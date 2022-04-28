@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\OrganizationController;
+use App\Http\Controllers\Admin\PersonController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Auth::routes(['register' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('organizations', OrganizationController::class);
+Route::resource('people', PersonController::class);

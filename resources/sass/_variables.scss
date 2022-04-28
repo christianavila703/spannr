@@ -1,14 +1,16 @@
-// Body
-$body-bg: #fff;
-
-// Typography
-$font-family-sans-serif: "Helvetica Neue LT Std", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-$headings-font-family: "ITC Lubalin Graph Std";
-$font-family-subheadings: "ITCAvantGardeGothW04";
-$font-size-base: 1rem;
-$line-height-base: 1.6;
-
 // Colors
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:    #000;
+
 $blue:    #0ac7fe;
 $indigo:  #5625ca;
 $purple:  #5625ca;
@@ -19,3 +21,44 @@ $yellow:  #ffc413;
 $green:   #88f200;
 $teal:    #00ffff;
 $cyan:    #00ffff;
+
+$primary:       $blue;
+$secondary:     $gray-600;
+$success:       $green;
+$info:          $cyan;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-100;
+$dark:          $gray-900;
+
+// Body
+$body-bg: $white;
+
+// Typography
+$font-family-sans-serif: "Helvetica Neue LT Std", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headings-font-family: "ITC Lubalin Graph Std";
+$font-family-subheadings: "ITCAvantGardeGothW04";
+
+// Components
+$component-active-color:      $white;
+$component-active-bg:         $primary;
+
+// Cards
+$card-border-radius: 0;
+
+// Navbar
+$navbar-dark-color:                 $white;
+$navbar-dark-hover-color:           $white;
+$navbar-dark-active-color:          $white;
+$navbar-dark-disabled-color:        rgba($black, .25);
+$navbar-dark-toggler-icon-bg:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-dark-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+$navbar-dark-toggler-border-color:  rgba($white, .1);
+
+// Dropdowns
+$dropdown-border-radius: 0;
+$dropdown-link-color:               $gray-900;
+$dropdown-link-hover-color:         $component-active-color;
+$dropdown-link-hover-bg:            $component-active-bg;
+
+$dropdown-link-active-color:        $component-active-color;
+$dropdown-link-active-bg:           $component-active-bg;

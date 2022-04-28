@@ -7,3 +7,33 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Gradient Backgrounds
+.bg-gradient-yellow-pink {
+    background: transparent linear-gradient(270deg, #F0C84D 22%, #D1337C 100%) 0 0 no-repeat padding-box;
+}
+
+// Navbar
+.navbar-dark {
+    .navbar-nav > li.nav-item {
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
+        font-family: $font-family-subheadings;
+    }
+
+    .dropdown-item {
+        text-shadow: none;
+    }
+}
+
+.navbar-brand {
+
+    img, svg {
+        width: 150px;
+        height: auto;
+    }
+}
+
+// Tables
+.table th {
+    font-family: $font-family-subheadings;
+}
