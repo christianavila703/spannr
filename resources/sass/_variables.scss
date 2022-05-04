@@ -24,12 +24,28 @@ $cyan:    #00ffff;
 
 $primary:       $blue;
 $secondary:     $gray-600;
+$tertiary:      $indigo;
+$quaternary:    $pink;
 $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
 $danger:        $red;
 $light:         $gray-100;
 $dark:          $gray-900;
+
+$theme-colors: (
+    "primary":      $primary,
+    "secondary":    $secondary,
+    "tertiary":     $tertiary,
+    "quaternary":   $quaternary,
+    "success":      $success,
+    "info":         $info,
+    "warning":      $warning,
+    "danger":       $danger,
+    "light":        $light,
+    "dark":         $dark,
+);
+
 
 // Body
 $body-bg: $white;

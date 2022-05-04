@@ -11,6 +11,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -27,15 +28,28 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Records
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
                                 <a class="dropdown-item" href="{{ route('organizations.index') }}">Organizations</a>
                                 <a class="dropdown-item" href="{{ route('people.index') }}">People</a>
                                 <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
                                 <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbar-dropdown-add-new" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Add New
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-add-new">
+                                <a class="dropdown-item" href="{{ route('organizations.create') }}">Organization</a>
+                                <a class="dropdown-item" href="{{ route('people.create') }}">Person</a>
+                                <a class="dropdown-item" href="{{ route('investors.create') }}">Investor</a>
+                                <a class="dropdown-item" href="{{ route('fundraising-rounds.create') }}">Fundraising Round</a>
                             </div>
                         </li>
                     </ul>

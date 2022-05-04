@@ -29,10 +29,11 @@ class OrganizationRequest extends FormRequest
             'website' => 'url|nullable',
             'summary' => 'string|max:255|nullable',
             'founded_date' => 'date_format:Y|nullable',
-            'facebook' => 'url|nullable',
-            'twitter' => 'url|nullable',
-            'linkedin' => 'url|nullable',
-            'instagram' => 'url|nullable',
+            'facebook' => 'string|nullable',
+            'twitter' => 'string|nullable',
+            'linkedin' => 'string|nullable',
+            'instagram' => 'string|nullable',
+            'description' => 'string|nullable'
         ];
     }
 }

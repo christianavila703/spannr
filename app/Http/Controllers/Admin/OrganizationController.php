@@ -35,7 +35,7 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OrganizationRequest $request)
+    public function store(OrganizationRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
         $organization = Organization::create($validated);

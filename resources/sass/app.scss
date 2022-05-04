@@ -1,6 +1,3 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 @import 'fonts';
@@ -35,5 +32,28 @@
 
 // Tables
 .table th {
+    font-family: $font-family-subheadings;
+}
+
+
+// Forms
+.form-floating > .form-control.floating-textarea-sm {
+    height: 100px;
+}
+
+.form-floating > .form-control.floating-textarea {
+    height: 150px;
+}
+
+.form-floating > .form-control.floating-textarea-lg {
+    height: 250px;
+}
+
+.form-floating > .form-control.floating-textarea-xl {
+    height: 400px;
+}
+
+// Buttons
+.btn {
     font-family: $font-family-subheadings;
 }
