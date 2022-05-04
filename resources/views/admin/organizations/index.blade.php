@@ -13,6 +13,7 @@
                 <th>Website</th>
                 <th>Summary</th>
                 <th>Fundraising Rounds</th>
+                <th>Investors</th>
             </tr>
             </thead>
             <tbody>
@@ -25,7 +26,12 @@
                     <td>{{ $organization->summary }}</td>
                     <td>
                         @foreach ($organization->fundraisingRounds as $fundraisingRound)
-                            {{ $fundraisingRound->name }}
+                            <a href="{{ route('fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a> @if (!$loop->last) / @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($organization->investors as $investor)
+                            <a href="{{ route('investors.show', $investor->id) }}">{{ $investor->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </td>
                 </tr>

@@ -15,7 +15,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $organizations = Organization::with(['fundraisingRounds'])
+        $organizations = Organization::with(['fundraisingRounds', 'investors'])
             ->get();
 
         return view('admin.organizations.index', [

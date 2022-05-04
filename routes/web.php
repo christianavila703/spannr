@@ -18,7 +18,9 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
-Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
-Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
-Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
+    Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
+    Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
+    Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
+});

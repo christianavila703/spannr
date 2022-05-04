@@ -40,6 +40,11 @@ class Organization extends Model
         return $this->hasMany(FundraisingRound::class);
     }
 
+    public function investors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Investor::class);
+    }
+
     /**
      * Mutators
      */

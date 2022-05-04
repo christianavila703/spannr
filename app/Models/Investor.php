@@ -30,6 +30,11 @@ class Investor extends Model
         return $this->belongsToMany(FundraisingRound::class);
     }
 
+    public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class);
+    }
+
     /**
      * Mutators
      */
