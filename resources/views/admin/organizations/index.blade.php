@@ -12,6 +12,7 @@
                 <th>Founded</th>
                 <th>Website</th>
                 <th>Summary</th>
+                <th>Fundraising Rounds</th>
             </tr>
             </thead>
             <tbody>
@@ -22,6 +23,11 @@
                     <td>{{ $organization->founded_date }}</td>
                     <td>{{ $organization->website }}</td>
                     <td>{{ $organization->summary }}</td>
+                    <td>
+                        @foreach ($organization->fundraisingRounds as $fundraisingRound)
+                            {{ $fundraisingRound->name }}
+                        @endforeach
+                    </td>
                 </tr>
             @endforeach
             </tbody>

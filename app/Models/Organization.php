@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Organization extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 
     const TYPE_PRIVATE = 'Private';
     const TYPE_PUBLIC = 'Public';
@@ -17,8 +20,6 @@ class Organization extends Model
     const TYPE_EDUCATIONAL = 'Educational';
     const TYPE_MEDICAL = 'Medical';
     const TYPE_DAO = 'DAO';
-
-    protected $guarded = ['id'];
 
     const TYPES = [
         self::TYPE_PRIVATE,
@@ -30,4 +31,20 @@ class Organization extends Model
         self::TYPE_MEDICAL,
         self::TYPE_DAO
     ];
+
+    /**
+     * Relationships
+     */
+    public function fundraisingRounds(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(FundraisingRound::class);
+    }
+
+    /**
+     * Mutators
+     */
+    public function setNameAttribute($value) {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
 }

@@ -26,7 +26,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Records
+                            </a>
 
+                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('organizations.index') }}">Organizations</a>
+                                <a class="dropdown-item" href="{{ route('people.index') }}">People</a>
+                                <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
+                                <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

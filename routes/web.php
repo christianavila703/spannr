@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\OrganizationController;
-use App\Http\Controllers\Admin\PersonController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +18,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('organizations', OrganizationController::class);
-Route::resource('people', PersonController::class);
+Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
+Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
+Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
+Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
