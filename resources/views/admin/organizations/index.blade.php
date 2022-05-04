@@ -4,6 +4,8 @@
     <div class="container-fluid">
         <h1 class="text-primary">Organizations</h1>
 
+        @include('admin.includes.status-messages')
+
         <table class="table">
             <thead>
             <tr>
