@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrganizationRequest extends FormRequest
 {
@@ -24,7 +25,11 @@ class OrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:organizations|max:255',
+            'name' => [
+                'required',
+                Rule::unique('organizations')->ignore($this->name, 'name'),
+                'max:255'
+            ],
             'type' => 'required',
             'website' => 'url|nullable',
             'summary' => 'string|max:255|nullable',
