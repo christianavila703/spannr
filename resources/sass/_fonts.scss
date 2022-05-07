@@ -19,41 +19,14 @@
 }
 
 @font-face {
-    font-family: 'Helvetica Neue LT Std';
-    src: local('Helvetica Neue LT Std 75 Bold'), local('HelveticaNeueLTStd-Bd'),
-    url('/fonts/HelveticaNeueLTStd-Bd.woff2') format('woff2'),
-    url('/fonts/HelveticaNeueLTStd-Bd.woff') format('woff');
-    font-weight: bold;
+    font-family:'Helvetica Neue';
+    src: url('/fonts/Helvetica Neue.eot');
+    src: url('/fonts/Helvetica Neue.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/Helvetica Neue.woff2') format('woff2'),
+    url('/fonts/Helvetica Neue.woff') format('woff'),
+    url('/fonts/Helvetica Neue.svg#Helvetica Neue') format('svg');
+    font-weight: 400;
     font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Helvetica Neue LT Std';
-    src: local('Helvetica Neue LT Std 55 Roman'), local('HelveticaNeueLTStd-Roman'),
-    url('/fonts/HelveticaNeueLTStd-Roman.woff2') format('woff2'),
-    url('/fonts/HelveticaNeueLTStd-Roman.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Helvetica Neue LT Std';
-    src: local('Helvetica Neue LT Std 56 Italic'), local('HelveticaNeueLTStd-It'),
-    url('/fonts/HelveticaNeueLTStd-It.woff2') format('woff2'),
-    url('/fonts/HelveticaNeueLTStd-It.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Helvetica Neue LT Std';
-    src: local('Helvetica Neue LT Std 76 Bold Italic'), local('HelveticaNeueLTStd-BdIt'),
-    url('/fonts/HelveticaNeueLTStd-BdIt.woff2') format('woff2'),
-    url('/fonts/HelveticaNeueLTStd-BdIt.woff') format('woff');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
+    font-stretch: normal;
+    unicode-range: U+0-10FFFF;
 }

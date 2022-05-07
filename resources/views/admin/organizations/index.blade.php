@@ -21,7 +21,9 @@
             <tbody>
             @foreach($organizations as $organization)
                 <tr>
-                    <td>{{ $organization->name }}</td>
+                    <td>
+                        <a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name }}</a>
+                    </td>
                     <td>{{ $organization->type }}</td>
                     <td>{{ $organization->founded_date }}</td>
                     <td>{{ $organization->website }}</td>

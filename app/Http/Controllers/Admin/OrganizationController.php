@@ -46,13 +46,14 @@ class OrganizationController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        //
+        $organization = Organization::where('slug', $slug)->firstOrFail();
+
+        return view('admin.organizations.show', [
+            'organization' => $organization
+        ]);
     }
 
     /**
