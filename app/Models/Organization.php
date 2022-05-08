@@ -51,9 +51,9 @@ class Organization extends Model
         return $this->belongsToMany(Person::class)->where('role', Person::ORGANIZATION_ROLE_FOUNDER)->withTimestamps();
     }
 
-    public function employees(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function team(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Person::class)->where('role', '!=', Person::ORGANIZATION_ROLE_FOUNDER)->withTimestamps();
+        return $this->belongsToMany(Person::class)->where('role', Person::ORGANIZATION_ROLE_TEAM)->withTimestamps();
     }
 
     public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

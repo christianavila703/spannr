@@ -13,13 +13,11 @@ class Person extends Model
         HasSocialMedia;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
-    const ORGANIZATION_ROLE_LEADERSHIP = 'Leadership';
-    const ORGANIZATION_ROLE_OTHER = 'Other';
+    const ORGANIZATION_ROLE_TEAM = 'Team';
 
     const ORGANIZATION_ROLES = [
         self::ORGANIZATION_ROLE_FOUNDER,
-        self::ORGANIZATION_ROLE_LEADERSHIP,
-        self::ORGANIZATION_ROLE_OTHER
+        self::ORGANIZATION_ROLE_TEAM
     ];
 
     protected $guarded = ['id'];
@@ -29,6 +27,10 @@ class Person extends Model
      */
     public function scopeFounders($query) {
         return $query->where('role', self::ORGANIZATION_ROLE_FOUNDER);
+    }
+
+    public function scopeTeam($query) {
+        return $query->where('role', self::ORGANIZATION_ROLE_TEAM);
     }
 
     /**

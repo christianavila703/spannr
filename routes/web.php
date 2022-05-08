@@ -23,4 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
     Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
     Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
+
+    // Organization Relationships
+    Route::post('/organizations/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
+    Route::post('/organizations/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people');
 });

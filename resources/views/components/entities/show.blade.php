@@ -10,7 +10,7 @@
             <div class="me-5">
                 <h1 class="text-primary">{{ $title }}</h1>
             </div>
-            <div>
+            <div class="d-flex flex-wrap align-items-center position-relative">
                 {{ $buttons }}
             </div>
         </div>
