@@ -4,6 +4,8 @@
     <div class="container-fluid">
         <h1 class="text-primary">Fundraising Rounds</h1>
 
+        @include('admin.includes.status-messages')
+
         <table class="table">
             <thead>
             <tr>
