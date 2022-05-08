@@ -25,6 +25,13 @@ class Person extends Model
     protected $guarded = ['id'];
 
     /**
+     * Scopes
+     */
+    public function scopeFounders($query) {
+        return $query->where('role', self::ORGANIZATION_ROLE_FOUNDER);
+    }
+
+    /**
      * Mutators
      */
     public function setNameAttribute($value) {

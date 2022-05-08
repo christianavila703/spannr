@@ -27,4 +27,9 @@ trait HasSocialMedia {
     {
         return '<a href="https://scholar.google.com/citations?user=' . $this->google_scholar . '" target="_blank" rel="noopener noreferrer">' . $this->google_scholar . '</a>';
     }
+
+    public function getWebsiteLinkAttribute(): string
+    {
+        return '<a href="' . $this->website . '" target="_blank" rel="noopener noreferrer">' . $this->website . '</a>';
+    }
 }

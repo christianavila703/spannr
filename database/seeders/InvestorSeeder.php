@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Investor;
+use App\Models\Organization;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,8 @@ class InvestorSeeder extends Seeder
     public function run()
     {
         Investor::factory()
-            ->count(50)
+            ->has(Organization::factory()->count(3))
+            ->count(10)
             ->create();
     }
 }

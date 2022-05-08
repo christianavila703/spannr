@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'spannr') }}</title>
 
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
@@ -97,7 +99,5 @@
             @yield('content')
         </main>
     </div>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
