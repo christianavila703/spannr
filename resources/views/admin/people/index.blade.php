@@ -15,7 +15,9 @@
             <tbody>
             @foreach($people as $person)
                 <tr>
-                    <td>{{ $person->name }}</td>
+                    <td>
+                        <a href="{{ route('people.show', $person->slug) }}">{{ $person->name }}</a>
+                    </td>
                     <td>{{ $person->byline }}</td>
                     <td>{{ $person->website }}</td>
                 </tr>

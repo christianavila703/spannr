@@ -2,7 +2,7 @@
     'title'
 ])
 
-<div {{ $attributes->merge(['class' => 'alert ']) }}>
+<div {{ $attributes->merge(['class' => '']) }}>
     <div class="container">
         <h1 class="text-primary">{{ $title }}</h1>
 
@@ -10,4 +10,3 @@
         {{ $slot }}
     </div>
 </div>
-

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('website')->nullable();
             $table->string('summary')->nullable();
+            $table->longText('description')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('linkedin')->nullable();

@@ -17,15 +17,19 @@ class InvestorFactory extends Factory
      */
     public function definition()
     {
+        $domainWord = $this->faker->domainWord;
+        $domainTld = $this->faker->tld;
+
         return [
             'name' => $this->faker->company,
             'type' => $this->faker->randomElement(Investor::TYPES),
-            'website' => 'https://' . $this->faker->domainName(),
+            'website' => 'https://' . $domainWord . "." . $domainTld,
             'summary' => $this->faker->catchPhrase(),
-            'facebook' => 'https://www.facebook.com/' . $this->faker->domainWord,
-            'twitter' => 'https://www.twitter.com/' . $this->faker->domainWord,
-            'linkedin' => 'https://www.linkedin.com/' . $this->faker->domainWord,
-            'instagram' => 'https://www.instagram.com/' . $this->faker->domainWord,
+            'description' => $this->faker->realTextBetween(200, 800),
+            'facebook' => $domainWord,
+            'twitter' => $domainWord,
+            'linkedin' => $domainWord,
+            'instagram' => $domainWord,
         ];
     }
 }

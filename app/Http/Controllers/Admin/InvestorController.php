@@ -50,9 +50,13 @@ class InvestorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $investor = Investor::where('slug', $slug)->firstOrFail();
+
+        return view('admin.investors.show', [
+            'investor' => $investor
+        ]);
     }
 
     /**
