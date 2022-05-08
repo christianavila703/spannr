@@ -19,15 +19,17 @@
             @foreach($fundraisingRounds as $fundraisingRound)
                 <tr>
                     <td>{{ $fundraisingRound->date }}</td>
-                    <td>{{ $fundraisingRound->name }}</td>
+                    <td>
+                        <a href="{{ route('fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a>
+                    </td>
                     <td>{{ $fundraisingRound->round }}</td>
                     <td>${{ number_format($fundraisingRound->amount_raised, 0) }}</td>
                     <td>
-                        <a href="{{ route('organizations.show', $fundraisingRound->organization->id) }}">{{ $fundraisingRound->organization->name }}</a>
+                        <a href="{{ route('organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
                     </td>
                     <td>
                         @foreach ($fundraisingRound->investors as $investor)
-                            <a href="{{ route('investors.show', $investor->id) }}">{{ $investor->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('investors.show', $investor->slug) }}">{{ $investor->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </td>
                 </tr>

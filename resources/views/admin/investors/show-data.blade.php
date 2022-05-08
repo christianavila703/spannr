@@ -55,6 +55,18 @@
                     @endforeach
                 </td>
             </tr>
+            <tr>
+                <td colspan="2" class="pt-3">
+                    <small class="h6 mb-0 d-block fw-bold text-uppercase">Fundraising Rounds</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @foreach ($investor->fundraisingRounds as $fundraisingRound)
+                        <a href="">{{ $fundraisingRound->name }}</a> - ${{ number_format($fundraisingRound->amount_raised, 0) }} @if (!$loop->last) <br> @endif
+                    @endforeach
+                </td>
+            </tr>
         </table>
 
         <div>
