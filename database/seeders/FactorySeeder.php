@@ -17,15 +17,18 @@ class FactorySeeder extends Seeder
     public function run()
     {
         Organization::factory()
-            ->count(50)
+            ->hasAttached(
+                Person::factory()->count(2),
+                ['role' => Person::ORGANIZATION_ROLE_FOUNDER]
+            )
+            ->count(10)
             ->create();
+
+        // TODO: Move all the relationships to their own factories for the random from faker??
 
         Investor::factory()
-            ->count(50)
-            ->create();
-
-        Person::factory()
-            ->count(50)
+            ->has(Organization::factory()->count(3))
+            ->count(10)
             ->create();
     }
 }

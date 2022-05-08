@@ -43,6 +43,32 @@
                 <td><i class="fa-brands fa-instagram"></i></td>
                 <td><a href="{{ $organization->instagram }}">{{ $organization->instagram }}</a></td>
             </tr>
+            <tr>
+                <td colspan="2" class="pt-3">
+                    <small class="h6 mb-0 d-block fw-bold text-uppercase">Investors</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @foreach ($organization->investors as $investor)
+                        <a href="{{ route('investors.show', $investor->slug) }}">{{ $investor->name }}</a> @if (!$loop->last) <br> @endif
+                    @endforeach
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="pt-3">
+                    <small class="h6 mb-0 d-block fw-bold text-uppercase">People</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @foreach ($organization->people as $person)
+                        <a href="{{ route('people.show', $person->slug) }}">
+                            {{ $person->pivot->role }} - {{ $person->name }}
+                        </a> @if (!$loop->last) <br> @endif
+                    @endforeach
+                </td>
+            </tr>
         </table>
 
         <div>

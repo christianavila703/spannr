@@ -38,7 +38,7 @@ class FundraisingRound extends Model
 
     public function investors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Investor::class);
+        return $this->belongsToMany(Investor::class)->withTimestamps();
     }
 
     /**

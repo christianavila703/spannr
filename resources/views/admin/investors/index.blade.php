@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         @foreach ($investor->organizations as $organization)
-                            <a href="{{ route('organizations.show', $organization->id) }}">{{ $organization->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </td>
                 </tr>

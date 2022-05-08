@@ -43,6 +43,18 @@
                 <td><i class="fa-brands fa-instagram"></i></td>
                 <td><a href="{{ $investor->instagram }}">{{ $investor->instagram }}</a></td>
             </tr>
+            <tr>
+                <td colspan="2" class="pt-3">
+                    <small class="h6 mb-0 d-block fw-bold text-uppercase">Organizations</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @foreach ($investor->organizations as $organization)
+                        <a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name }}</a> @if (!$loop->last) <br> @endif
+                    @endforeach
+                </td>
+            </tr>
         </table>
 
         <div>

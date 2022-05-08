@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasSocialMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Organization extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasSocialMedia;
 
     protected $guarded = ['id'];
 
@@ -40,7 +42,12 @@ class Organization extends Model
 
     public function investors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Investor::class);
+        return $this->belongsToMany(Investor::class)->withTimestamps();
+    }
+
+    public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();
     }
 
     /**
