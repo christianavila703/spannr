@@ -49,7 +49,6 @@
                                 <a class="dropdown-item" href="{{ route('organizations.create') }}">Organization</a>
                                 <a class="dropdown-item" href="{{ route('people.create') }}">Person</a>
                                 <a class="dropdown-item" href="{{ route('investors.create') }}">Investor</a>
-                                <a class="dropdown-item" href="{{ route('fundraising-rounds.create') }}">Fundraising Round</a>
                             </div>
                         </li>
                     </ul>

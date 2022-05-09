@@ -37,6 +37,7 @@ class FundraisingRoundController extends Controller
 
         if (!empty($validated['investors'])) {
             $fundraisingRound->investors()->syncWithoutDetaching($validated['investors']);
+            $organization->investors()->syncWithoutDetaching($validated['investors']);
         }
 
         return redirect()->route('organizations.show', $organization->slug)->with('success', $fundraisingRound->name . ' added!');
