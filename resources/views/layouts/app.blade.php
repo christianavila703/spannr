@@ -51,6 +51,10 @@
                                 <a class="dropdown-item" href="{{ route('investors.create') }}">Investor</a>
                             </div>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('activity-log.index') }}" class="nav-link">Activity Log</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

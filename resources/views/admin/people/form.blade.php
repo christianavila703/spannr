@@ -23,6 +23,7 @@
                 <x-forms.input-group type="text" name="twitter" label="https://www.twitter.com/" class="mb-1" value="{{ $person->twitter ?? old('twitter') }}" />
                 <x-forms.input-group type="text" name="linkedin" label="https://www.linkedin.com/" class="mb-1" value="{{ $person->linkedin ?? old('linkedin') }}" />
                 <x-forms.input-group type="text" name="instagram" label="https://www.instagram.com/" class="mb-1" value="{{ $person->instagram ?? old('instagram') }}" />
+                <x-forms.input-group type="text" name="google_scholar" label="https://scholar.google.com/citations?user=" class="mb-1" value="{{ $person->google_scholar ?? old('google_scholar') }}" />
 
             </div>
         </div>

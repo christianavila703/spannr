@@ -103,12 +103,16 @@ class OrganizationController extends Controller
             $founderSync = array_fill_keys($founderIds, ['role' => Person::ORGANIZATION_ROLE_FOUNDER]);
             $organization->founders()->syncWithoutDetaching($founderSync);
             $logProperties['founders'] = $founderIds;
+
+            // TODO: dispatch job for the founders to add activity log for those person records!
         }
 
         if (!empty($teamIds)) {
             $teamSync = array_fill_keys($teamIds, ['role' => Person::ORGANIZATION_ROLE_TEAM]);
             $organization->team()->syncWithoutDetaching($teamSync);
             $logProperties['team'] = $teamIds;
+
+            // TODO: dispatch job for the team to add activity log for those person records!
         }
 
         activity()

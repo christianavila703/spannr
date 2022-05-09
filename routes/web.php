@@ -27,4 +27,7 @@ Route::middleware(['auth'])->group(function () {
     // Organization Relationships
     Route::post('/organizations/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
     Route::post('/organizations/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people');
+
+    // Activity Log
+    Route::get('/activity-log', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-log.index');
 });
