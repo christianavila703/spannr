@@ -10,6 +10,7 @@
                 <div class="modal-body" style="min-height: 400px">
                     <label for="investors" class="visually-hidden">Select Investors</label>
                     <select multiple name="investors[]" id="investors" class="js-choice-investor">
+                        <option value="">Select Investors</option>
                         @foreach ($investors as $investor)
                             <option value="{{ $investor->id }}">{{ $investor->name }}</option>
                         @endforeach

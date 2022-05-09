@@ -13,7 +13,7 @@
                 <ul class="dropdown-menu" aria-labelledby="add-relationship">
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addInvestorForm">Investors</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addPeopleForm">People</a></li>
-                    <li><a class="dropdown-item" href="#">Fundraising Round</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFundraisingRoundForm">Fundraising Round</a></li>
                 </ul>
             </div>
         </x-slot:buttons>
@@ -22,5 +22,6 @@
 
     @include('admin.organizations.investors.add')
     @include('admin.organizations.people.add')
+    @include('admin.organizations.fundraising-rounds.add')
 
 @endsection

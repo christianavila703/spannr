@@ -69,7 +69,7 @@ class OrganizationController extends Controller
         $organization = Organization::findOrFail($id);
         $organization->update($validated);
 
-        return redirect()->route('organizations.show', $organization->slug);
+        return redirect()->route('organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');
     }
 
     public function addInvestors(Request $request): \Illuminate\Http\RedirectResponse

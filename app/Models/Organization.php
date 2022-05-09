@@ -37,7 +37,7 @@ class Organization extends Model
      */
     public function fundraisingRounds(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(FundraisingRound::class);
+        return $this->hasMany(FundraisingRound::class)->orderByDesc('date');
     }
 
     public function investors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

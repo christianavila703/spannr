@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('fundraising_rounds', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->string('round');
             $table->foreignId('organization_id')->references('id')->on('organizations')->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('date');

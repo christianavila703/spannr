@@ -44,8 +44,7 @@ class FundraisingRound extends Model
     /**
      * Mutators
      */
-    public function setRoundAttribute($value) {
-        $this->attributes['round'] = $value;
-        $this->attributes['name'] = $this->organization->name . ' - ' . $value;
+    public function setNameAttribute() {
+        $this->attributes['name'] = $this->organization->name . ' - ' . $this->round;
     }
 }

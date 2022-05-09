@@ -9,7 +9,7 @@
             <x-forms.input type="text" name="name" label="Name" class="mb-3" value="{{ $organization->name ?? old('name') }}" />
 
             <div class="form-floating mb-3">
-                <select class="form-select" id="type" name="type" aria-label="Floating label select example">
+                <select class="form-select" id="type" name="type" aria-label="Select type">
                     <option selected disabled>Select Type</option>
                     @foreach (\App\Models\Organization::TYPES as $type)
                         <option value="{{ $type }}"
