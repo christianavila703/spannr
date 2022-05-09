@@ -8,6 +8,7 @@ use App\Models\Investor;
 use App\Models\Organization;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
 {
@@ -77,6 +78,16 @@ class OrganizationController extends Controller
         $investorIds = $request->input('investors');
         $organization = Organization::findOrFail($request->input('organization_id'));
         $organization->investors()->syncWithoutDetaching($investorIds);
+
+        // Log Activity
+        activity()
+            ->useLog('organizations')
+            ->causedBy(Auth::user())
+            ->performedOn($organization)
+            ->withProperties(['investors' => $investorIds])
+            ->event('added investors')
+            ->log('Investors added to ' . $organization->name);
+
         return redirect()->route('organizations.show', $organization->slug)->with('success', 'Investors added!');
     }
 
@@ -86,15 +97,27 @@ class OrganizationController extends Controller
         $teamIds = $request->input('team');
         $organization = Organization::findOrFail($request->input('organization_id'));
 
+        $logProperties = [];
+
         if (!empty($founderIds)) {
             $founderSync = array_fill_keys($founderIds, ['role' => Person::ORGANIZATION_ROLE_FOUNDER]);
             $organization->founders()->syncWithoutDetaching($founderSync);
+            $logProperties['founders'] = $founderIds;
         }
 
         if (!empty($teamIds)) {
             $teamSync = array_fill_keys($teamIds, ['role' => Person::ORGANIZATION_ROLE_TEAM]);
             $organization->team()->syncWithoutDetaching($teamSync);
+            $logProperties['team'] = $teamIds;
         }
+
+        activity()
+            ->useLog('organizations')
+            ->causedBy(Auth::user())
+            ->performedOn($organization)
+            ->withProperties($logProperties)
+            ->event('added people')
+            ->log('People added to ' . $organization->name);
 
         return redirect()->route('organizations.show', $organization->slug)->with('success', 'People added!');
     }

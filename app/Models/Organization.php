@@ -6,11 +6,14 @@ use App\Http\Traits\HasSocialMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Organization extends Model
 {
     use HasFactory,
-        HasSocialMedia;
+        HasSocialMedia,
+        LogsActivity;
 
     protected $guarded = ['id'];
 
@@ -31,6 +34,18 @@ class Organization extends Model
         self::TYPE_MEDICAL,
         self::TYPE_DAO
     ];
+
+    /**
+     * Functions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('organizations')
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
 
     /**
      * Relationships

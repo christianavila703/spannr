@@ -6,11 +6,14 @@ use App\Http\Traits\HasSocialMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Person extends Model
 {
     use HasFactory,
-        HasSocialMedia;
+        HasSocialMedia,
+        LogsActivity;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
     const ORGANIZATION_ROLE_TEAM = 'Team';
@@ -44,5 +47,14 @@ class Person extends Model
     public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->withPivot('role')->withTimestamps();
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('people')
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
 }

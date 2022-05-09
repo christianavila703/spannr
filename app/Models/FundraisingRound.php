@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class FundraisingRound extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        LogsActivity;
 
     protected $guarded = ['id'];
 
@@ -42,9 +45,15 @@ class FundraisingRound extends Model
     }
 
     /**
-     * Mutators
+     * Functions
      */
-    public function setNameAttribute() {
-        $this->attributes['name'] = $this->organization->name . ' - ' . $this->round;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('fundraising-rounds')
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
 }

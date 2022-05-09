@@ -6,11 +6,14 @@ use App\Http\Traits\HasSocialMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Investor extends Model
 {
     use HasFactory,
-        HasSocialMedia;
+        HasSocialMedia,
+        LogsActivity;
 
     protected $guarded = ['id'];
 
@@ -43,5 +46,14 @@ class Investor extends Model
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('investors')
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
 }
