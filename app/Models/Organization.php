@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\HasSocialMedia;
+use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -13,7 +14,8 @@ class Organization extends Model
 {
     use HasFactory,
         HasSocialMedia,
-        LogsActivity;
+        LogsActivity,
+        SearchableEntity;
 
     protected $guarded = ['id'];
 
@@ -34,6 +36,10 @@ class Organization extends Model
         self::TYPE_MEDICAL,
         self::TYPE_DAO
     ];
+
+    private string $searchableRouteName = 'organizations.show';
+    private string $searchableRouteField = 'slug';
+    private string $searchableIcon = 'fa-duotone fa-buildings';
 
     /**
      * Functions

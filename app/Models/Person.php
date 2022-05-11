@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\HasSocialMedia;
+use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -13,7 +14,8 @@ class Person extends Model
 {
     use HasFactory,
         HasSocialMedia,
-        LogsActivity;
+        LogsActivity,
+        SearchableEntity;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
     const ORGANIZATION_ROLE_TEAM = 'Team';
@@ -24,6 +26,10 @@ class Person extends Model
     ];
 
     protected $guarded = ['id'];
+
+    private string $searchableRouteName = 'people.show';
+    private string $searchableRouteField = 'slug';
+    private string $searchableIcon = 'fa-duotone fa-user-hair-buns';
 
     /**
      * Scopes
@@ -44,11 +50,17 @@ class Person extends Model
         $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 
+    /**
+     * Relationships
+     */
     public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->withPivot('role')->withTimestamps();
     }
 
+    /**
+     * Functions
+     */
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -57,4 +69,5 @@ class Person extends Model
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
+
 }

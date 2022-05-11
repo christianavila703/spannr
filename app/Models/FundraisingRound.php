@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -11,7 +11,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class FundraisingRound extends Model
 {
     use HasFactory,
-        LogsActivity;
+        LogsActivity,
+        SearchableEntity;
 
     protected $guarded = ['id'];
 
@@ -30,6 +31,10 @@ class FundraisingRound extends Model
         self::ROUND_SERIES_D,
         self::ROUND_UNKNOWN
     ];
+
+    private string $searchableRouteName = 'fundraising-rounds.show';
+    private string $searchableRouteField = 'id';
+    private string $searchableIcon = 'fa-duotone fa-sack-dollar';
 
     /**
      * Relationships

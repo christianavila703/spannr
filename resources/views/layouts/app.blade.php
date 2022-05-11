@@ -8,6 +8,7 @@
 
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
@@ -15,7 +16,7 @@
 </head>
 <body>
     <div id="app">
-        <nav id="primary-nav" class="navbar navbar-expand-md navbar-dark bg-gradient-yellow-pink text-white">
+        <nav id="primary-nav" class="navbar navbar-expand-lg navbar-dark bg-gradient-yellow-pink text-white align-items-center">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('images/logo-color.svg') }}" alt="spannr">
@@ -24,37 +25,52 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Records
-                            </a>
+                    <ul class="navbar-nav me-auto align-items-center">
+                        @can('view records')
+                            <livewire:search />
+                        @endcan
+                        @can('view records')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Records
+                                </a>
 
-                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
-                                <a class="dropdown-item" href="{{ route('organizations.index') }}">Organizations</a>
-                                <a class="dropdown-item" href="{{ route('people.index') }}">People</a>
-                                <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
-                                <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
+                                    <a class="dropdown-item" href="{{ route('organizations.index') }}">Organizations</a>
+                                    <a class="dropdown-item" href="{{ route('people.index') }}">People</a>
+                                    <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
+                                    <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
+                                </div>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item dropdown">
-                            <a id="navbar-dropdown-add-new" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Add New
-                            </a>
+                        @can('edit records')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-add-new" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Add New
+                                </a>
 
-                            <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-add-new">
-                                <a class="dropdown-item" href="{{ route('organizations.create') }}">Organization</a>
-                                <a class="dropdown-item" href="{{ route('people.create') }}">Person</a>
-                                <a class="dropdown-item" href="{{ route('investors.create') }}">Investor</a>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-add-new">
+                                    <a href="{{ route('organizations.create') }}" class="dropdown-item">Organization</a>
+                                    <a href="{{ route('people.create') }}" class="dropdown-item">Person</a>
+                                    <a href="{{ route('investors.create') }}" class="dropdown-item">Investor</a>
+                                </div>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item">
-                            <a href="{{ route('activity-log.index') }}" class="nav-link">Activity Log</a>
-                        </li>
+                        @can('admin control')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-admin" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Admin
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-admin">
+                                    <a href="{{ route('activity-log.index') }}" class="dropdown-item">Activity Log</a>
+                                </div>
+                            </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -100,5 +116,6 @@
             @yield('content')
         </main>
     </div>
+    @livewireScripts
 </body>
 </html>
