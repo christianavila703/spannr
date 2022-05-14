@@ -29,6 +29,9 @@
         <x-entities.show.field-heading title="Organizations" />
         <x-entities.show.relationship-basic :records="$person->organizations" routeName="organizations.show" />
 
+        <x-entities.show.field-heading title="Locations" />
+        <x-entities.show.relationship-basic :records="$person->locations" routeName="locations.show" />
+
         <x-entities.show.field-heading title="Bio" />
         <div>
             {!! nl2br(e($person->bio)) !!}

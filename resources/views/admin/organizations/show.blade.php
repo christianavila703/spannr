@@ -14,6 +14,7 @@
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addInvestorForm">Investors</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addPeopleForm">People</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFundraisingRoundForm">Fundraising Round</a></li>
+                    <li><a class="dropdown-item" href="{{ route('locations.attach', ['organizations', $organization->id]) }}">Location</a></li>
                 </ul>
             </div>
         </x-slot:buttons>

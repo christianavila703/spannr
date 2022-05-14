@@ -38,7 +38,8 @@ class OrganizationRequest extends FormRequest
             'twitter' => 'string|nullable',
             'linkedin' => 'string|nullable',
             'instagram' => 'string|nullable',
-            'description' => 'string|nullable'
+            'description' => 'string|nullable',
+            ''
         ];
     }
 }

@@ -43,6 +43,9 @@
         <x-entities.show.field-heading title="Fundraising Rounds" />
         <x-entities.show.relationship-fundraising-round :records="$organization->fundraisingRounds" />
 
+        <x-entities.show.field-heading title="Locations" />
+        <x-entities.show.relationship-basic :records="$organization->locations" routeName="locations.show" />
+
         <x-entities.show.field-heading title="Description" />
         <div>
             {!! nl2br(e($organization->description)) !!}

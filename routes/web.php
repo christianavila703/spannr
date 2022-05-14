@@ -26,9 +26,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
 
     // Organization Relationships
-    Route::post('/organizations/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
-    Route::post('/organizations/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people');
+    Route::post('/organization/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
+    Route::post('/organization/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people');
 
+    // Location
+    Route::get('/locations/{entityType}/{entityId}', [\App\Http\Controllers\Admin\LocationController::class, 'attach'])->name('locations.attach');
+    Route::post('/locations/attach', [\App\Http\Controllers\Admin\LocationController::class, 'store'])->name('locations.store');
+    Route::get('/locations/{id}', [\App\Http\Controllers\Admin\LocationController::class, 'show'])->name('locations.show');
 });
 
 Route::middleware(['auth', 'can:admin control'])->group(function () {

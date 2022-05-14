@@ -8,11 +8,11 @@
 
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @livewireStyles
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
-
+    @livewireStyles
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    @stack('head')
 </head>
 <body>
     <div id="app">
@@ -117,5 +117,6 @@
         </main>
     </div>
     @livewireScripts
+    @stack('end')
 </body>
 </html>

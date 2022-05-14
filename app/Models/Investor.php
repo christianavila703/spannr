@@ -41,6 +41,11 @@ class Investor extends Model
         return $this->belongsToMany(FundraisingRound::class);
     }
 
+    public function locations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Location::class, 'locatable' , 'location_relationships')->withTimestamps();
+    }
+
     public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Organization::class);
