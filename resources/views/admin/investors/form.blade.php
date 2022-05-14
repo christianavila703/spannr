@@ -1,4 +1,4 @@
-<form method="POST" action="{{ $route }}">
+<form method="POST" action="{{ $route }}" enctype="multipart/form-data">
     @csrf
     @isset($method)
         @method($method)
@@ -46,6 +46,10 @@
             <div class="form-floating mb-3">
                 <textarea class="form-control floating-textarea-xl" id="description" name="description" placeholder="Description">{{ $investor->description ?? old('description') }}</textarea>
                 <label for="description">Description / Content Area</label>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label"><x-entities.show.field-heading title="Logo" /></label>
+                <input class="form-control" type="file" name="image" id="image">
             </div>
         </div>
         <div class="col-12">

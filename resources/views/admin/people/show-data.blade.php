@@ -37,4 +37,11 @@
             {!! nl2br(e($person->bio)) !!}
         </div>
     </div>
+    <div class="col-12 col-md-6">
+        <div class="mb-2">
+            @if($person->image != '')
+                <img src="{{ $person->imageUrl }}" alt="{{ $person->name }}" class="entity-show-image">
+            @endif
+        </div>
+    </div>
 </div>

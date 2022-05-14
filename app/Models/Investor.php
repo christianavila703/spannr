@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,8 @@ class Investor extends Model
     use HasFactory,
         HasSocialMedia,
         LogsActivity,
-        SearchableEntity;
+        SearchableEntity,
+        HasImage;
 
     protected $guarded = ['id'];
 
@@ -32,6 +34,9 @@ class Investor extends Model
     private string $searchableRouteName = 'investors.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-hands-holding-dollar';
+
+    private string $modelName = 'investors';
+    private string $imageUrlStoragePath = 'public/images/investors';
 
     /**
      * Relationships

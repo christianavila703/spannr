@@ -39,6 +39,7 @@ class PersonRequest extends FormRequest
             'linkedin' => 'string|nullable',
             'instagram' => 'string|nullable',
             'google_scholar' => 'string|nullable',
+            'image' => 'image|nullable'
         ];
     }
 }

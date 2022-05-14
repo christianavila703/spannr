@@ -45,4 +45,11 @@
             {!! nl2br(e($investor->description)) !!}
         </div>
     </div>
+    <div class="col-12 col-md-6">
+        <div class="mb-2">
+            @if($investor->image != '')
+                <img src="{{ $investor->imageUrl }}" alt="{{ $investor->name }}" class="entity-show-image">
+            @endif
+        </div>
+    </div>
 </div>

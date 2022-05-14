@@ -29,6 +29,10 @@ class PersonController extends Controller
         $validated = $request->validated();
         $person = Person::create($validated);
 
+        if (isset($validated['image'])) {
+            $person->storeImage($request->file('image'));
+        }
+
         return redirect()->route('people.index')->with('success', 'Added ' . $person->name);
     }
 
@@ -55,6 +59,10 @@ class PersonController extends Controller
         $validated = $request->validated();
         $person = Person::findOrFail($id);
         $person->update($validated);
+
+        if (isset($validated['image'])) {
+            $person->storeImage($request->file('image'));
+        }
 
         return redirect()->route('people.show', $person->slug);
     }

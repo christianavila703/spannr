@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,8 @@ class Person extends Model
     use HasFactory,
         HasSocialMedia,
         LogsActivity,
-        SearchableEntity;
+        SearchableEntity,
+        HasImage;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
     const ORGANIZATION_ROLE_TEAM = 'Team';
@@ -30,6 +32,9 @@ class Person extends Model
     private string $searchableRouteName = 'people.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-user-hair-buns';
+
+    private string $modelName = 'people';
+    private string $imageUrlStoragePath = 'public/images/people';
 
     /**
      * Scopes

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,8 @@ class Organization extends Model
     use HasFactory,
         HasSocialMedia,
         LogsActivity,
-        SearchableEntity;
+        SearchableEntity,
+        HasImage;
 
     protected $guarded = ['id'];
 
@@ -40,6 +42,9 @@ class Organization extends Model
     private string $searchableRouteName = 'organizations.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-buildings';
+
+    private string $modelName = 'organizations';
+    private string $imageUrlStoragePath = 'public/images/organizations';
 
     /**
      * Functions

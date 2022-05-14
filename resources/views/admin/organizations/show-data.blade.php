@@ -51,4 +51,11 @@
             {!! nl2br(e($organization->description)) !!}
         </div>
     </div>
+    <div class="col-12 col-md-6">
+        <div class="mb-2">
+            @if($organization->image != '')
+                <img src="{{ $organization->imageUrl }}" alt="{{ $organization->name }}" class="entity-show-image">
+            @endif
+        </div>
+    </div>
 </div>

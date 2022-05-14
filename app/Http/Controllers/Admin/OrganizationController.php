@@ -10,6 +10,7 @@ use App\Models\Person;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OrganizationController extends Controller
 {
@@ -32,6 +33,10 @@ class OrganizationController extends Controller
     {
         $validated = $request->validated();
         $organization = Organization::create($validated);
+
+        if (isset($validated['image'])) {
+            $organization->storeImage($request->file('image'));
+        }
 
         return redirect()->route('organizations.index')->with('success', 'Added ' . $organization->name);
 
@@ -70,6 +75,10 @@ class OrganizationController extends Controller
         $validated = $request->validated();
         $organization = Organization::findOrFail($id);
         $organization->update($validated);
+
+        if (isset($validated['image'])) {
+            $organization->storeImage($request->file('image'));
+        }
 
         return redirect()->route('organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');
     }

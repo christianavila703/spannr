@@ -39,7 +39,7 @@ class OrganizationRequest extends FormRequest
             'linkedin' => 'string|nullable',
             'instagram' => 'string|nullable',
             'description' => 'string|nullable',
-            ''
+            'image' => 'image|nullable'
         ];
     }
 }

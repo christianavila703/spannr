@@ -29,6 +29,10 @@ class InvestorController extends Controller
         $validated = $request->validated();
         $investor = Investor::create($validated);
 
+        if (isset($validated['image'])) {
+            $investor->storeImage($request->file('image'));
+        }
+
         return redirect()->route('investors.index')->with('success', 'Added ' . $investor->name);
     }
 
@@ -55,6 +59,10 @@ class InvestorController extends Controller
         $validated = $request->validated();
         $investor = Investor::findOrFail($id);
         $investor->update($validated);
+
+        if (isset($validated['image'])) {
+            $investor->storeImage($request->file('image'));
+        }
 
         return redirect()->route('investors.show', $investor->slug);
     }
