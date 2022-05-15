@@ -33,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/locations/{entityType}/{entityId}', [\App\Http\Controllers\Admin\LocationController::class, 'attach'])->name('locations.attach');
     Route::post('/locations/attach', [\App\Http\Controllers\Admin\LocationController::class, 'store'])->name('locations.store');
     Route::get('/locations/{id}', [\App\Http\Controllers\Admin\LocationController::class, 'show'])->name('locations.show');
+
+    // User Settings
+    Route::get('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'index'])->name('users.change-password');
+    Route::post('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'store'])->name('users.store-password');
 });
 
 Route::middleware(['auth', 'can:admin control'])->group(function () {
