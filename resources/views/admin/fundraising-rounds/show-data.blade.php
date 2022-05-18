@@ -22,7 +22,7 @@
             @endif
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-typewriter" tooltip="Announcement">
-            @if ($fundraisingRound->valuation == '')
+            @if ($fundraisingRound->announcement_url == '')
                 &ndash;
             @else
                 <a href="{{ $fundraisingRound->announcement_url }}" target="_blank" rel="noopener noreferrer">Announcement<i class="fa fa-arrow-up-right-from-square ms-1"></i></a>
