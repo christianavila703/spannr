@@ -5,6 +5,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.text-right {
+    text-align: right;
+}
+
 // Gradient Backgrounds
 .bg-gradient-yellow-pink {
     background: transparent linear-gradient(270deg, #F0C84D 22%, #D1337C 100%) 0 0 no-repeat padding-box;

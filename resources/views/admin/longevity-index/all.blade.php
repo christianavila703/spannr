@@ -27,7 +27,9 @@
                     <td>
                         <span class="{{ $marketSnapshot->index_change_color }}">{{ $marketSnapshot->formatted_index_value }}</span>
                     </td>
-                    <td>{{ $marketSnapshot->formatted_index_change }}</td>
+                    <td class="text-right">
+                        {{ $marketSnapshot->formatted_index_change }}
+                    </td>
                 </tr>
             @endforeach
             </tbody>

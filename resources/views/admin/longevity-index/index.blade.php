@@ -42,7 +42,9 @@
             <tbody>
             @foreach($marketSnapshot->stockSnapshots as $stockSnapshot)
                 <tr>
-                    <td>{{ $stockSnapshot->stock->name }}</td>
+                    <td>
+                        <a href="{{ route('organizations.show', $stockSnapshot->stock->organization->slug) }}">{{ $stockSnapshot->stock->name }}</a>
+                    </td>
                     <td>
                         {{ $stockSnapshot->weight_percent }}%
                     </td>

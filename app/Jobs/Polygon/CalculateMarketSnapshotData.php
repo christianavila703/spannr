@@ -15,15 +15,17 @@ class CalculateMarketSnapshotData implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private MarketSnapshot $marketSnapshot;
+    private MarketSnapshot $previousMarketSnapshot;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(MarketSnapshot $marketSnapshot)
+    public function __construct(MarketSnapshot $marketSnapshot, MarketSnapshot $previousMarketSnapshot)
     {
         $this->marketSnapshot = $marketSnapshot;
+        $this->previousMarketSnapshot = $previousMarketSnapshot;
     }
 
     /**
@@ -36,12 +38,21 @@ class CalculateMarketSnapshotData implements ShouldQueue
         $stockSnapshots = $this->marketSnapshot->stockSnapshots();
 
         $marketCapSum = $stockSnapshots->sum('market_cap');
+
+        // Calcs against base MC
         $indexChange = ($marketCapSum / $this->marketSnapshot->base_mc) - 1;
         $indexValue = 100 * (1 + $indexChange);
 
         $this->marketSnapshot->market_cap = $marketCapSum;
         $this->marketSnapshot->index_change = $indexChange;
         $this->marketSnapshot->index_value = $indexValue;
+
+        // Calcs against previous snapshot
+        $dailyIndexChange = ($marketCapSum / $this->previousMarketSnapshot->market_cap) - 1;
+        $dailyIndexValue = 100 * (1 + $dailyIndexChange);
+
+        $this->marketSnapshot->daily_index_change = $dailyIndexChange;
+        $this->marketSnapshot->daily_index_value = $dailyIndexValue;
 
         $this->marketSnapshot->save();
 

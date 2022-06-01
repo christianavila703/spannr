@@ -40,6 +40,9 @@ class GetMarketSnapshot implements ShouldQueue
      */
     public function handle()
     {
+        /* TODO: is this the most recent one (hourly or should I calc against previous EOD??? waiting on Slack response right now it's hourly */
+        $previousMarketSnapshot = MarketSnapshot::orderByDesc('timestamp')->first();
+
         $stocks = Stock::all()->pluck('ticker')->toArray();
 
         $stockList = implode(',', $stocks);
@@ -82,10 +85,10 @@ class GetMarketSnapshot implements ShouldQueue
 
             // Job to Calculate More Stuff
             $batch = Bus::batch($batchArray)
-                ->then(function (Batch $batch) use ($marketSnapshot) {
+                ->then(function (Batch $batch) use ($marketSnapshot, $previousMarketSnapshot) {
                     // All jobs completed successfully...
                     Log::info('Completed market snapshot successfully');
-                    CalculateMarketSnapshotData::dispatch($marketSnapshot);
+                    CalculateMarketSnapshotData::dispatch($marketSnapshot, $previousMarketSnapshot);
 
                 })->catch(function (Batch $batch, Throwable $throwable) {
                     // First batch job failure detected...

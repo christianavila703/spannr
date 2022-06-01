@@ -15,11 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('startMarketSnapshot')->dailyAt('7:00');
-        $schedule->command('startMarketSnapshot')->dailyAt('9:00');
-        $schedule->command('startMarketSnapshot')->dailyAt('12:00');
-        $schedule->command('startMarketSnapshot')->dailyAt('14:00');
-        $schedule->command('startMarketSnapshot')->dailyAt('16:00');
+        $schedule->command('startMarketSnapshot')
+            ->weekdays()
+            ->hourly();
     }
 
     /**

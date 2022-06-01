@@ -42,12 +42,20 @@ class MarketSnapshot extends Model
      */
     public function getFormattedIndexChangeAttribute(): string
     {
-        return ($this->index_change * 100) . '%';
+        if ($this->daily_index_change != '') {
+            return number_format(($this->daily_index_change * 100), 2) . '%';
+        } else {
+            return '';
+        }
     }
 
     public function getFormattedIndexValueAttribute(): string
     {
-        return '$' . number_format($this->index_value, 2);
+        if ($this->daily_index_value != '') {
+            return '$' . number_format($this->daily_index_value, 2);
+        } else {
+            return '';
+        }
     }
 
     public function getFormattedTimestampAttribute(): string
@@ -62,11 +70,10 @@ class MarketSnapshot extends Model
 
     public function getIndexChangeColorAttribute(): string
     {
-        if ($this->index_value >= 100) {
+        if ($this->daily_index_value >= 100) {
             return 'text-success';
         } else {
             return 'text-danger';
         }
-
     }
 }
