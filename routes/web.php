@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
     // User Settings
     Route::get('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'index'])->name('users.change-password');
     Route::post('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'store'])->name('users.store-password');
+
+    Route::get('/longevity-index', [\App\Http\Controllers\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
+    Route::get('/longevity-index/update', [\App\Http\Controllers\Index\LongevityIndexController::class, 'updateIndex'])->name('longevity-index.update');
 });
 
 Route::middleware(['auth', 'can:admin control'])->group(function () {

@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+
+class StockSnapshot extends Model
+{
+    use HasFactory,
+        LogsActivity;
+
+    protected $guarded = ['id'];
+
+    /**
+     * Relationships
+     */
+    public function stock(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Stock::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('stock-snapshots')
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    /**
+     * Accessors
+     */
+    public function getChangeColorAttribute(): string
+    {
+        if ($this->previous_day_change_price < 0) {
+            return 'text-danger';
+        } elseif ($this->previous_day_change_price > 0) {
+            return 'text-success';
+        } else {
+            return 'text-normal';
+        }
+    }
+}
