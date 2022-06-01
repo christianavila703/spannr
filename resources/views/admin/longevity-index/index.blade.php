@@ -43,7 +43,9 @@
             @foreach($marketSnapshot->stockSnapshots as $stockSnapshot)
                 <tr>
                     <td>{{ $stockSnapshot->stock->name }}</td>
-                    <td></td>
+                    <td>
+                        {{ $stockSnapshot->weight_percent }}%
+                    </td>
                     <td>{{ $stockSnapshot->stock->ticker }}</td>
                     <td>${{ number_format($stockSnapshot->current_price, 2) }}</td>
                     <td>${{ number_format($stockSnapshot->yesterday_close, 2) }}</td>
@@ -64,5 +66,9 @@
             @endforeach
             </tbody>
         </table>
+
+        <div>
+            <a href="{{ route('longevity-index.all') }}">View past snapshots</a>
+        </div>
     </div>
 @endsection

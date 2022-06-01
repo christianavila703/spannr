@@ -19,6 +19,22 @@ class LongevityIndexController extends Controller
         ]);
     }
 
+    public function show($id) {
+        $marketSnapshot = MarketSnapshot::with(['stockSnapshots'])->findOrFail($id);
+
+        return view('admin.longevity-index.index', [
+            'marketSnapshot' => $marketSnapshot
+        ]);
+    }
+
+    public function all() {
+        $marketSnapshots = MarketSnapshot::with(['stockSnapshots'])->orderByDesc('created_at')->get();
+
+        return view('admin.longevity-index.all', [
+            'marketSnapshots' => $marketSnapshots
+        ]);
+    }
+
     public function updateIndex(): \Illuminate\Http\RedirectResponse
     {
         Artisan::call('startMarketSnapshot');

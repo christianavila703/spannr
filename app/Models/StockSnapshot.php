@@ -44,4 +44,9 @@ class StockSnapshot extends Model
             return 'text-normal';
         }
     }
+
+    public function getWeightPercentAttribute(): string
+    {
+        return number_format($this->weight, 2);
+    }
 }

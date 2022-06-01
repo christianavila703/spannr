@@ -44,5 +44,8 @@ class CalculateMarketSnapshotData implements ShouldQueue
         $this->marketSnapshot->index_value = $indexValue;
 
         $this->marketSnapshot->save();
+
+        CalculateStockWeight::dispatch($this->marketSnapshot);
+
     }
 }
