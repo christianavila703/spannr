@@ -52,7 +52,7 @@
                     <td>${{ number_format($stockSnapshot->current_price, 2) }}</td>
                     <td>${{ number_format($stockSnapshot->yesterday_close, 2) }}</td>
                     <td>${{ number_format($stockSnapshot->market_cap, 2) }}</td>
-                    <td></td>
+                    <td>{{ number_format($stockSnapshot->volume, 0) }}</td>
                     <td>${{ number_format($stockSnapshot->today_high, 2) }}</td>
                     <td>${{ number_format($stockSnapshot->today_low, 2) }}</td>
                     <td>

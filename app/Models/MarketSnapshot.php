@@ -17,6 +17,9 @@ class MarketSnapshot extends Model
 
     protected $guarded = ['id'];
 
+    const TYPE_DAILY = 'daily';
+    const TYPE_HOURLY = 'hourly';
+
     /**
      * FUNCTIONS
      */
@@ -42,8 +45,8 @@ class MarketSnapshot extends Model
      */
     public function getFormattedIndexChangeAttribute(): string
     {
-        if ($this->daily_index_change != '') {
-            return number_format(($this->daily_index_change * 100), 2) . '%';
+        if ($this->index_change != '') {
+            return number_format(($this->index_change * 100), 2) . '%';
         } else {
             return '';
         }
@@ -51,8 +54,8 @@ class MarketSnapshot extends Model
 
     public function getFormattedIndexValueAttribute(): string
     {
-        if ($this->daily_index_value != '') {
-            return '$' . number_format($this->daily_index_value, 2);
+        if ($this->index_value != '') {
+            return '$' . number_format($this->index_value, 2);
         } else {
             return '';
         }
@@ -70,7 +73,7 @@ class MarketSnapshot extends Model
 
     public function getIndexChangeColorAttribute(): string
     {
-        if ($this->daily_index_value >= 100) {
+        if ($this->index_value >= 100) {
             return 'text-success';
         } else {
             return 'text-danger';

@@ -40,7 +40,7 @@ class GetMarketSnapshot implements ShouldQueue
      */
     public function handle()
     {
-        /* TODO: is this the most recent one (hourly or should I calc against previous EOD??? waiting on Slack response right now it's hourly */
+        /* TODO: calc against previous EOD I think */
         $previousMarketSnapshot = MarketSnapshot::orderByDesc('timestamp')->first();
 
         $stocks = Stock::all()->pluck('ticker')->toArray();
@@ -78,7 +78,6 @@ class GetMarketSnapshot implements ShouldQueue
                 $stockSnapshot = StockSnapshot::create($attributes);
 
                 // Get Market Cap and Outstanding Shares
-//                GetTickerDetails::dispatch($stockSnapshot);
                 array_push($batchArray, new GetTickerDetails($stockSnapshot));
 
             }

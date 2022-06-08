@@ -38,21 +38,21 @@ class CalculateMarketSnapshotData implements ShouldQueue
         $stockSnapshots = $this->marketSnapshot->stockSnapshots();
 
         $marketCapSum = $stockSnapshots->sum('market_cap');
+        $this->marketSnapshot->market_cap = $marketCapSum;
 
         // Calcs against base MC
-        $indexChange = ($marketCapSum / $this->marketSnapshot->base_mc) - 1;
-        $indexValue = 100 * (1 + $indexChange);
+//        $indexChange = ($marketCapSum / $this->marketSnapshot->base_mc) - 1;
+//        $indexValue = 100 * (1 + $indexChange);
+//
+//        $this->marketSnapshot->index_change = $indexChange;
+//        $this->marketSnapshot->index_value = $indexValue;
 
-        $this->marketSnapshot->market_cap = $marketCapSum;
-        $this->marketSnapshot->index_change = $indexChange;
-        $this->marketSnapshot->index_value = $indexValue;
-
-        // Calcs against previous snapshot
+        // Calcs against previous snapshot -- no need against base MC apparently
         $dailyIndexChange = ($marketCapSum / $this->previousMarketSnapshot->market_cap) - 1;
         $dailyIndexValue = 100 * (1 + $dailyIndexChange);
 
-        $this->marketSnapshot->daily_index_change = $dailyIndexChange;
-        $this->marketSnapshot->daily_index_value = $dailyIndexValue;
+        $this->marketSnapshot->index_change = $dailyIndexChange;
+        $this->marketSnapshot->index_value = $dailyIndexValue;
 
         $this->marketSnapshot->save();
 

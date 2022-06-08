@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\Polygon\GetEndOfDayMarketSnapshot;
 use App\Jobs\Polygon\GetMarketSnapshot;
 use Illuminate\Console\Command;
 
@@ -28,7 +29,8 @@ class StartMarketSnapshot extends Command
      */
     public function handle()
     {
-        GetMarketSnapshot::dispatch();
+//        GetMarketSnapshot::dispatch();
+        GetEndOfDayMarketSnapshot::dispatch();
         return 0;
     }
 }
