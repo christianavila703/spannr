@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('startMarketSnapshot')
             ->weekdays()
-            ->dailyAt('17:00');
+            ->dailyAt('1:00');
     }
 
     /**

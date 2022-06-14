@@ -21,6 +21,10 @@
             {{ $marketSnapshot->formatted_timestamp }} <small class="text-muted">{{ $marketSnapshot->formatted_timezone }}</small>
         </p>
 
+        <div class="chart-container py-3">
+            @include('admin.longevity-index.chart')
+        </div>
+
         <table class="table">
             <thead>
             <tr>

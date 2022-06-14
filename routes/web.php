@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/longevity-index', [\App\Http\Controllers\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
     Route::get('/longevity-index/update', [\App\Http\Controllers\Index\LongevityIndexController::class, 'updateIndex'])->name('longevity-index.update');
     Route::get('/longevity-index/all', [\App\Http\Controllers\Index\LongevityIndexController::class, 'all'])->name('longevity-index.all');
+    Route::get('/longevity-index/chart', [\App\Http\Controllers\Index\LongevityIndexController::class, 'chart'])->name('longevity-index.chart');
+    Route::get('/longevity-index/chart.json', [\App\Http\Controllers\Index\LongevityIndexController::class, 'chartData'])->name('longevity-index.chart-data');
     Route::get('/longevity-index/{id}', [\App\Http\Controllers\Index\LongevityIndexController::class, 'show'])->name('longevity-index.show');
 });
 

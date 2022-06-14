@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketSnapshot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class LongevityIndexController extends Controller
 {
-    public function index() {
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $marketSnapshot = MarketSnapshot::orderByDesc('timestamp')
             ->with(['stockSnapshots'])
             ->first();
@@ -19,7 +21,8 @@ class LongevityIndexController extends Controller
         ]);
     }
 
-    public function show($id) {
+    public function show($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $marketSnapshot = MarketSnapshot::with(['stockSnapshots'])->findOrFail($id);
 
         return view('admin.longevity-index.index', [
@@ -27,7 +30,8 @@ class LongevityIndexController extends Controller
         ]);
     }
 
-    public function all() {
+    public function all(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $marketSnapshots = MarketSnapshot::with(['stockSnapshots'])->orderByDesc('created_at')->get();
 
         return view('admin.longevity-index.all', [
@@ -39,5 +43,32 @@ class LongevityIndexController extends Controller
     {
         Artisan::call('startMarketSnapshot');
         return redirect()->route('longevity-index')->with('success', 'Getting new market snapshot... standby!');
+    }
+
+    public function chartData(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $marketSnapshots = MarketSnapshot::daily()
+            ->orderBy('timestamp')
+            ->get();
+
+        $data = [];
+
+        foreach($marketSnapshots as $marketSnapshot) {
+            array_push($data, [
+                'name' => 'test',
+                'date' => $marketSnapshot->formatted_date,
+                'value' => $marketSnapshot->index_value,
+                'formatted_value' => $marketSnapshot->formatted_index_value,
+                'formatted_date' => $marketSnapshot->formatted_pretty_date,
+                'change' => $marketSnapshot->formatted_index_change
+            ]);
+        }
+
+        return response(json_encode($data, JSON_NUMERIC_CHECK));
+    }
+
+    public function chart(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('admin.longevity-index.chart');
     }
 }

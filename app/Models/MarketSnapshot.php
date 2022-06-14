@@ -41,8 +41,36 @@ class MarketSnapshot extends Model
     }
 
     /**
+     * SCOPES
+     */
+    public function scopeDaily($query)
+    {
+        return $query->where('type', self::TYPE_DAILY);
+    }
+
+    public function scopeHourly($query)
+    {
+        return $query->where('type', self::TYPE_HOURLY);
+    }
+
+    /**
      * Accessors
      */
+    public function getFormattedDateAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->format('Y-m-d');
+    }
+
+    public function getFormattedPrettyDateAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->format('M j, Y');
+    }
+
+    public function getFormattedDateJsonAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->timestamp;
+    }
+
     public function getFormattedIndexChangeAttribute(): string
     {
         if ($this->index_change != '') {
