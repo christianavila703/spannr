@@ -25,7 +25,7 @@ class StockSnapshot extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('stock-snapshots')
+            ->useLogName(Activity::LOG_STOCK_SNAPSHOTS)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");

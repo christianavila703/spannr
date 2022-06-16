@@ -67,7 +67,7 @@ class Investor extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('investors')
+            ->useLogName(Activity::LOG_INVESTORS)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");

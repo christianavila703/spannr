@@ -74,7 +74,7 @@ class Person extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('people')
+            ->useLogName(Activity::LOG_PEOPLE)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");

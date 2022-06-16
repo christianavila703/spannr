@@ -10,10 +10,14 @@ class ActivityLogController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $activities = Activity::orderBy('created_at', 'desc')->get();
+        $activities = Activity::orderBy('created_at', 'desc')
+            ->paginate(100);
+
+        $filterOptionsLog = Activity::pluck('log_name')->unique();
 
         return view('admin.activity-log.index', [
-            'activities' => $activities
+            'activities' => $activities,
+            'filterOptionsLog' => $filterOptionsLog
         ]);
     }
 }

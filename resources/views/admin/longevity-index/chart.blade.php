@@ -51,6 +51,7 @@
 
         let yAxis = chart.yAxes.push(
             am5xy.ValueAxis.new(root, {
+                min: 60,
                 renderer: am5xy.AxisRendererY.new(root, {})
             })
         );

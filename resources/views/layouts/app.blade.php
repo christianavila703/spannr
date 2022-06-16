@@ -71,6 +71,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-admin">
                                     <a href="{{ route('activity-log.index') }}" class="dropdown-item">Activity Log</a>
+                                    <a href="/backup" class="dropdown-item">Backups</a>
+                                    <a href="/log-viewer" class="dropdown-item">Logs</a>
                                 </div>
                             </li>
                         @endcan

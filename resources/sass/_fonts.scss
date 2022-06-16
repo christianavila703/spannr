@@ -1,32 +1,17 @@
 @font-face {
     font-family: 'ITC Lubalin Graph Std';
     src: local('ITC Lubalin Graph Std Demi'), local('LubalinGraphStd-Demi'),
-    url('/fonts/LubalinGraphStd-Demi.woff2') format('woff2'),
-    url('/fonts/LubalinGraphStd-Demi.woff') format('woff');
+    url('/../fonts/LubalinGraphStd-Demi.woff2') format('woff2'),
+    url('/../fonts/LubalinGraphStd-Demi.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'ITCAvantGardeGothW04';
-    src: local('ITC Avant Garde Goth W04 Bold'), local('ITCAvantGardeGothW04-Bold'),
-    url('/fonts/ITCAvantGardeGothW04-Bold.woff2') format('woff2'),
-    url('/fonts/ITCAvantGardeGothW04-Bold.woff') format('woff');
-    font-weight: bold;
+    font-family: 'Avant Garde Gothic Pro Bold';
+    src: url('../fonts/AvantGardeGothicProBold.woff2') format('woff2'),
+    url('../fonts/AvantGardeGothicProBold.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family:'Helvetica Neue';
-    src: url('/fonts/Helvetica Neue.eot');
-    src: url('/fonts/Helvetica Neue.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Helvetica Neue.woff2') format('woff2'),
-    url('/fonts/Helvetica Neue.woff') format('woff'),
-    url('/fonts/Helvetica Neue.svg#Helvetica Neue') format('svg');
-    font-weight: 400;
-    font-style: normal;
-    font-stretch: normal;
-    unicode-range: U+0-10FFFF;
 }

@@ -52,7 +52,7 @@ class Organization extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('organizations')
+            ->useLogName(Activity::LOG_ORGANIZATIONS)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");

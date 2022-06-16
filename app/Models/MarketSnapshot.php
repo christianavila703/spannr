@@ -26,7 +26,7 @@ class MarketSnapshot extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('market-snapshots')
+            ->useLogName(Activity::LOG_MARKET_SNAPSHOTS)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");

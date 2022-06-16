@@ -56,7 +56,7 @@ class FundraisingRound extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->useLogName('fundraising-rounds')
+            ->useLogName(Activity::LOG_FUNDRAISING_ROUNDS)
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
