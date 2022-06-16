@@ -18,7 +18,7 @@
             <button wire:click="resetFilters" class="btn btn-sm">Reset Filters</button>
         </div>
         <div class="ms-auto lead">
-            {{ $organizations->count() }} results
+            {{ $organizations->total() }} results
         </div>
     </div>
     <table class="table">
@@ -43,7 +43,11 @@
                 </td>
                 <td>{{ $organization->type }}</td>
                 <td>{{ $organization->founded_date }}</td>
-                <td>{{ $organization->website }}</td>
+                <td>
+                    <a href="{{ $organization->website }}" target="_blank" rel="noopener noreferrer">
+                        {{ $organization->website }}
+                    </a>
+                </td>
                 <td>
                     <div class="max-width-300">
                         {{ $organization->summary }}

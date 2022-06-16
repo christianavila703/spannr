@@ -6,8 +6,6 @@
     <div class="row">
         <div class="col-12 col-md-6 col-lg-5">
 
-            {{ $person->byline ?? old('byline') }}
-
             <x-forms.input type="text" name="name" label="Name" class="mb-3" value="{{ $person->name ?? old('name') }}" />
 
             <x-forms.input type="text" name="byline" label="Byline" class="mb-3" value="{{ $person->byline ?? old('byline') }}" />
