@@ -7,7 +7,7 @@
         <x-entities.show.field-group icon="fa-duotone fa-briefcase" tooltip="Job Type">
             {{ $person->job_type }}
         </x-entities.show.field-group>
-        <x-entities.show.field-group icon="fa-duotone fa-earth-americas" tooltip="Website">
+        <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Website">
             {!! $person->websiteLink !!}
         </x-entities.show.field-group>
 

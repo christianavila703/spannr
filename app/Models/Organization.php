@@ -71,6 +71,11 @@ class Organization extends Model
         return $this->belongsToMany(Investor::class)->withTimestamps();
     }
 
+    public function jobs(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Job::class, 'owner');
+    }
+
     public function locations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Location::class, 'locatable' , 'location_relationships')->withTimestamps();

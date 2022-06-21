@@ -57,6 +57,10 @@
     height: 400px;
 }
 
+.form-input-min-height {
+    min-height: 3.625rem;
+}
+
 // Buttons
 .btn {
     font-family: $font-family-subheadings;
@@ -109,4 +113,18 @@
     width: 100%;
     max-width: 350px;
     height: auto;
+}
+
+// Entity Summary on Show Page
+.summary-field {
+    color: $gray-600;
+
+    a {
+        color: $gray-600;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $tertiary;
+    }
 }

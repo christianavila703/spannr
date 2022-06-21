@@ -1,3 +1,3 @@
-<p class="lead mb-2 text-muted">
+<p class="summary-field lead mb-2">
     {{ $slot }}
 </p>

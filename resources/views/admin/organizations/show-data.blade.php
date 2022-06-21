@@ -12,7 +12,7 @@
         <x-entities.show.field-group icon="fa-duotone fa-calendar-days" tooltip="Founded">
             {{ $organization->founded_date }}
         </x-entities.show.field-group>
-        <x-entities.show.field-group icon="fa-duotone fa-earth-americas" tooltip="Website">
+        <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Website">
             {!! $organization->websiteLink !!}
         </x-entities.show.field-group>
 

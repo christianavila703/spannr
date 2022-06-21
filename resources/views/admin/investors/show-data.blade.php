@@ -12,7 +12,7 @@
             {totalRaised}
         </x-entities.show.field-group>
 
-        <x-entities.show.field-group icon="fa-duotone fa-earth-americas" tooltip="Website">
+        <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Website">
             {!! $investor->websiteLink !!}
         </x-entities.show.field-group>
 

@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
     Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
     Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
+    Route::resource('jobs', \App\Http\Controllers\Admin\JobController::class);
 
     // Organization Relationships
     Route::post('/organization/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');

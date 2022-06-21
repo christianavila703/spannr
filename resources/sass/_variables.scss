@@ -45,6 +45,7 @@ $theme-colors: (
     "danger":       $danger,
     "light":        $light,
     "dark":         $dark,
+    "gray-medium":   $gray-300,
 );
 
 
@@ -55,6 +56,7 @@ $body-bg: $white;
 $font-family-sans-serif: "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 $headings-font-family: "ITC Lubalin Graph Std";
 $font-family-subheadings: "Avant Garde Gothic Pro Bold";
+$lead-font-weight: 400;
 
 // Components
 $component-active-color:      $white;

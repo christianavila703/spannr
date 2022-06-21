@@ -17,6 +17,11 @@ class Location extends Model
         return $this->morphedByMany(Investor::class, 'locatable', 'location_relationships')->withTimestamps();
     }
 
+    public function jobs(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Job::class, 'locatable', 'location_relationships')->withTimestamps();
+    }
+
     public function organizations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Organization::class, 'locatable', 'location_relationships')->withTimestamps();
