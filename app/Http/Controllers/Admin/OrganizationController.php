@@ -16,12 +16,7 @@ class OrganizationController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $organizations = Organization::with(['fundraisingRounds', 'investors'])
-            ->get();
-
-        return view('admin.organizations.index', [
-            'organizations' => $organizations
-        ]);
+        return view('admin.organizations.index');
     }
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application

@@ -10,6 +10,8 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
+    <link rel="stylesheet" href="{{ mix('css/choices.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
     @stack('head')
 </head>
 <body>
@@ -44,6 +46,7 @@
                                     <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
                                     <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
                                     <a class="dropdown-item" href="{{ route('jobs.index') }}">Jobs</a>
+                                    <a class="dropdown-item" href="{{ route('events.index') }}">Events</a>
                                 </div>
                             </li>
                         @endcan
@@ -59,6 +62,7 @@
                                     <a href="{{ route('people.create') }}" class="dropdown-item">Person</a>
                                     <a href="{{ route('investors.create') }}" class="dropdown-item">Investor</a>
                                     <a href="{{ route('jobs.create') }}" class="dropdown-item">Job</a>
+                                    <a href="{{ route('events.create') }}" class="dropdown-item">Event</a>
                                 </div>
                             </li>
                         @endcan

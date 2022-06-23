@@ -38,6 +38,7 @@
             <th>Date</th>
             <th>Job Title</th>
             <th>Type</th>
+            <th>Location</th>
             <th>Category</th>
             <th>Owner</th>
             <th>Salary</th>
@@ -62,7 +63,19 @@
                     @endif
                 </td>
                 <td>{{ $job->type }}</td>
-                <td>{{ $job->category->name }}</td>
+                <td>
+                    @if($job->remote)
+                        <p class="m-0">Remote / Virtual</p>
+                    @endif
+                    @if($job->locations->count() > 0)
+                        <x-entities.show.relationship-list :records="$job->locations" class="" />
+                    @endif
+                </td>
+                <td>
+                    <div class="max-width-300 small">
+                        {{ $job->category->name }}
+                    </div>
+                </td>
                 <td>
                     <a href="{{ $job->owner_show_link }}">
                         {{ $job->owner->name }}

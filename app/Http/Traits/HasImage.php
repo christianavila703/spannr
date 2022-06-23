@@ -7,7 +7,13 @@ use Illuminate\Support\Facades\Storage;
 trait HasImage {
     public function getImageUrlAttribute(): string
     {
-        return '/storage/images/' . $this->modelName . '/' . $this->image;
+        if ($this->image) {
+            return '/storage/images/' . $this->modelName . '/' . $this->image;
+        } elseif ($this->blankImage) {
+            return $this->blankImage;
+        } else {
+            return '';
+        }
     }
 
     public function storeImage($file) {

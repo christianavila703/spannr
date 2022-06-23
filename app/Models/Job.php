@@ -109,7 +109,6 @@ class Job extends Model
      * Mutators
      */
     public function setNameAttribute($value) {
-        // TODO: Needs unique identifier added
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
     }

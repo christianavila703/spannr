@@ -22,7 +22,7 @@ class UpdateJobRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('jobs')->ignore($this->id),
+                Rule::unique('jobs')->ignore($this->name, 'name'),
                 'max:255'
             ],
             'type' => 'required',
@@ -34,7 +34,8 @@ class UpdateJobRequest extends FormRequest
             'exp_date' => 'date|nullable',
             'salary' => 'nullable|integer',
             'hourly' => 'nullable|numeric',
-            'url' => 'nullable|url',
+            'url' => 'required|url',
+            'remote' => 'integer|nullable'
         ];
     }
 }

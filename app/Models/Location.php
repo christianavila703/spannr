@@ -12,6 +12,14 @@ class Location extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * Relationships
+     */
+    public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Event::class, 'locatable', 'location_relationships')->withTimestamps();
+    }
+
     public function investors(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Investor::class, 'locatable', 'location_relationships')->withTimestamps();

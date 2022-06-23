@@ -32,6 +32,11 @@
                 ${{ number_format($job->hourly, 0) }} / hour
             @endif
         </x-entities.show.field-group>
+        <x-entities.show.field-heading title="Locations" />
+        @if($job->remote)
+            <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
+        @endif
+        <x-entities.show.relationship-basic :records="$job->locations" routeName="locations.show" />
         <x-entities.show.field-heading title="Application URL" />
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Application URL">
             {!! $job->urlLink !!}

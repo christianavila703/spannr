@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Investor;
+use App\Models\Job;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Person;
@@ -77,7 +79,9 @@ class LocationController extends Controller
         return match($entityType) {
             'organizations' => Organization::class,
             'people' => Person::class,
-            'investors' => Investor::class
+            'investors' => Investor::class,
+            'events' => Event::class,
+            'jobs' => Job::class,
         };
     }
 }

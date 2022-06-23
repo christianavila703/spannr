@@ -16,8 +16,6 @@ class Index extends Component
 
     public $filters = [
         'search' => '',
-        'amount-min' => null,
-        'amount-max' => null,
         'selected-status' => [],
         'selected-types' => [],
     ];

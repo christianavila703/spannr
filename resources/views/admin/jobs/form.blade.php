@@ -174,11 +174,23 @@
         </div>
 
         <div class="col-12">
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="remote" id="remote"
+                        @if(old('remote'))
+                            checked
+                        @else
+                            @isset($job)
+                                @if ($job->remote) checked @endif
+                            @endisset
+                        @endif
+                    >
+                    <label class="form-check-label fw-bold text-quaternary" for="remote">Remote / Virtual</label>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </div>
-    <link rel="stylesheet" href="{{ mix('css/choices.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
     <script>
         const jobOwnerOrganization = new Choices(document.getElementById('owner_id_organization'));
         const jobOwnerInvestor = new Choices(document.getElementById('owner_id_investor'));

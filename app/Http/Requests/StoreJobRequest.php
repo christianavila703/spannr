@@ -34,7 +34,8 @@ class StoreJobRequest extends FormRequest
             'exp_date' => 'date|nullable',
             'salary' => 'nullable|integer',
             'hourly' => 'nullable|numeric',
-            'url' => 'nullable|url',
+            'url' => 'required|url',
+            'remote' => 'integer|nullable'
         ];
     }
 }

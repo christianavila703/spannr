@@ -128,3 +128,13 @@
         color: $tertiary;
     }
 }
+
+// Cards
+.card-heading-link {
+    font-family: $headings-font-family;
+    font-size: 1.4rem;
+
+    a {
+        text-decoration: none;
+    }
+}

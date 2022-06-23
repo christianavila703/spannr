@@ -20,6 +20,7 @@ class Activity extends SpatieActivity
     const LOG_FUNDRAISING_ROUNDS = 'fundraising rounds';
     const LOG_JOBS = 'jobs';
     const LOG_JOB_CATEGORIES = 'job categories';
+    const LOG_EVENTS = 'events';
 
     const LOG_OPTIONS = [
         self::LOG_ORGANIZATIONS,
