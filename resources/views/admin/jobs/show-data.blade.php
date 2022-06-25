@@ -1,11 +1,13 @@
-<div class="row">
-    <div class="col-12 col-md-6">
-        <x-entities.show.field-summary>
-            <a href="{{ $job->owner_show_link }}">
-                at {{ $job->owner->name }}
-            </a>
-        </x-entities.show.field-summary>
-
+<div class="row d-flex">
+    <div class="col-12 col-lg-7 order-2 order-lg-1">
+        <div class="mb-2">
+            <x-entities.show.field-heading title="Job Description" />
+            <div>
+                {!! $job->trixRender('description') !!}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-5 order-1 order-lg-2 ps-lg-4">
         <x-entities.show.field-heading title="Details" />
 
         <x-entities.show.field-group icon="fa-duotone fa-clock" tooltip="Status">
@@ -41,13 +43,5 @@
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Application URL">
             {!! $job->urlLink !!}
         </x-entities.show.field-group>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="mb-2">
-            <x-entities.show.field-heading title="Job Description" />
-            <div>
-                {!! nl2br(e($job->description)) !!}
-            </div>
-        </div>
     </div>
 </div>

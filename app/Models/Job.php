@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasRichText;
 use App\Http\Traits\SearchableEntity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,8 @@ class Job extends Model
 {
     use HasFactory,
         LogsActivity,
-        SearchableEntity;
+        SearchableEntity,
+        HasRichText;
 
     protected $guarded = ['id'];
 

@@ -29,13 +29,13 @@ class UpdateJobRequest extends FormRequest
             'category_id' => 'required|integer',
             'status' => 'required',
             'owner_id' => 'required',
-            'description' => 'required',
             'posted_date' => 'required',
             'exp_date' => 'date|nullable',
             'salary' => 'nullable|integer',
             'hourly' => 'nullable|numeric',
             'url' => 'required|url',
-            'remote' => 'integer|nullable'
+            'remote' => 'integer|nullable',
+            'job-trixFields' => 'required'
         ];
     }
 }

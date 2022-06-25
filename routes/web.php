@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
     Route::resource('fundraising-rounds', \App\Http\Controllers\Admin\FundraisingRoundController::class);
     Route::resource('jobs', \App\Http\Controllers\Admin\JobController::class);
+    Route::resource('job-categories', \App\Http\Controllers\Admin\JobCategoryController::class);
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
 
     // Organization Relationships

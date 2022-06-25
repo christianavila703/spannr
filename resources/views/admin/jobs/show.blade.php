@@ -3,7 +3,14 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:title>{{ $job->name }}</x-slot:title>
+        <div>
+            <x-slot:title>{{ $job->name }}</x-slot:title>
+            <x-entities.show.field-summary>
+                <a href="{{ $job->owner_show_link }}">
+                    {{ $job->owner->name }}
+                </a>
+            </x-entities.show.field-summary>
+        </div>
         <x-slot:buttons>
             <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-info me-3">Edit</a>
             <div class="dropdown mb-0">

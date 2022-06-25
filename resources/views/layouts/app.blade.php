@@ -6,13 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'spannr') }}</title>
 
+    @stack('head')
     <script src="{{ mix('js/app.js') }}" defer></script>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
     <link rel="stylesheet" href="{{ mix('css/choices.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
-    @stack('head')
 </head>
 <body>
     <div id="app">

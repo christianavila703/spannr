@@ -45,17 +45,16 @@
 
         <x-entities.show.field-heading title="Locations" />
         <x-entities.show.relationship-basic :records="$organization->locations" routeName="locations.show" />
-
-        <x-entities.show.field-heading title="Description" />
-        <div>
-            {!! nl2br(e($organization->description)) !!}
-        </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">
             @if($organization->image != '')
                 <img src="{{ $organization->imageUrl }}" alt="{{ $organization->name }}" class="entity-show-image">
             @endif
+            <x-entities.show.field-heading title="Description" />
+            <div>
+                {!! nl2br(e($organization->description)) !!}
+            </div>
         </div>
     </div>
 </div>

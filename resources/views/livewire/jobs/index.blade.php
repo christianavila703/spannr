@@ -72,7 +72,7 @@
                     @endif
                 </td>
                 <td>
-                    <div class="max-width-300 small">
+                    <div class="max-width-300">
                         {{ $job->category->name }}
                     </div>
                 </td>

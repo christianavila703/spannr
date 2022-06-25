@@ -1,10 +1,24 @@
+@push('head')
+    @trixassets
+@endpush
+
 <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
     @csrf
     @isset($method)
         @method($method)
     @endisset
     <div class="row">
-        <div class="col-12 col-md-6 col-lg-6">
+        <div class="col-12 col-lg-6">
+            <div class="mb-3">
+                @isset($job)
+                    {!! $job->trix('description') !!}
+
+                @else
+                    @trix(\App\Models\Job::class, 'description')
+                @endisset
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
 
             <x-forms.input type="text" name="name" label="Job Title" class="mb-3" value="{{ $job->name ?? old('name') }}" />
 
@@ -163,17 +177,9 @@
                     <x-forms.input type="date" name="exp_date" label="Expiration Date" class="mb-3" value="{{ $job->exp_date ?? old('exp_date') }}" />
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-md-6 col-lg-6">
             <x-forms.input type="url" name="url" label="Application URL" class="mb-3" value="{{ $job->url ?? old('url') }}" />
-            <div class="form-floating mb-3">
-                <textarea class="form-control floating-textarea-xl" id="description" name="description" placeholder="Description">{{ $job->description ?? old('description') }}</textarea>
-                <label for="description">Job Description / Requirements</label>
-            </div>
-        </div>
 
-        <div class="col-12">
             <div class="mb-3">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="remote" id="remote"

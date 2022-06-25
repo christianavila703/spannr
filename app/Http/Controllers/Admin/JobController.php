@@ -48,6 +48,8 @@ class JobController extends Controller
 
         $job = Job::create($validated);
 
+        $job->saveTrixRichText($request->input('job-trixFields'));
+
         return redirect()->route('jobs.index')->with('success', 'Added ' . $job->name);
     }
 
@@ -93,15 +95,11 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
         $job->update($validated);
 
+        $job->saveTrixRichText($request->input('job-trixFields'));
+
         return redirect()->route('jobs.show', $job->slug)->with('success', $job->name . ' updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
