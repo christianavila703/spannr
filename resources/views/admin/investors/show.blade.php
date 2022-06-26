@@ -13,6 +13,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="add-relationship">
                     <li><a class="dropdown-item" href="{{ route('locations.attach', ['investors', $investor->id]) }}">Location</a></li>
+                    <li><a class="dropdown-item" href="{{ route('investors.people', $investor->slug) }}">People</a></li>
                 </ul>
             </div>
         </x-slot:buttons>

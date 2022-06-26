@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <x-entities.create>
+    <x-entities.create backUrl="{{ route('investors.show', $investor->slug) }}" backLabel="{{ $investor->name }}">
         <x-slot:title>Edit {{ $investor->name }}</x-slot:title>
         @include('admin.investors.form', [
             'route' => route('investors.update', $investor->id),

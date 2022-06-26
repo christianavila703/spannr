@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <x-entities.create>
+    <x-entities.create backUrl="{{ route('jobs.show', $job->slug) }}" backLabel="{{ $job->name }}">
         <x-slot:title>Edit {{ $job->name }}</x-slot:title>
         @include('admin.jobs.form', [
             'route' => route('jobs.update', $job->id),

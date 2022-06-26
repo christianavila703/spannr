@@ -36,8 +36,8 @@
                 <td>
                     <a href="{{ route('investors.show', $investor->slug) }}">{{ $investor->name }}</a>
                 </td>
-                <td>{{ $investor->type }}</td>
-                <td>{{ $investor->website }}</td>
+                <td class="text-nowrap">{{ $investor->type }}</td>
+                <td>{!! $investor->websiteLink !!}</td>
                 <td>{{ $investor->summary }}</td>
                 <td>
                     <div class="max-width-600">

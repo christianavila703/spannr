@@ -34,11 +34,8 @@
         <x-entities.show.field-heading title="Investors" />
         <x-entities.show.relationship-basic :records="$organization->investors" routeName="investors.show" />
 
-        <x-entities.show.field-heading title="Founders" />
-        <x-entities.show.relationship-basic :records="$organization->founders" routeName="people.show" />
-
-        <x-entities.show.field-heading title="Team" />
-        <x-entities.show.relationship-basic :records="$organization->team" routeName="people.show" />
+        <x-entities.show.field-heading title="People" />
+        <x-entities.show.relationship-with-pivot :records="$organization->people" routeName="people.show" pivotName="role" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
         <x-entities.show.relationship-fundraising-round :records="$organization->fundraisingRounds" />

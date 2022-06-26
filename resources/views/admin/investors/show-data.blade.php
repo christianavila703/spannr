@@ -8,9 +8,6 @@
         <x-entities.show.field-group icon="fa-duotone fa-buildings" tooltip="Investor type">
             {{ $investor->type }}
         </x-entities.show.field-group>
-        <x-entities.show.field-group icon="fa-duotone fa-money-check-dollar-pen" tooltip="Investor type">
-            {totalRaised}
-        </x-entities.show.field-group>
 
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Website">
             {!! $investor->websiteLink !!}
@@ -33,6 +30,9 @@
 
         <x-entities.show.field-heading title="Organizations" />
         <x-entities.show.relationship-basic :records="$investor->organizations" routeName="organizations.show" />
+
+        <x-entities.show.field-heading title="People" />
+        <x-entities.show.relationship-basic :records="$investor->people" routeName="people.show" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
         <x-entities.show.relationship-fundraising-round :records="$investor->fundraisingRounds" />

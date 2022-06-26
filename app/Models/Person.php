@@ -58,6 +58,11 @@ class Person extends Model
     /**
      * Relationships
      */
+    public function investors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Investor::class)->withPivot('role')->withTimestamps();
+    }
+
     public function locations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Location::class, 'locatable' , 'location_relationships')->withTimestamps();

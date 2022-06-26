@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InvestorPersonRequest;
 use App\Http\Requests\InvestorRequest;
 use App\Models\Investor;
+use App\Models\Person;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class InvestorController extends Controller
 {
@@ -70,5 +73,42 @@ class InvestorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function people($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $investor = Investor::with('people')->where('slug', $slug)->firstOrFail();
+        $people = Person::orderBy('name')->get([
+            'id AS value',
+            'name AS label'
+        ])->toJson();
+
+        return view('admin.investors.manage-people', [
+            'investor' => $investor,
+            'people' => $people,
+        ]);
+    }
+
+    public function savePerson(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $investorId = $request->input('investor');
+        $personId = $request->input('person');
+        $role = $request->input('role');
+
+        if ($investorId AND $personId AND $role) {
+            $investor = Investor::findOrFail($investorId);
+            $investor->people()->detach($personId);
+            $investor->people()->attach($personId, ['role' => $role]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Updated!'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You must include the person and role'
+            ]);
+        }
     }
 }

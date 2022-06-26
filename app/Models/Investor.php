@@ -61,6 +61,22 @@ class Investor extends Model
         return $this->belongsToMany(Organization::class);
     }
 
+    // People Relationships
+    public function founders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Person::class)->where('role', Person::ORGANIZATION_ROLE_FOUNDER)->withTimestamps();
+    }
+
+    public function team(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Person::class)->where('role', '!=', Person::ORGANIZATION_ROLE_FOUNDER)->withTimestamps();
+    }
+
+    public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Person::class)->orderBy('name')->withPivot('role')->withTimestamps();
+    }
+
     /**
      * Mutators
      */

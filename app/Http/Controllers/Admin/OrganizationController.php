@@ -131,6 +131,43 @@ class OrganizationController extends Controller
         return redirect()->route('organizations.show', $organization->slug)->with('success', 'People added!');
     }
 
+    public function people($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $organization = Organization::with('people')->where('slug', $slug)->firstOrFail();
+        $people = Person::orderBy('name')->get([
+            'id AS value',
+            'name AS label'
+        ])->toJson();
+
+        return view('admin.organizations.manage-people', [
+            'organization' => $organization,
+            'people' => $people,
+        ]);
+    }
+
+    public function savePerson(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $organizationId = $request->input('organization');
+        $personId = $request->input('person');
+        $role = $request->input('role');
+
+        if ($organizationId AND $personId AND $role) {
+            $organization = Organization::findOrFail($organizationId);
+            $organization->people()->detach($personId);
+            $organization->people()->attach($personId, ['role' => $role]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Updated!'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You must include the person and role'
+            ]);
+        }
+    }
+
     public function destroy($id)
     {
         //
