@@ -15,6 +15,7 @@
                 <th>Market Cap</th>
                 <th>Index Value</th>
                 <th>Index &Delta;</th>
+                <th>Cumulative &Delta;</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
                     </td>
                     <td class="text-right">
                         {{ $marketSnapshot->formatted_index_change }}
+                    </td>
+                    <td class="text-right">
+                        {{ $marketSnapshot->formatted_cumulative_change }}
                     </td>
                 </tr>
             @endforeach

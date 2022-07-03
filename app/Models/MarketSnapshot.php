@@ -56,6 +56,7 @@ class MarketSnapshot extends Model
     /**
      * Accessors
      */
+    // Date and Time
     public function getFormattedDateAttribute(): string
     {
         return Carbon::parse($this->timestamp)->format('Y-m-d');
@@ -71,6 +72,26 @@ class MarketSnapshot extends Model
         return Carbon::parse($this->timestamp)->timestamp;
     }
 
+    public function getFormattedTimestampAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->format('M d, Y g:i a');
+    }
+
+    public function getFormattedTimezoneAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->format('T');
+    }
+
+    // Change
+    public function getFormattedCumulativeChangeAttribute(): string
+    {
+        if ($this->cumulative_change != '') {
+            return number_format(($this->cumulative_change * 100), 2) . '%';
+        } else {
+            return '';
+        }
+    }
+
     public function getFormattedIndexChangeAttribute(): string
     {
         if ($this->index_change != '') {
@@ -80,6 +101,25 @@ class MarketSnapshot extends Model
         }
     }
 
+    public function getIndexChangeColorAttribute(): string
+    {
+        if ($this->index_value >= 100) {
+            return 'text-success';
+        } else {
+            return 'text-danger';
+        }
+    }
+
+    public function getIndexChangeIconAttribute(): string
+    {
+        if ($this->index_value >= 100) {
+            return '<i class="fa-duotone fa-circle-up"></i>';
+        } else {
+            return '<i class="fa-duotone fa-circle-down"></i>';
+        }
+    }
+
+    // Value
     public function getFormattedIndexValueAttribute(): string
     {
         if ($this->index_value != '') {
@@ -89,22 +129,44 @@ class MarketSnapshot extends Model
         }
     }
 
-    public function getFormattedTimestampAttribute(): string
+    // Market Cap
+    public function getFormattedMarketCapAttribute(): string
     {
-        return Carbon::parse($this->timestamp)->format('M d, Y g:i a');
-    }
-
-    public function getFormattedTimezoneAttribute(): string
-    {
-        return Carbon::parse($this->timestamp)->format('e');
-    }
-
-    public function getIndexChangeColorAttribute(): string
-    {
-        if ($this->index_value >= 100) {
-            return 'text-success';
+        if ($this->market_cap != '') {
+            return '$' . number_format($this->market_cap, 0);
         } else {
-            return 'text-danger';
+            return '';
         }
+    }
+
+    // Stock Calcs
+    public function getVolumeAttribute(): string
+    {
+        return number_format($this->stockSnapshots()->sum('volume'), 0);
+    }
+
+    // Previous Market Snapshot Calcs
+    public function getPreviousCloseAttribute(): string
+    {
+        $previous = $this->where('id', '<', $this->id)->orderByDesc('id')->first();
+        return $previous->formatted_index_value ?? '';
+    }
+
+    public function getPreviousDollarChangeAttribute(): string
+    {
+        $previous = $this->where('id', '<', $this->id)->orderByDesc('id')->first();
+        return '$' . number_format($this->index_value - $previous->index_value, 2);
+    }
+
+    public function getYearHighAttribute(): string
+    {
+        $highestYear = $this->orderByDesc('index_value')->first();
+        return '$' . number_format($highestYear->index_value, 2);
+    }
+
+    public function getYearLowAttribute(): string
+    {
+        $highestYear = $this->orderBy('index_value')->first();
+        return '$' . number_format($highestYear->index_value, 2);
     }
 }

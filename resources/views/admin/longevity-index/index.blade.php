@@ -2,27 +2,66 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="d-flex flex-wrap justify-content-between">
-            <h1 class="text-primary">Longevity Index</h1>
-            <div class="mb-2">
-                <a href="{{ route('longevity-index.update') }}" class="btn btn-tertiary">Update Index</a>
-            </div>
-        </div>
-
         @include('admin.includes.status-messages')
 
-        <div class="d-flex flex-wrap mt-2">
-            <div class="h3 pe-4 mb-2">{{ $marketSnapshot->formatted_index_value }}</div>
-            <div class="h3 mb-2 {{ $marketSnapshot->index_change_color }} pe-4">&Delta; {{ $marketSnapshot->formatted_index_change }}</div>
-            <div class="h3 mb-2">${{ number_format($marketSnapshot->market_cap, 0) }}</div>
-        </div>
+        <div class="d-lg-flex align-items-start flex-shrink-0 pe-lg-5">
+            <div class="overview d-flex flex-column justify-content-center mt-lg-5 mb-3">
+                <h1 class="text-primary text-center">Longevity <span class="d-block">Stock Index</span></h1>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="h3 pe-3 my-1">{{ $marketSnapshot->formatted_index_value }}</div>
+                    <div class="my-1 {{ $marketSnapshot->index_change_color }}">
+                       <span class="me-1 lead">{!! $marketSnapshot->index_change_icon !!}</span>
+                       <span class="h4 fw-bold">{{ $marketSnapshot->formatted_index_change }}</span>
+                    </div>
+                </div>
+                <p class="mb-1 text-center small text-muted px-2">
+                    <span class="me-3">{{ $marketSnapshot->formatted_timestamp }} {{ $marketSnapshot->formatted_timezone }}</span>
+                    <span>Market Cap: {{ $marketSnapshot->formatted_market_cap }}</span>
+                </p>
+                <div class="d-md-flex">
+                    <table class="table table-sm small">
+                        <tr>
+                            <td>Last</td><td class="text-right">{{ $marketSnapshot->formatted_index_value }}</td>
+                        </tr>
+                        <tr>
+                            <td>$ Change</td><td class="text-right">{{ $marketSnapshot->previous_dollar_change }}</td>
+                        </tr>
+                        <tr>
+                            <td>Open</td><td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>High</td><td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Year Low</td><td class="text-right">{{ $marketSnapshot->year_low }}</td>
+                        </tr>
+                    </table>
+                    <div>&nbsp;&nbsp;&nbsp;</div>
+                    <table class="table table-sm small">
+                        <tr>
+                            <td>Volume</td><td class="text-right">{{ $marketSnapshot->volume }}</td>
+                        </tr>
+                        <tr>
+                            <td>% Change</td><td class="text-right">{{ $marketSnapshot->formatted_index_change }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prev. Close</td><td class="text-right">{{ $marketSnapshot->previous_close }}</td>
+                        </tr>
+                        <tr>
+                            <td>Low</td><td class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Year High</td><td class="text-right">{{ $marketSnapshot->year_high }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
-        <p class="my-1">
-            {{ $marketSnapshot->formatted_timestamp }} <small class="text-muted">{{ $marketSnapshot->formatted_timezone }}</small>
-        </p>
-
-        <div class="chart-container py-3">
-            @include('admin.longevity-index.chart')
+            <div class="flex-grow-1">
+                <div class="chart-container py-3">
+                    @include('admin.longevity-index.chart')
+                </div>
+            </div>
         </div>
 
         <table class="table">
@@ -73,8 +112,9 @@
             </tbody>
         </table>
 
-        <div>
-            <a href="{{ route('longevity-index.all') }}">View past snapshots</a>
+        <div class="mt-5">
+            <a href="{{ route('longevity-index.all') }}" class="btn btn-secondary">View past snapshots</a>
+            <a href="{{ route('longevity-index.update') }}" class="btn btn-tertiary">Update Index</a>
         </div>
     </div>
 @endsection
