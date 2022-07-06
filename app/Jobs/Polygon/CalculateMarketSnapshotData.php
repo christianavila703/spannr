@@ -41,10 +41,12 @@ class CalculateMarketSnapshotData implements ShouldQueue
 
         $indexChange = round(($this->marketSnapshot->market_cap / $this->previousMarketSnapshot->market_cap) - 1, 4);
         $indexValue = round($this->previousMarketSnapshot->index_value * (1 + $indexChange), 2);
+        $cumulativeChange = ($indexValue - 100) / 100;
 
         $this->marketSnapshot->market_cap = $marketCapSum;
         $this->marketSnapshot->index_change = $indexChange;
         $this->marketSnapshot->index_value = $indexValue;
+        $this->marketSnapshot->cumulative_change = $cumulativeChange;
 
         $this->marketSnapshot->save();
 

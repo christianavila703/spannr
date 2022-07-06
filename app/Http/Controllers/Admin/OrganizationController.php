@@ -55,8 +55,7 @@ class OrganizationController extends Controller
     {
         $organization = Organization::with([
             'investors',
-            'founders',
-            'team',
+            'people',
             'fundraisingRounds'
         ])->findOrFail($id);
 
