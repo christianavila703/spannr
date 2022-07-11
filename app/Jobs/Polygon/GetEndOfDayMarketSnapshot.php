@@ -54,11 +54,7 @@ class GetEndOfDayMarketSnapshot implements ShouldQueue
         $batchArray = [];
 
         foreach ($stocks as $stock) {
-
             array_push($batchArray, new GetEndofDayStockSnapshot($stock, $marketSnapshot, $date));
-
-//            GetEndofDayStockSnapshot::dispatch($stock, $marketSnapshot, $date);
-
         }
 
         try {
