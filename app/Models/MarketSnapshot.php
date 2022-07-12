@@ -19,6 +19,7 @@ class MarketSnapshot extends Model
 
     const TYPE_DAILY = 'daily';
     const TYPE_HOURLY = 'hourly';
+    const TYPE_REBALANCE = 're-balance';
 
     /**
      * FUNCTIONS
@@ -51,6 +52,11 @@ class MarketSnapshot extends Model
     public function scopeHourly($query)
     {
         return $query->where('type', self::TYPE_HOURLY);
+    }
+
+    public function scopeRebalance($query)
+    {
+        return $query->where('type', self::TYPE_REBALANCE);
     }
 
     /**
@@ -103,7 +109,7 @@ class MarketSnapshot extends Model
 
     public function getIndexChangeColorAttribute(): string
     {
-        if ($this->index_value >= 100) {
+        if ($this->index_change > 0) {
             return 'text-success';
         } else {
             return 'text-danger';

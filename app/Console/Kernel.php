@@ -15,9 +15,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('startMarketSnapshot')
+        // Market Snapshots
+        $schedule->command('snapshot:EOD')
             ->weekdays()
             ->dailyAt('1:00');
+
+//        $schedule->command('snapshot:hourly')
+//            ->weekdays()
+//            ->hourly()
+//            ->between('7:00', '17:00');
 
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');

@@ -43,7 +43,7 @@ class GetMarketSnapshot implements ShouldQueue
         /* TODO: calc against previous EOD I think */
         $previousMarketSnapshot = MarketSnapshot::orderByDesc('timestamp')->first();
 
-        $stocks = Stock::all()->pluck('ticker')->toArray();
+        $stocks = Stock::active()->get()->pluck('ticker')->toArray();
 
         $stockList = implode(',', $stocks);
 
@@ -66,6 +66,7 @@ class GetMarketSnapshot implements ShouldQueue
 
                 $attributes = [
                     'current_price' => $ticker->day->c,
+                    'volume' => $ticker->day->v,
                     'yesterday_close' => $ticker->prevDay->c,
                     'today_high' => $ticker->day->h,
                     'today_low' => $ticker->day->l,

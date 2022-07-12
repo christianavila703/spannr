@@ -39,7 +39,7 @@ class GetEndOfDayMarketSnapshot implements ShouldQueue
      */
     public function handle()
     {
-        $previousSnapshot = MarketSnapshot::orderByDesc('timestamp')->first();
+        $previousSnapshot = MarketSnapshot::daily()->orderByDesc('timestamp')->first();
 
         $date = Carbon::parse($previousSnapshot->timestamp)->addWeekdays(1)->format('Y-m-d');
         $dateTime = Carbon::parse($previousSnapshot->timestamp)->addWeekdays(1)->format('Y-m-d H:i:s');
@@ -49,7 +49,7 @@ class GetEndOfDayMarketSnapshot implements ShouldQueue
         $marketSnapshot->type = MarketSnapshot::TYPE_DAILY;
         $marketSnapshot->save();
 
-        $stocks = Stock::get();
+        $stocks = Stock::active()->get();
 
         $batchArray = [];
 

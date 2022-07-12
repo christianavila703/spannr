@@ -15,6 +15,9 @@ class Stock extends Model
 
     protected $guarded = ['id'];
 
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+
     /**
      * Relationships
      */
@@ -38,6 +41,25 @@ class Stock extends Model
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeActive($query)
+    {
+        $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    /**
+     * Accessors
+     */
+    public function getStatusColorAttribute(): string
+    {
+        return match($this->status) {
+            self::STATUS_ACTIVE => 'text-success',
+            self::STATUS_INACTIVE => 'text-danger',
+        };
     }
 
     /**

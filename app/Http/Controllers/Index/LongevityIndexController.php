@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketSnapshot;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -33,15 +34,20 @@ class LongevityIndexController extends Controller
     public function all(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $marketSnapshots = MarketSnapshot::with(['stockSnapshots'])->orderByDesc('created_at')->get();
+        $stocks = Stock::with(['snapshots'])
+            ->orderBy('status')
+            ->orderBy('name')
+            ->get();
 
         return view('admin.longevity-index.all', [
-            'marketSnapshots' => $marketSnapshots
+            'marketSnapshots' => $marketSnapshots,
+            'stocks' => $stocks
         ]);
     }
 
     public function updateIndex(): \Illuminate\Http\RedirectResponse
     {
-        Artisan::call('startMarketSnapshot');
+        Artisan::call('snapshot:hourly');
         return redirect()->route('longevity-index')->with('success', 'Getting new market snapshot... standby!');
     }
 

@@ -45,6 +45,15 @@ class StockSnapshot extends Model
         }
     }
 
+    public function getFormattedMarketCapAttribute(): string
+    {
+        if ($this->market_cap != '') {
+            return '$' . number_format($this->market_cap, 0);
+        } else {
+            return '';
+        }
+    }
+
     public function getWeightPercentAttribute(): string
     {
         return number_format($this->weight, 2);
