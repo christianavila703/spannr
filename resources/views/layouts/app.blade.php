@@ -33,7 +33,7 @@
                         @endcan
                         @can('view records')
                             <li class="nav-item">
-                                <a href="{{ route('longevity-index') }}" class="nav-link">Longevity Index</a>
+                                <a href="{{ route('longevity-index') }}" class="nav-link">Longevity Stock Index</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

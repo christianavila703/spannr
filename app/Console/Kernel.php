@@ -20,10 +20,10 @@ class Kernel extends ConsoleKernel
             ->weekdays()
             ->dailyAt('1:00');
 
-//        $schedule->command('snapshot:hourly')
-//            ->weekdays()
-//            ->hourly()
-//            ->between('7:00', '17:00');
+        $schedule->command('snapshot:hourly')
+            ->weekdays()
+            ->hourly()
+            ->between('7:00', '17:00');
 
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex flex-wrap justify-content-between">
-            <h1 class="text-primary">Longevity Index</h1>
+            <h1 class="text-primary">Longevity Stock Index</h1>
         </div>
 
         @include('admin.includes.status-messages')

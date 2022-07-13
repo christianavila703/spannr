@@ -40,7 +40,7 @@ class Index extends Component
         return view('livewire.events.index', [
             'eventTypes' => EventType::all(),
             'statusOptions' => [Event::STATUS_CURRENT, Event::STATUS_PAST],
-            'events' => Event::orderByDesc('start_date')
+            'events' => Event::orderBy('start_date')
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
