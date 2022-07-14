@@ -22,8 +22,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('snapshot:hourly')
             ->weekdays()
-            ->hourly()
-            ->between('7:00', '17:00');
+            ->everyFifteenMinutes()
+            ->between('8:30', '17:00');
 
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
