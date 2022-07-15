@@ -26,8 +26,16 @@ class Investor extends Model
     const TYPE_PRIVATE_EQUITY = 'Private Equity';
 
     const TYPES = [
+        'Academic Fund',
         self::TYPE_ANGEL,
+        'Asset Management',
+        'Corporate',
+        'Family Office',
+        'Foundation',
         self::TYPE_FUND,
+        'Hedge Fund',
+        'Incubator',
+        'Platform',
         self::TYPE_PRIVATE_EQUITY,
     ];
 
