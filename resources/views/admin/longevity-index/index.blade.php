@@ -27,10 +27,10 @@
                             <td>$ Change</td><td class="text-right">{{ $marketSnapshot->previous_dollar_change }}</td>
                         </tr>
                         <tr>
-                            <td>Open</td><td class="text-right"></td>
+                            <td>Open</td><td class="text-right">{{ $marketSnapshot->today_open }}</td>
                         </tr>
                         <tr>
-                            <td>High</td><td class="text-right"></td>
+                            <td>High</td><td class="text-right">{{ $marketSnapshot->today_high }}</td>
                         </tr>
                         <tr>
                             <td>Year Low</td><td class="text-right">{{ $marketSnapshot->year_low }}</td>
@@ -48,7 +48,7 @@
                             <td>Prev. Close</td><td class="text-right">{{ $marketSnapshot->previous_close }}</td>
                         </tr>
                         <tr>
-                            <td>Low</td><td class="text-right"></td>
+                            <td>Low</td><td class="text-right">{{ $marketSnapshot->today_low }}</td>
                         </tr>
                         <tr>
                             <td>Year High</td><td class="text-right">{{ $marketSnapshot->year_high }}</td>

@@ -40,9 +40,9 @@
 
         // Axis
         let xAxis = chart.xAxes.push(
-            am5xy.DateAxis.new(root, {
+            am5xy.GaplessDateAxis.new(root, {
                 baseInterval: {
-                    timeUnit: "day",
+                    timeUnit: "hour",
                     count: 1
                 },
                 renderer: am5xy.AxisRendererX.new(root, {})
@@ -90,7 +90,7 @@
         series.data.processor = am5.DataProcessor.new(root, {
             numericFields: ["value"],
             dateFields: ["date"],
-            dateFormat: "yyyy-MM-dd"
+            dateFormat: "yyyy-MM-dd H:mm"
         });
 
         // Series Template

@@ -9,46 +9,10 @@
         @include('admin.includes.status-messages')
 
         <div class="row">
-            <div class="col-12 col-xl-6">
-                <table class="table width-auto">
-                    <thead>
-                    <tr>
-                        <th>Date/Time</th>
-                        <th>Type</th>
-                        <th>Market Cap</th>
-                        <th>Index Value</th>
-                        <th>Index &Delta;</th>
-                        <th>Cumulative &Delta;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($marketSnapshots as $marketSnapshot)
-                        <tr>
-                            <td>
-                                <a href="{{ route('longevity-index.show', $marketSnapshot->id) }}">{{ $marketSnapshot->formatted_timestamp }}</a>
-                            </td>
-                            <td>
-                                {{ ucwords($marketSnapshot->type) }}
-                                @if($marketSnapshot->notes)
-                                    <i class="fa-solid fa-circle-info mx-2 text-quaternary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $marketSnapshot->notes }}"></i>
-                                @endif
-                            </td>
-                            <td>${{ number_format($marketSnapshot->market_cap, 0) }}</td>
-                            <td>
-                                <span class="{{ $marketSnapshot->index_change_color }}">{{ $marketSnapshot->formatted_index_value }}</span>
-                            </td>
-                            <td class="text-right">
-                                {{ $marketSnapshot->formatted_index_change }}
-                            </td>
-                            <td class="text-right">
-                                {{ $marketSnapshot->formatted_cumulative_change }}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+            <div class="col-12 col-xl-7">
+                <livewire:longevity-index.market-snapshots />
             </div>
-            <div class="col-12 col-xl-6">
+            <div class="col-12 col-xl-4">
                 <h2 class="h5 text-tertiary">Index Stocks</h2>
                 <table class="table width-auto">
                     <thead>

@@ -19,7 +19,7 @@ class MarketSnapshot extends Model
 
     const TYPE_DAILY = 'daily';
     const TYPE_HOURLY = 'hourly';
-    const TYPE_REBALANCE = 're-balance';
+    const TYPE_REBALANCE = 'rebalance';
 
     /**
      * FUNCTIONS
@@ -65,12 +65,12 @@ class MarketSnapshot extends Model
     // Date and Time
     public function getFormattedDateAttribute(): string
     {
-        return Carbon::parse($this->timestamp)->format('Y-m-d');
+        return Carbon::parse($this->timestamp)->format('Y-m-d H:i');
     }
 
     public function getFormattedPrettyDateAttribute(): string
     {
-        return Carbon::parse($this->timestamp)->format('M j, Y');
+        return Carbon::parse($this->timestamp)->format('M j, Y H:i T');
     }
 
     public function getFormattedDateJsonAttribute(): string
@@ -154,25 +154,89 @@ class MarketSnapshot extends Model
     // Previous Market Snapshot Calcs
     public function getPreviousCloseAttribute(): string
     {
-        $previous = $this->where('id', '<', $this->id)->orderByDesc('id')->first();
+        $previous = $this->daily()->where('id', '<', $this->id)->orderByDesc('id')->first();
         return $previous->formatted_index_value ?? '';
     }
 
     public function getPreviousDollarChangeAttribute(): string
     {
-        $previous = $this->where('id', '<', $this->id)->orderByDesc('id')->first();
-        return '$' . number_format($this->index_value - $previous->index_value, 2);
+        $timestamp = Carbon::parse($this->timestamp);
+
+        $firstOfDay = $this->whereBetween('timestamp', [
+                $timestamp->copy()->startOfDay()->format('Y-m-d H:i:s'),
+                $timestamp->copy()->endOfDay()->format('Y-m-d H:i:s')
+            ])
+            ->orderBy('timestamp')
+            ->first();
+
+        return '$' . number_format($this->index_value - $firstOfDay->index_value, 2);
+    }
+
+    // Get Opening Snapshot of the Day
+    public function getTodayOpenAttribute(): string
+    {
+        $timestamp = Carbon::parse($this->timestamp);
+
+        $snapshot = $this->hourly()->whereBetween('timestamp', [
+                $timestamp->copy()->startOfDay()->format('Y-m-d H:i:s'),
+                $timestamp->copy()->endOfDay()->format('Y-m-d H:i:s')
+            ])
+            ->orderBy('timestamp')
+            ->first();
+
+        return '$' . number_format($snapshot->index_value, 2);
+    }
+
+    // Get Highest Snapshot of Today
+    public function getTodayHighAttribute(): string
+    {
+        $timestamp = Carbon::parse($this->timestamp);
+
+        $snapshot = $this->hourly()->whereBetween('timestamp', [
+                $timestamp->copy()->startOfDay()->format('Y-m-d H:i:s'),
+                $timestamp->copy()->endOfDay()->format('Y-m-d H:i:s')
+            ])
+            ->orderByDesc('index_value')
+            ->first();
+
+        return '$' . number_format($snapshot->index_value, 2);
+    }
+
+    // Get Lowest Snapshot of Today
+    public function getTodayLowAttribute(): string
+    {
+        $timestamp = Carbon::parse($this->timestamp);
+
+        $snapshot = $this->whereBetween('timestamp', [
+                $timestamp->copy()->startOfDay()->format('Y-m-d H:i:s'),
+                $timestamp->copy()->endOfDay()->format('Y-m-d H:i:s')
+            ])
+            ->orderBy('index_value')
+            ->first();
+
+        return '$' . number_format($snapshot->index_value, 2);
     }
 
     public function getYearHighAttribute(): string
     {
+        // TODO: These will not work in 2023!
         $highestYear = $this->orderByDesc('index_value')->first();
         return '$' . number_format($highestYear->index_value, 2);
     }
 
     public function getYearLowAttribute(): string
     {
+        // TODO: These will not work in 2023!
         $highestYear = $this->orderBy('index_value')->first();
         return '$' . number_format($highestYear->index_value, 2);
+    }
+
+    public function getTypeColorAttribute(): string
+    {
+        return match($this->type) {
+            self::TYPE_DAILY => 'text-orange',
+            self::TYPE_REBALANCE => 'text-tertiary',
+            default => 'text-dark'
+        };
     }
 }

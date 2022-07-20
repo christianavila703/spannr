@@ -53,6 +53,7 @@ class LongevityIndexController extends Controller
 
     public function chartData(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        $now = Carbon::now();
         $marketSnapshots = MarketSnapshot::daily()
             ->orderBy('timestamp')
             ->get();
@@ -69,6 +70,17 @@ class LongevityIndexController extends Controller
                 'change' => $marketSnapshot->formatted_index_change
             ]);
         }
+
+        $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
+
+        array_push($data, [
+                'name' => 'test',
+                'date' => $latestHourly->formatted_date,
+                'value' => $latestHourly->index_value,
+                'formatted_value' => $latestHourly->formatted_index_value,
+                'formatted_date' => $latestHourly->formatted_pretty_date,
+                'change' => $latestHourly->formatted_index_change
+            ]);
 
         return response(json_encode($data, JSON_NUMERIC_CHECK));
     }
