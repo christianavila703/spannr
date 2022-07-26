@@ -88,6 +88,11 @@ class MarketSnapshot extends Model
         return Carbon::parse($this->timestamp)->format('T');
     }
 
+    public function getFormattedEasternTimestampAttribute(): string
+    {
+        return Carbon::parse($this->timestamp)->setTimeZone('America/New_York')->format('M d, Y g:i a T');
+    }
+
     // Change
     public function getFormattedCumulativeChangeAttribute(): string
     {
@@ -118,7 +123,7 @@ class MarketSnapshot extends Model
 
     public function getIndexChangeIconAttribute(): string
     {
-        if ($this->index_value >= 100) {
+        if ($this->index_change >= 0) {
             return '<i class="fa-duotone fa-circle-up"></i>';
         } else {
             return '<i class="fa-duotone fa-circle-down"></i>';

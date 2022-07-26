@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class PasswordController extends Controller
 {
-    public function index() {
-        return view ('users.change-password');
-    }
-
-    public function store(UserChangePasswordRequest $request) {
+    public function store(UserChangePasswordRequest $request): \Illuminate\Http\RedirectResponse
+    {
         $user = Auth::user();
         $currentPassword = $request->input('currentPassword');
 

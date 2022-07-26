@@ -79,7 +79,6 @@
                 <th><span class="d-block">Previous Day</span> Price Change</th>
                 <th><span class="d-block">Previous Day</span> % Change</th>
                 <th>Outstanding Shares</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>

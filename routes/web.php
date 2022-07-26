@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +47,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/locations/{id}', [\App\Http\Controllers\Admin\LocationController::class, 'show'])->name('locations.show');
 
     // User Settings
-    Route::get('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'index'])->name('users.change-password');
+    Route::get('/settings', [\App\Http\Controllers\Users\SettingsController::class, 'index'])->name('users.settings');
     Route::post('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'store'])->name('users.store-password');
+    Route::post('/settings/api', [\App\Http\Controllers\Users\ApiController::class, 'createKey'])->name('users.api.create');
+    Route::post('/settings/api/delete', [\App\Http\Controllers\Users\ApiController::class, 'deleteKey'])->name('users.api.delete');
 
     Route::get('/longevity-index', [\App\Http\Controllers\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
     Route::get('/longevity-index/update', [\App\Http\Controllers\Index\LongevityIndexController::class, 'updateIndex'])->name('longevity-index.update');
