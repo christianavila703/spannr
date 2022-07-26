@@ -169,7 +169,9 @@ class MarketSnapshot extends Model
             ->orderBy('timestamp')
             ->first();
 
-        return '$' . number_format($this->index_value - $firstOfDay->index_value, 2);
+        $previousClose = $this->daily()->orderByDesc('timestamp')->first();
+
+        return '$' . number_format($this->index_value - $previousClose->index_value, 2);
     }
 
     // Get Opening Snapshot of the Day

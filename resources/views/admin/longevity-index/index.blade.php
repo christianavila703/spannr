@@ -15,43 +15,43 @@
                     </div>
                 </div>
                 <p class="mb-1 text-center small text-muted px-2">
-                    <span class="me-3">{{ $marketSnapshot->formatted_timestamp }} {{ $marketSnapshot->formatted_timezone }}</span>
-                    <span>Market Cap: {{ $marketSnapshot->formatted_market_cap }}</span>
+                    <span class="me-3 text-nowrap">{{ $marketSnapshot->formatted_timestamp }} {{ $marketSnapshot->formatted_timezone }}</span>
+                    <span class="text-nowrap">Market Cap: {{ $marketSnapshot->formatted_market_cap }}</span>
                 </p>
                 <div class="d-md-flex">
                     <table class="table table-sm small">
                         <tr>
-                            <td>Last</td><td class="text-right">{{ $marketSnapshot->formatted_index_value }}</td>
+                            <td class="text-nowrap">Last</td><td class="text-right">{{ $marketSnapshot->formatted_index_value }}</td>
                         </tr>
                         <tr>
-                            <td>$ Change</td><td class="text-right">{{ $marketSnapshot->previous_dollar_change }}</td>
+                            <td class="text-nowrap">$ Change</td><td class="text-right">{{ $marketSnapshot->previous_dollar_change }}</td>
                         </tr>
                         <tr>
-                            <td>Open</td><td class="text-right">{{ $marketSnapshot->today_open }}</td>
+                            <td class="text-nowrap">Open</td><td class="text-right">{{ $marketSnapshot->today_open }}</td>
                         </tr>
                         <tr>
-                            <td>High</td><td class="text-right">{{ $marketSnapshot->today_high }}</td>
+                            <td class="text-nowrap">High</td><td class="text-right">{{ $marketSnapshot->today_high }}</td>
                         </tr>
                         <tr>
-                            <td>Year Low</td><td class="text-right">{{ $marketSnapshot->year_low }}</td>
+                            <td class="text-nowrap">Year Low</td><td class="text-right">{{ $marketSnapshot->year_low }}</td>
                         </tr>
                     </table>
                     <div>&nbsp;&nbsp;&nbsp;</div>
                     <table class="table table-sm small">
                         <tr>
-                            <td>Volume</td><td class="text-right">{{ $marketSnapshot->volume }}</td>
+                            <td class="text-nowrap">Volume</td><td class="text-right">{{ $marketSnapshot->volume }}</td>
                         </tr>
                         <tr>
-                            <td>% Change</td><td class="text-right">{{ $marketSnapshot->formatted_index_change }}</td>
+                            <td class="text-nowrap">% Change</td><td class="text-right">{{ $marketSnapshot->formatted_index_change }}</td>
                         </tr>
                         <tr>
-                            <td>Prev. Close</td><td class="text-right">{{ $marketSnapshot->previous_close }}</td>
+                            <td class="text-nowrap">Prev. Close</td><td class="text-right">{{ $marketSnapshot->previous_close }}</td>
                         </tr>
                         <tr>
-                            <td>Low</td><td class="text-right">{{ $marketSnapshot->today_low }}</td>
+                            <td class="text-nowrap">Low</td><td class="text-right">{{ $marketSnapshot->today_low }}</td>
                         </tr>
                         <tr>
-                            <td>Year High</td><td class="text-right">{{ $marketSnapshot->year_high }}</td>
+                            <td class="text-nowrap">Year High</td><td class="text-right">{{ $marketSnapshot->year_high }}</td>
                         </tr>
                     </table>
                 </div>
