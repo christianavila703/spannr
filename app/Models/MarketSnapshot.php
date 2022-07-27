@@ -191,7 +191,11 @@ class MarketSnapshot extends Model
             ->orderBy('timestamp')
             ->first();
 
-        return '$' . number_format($snapshot->index_value, 2);
+        if ($snapshot) {
+            return '$' . number_format($snapshot->index_value, 2);
+        } else {
+             return '';
+        }
     }
 
     // Get Highest Snapshot of Today
@@ -206,7 +210,11 @@ class MarketSnapshot extends Model
             ->orderByDesc('index_value')
             ->first();
 
-        return '$' . number_format($snapshot->index_value, 2);
+        if ($snapshot) {
+            return '$' . number_format($snapshot->index_value, 2);
+        } else {
+            return '';
+        }
     }
 
     // Get Lowest Snapshot of Today
@@ -221,7 +229,11 @@ class MarketSnapshot extends Model
             ->orderBy('index_value')
             ->first();
 
-        return '$' . number_format($snapshot->index_value, 2);
+        if ($snapshot) {
+            return '$' . number_format($snapshot->index_value, 2);
+        } else {
+            return '';
+        }
     }
 
     public function getYearHighAttribute(): string
