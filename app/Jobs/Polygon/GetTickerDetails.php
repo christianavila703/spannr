@@ -11,6 +11,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class GetTickerDetails implements ShouldQueue
 {
@@ -45,8 +47,14 @@ class GetTickerDetails implements ShouldQueue
         $tickerDetails = Http::get($url);
         $tickerDetailsArray = json_decode($tickerDetails->body());
 
-        $this->stockSnapshot->market_cap = $tickerDetailsArray->results->market_cap;
-        $this->stockSnapshot->outstanding_shares = $tickerDetailsArray->results->share_class_shares_outstanding;
-        $this->stockSnapshot->save();
+        try {
+            $this->stockSnapshot->market_cap = $tickerDetailsArray->results->market_cap;
+            $this->stockSnapshot->outstanding_shares = $tickerDetailsArray->results->share_class_shares_outstanding;
+            $this->stockSnapshot->save();
+        } catch (\Throwable $throwable) {
+            $message = 'Failure during GetTickerDetails ' . $this->stockSnapshot->stock->ticker . "\n" . $throwable->getMessage() . "\n" . '```' . print_r($tickerDetailsArray, true) . '```';
+            Log::critical($message);
+            SlackAlert::to('index')->message("<@sydney> " . $message);
+        }
     }
 }

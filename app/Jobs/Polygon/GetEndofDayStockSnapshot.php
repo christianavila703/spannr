@@ -14,6 +14,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
 class GetEndofDayStockSnapshot implements ShouldQueue
 {
@@ -52,7 +53,7 @@ class GetEndofDayStockSnapshot implements ShouldQueue
         $request = Http::get($url);
 
         $response = json_decode($request->body());
-        Log::info('EndOfDaySnapshot OpenClose ' . $this->stock->ticker . ' ' . '\n' . print_r($response, true));
+        Log::info('EndOfDaySnapshot OpenClose ' . $this->stock->ticker . ' ' . "\n" . print_r($response, true));
 
         try {
             $stockSnapshot = new StockSnapshot();
@@ -64,7 +65,9 @@ class GetEndofDayStockSnapshot implements ShouldQueue
             $stockSnapshot->stock_id = $this->stock->id;
             $stockSnapshot->save();
         } catch (\Throwable $throwable) {
-            Log::critical('Failure during EndOfDaySnapshot OpenClose' . '\n' . $throwable->getMessage());
+            $message = 'Failure during EndOfDaySnapshot OpenClose ' . $this->stock->ticker . "\n" . $throwable->getMessage();
+            Log::critical($message);
+            SlackAlert::to('index')->message("<@sydney> " . $message);
         }
 
         // GET Market Cap for each Stock
@@ -73,14 +76,16 @@ class GetEndofDayStockSnapshot implements ShouldQueue
         $request = Http::get($url);
 
         $response = json_decode($request->body());
-        Log::info('EndOfDaySnapshot Tickers ' . $this->stock->ticker . ' ' . '\n' . print_r($response, true));
+        Log::info('EndOfDaySnapshot Tickers ' . $this->stock->ticker . ' ' . "\n" . print_r($response, true));
 
         try {
             $stockSnapshot->market_cap = $response->results->market_cap;
             $stockSnapshot->outstanding_shares = $response->results->share_class_shares_outstanding;
             $stockSnapshot->save();
         } catch (\Throwable $throwable) {
-            Log::critical('Failure during EndOfDaySnapshot Tickers' . '\n' . $throwable->getMessage());
+            $message = 'Failure during EndOfDaySnapshot Tickers ' . $this->stock->ticker . "\n" . $throwable->getMessage() . "\n" . '```' . print_r($response, true) . '```';
+            Log::critical($message);
+            SlackAlert::to('index')->message("<@sydney> " . $message);
         }
     }
 }

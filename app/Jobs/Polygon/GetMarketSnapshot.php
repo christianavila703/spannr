@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 use Throwable;
 use App\Jobs\Polygon\GetTickerDetails;
 
@@ -40,7 +41,6 @@ class GetMarketSnapshot implements ShouldQueue
      */
     public function handle()
     {
-        /* TODO: calc against previous EOD I think */
         $previousMarketSnapshot = MarketSnapshot::daily()->orderByDesc('timestamp')->first();
 
         $stocks = Stock::active()->get()->pluck('ticker')->toArray();
@@ -92,12 +92,16 @@ class GetMarketSnapshot implements ShouldQueue
 
                 })->catch(function (Batch $batch, Throwable $throwable) {
                     // First batch job failure detected...
-                    Log::critical('Market Snapshot Batch Failure' . "\n" . $throwable->getMessage());
+                    $message = 'Market Snapshot Batch Failure' . "\n" . $throwable->getMessage();
+                    Log::critical($message);
+                    SlackAlert::to('index')->message("<@sydney> " . $message);
 
                 })->dispatch();
 
         } catch(\Throwable $throwable) {
-            Log::critical('Failure during GetMarketSnapshot' . "\n" . $throwable->getMessage());
+            $message = 'Failure during GetMarketSnapshot' . "\n" . $throwable->getMessage();
+            Log::critical($message);
+            SlackAlert::to('index')->message("<@sydney> " . $message);
         }
     }
 }
