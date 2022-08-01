@@ -41,7 +41,7 @@
     let dataLow;
 
     console.log("Fetching data...");
-    getJSON("https://spannrapp.test/organizations/{{ $slug }}/stock-data").then(data => {
+    getJSON("/organizations/{{ $slug }}/stock-data").then(data => {
 
         labels = data.chartLabels.map(function (e) {
             return e;
