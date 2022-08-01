@@ -25,6 +25,11 @@ class Kernel extends ConsoleKernel
             ->everyFifteenMinutes()
             ->between('8:45', '15:30');
 
+        $schedule->command('stocks:get-aggregates')
+            ->weekdays()
+            ->everyFifteenMinutes()
+            ->between('8:45', '15:30');
+
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');

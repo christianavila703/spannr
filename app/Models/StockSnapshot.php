@@ -17,6 +17,11 @@ class StockSnapshot extends Model
     /**
      * Relationships
      */
+    public function marketSnapshot(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(MarketSnapshot::class);
+    }
+
     public function stock(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Stock::class);

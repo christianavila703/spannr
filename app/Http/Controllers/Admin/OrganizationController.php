@@ -8,6 +8,7 @@ use App\Models\Investor;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Location;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -39,15 +40,73 @@ class OrganizationController extends Controller
 
     public function show($slug): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        $organization = Organization::where('slug', $slug)->firstOrFail();
+        $organization = Organization::where('slug', $slug)
+            ->with(['stock.latestSnapshot'])
+            ->firstOrFail();
 
         $investors = Investor::orderBy('name')->get();
         $people = Person::orderBy('name')->get();
 
+        $hasStockChart = ($organization->stock('stock')->count() > 0);
+        $latestSnapshot = $organization->stock->latestSnapshot ?? null;
+
         return view('admin.organizations.show', [
             'organization' => $organization,
             'investors' => $investors,
-            'people' => $people
+            'people' => $people,
+            'hasStockChart' => $hasStockChart,
+            'latestSnapshot' => $latestSnapshot
+        ]);
+    }
+
+    public function stockData($slug) {
+        $organization = Organization::where('slug', $slug)->firstOrFail();
+        $chartData = json_decode($organization->stock->data, true);
+
+        $chartLabels = [];
+        $valuesClose = [];
+        $valuesOpen = [];
+        $valuesHigh = [];
+        $valuesLow = [];
+
+        foreach ($chartData as $data) {
+            $chartLabels[] = Carbon::createFromTimestampMsUTC($data['date'])->format('M d, Y');
+
+            $valuesClose[] = [
+                'x' => $data['date'],
+                'y' => $data['close']
+            ];
+
+            $valuesOpen[] = [
+                'x' => $data['date'],
+                'y' => $data['open']
+            ];
+
+            $valuesHigh[] = [
+                'x' => $data['date'],
+                'y' => $data['high']
+            ];
+
+            $valuesLow[] = [
+                'x' => $data['date'],
+                'y' => $data['low']
+            ];
+        }
+
+        return json_encode([
+            'chartLabels' => $chartLabels,
+            'valuesClose' => $valuesClose,
+            'valuesOpen' => $valuesOpen,
+            'valuesHigh' => $valuesHigh,
+            'valuesLow' => $valuesLow
+        ], true);
+
+    }
+
+    public function stockChart($slug) {
+        $organization = Organization::where('slug', $slug)->firstOrFail();
+        return view('admin.organizations.stock-chart', [
+            'slug' => $organization->slug
         ]);
     }
 

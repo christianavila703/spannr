@@ -29,7 +29,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('job-categories', \App\Http\Controllers\Admin\JobCategoryController::class);
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
 
-    // Organization Relationships
+    // Organization Routes & Relationships
+    Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');
+    Route::get('/organizations/{slug}/stock-chart', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockChart'])->name('organizations.stock-chart');
     Route::post('/organization/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
 
     Route::post('/organization/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people'); // old person

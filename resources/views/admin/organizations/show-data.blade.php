@@ -52,6 +52,40 @@
             <div>
                 {!! nl2br(e($organization->description)) !!}
             </div>
+            <div>
+                @if($hasStockChart)
+                    <div class="mt-5">
+                        @if($latestSnapshot)
+                            <div class="stock-details lead">
+                                <span class="ticker me-2 fw-bold">
+                                    {{ $organization->stock->ticker }}
+                                </span>
+                                <span class="current-price me-2">
+                                    ${{ $latestSnapshot->current_price }}
+                                </span>
+                                <span class="change-percent me-2 {{ ($latestSnapshot->previous_day_change_percent > 0) ? 'text-success' : 'text-danger' }}">
+                                    @if ($latestSnapshot->previous_day_change_percent > 0)
+                                        <i class="fa-duotone fa-circle-up text-success"></i>
+                                    @else
+                                        <i class="fa-duotone fa-circle-down text-danger"></i>
+                                    @endif
+                                    {{ $latestSnapshot->previous_day_change_percent }}%
+                                </span>
+                                <span class="change-dollar">
+                                    @if($latestSnapshot->previous_day_change_price < 0)
+                                        @php $amount = $latestSnapshot->previous_day_change_price * -1; @endphp
+                                        $({{ $amount }})
+                                    @else
+                                        ${{ $latestSnapshot->previous_day_change_price }}
+                                    @endif
+                                </span>
+                            </div>
+                        @endif
+                        @include('admin.organizations.stock-chart', ['slug' => $organization->slug])
+                        <div class="text-muted small my-2 text-center">Updated every 15 minutes between 7:45a - 4:30p Eastern</div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </div>

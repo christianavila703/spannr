@@ -61,26 +61,26 @@ class LongevityIndexController extends Controller
         $data = [];
 
         foreach($marketSnapshots as $marketSnapshot) {
-            array_push($data, [
+            $data[] = [
                 'name' => 'test',
                 'date' => $marketSnapshot->formatted_date,
                 'value' => $marketSnapshot->index_value,
                 'formatted_value' => $marketSnapshot->formatted_index_value,
                 'formatted_date' => $marketSnapshot->formatted_pretty_date,
                 'change' => $marketSnapshot->formatted_index_change
-            ]);
+            ];
         }
 
         $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
 
-        array_push($data, [
-                'name' => 'test',
-                'date' => $latestHourly->formatted_date,
-                'value' => $latestHourly->index_value,
-                'formatted_value' => $latestHourly->formatted_index_value,
-                'formatted_date' => $latestHourly->formatted_pretty_date,
-                'change' => $latestHourly->formatted_index_change
-            ]);
+        $data[] = [
+            'name' => 'test',
+            'date' => $latestHourly->formatted_date,
+            'value' => $latestHourly->index_value,
+            'formatted_value' => $latestHourly->formatted_index_value,
+            'formatted_date' => $latestHourly->formatted_pretty_date,
+            'change' => $latestHourly->formatted_index_change
+        ];
 
         return response(json_encode($data, JSON_NUMERIC_CHECK));
     }

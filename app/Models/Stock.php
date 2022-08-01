@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -29,6 +30,14 @@ class Stock extends Model
     public function snapshots(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(StockSnapshot::class)->orderByDesc('created_at');
+    }
+
+    public function latestSnapshot(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(StockSnapshot::class)->whereHas('marketSnapshot', function (Builder $query) {
+                $query->hourly();
+            })->latest();
+
     }
 
     /**

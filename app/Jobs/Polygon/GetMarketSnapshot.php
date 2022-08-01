@@ -51,7 +51,7 @@ class GetMarketSnapshot implements ShouldQueue
             'timestamp' => Carbon::now()
         ]);
 
-        $url = 'https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=' . $stockList .'&apiKey=iGuwdIWUG9fkFhd9qWEHSbHH4cuFOHxs';
+        $url = 'https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=' . $stockList .'&apiKey=' . config('services.polygon.key');
 
         $batchArray = [];
 

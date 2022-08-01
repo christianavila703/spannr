@@ -32,7 +32,7 @@ class DailyOpenCloseMarketSnapshot implements ShouldQueue
             'type' => MarketSnapshot::TYPE_DAILY
         ]);
 
-        $url = 'https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=' . $stockList .'&apiKey=iGuwdIWUG9fkFhd9qWEHSbHH4cuFOHxs';
+        $url = 'https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=' . $stockList .'&apiKey=' . config('services.polygon.key');
 
         $batchArray = [];
     }

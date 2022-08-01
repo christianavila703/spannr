@@ -48,7 +48,7 @@ class GetEndofDayStockSnapshot implements ShouldQueue
             return;
         }
 
-        $url = 'https://api.polygon.io/v1/open-close/' . $this->stock->ticker .'/' . $this->date . '?adjusted=true&apiKey=iGuwdIWUG9fkFhd9qWEHSbHH4cuFOHxs';
+        $url = 'https://api.polygon.io/v1/open-close/' . $this->stock->ticker .'/' . $this->date . '?adjusted=true&apiKey=' . config('services.polygon.key');
 
         $request = Http::get($url);
 
@@ -71,7 +71,7 @@ class GetEndofDayStockSnapshot implements ShouldQueue
         }
 
         // GET Market Cap for each Stock
-        $url = 'https://api.polygon.io/v3/reference/tickers/' . $this->stock->ticker . '?date=' . $this->date . '&apiKey=iGuwdIWUG9fkFhd9qWEHSbHH4cuFOHxs';
+        $url = 'https://api.polygon.io/v3/reference/tickers/' . $this->stock->ticker . '?date=' . $this->date . '&apiKey=' . config('services.polygon.key');
 
         $request = Http::get($url);
 
