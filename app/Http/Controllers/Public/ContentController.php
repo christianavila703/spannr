@@ -19,10 +19,11 @@ class ContentController extends Controller
        View::share ('showHeader', true);
     }
 
-    public function index() {
+    public function home() {
         $seo = Content::where('slug', 'home')->first();
         return view('public.content.index', [
-            'showHeader' => false,
+            'showHeader' => true,
+            'headerClass' => 'dark',
             'seo' => $seo
         ]);
     }
@@ -113,7 +114,7 @@ class ContentController extends Controller
     }
 
     public function longevityStockIndex() {
-        $seo = Content::where('slug', 'longevity-stock-index')->first();
+        $seo = Content::where('slug', 'index')->first();
 
         $marketSnapshot = MarketSnapshot::orderByDesc('timestamp')
             ->with(['stockSnapshots'])
@@ -127,7 +128,6 @@ class ContentController extends Controller
 
     public function longevityStockChart(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $now = Carbon::now();
         $marketSnapshots = MarketSnapshot::daily()
             ->orderBy('timestamp')
             ->get();
@@ -136,7 +136,6 @@ class ContentController extends Controller
 
         foreach($marketSnapshots as $marketSnapshot) {
             $data[] = [
-                'name' => 'test',
                 'date' => $marketSnapshot->formatted_date,
                 'value' => $marketSnapshot->index_value,
                 'formatted_value' => $marketSnapshot->formatted_index_value,
@@ -148,7 +147,6 @@ class ContentController extends Controller
         $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
 
         $data[] = [
-            'name' => 'test',
             'date' => $latestHourly->formatted_date,
             'value' => $latestHourly->index_value,
             'formatted_value' => $latestHourly->formatted_index_value,

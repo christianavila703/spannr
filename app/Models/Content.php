@@ -26,7 +26,6 @@ class Content extends Model
     const PAGES = [
         'home',
         'articles',
-        'longevity-stock-index',
         'index',
         'ventures',
         'terms',

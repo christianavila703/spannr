@@ -33,6 +33,9 @@
                         @endcan
                         @can('view records')
                             <li class="nav-item">
+                                <a href="{{ route('admin.home') }}" class="nav-link">Admin</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.longevity-index') }}" class="nav-link">Longevity Stock Index</a>
                             </li>
                             <li class="nav-item dropdown">

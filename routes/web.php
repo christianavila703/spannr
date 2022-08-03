@@ -19,7 +19,7 @@ Auth::routes(['verify' => true]);
 /**
  * PUBLIC ROUTES
  */
-Route::get('/', [App\Http\Controllers\Public\ContentController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\Public\ContentController::class, 'home'])->name('home');
 Route::get('/ventures', [App\Http\Controllers\Public\ContentController::class, 'ventures'])->name('public.content.ventures');
 Route::get('/terms', [App\Http\Controllers\Public\ContentController::class, 'terms'])->name('public.content.terms');
 Route::get('/privacy', [App\Http\Controllers\Public\ContentController::class, 'privacy'])->name('public.content.privacy');
@@ -29,7 +29,7 @@ Route::get('/articles', [App\Http\Controllers\Public\ContentController::class, '
 Route::get('/articles/{slug}', [App\Http\Controllers\Public\ContentController::class, 'articleShow'])->name('public.content.articles.show');
 Route::get('/glossary', [App\Http\Controllers\Public\ContentController::class, 'glossaryIndex'])->name('public.content.glossary.index');
 Route::get('/glossary/{slug}', [App\Http\Controllers\Public\ContentController::class, 'glossaryShow'])->name('public.content.glossary.show');
-Route::get('/longevity-stock-index', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndex'])->name('public.content.longevity-index');
+Route::get('/index', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndex'])->name('public.content.longevity-index');
 Route::get('/longevity-stock-chart', [App\Http\Controllers\Public\ContentController::class, 'longevityStockChart'])->name('public.content.longevity-index.chart');
 Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::class, 'organizationShow'])->name('public.content.organizations.show');
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');

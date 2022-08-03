@@ -16,6 +16,15 @@
     }
 }
 
+.header.public-header {
+    padding: 1.25rem 1rem .5rem 1rem;
+}
+
+.header.dark {
+    padding: 1.25rem 1rem .5rem 1rem;
+    background: $black;
+}
+
 #primary-public-nav {
     a {
         color: $white;
