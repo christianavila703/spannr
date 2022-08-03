@@ -29,7 +29,7 @@ class Person extends Model
 
     protected $guarded = ['id'];
 
-    private string $searchableRouteName = 'people.show';
+    private string $searchableRouteName = 'admin.people.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-user-hair-buns';
 

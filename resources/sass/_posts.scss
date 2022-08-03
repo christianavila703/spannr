@@ -18,6 +18,12 @@
         max-width: 700px;
         min-height: 750px;
         @include margin-top-md;
+
+        img,
+        .wp-caption {
+            max-width: 100%;
+            height: auto;
+        }
     }
 }
 

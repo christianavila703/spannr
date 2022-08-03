@@ -39,7 +39,7 @@ class Organization extends Model
         self::TYPE_DAO
     ];
 
-    private string $searchableRouteName = 'organizations.show';
+    private string $searchableRouteName = 'admin.organizations.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-buildings';
 

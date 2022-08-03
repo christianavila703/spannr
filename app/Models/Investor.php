@@ -39,7 +39,7 @@ class Investor extends Model
         self::TYPE_PRIVATE_EQUITY,
     ];
 
-    private string $searchableRouteName = 'investors.show';
+    private string $searchableRouteName = 'admin.investors.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-hands-holding-dollar';
 

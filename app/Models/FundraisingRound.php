@@ -32,7 +32,7 @@ class FundraisingRound extends Model
         self::ROUND_UNKNOWN
     ];
 
-    private string $searchableRouteName = 'fundraising-rounds.show';
+    private string $searchableRouteName = 'admin.fundraising-rounds.show';
     private string $searchableRouteField = 'id';
     private string $searchableIcon = 'fa-duotone fa-sack-dollar';
 

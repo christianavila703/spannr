@@ -111,9 +111,13 @@
             </tbody>
         </table>
     </div>
-    <div class="container pb-3">
+    <div class="container pb-3 small">
         @if($seo)
             {!! $seo->content !!}
         @endif
+        <div class="d-flex flex-wrap align-items-center justify-content-center mb-3">
+            <a href="{{ route('public.content.longevity-index.about') }}" class="btn btn-link text-quaternary p-2">About the Index / Methodology</a>
+            <a href="{{ route('public.content.longevity-index.terms') }}" class="btn btn-link text-quaternary p-2">Terms &amp; Disclosures</a>
+        </div>
     </div>
 @endsection

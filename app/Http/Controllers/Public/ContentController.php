@@ -8,9 +8,11 @@ use App\Models\Content;
 use App\Models\Glossary;
 use App\Models\MarketSnapshot;
 use App\Models\Organization;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Database\Eloquent\Builder;
 
 class ContentController extends Controller
 {
@@ -172,7 +174,12 @@ class ContentController extends Controller
     }
 
     public function companiesList() {
-        $organizations = Organization::whereHas('stock')->get();
+        $organizations = Organization::whereHas('stock', function (Builder $query) {
+                $query->where('status', Stock::STATUS_ACTIVE);
+            })
+            ->orderBy('name')
+            ->get();
+
         $seo = Content::where('slug', 'companies')->first();
 
         return view('public.content.organizations.index', [
