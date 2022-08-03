@@ -15,7 +15,14 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
-    <!-- ADD GOOGLE ANALYTICS TAG -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-TW8JCMEBZF');
+    </script>
 </head>
 <body>
     @includeUnless($showHeader === false, 'public.includes.header')
