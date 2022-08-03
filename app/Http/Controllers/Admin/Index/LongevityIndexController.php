@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Index;
+namespace App\Http\Controllers\Admin\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketSnapshot;
 use App\Models\Stock;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class LongevityIndexController extends Controller

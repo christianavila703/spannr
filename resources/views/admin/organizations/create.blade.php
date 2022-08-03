@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <x-entities.create backUrl="{{ route('organizations.index') }}" backLabel="Organizations">
+    <x-entities.create backUrl="{{ route('admin.organizations.index') }}" backLabel="Organizations">
         <x-slot:title>Add Organization</x-slot:title>
-        @include('admin.organizations.form', ['route' => route('organizations.store')])
+        @include('admin.organizations.form', ['route' => route('admin.organizations.store')])
     </x-entities.create>
 
 @endsection

@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Organization;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,7 @@ Route::middleware(['auth:sanctum', 'abilities:view-organizations'])->group(funct
     Route::get('/organizations', [\App\Http\Controllers\Api\OrganizationsController::class, 'stockList']);
     Route::get('/organization/{id}', [\App\Http\Controllers\Api\OrganizationsController::class, 'show']);
     Route::get('/organization/{slug}/stock-data', [\App\Http\Controllers\Api\OrganizationsController::class, 'stockData']);
-    Route::get('/longevity-stock-index/chart', [\App\Http\Controllers\Index\LongevityIndexController::class, 'chartData']);
+    Route::get('/longevity-stock-index/chart', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chartData']);
     Route::get('/longevity-stock-index/summary', [\App\Http\Controllers\Api\LongevityStockIndexController::class, 'summary']);
     Route::get('/longevity-stock-index/stocks', [\App\Http\Controllers\Api\LongevityStockIndexController::class, 'stockList']);
 });

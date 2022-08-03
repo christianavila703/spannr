@@ -38,7 +38,7 @@
         @if($job->remote)
             <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
         @endif
-        <x-entities.show.relationship-basic :records="$job->locations" routeName="locations.show" />
+        <x-entities.show.relationship-basic :records="$job->locations" routeName="admin.locations.show" />
         <x-entities.show.field-heading title="Application URL" />
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Application URL">
             {!! $job->urlLink !!}

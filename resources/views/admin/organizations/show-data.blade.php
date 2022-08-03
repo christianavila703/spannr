@@ -32,16 +32,16 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$organization->investors" routeName="investors.show" />
+        <x-entities.show.relationship-basic :records="$organization->investors" routeName="admin.investors.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-with-pivot :records="$organization->people" routeName="people.show" pivotName="role" />
+        <x-entities.show.relationship-with-pivot :records="$organization->people" routeName="admin.people.show" pivotName="role" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
         <x-entities.show.relationship-fundraising-round :records="$organization->fundraisingRounds" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$organization->locations" routeName="locations.show" />
+        <x-entities.show.relationship-basic :records="$organization->locations" routeName="admin.locations.show" />
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">

@@ -1,7 +1,7 @@
 <div class="modal fade" id="addPeopleForm" tabindex="-1" aria-labelledby="addPeopleFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-            <form method="POST" action="{{ route('organizations.add-people') }}">
+            <form method="POST" action="{{ route('admin.organizations.add-people') }}">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addPeopleFormLabel">Add a Person to {{ $organization->name }}</h5>

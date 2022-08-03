@@ -34,7 +34,7 @@ class OrganizationController extends Controller
             $organization->storeImage($request->file('image'));
         }
 
-        return redirect()->route('organizations.index')->with('success', 'Added ' . $organization->name);
+        return redirect()->route('admin.organizations.index')->with('success', 'Added ' . $organization->name);
 
     }
 
@@ -133,7 +133,7 @@ class OrganizationController extends Controller
             $organization->storeImage($request->file('image'));
         }
 
-        return redirect()->route('organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');
+        return redirect()->route('admin.organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');
     }
 
     public function addInvestors(Request $request): \Illuminate\Http\RedirectResponse
@@ -151,7 +151,7 @@ class OrganizationController extends Controller
             ->event('added investors')
             ->log('Investors added to ' . $organization->name);
 
-        return redirect()->route('organizations.show', $organization->slug)->with('success', 'Investors added!');
+        return redirect()->route('admin.organizations.show', $organization->slug)->with('success', 'Investors added!');
     }
 
     public function addPeople(Request $request): \Illuminate\Http\RedirectResponse
@@ -186,7 +186,7 @@ class OrganizationController extends Controller
             ->event('added people')
             ->log('People added to ' . $organization->name);
 
-        return redirect()->route('organizations.show', $organization->slug)->with('success', 'People added!');
+        return redirect()->route('admin.organizations.show', $organization->slug)->with('success', 'People added!');
     }
 
     public function people($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <x-entities.create backUrl="{{ route('organizations.show', $organization->slug) }}" backLabel="{{ $organization->name }}">
+    <x-entities.create backUrl="{{ route('admin.organizations.show', $organization->slug) }}" backLabel="{{ $organization->name }}">
         <x-slot:title>Manage People</x-slot:title>
 
         <form action="" method="post" id="people-form" data-people="{{ $people }}">
@@ -24,7 +24,7 @@
                     <input type="hidden" id="organization" name="organization" value="{{ $organization->id }}">
                 </div>
                 <div>
-                    <button id="add-person" type="submit" class="btn btn-lg btn-tertiary" data-url="{{ route('organizations.save-person') }}">Save</button>
+                    <button id="add-person" type="submit" class="btn btn-lg btn-tertiary" data-url="{{ route('admin.organizations.save-person') }}">Save</button>
                 </div>
             </div>
 

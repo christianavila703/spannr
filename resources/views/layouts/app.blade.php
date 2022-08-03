@@ -33,7 +33,7 @@
                         @endcan
                         @can('view records')
                             <li class="nav-item">
-                                <a href="{{ route('longevity-index') }}" class="nav-link">Longevity Stock Index</a>
+                                <a href="{{ route('admin.longevity-index') }}" class="nav-link">Longevity Stock Index</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -41,12 +41,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
-                                    <a class="dropdown-item" href="{{ route('organizations.index') }}">Organizations</a>
-                                    <a class="dropdown-item" href="{{ route('people.index') }}">People</a>
-                                    <a class="dropdown-item" href="{{ route('investors.index') }}">Investors</a>
-                                    <a class="dropdown-item" href="{{ route('fundraising-rounds.index') }}">Fundraising Rounds</a>
-                                    <a class="dropdown-item" href="{{ route('jobs.index') }}">Jobs</a>
-                                    <a class="dropdown-item" href="{{ route('events.index') }}">Events</a>
+                                    <a class="dropdown-item" href="{{ route('admin.organizations.index') }}">Organizations</a>
+                                    <a class="dropdown-item" href="{{ route('admin.people.index') }}">People</a>
+                                    <a class="dropdown-item" href="{{ route('admin.investors.index') }}">Investors</a>
+                                    <a class="dropdown-item" href="{{ route('admin.fundraising-rounds.index') }}">Fundraising Rounds</a>
+                                    <a class="dropdown-item" href="{{ route('admin.jobs.index') }}">Jobs</a>
+                                    <a class="dropdown-item" href="{{ route('admin.events.index') }}">Events</a>
+                                    <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
                                 </div>
                             </li>
                         @endcan
@@ -58,11 +59,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-add-new">
-                                    <a href="{{ route('organizations.create') }}" class="dropdown-item">Organization</a>
-                                    <a href="{{ route('people.create') }}" class="dropdown-item">Person</a>
-                                    <a href="{{ route('investors.create') }}" class="dropdown-item">Investor</a>
-                                    <a href="{{ route('jobs.create') }}" class="dropdown-item">Job</a>
-                                    <a href="{{ route('events.create') }}" class="dropdown-item">Event</a>
+                                    <a href="{{ route('admin.organizations.create') }}" class="dropdown-item">Organization</a>
+                                    <a href="{{ route('admin.people.create') }}" class="dropdown-item">Person</a>
+                                    <a href="{{ route('admin.investors.create') }}" class="dropdown-item">Investor</a>
+                                    <a href="{{ route('admin.jobs.create') }}" class="dropdown-item">Job</a>
+                                    <a href="{{ route('admin.events.create') }}" class="dropdown-item">Event</a>
+                                    <a href="{{ route('admin.content.create') }}" class="dropdown-item">Content</a>
                                 </div>
                             </li>
                         @endcan
@@ -74,9 +76,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-admin">
-                                    <a href="{{ route('activity-log.index') }}" class="dropdown-item">Activity Log</a>
-                                    <a href="/backup" class="dropdown-item">Backups</a>
+                                    <a href="{{ route('admin.activity-log.index') }}" class="dropdown-item">Activity Log</a>
+                                    <a href="/admin/backup" class="dropdown-item">Backups</a>
                                     <a href="/log-viewer" class="dropdown-item">Logs</a>
+                                    <a href="{{ route('admin.users.index') }}" class="dropdown-item">Users</a>
                                 </div>
                             </li>
                         @endcan
@@ -89,12 +92,6 @@
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

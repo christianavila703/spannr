@@ -29,11 +29,11 @@
             @endif
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-building" tooltip="Organization">
-            <a href="{{ route('organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
+            <a href="{{ route('admin.organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$fundraisingRound->investors" routeName="investors.show" />
+        <x-entities.show.relationship-basic :records="$fundraisingRound->investors" routeName="admin.investors.show" />
 
         <x-entities.show.field-heading title="Description" />
         <div>

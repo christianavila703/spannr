@@ -27,10 +27,10 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$person->organizations" routeName="organizations.show" />
+        <x-entities.show.relationship-basic :records="$person->organizations" routeName="admin.organizations.show" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$person->locations" routeName="locations.show" />
+        <x-entities.show.relationship-basic :records="$person->locations" routeName="admin.locations.show" />
 
         <x-entities.show.field-heading title="Bio" />
         <div>

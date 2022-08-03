@@ -36,7 +36,7 @@ class InvestorController extends Controller
             $investor->storeImage($request->file('image'));
         }
 
-        return redirect()->route('investors.index')->with('success', 'Added ' . $investor->name);
+        return redirect()->route('admin.investors.index')->with('success', 'Added ' . $investor->name);
     }
 
     public function show($slug)
@@ -67,7 +67,7 @@ class InvestorController extends Controller
             $investor->storeImage($request->file('image'));
         }
 
-        return redirect()->route('investors.show', $investor->slug);
+        return redirect()->route('admin.investors.show', $investor->slug);
     }
 
     public function destroy($id)

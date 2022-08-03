@@ -1,3 +1,14 @@
+/* Spacer Sizing */
+$spacer-mobile: 1.25rem;
+$spacer-desktop: 2rem;
+
+///* Breakpoints */
+$bp-min-tablet: 768px;
+$bp-min-desktop: 1024px;
+$bp-min-desktop-xl: 1500px;
+
+$container-max-width: 1600px;
+
 // Colors
 $white:    #fff;
 $gray-100: #f8f9fa;
@@ -22,11 +33,13 @@ $green:   #88f200;
 $green-darker: #61ac01;
 $teal:    #00ffff;
 $cyan:    #00ffff;
+$maroon: #9e1f63;
 
 $primary:       $blue;
 $secondary:     $gray-600;
 $tertiary:      $indigo;
 $quaternary:    $pink;
+$quintary:      $maroon;
 $success:       $green-darker;
 $info:          $cyan;
 $warning:       $yellow;
@@ -39,6 +52,7 @@ $theme-colors: (
     "secondary":    $secondary,
     "tertiary":     $tertiary,
     "quaternary":   $quaternary,
+    "quintary":     $quintary,
     "success":      $success,
     "info":         $info,
     "warning":      $warning,
@@ -68,6 +82,25 @@ $headings-font-family: "ITC Lubalin Graph Std";
 $font-family-subheadings: "Avant Garde Gothic Pro Bold";
 $lead-font-weight: 400;
 
+$font-size-root:              null !default;
+$font-size-base:              1rem; // Assumes the browser default, typically `16px`
+$font-size-sm:                $font-size-base * .875;
+$font-size-lg:                $font-size-base * 1.25;
+
+$line-height-base:            1.5 !default;
+$line-height-sm:              1.25 !default;
+$line-height-lg:              2 !default;
+
+$h1-font-size:                $font-size-base * 2.5 !default;
+$h2-font-size:                $font-size-base * 2 !default;
+$h3-font-size:                $font-size-base * 1.75 !default;
+$h4-font-size:                $font-size-base * 1.5 !default;
+$h5-font-size:                $font-size-base * 1.25 !default;
+$h6-font-size:                $font-size-base !default;
+
+$headings-margin-bottom:      .5rem;
+$headings-line-height:        1.2 !default;
+
 // Components
 $component-active-color:      $white;
 $component-active-bg:         $primary;
@@ -94,3 +127,13 @@ $dropdown-link-active-bg:           $component-active-bg;
 
 // Tooltips
 $tooltip-max-width:                 450px;
+
+// Input
+$input-border-radius: 0;
+$input-border-radius-sm: 0;
+$input-border-radius-lg: 0;
+//$input-border-color: $white;
+$input-focus-border-color: $purple;
+
+// Buttons
+$btn-border-radius: 0;

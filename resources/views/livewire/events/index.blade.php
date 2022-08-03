@@ -38,13 +38,13 @@
             <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex align-items-stretch">
                 <div class="card">
                     @if ($event->image_url)
-                        <a href="{{ route('events.show', $event->slug) }}">
+                        <a href="{{ route('admin.events.show', $event->slug) }}">
                             <img src="{{ $event->image_url }}" alt="{{ $event->name }}" class="card-img-top">
                         </a>
                     @endif
                     <div class="card-body">
                         <p class="card-heading-link mb-0">
-                            <a href="{{ route('events.show', $event->slug) }}">{{ $event->name }}</a>
+                            <a href="{{ route('admin.events.show', $event->slug) }}">{{ $event->name }}</a>
                         </p>
                         <div class="dates fw-bold {{ ($event->status == \App\Models\Event::STATUS_CURRENT) ? 'text-tertiary' : 'text-dark' }} mb-1">
                             @include('admin.events.fields.dates')
@@ -63,7 +63,7 @@
                     @can('edit records')
                         <div class="card-footer">
                             <div class="edit-link">
-                                <a href="{{ route('events.edit', $event->id) }}">Edit</a>
+                                <a href="{{ route('admin.events.edit', $event->id) }}">Edit</a>
                             </div>
                         </div>
                     @endcan

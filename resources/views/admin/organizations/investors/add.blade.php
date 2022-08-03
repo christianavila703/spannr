@@ -1,7 +1,7 @@
 <div class="modal fade" id="addInvestorForm" tabindex="-1" aria-labelledby="addInvestorFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-            <form method="POST" action="{{ route('organizations.add-investors') }}">
+            <form method="POST" action="{{ route('admin.organizations.add-investors') }}">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addInvestorFormLabel">Add Investors to {{ $organization->name }}</h5>

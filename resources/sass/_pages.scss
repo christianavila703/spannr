@@ -1,0 +1,385 @@
+.page-container {
+    padding: 2rem 0;
+
+    @media (min-width: $bp-min-desktop) {
+        padding: 4rem 0;
+    }
+
+    .single-page-content {
+        max-width: 840px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Glossary */
+main.page-glossary .single-post-wrapper .container {
+    margin-top: 0;
+}
+
+.glossary-list {
+
+    .glossary-list-group {
+        position: relative;
+        min-height: 5rem;
+
+        .group-title {
+            font-size: 2.75rem;
+            color: var(--color-blue);
+            border-bottom: 2px solid var(--color-gray-light);
+        }
+
+        @media (min-width: $bp-min-desktop) {
+            padding-left: 3.5rem;
+
+            .group-title {
+                position: absolute;
+                display: flex;
+                top: 1rem;
+                left: 0;
+                border: 0;
+            }
+        }
+
+        @media (min-width: 1250px) {
+            padding-left: 0;
+
+            .group-title {
+                left: -4rem;
+            }
+        }
+
+        .glossary-list-group-item {
+            @include margin-bottom-md;
+
+            a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                padding: .75rem;
+
+                .title {
+                    @include font-size-lg;
+                    color: var(--color-gray-dark);
+                    font-family: $font-family-subheadings;
+                    margin-bottom: .5rem;
+                }
+
+                .excerpt {
+                    color: var(--color-black);
+                    p:last-of-type {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            a:hover {
+                background: var(--color-gray-extra-light);
+
+                .title {
+                    color: var(--color-purple);
+                }
+            }
+        }
+    }
+}
+
+.glossary-nav {
+    @include margin-top-md;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+}
+
+.glossary-nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid transparent;
+
+    li {
+        display: block;
+        @include font-size-xxl;
+        margin: .75rem .75rem .5rem .75rem;
+
+        @media (min-width: 1200px) {
+            @include font-size-xl;
+            margin: .75rem .5rem .25rem .5rem;
+        }
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: .25rem;
+            text-decoration: none;
+            font-family: $font-family-subheadings;
+        }
+    }
+}
+
+.glossary-nav-menu .toggle-mobile {
+    display: none;
+}
+
+.glossary-nav-menu.fixed-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-white);
+    z-index: 5;
+    max-height: 3.75rem;
+    overflow: hidden;
+    @include box-shadow-sm;
+    justify-content: flex-start;
+
+    .toggle-mobile {
+        display: block;
+        width: 1.5rem;
+    }
+
+    .toggle-mobile:hover {
+        cursor: pointer;
+    }
+
+    @media (min-width: $bp-min-desktop) {
+        justify-content: center;
+
+        .toggle-mobile {
+            display: none;
+        }
+    }
+}
+
+.glossary-nav-menu.fixed-nav.open {
+    max-height: none;
+}
+
+/* Longevity Stock Index */
+.longevity-stock-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $bp-min-tablet) {
+        flex-direction: row;
+    }
+
+    #summary {
+        margin-bottom: 2rem;
+        flex-shrink: 0;
+
+        @media (min-width: $bp-min-desktop) {
+            margin-right: 2rem;
+        }
+    }
+
+    #chart {
+        width: 100%;
+        height: 500px;
+    }
+}
+
+.longevity-stock-index-summary {
+
+    .title {
+        text-align: center;
+        color: var(--color-blue);
+
+        span {
+            display: block;
+        }
+    }
+
+    .top-line {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+
+        .last {
+            margin-bottom: 0;
+            margin-right: .75rem;
+        }
+
+        .change {
+
+            .lead {
+                margin-right: .25rem;
+            }
+        }
+    }
+
+    .second-line {
+        font-size: .9rem;
+        color: var(--color-gray-dark);
+        margin-bottom: .5rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .timestamp,
+        .market-cap {
+            margin: .25rem .5rem;
+        }
+    }
+
+    .table-container {
+        display: flex;
+        font-size: .9rem;
+
+        .spacer {
+            flex-grow: 1;
+        }
+
+        .table {
+            width: 47%;
+            flex-shrink: 0;
+        }
+    }
+}
+
+.longevity-stock-table-container {
+    padding: 2rem 1rem;
+
+    .table {
+        width: 100%;
+
+        th {
+            font-size: 1rem;
+            max-width: 140px;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+    }
+}
+/* Companies */
+#longevity-companies {
+    .company-card {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        padding: 1rem;
+        align-items: center;
+
+        a {
+            display: flex;
+            flex-direction: column;
+            align-self: stretch;
+            padding: 1rem;
+            align-items: center;
+            border: 2px solid var(--color-gray-extra-light);
+            text-decoration: none;
+            transition: all .3s ease-in-out;
+        }
+
+        a:hover {
+            transform: scale(1.02);
+        }
+
+        .logo {
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            height: 200px;
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            margin-bottom: 1rem;
+        }
+
+        .title {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.organization-details-container {
+    min-height: 700px;
+
+    .heading-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+    }
+
+    .logo {
+        width: 200px;
+        height: 140px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        //border-radius: 100%;
+        display: block;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        //border: 1px solid var(--color-gray-light);
+
+        @media (min-width: 768px) {
+            margin-right: 2rem;
+        }
+    }
+
+    .title {
+        border-bottom: 1px solid var(--color-gray-dark);
+        text-transform: uppercase;
+        margin-bottom: .5rem;
+    }
+
+    .overview {
+        .label {
+            display: block;
+            color: var(--color-gray-medium-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .value {
+            display: block;
+            font-weight: 600;
+        }
+    }
+
+    .stock-details {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 1rem;
+
+        .ticker,
+        .current-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-right: 1rem;
+            display: block;
+            line-height: 1.15;
+        }
+
+        .ticker {
+            color: var(--color-gray-medium-dark);
+        }
+
+        .change-percent {
+            margin-right: .5rem;
+            display: block;
+            line-height: 1.25;
+        }
+
+        .change-dollar {
+            display: block;
+            line-height: 1.25;
+        }
+    }
+}

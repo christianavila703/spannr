@@ -35,4 +35,10 @@ return [
         'key' => env('POLYGON_KEY'),
     ],
 
+    'wordpress' => [
+        'url' => env('WORDPRESS_URL'),
+        'username' => env('WORDPRESS_USERNAME'),
+        'password' => env('WORDPRESS_PASSWORD'),
+    ],
+
 ];

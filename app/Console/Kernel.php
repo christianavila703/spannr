@@ -30,6 +30,12 @@ class Kernel extends ConsoleKernel
             ->everyFifteenMinutes()
             ->between('8:45', '15:30');
 
+        $schedule->command('wordpress:sync-articles')
+            ->hourlyAt(15);
+
+        $schedule->command('wordpress:sync-glossary')
+            ->hourlyAt(20);
+
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');

@@ -16,6 +16,17 @@ trait HasImage {
         }
     }
 
+    public function getImageFullUrlAttribute(): string
+    {
+        if ($this->image) {
+            return url('/') . '/storage/images/' . $this->modelName . '/' . $this->image;
+        } elseif ($this->blankImage) {
+            return url('/') . $this->blankImage;
+        } else {
+            return '';
+        }
+    }
+
     public function storeImage($file) {
         $fileName = $this->slug . "." . $file->getClientOriginalExtension();
         Storage::putFileAs($this->imageUrlStoragePath, $file, $fileName);

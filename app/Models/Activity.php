@@ -36,10 +36,10 @@ class Activity extends SpatieActivity
     public function getSubjectLinkAttribute(): string
     {
         $routeName = match($this->subject_type) {
-            Organization::class => 'organizations.show',
-            Person::class => 'people.show',
-            Investor::class => 'investors.show',
-            FundraisingRound::class => 'fundraising-rounds.show',
+            Organization::class => 'admin.organizations.show',
+            Person::class => 'admin.people.show',
+            Investor::class => 'admin.investors.show',
+            FundraisingRound::class => 'admin.fundraising-rounds.show',
             default => ''
         };
 

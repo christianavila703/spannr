@@ -34,7 +34,7 @@
         @foreach($investors as $investor)
             <tr>
                 <td>
-                    <a href="{{ route('investors.show', $investor->slug) }}">{{ $investor->name }}</a>
+                    <a href="{{ route('admin.investors.show', $investor->slug) }}">{{ $investor->name }}</a>
                 </td>
                 <td class="text-nowrap">{{ $investor->type }}</td>
                 <td>{!! $investor->websiteLink !!}</td>
@@ -42,14 +42,14 @@
                 <td>
                     <div class="max-width-600">
                         @foreach ($investor->fundraisingRounds as $fundraisingRound)
-                            <a href="{{ route('fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('admin.fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </div>
                 </td>
                 <td>
                     <div class="max-width-600">
                         @foreach ($investor->organizations as $organization)
-                            <a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('admin.organizations.show', $organization->slug) }}">{{ $organization->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </div>
                 </td>

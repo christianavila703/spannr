@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,5 +54,18 @@ class User extends Authenticatable implements MustVerifyEmail
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    public function getCreatedDateAttribute(): string
+    {
+        return Carbon::parse($this->created_at)->format('Y-m-d');
+    }
+
+    public function getRoleColorAttribute($role): string
+    {
+        return match($role) {
+            'Admin' => 'bg-primary',
+            default => 'bg-info'
+        };
     }
 }

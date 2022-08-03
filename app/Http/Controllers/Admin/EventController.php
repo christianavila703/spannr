@@ -41,7 +41,7 @@ class EventController extends Controller
 
         $this->syncRelationships($event, $validated, $request);
 
-        return redirect()->route('events.index')->with('success', 'Added ' . $event->name);
+        return redirect()->route('admin.events.index')->with('success', 'Added ' . $event->name);
     }
 
     public function show($slug)
@@ -90,7 +90,7 @@ class EventController extends Controller
 
         $this->syncRelationships($event, $validated, $request);
 
-        return redirect()->route('events.show', $event->slug)->with('success', $event->name . ' updated!');
+        return redirect()->route('admin.events.show', $event->slug)->with('success', $event->name . ' updated!');
     }
 
     public function destroy($id)

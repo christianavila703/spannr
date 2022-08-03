@@ -33,7 +33,7 @@ class PersonController extends Controller
             $person->storeImage($request->file('image'));
         }
 
-        return redirect()->route('people.index')->with('success', 'Added ' . $person->name);
+        return redirect()->route('admin.people.index')->with('success', 'Added ' . $person->name);
     }
 
     public function show($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -64,7 +64,7 @@ class PersonController extends Controller
             $person->storeImage($request->file('image'));
         }
 
-        return redirect()->route('people.show', $person->slug);
+        return redirect()->route('admin.people.show', $person->slug);
     }
 
     public function destroy($id)

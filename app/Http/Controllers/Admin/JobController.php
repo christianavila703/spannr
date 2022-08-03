@@ -50,7 +50,7 @@ class JobController extends Controller
 
         $job->saveTrixRichText($request->input('job-trixFields'));
 
-        return redirect()->route('jobs.index')->with('success', 'Added ' . $job->name);
+        return redirect()->route('admin.jobs.index')->with('success', 'Added ' . $job->name);
     }
 
     public function show($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -93,11 +93,12 @@ class JobController extends Controller
     {
         $validated = $request->validated();
         $job = Job::findOrFail($id);
+
         $job->update($validated);
 
         $job->saveTrixRichText($request->input('job-trixFields'));
 
-        return redirect()->route('jobs.show', $job->slug)->with('success', $job->name . ' updated!');
+        return redirect()->route('admin.jobs.show', $job->slug)->with('success', $job->name . ' updated!');
     }
 
     public function destroy($id)

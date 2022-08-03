@@ -107,7 +107,7 @@
                             value="{{ old('owner_id') }}"
                         @else
                             @isset($job)
-                                value="{{ $job->id }}"
+                                value="{{ $job->owner_id }}"
                             @endisset
                         @endif
                     >

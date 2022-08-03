@@ -9,7 +9,7 @@
         <livewire:jobs.index />
 
         <div class="mt-3">
-            <a href="{{ route('job-categories.create') }}" class="btn btn-sm btn-outline-tertiary">Add Job Category</a>
+            <a href="{{ route('admin.job-categories.create') }}" class="btn btn-sm btn-outline-tertiary">Add Job Category</a>
         </div>
     </div>
 @endsection

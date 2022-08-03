@@ -99,4 +99,8 @@ class Organization extends Model
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
     }
+
+    public function getSeoDescriptionAttribute() {
+        return Str::words($this->description, 25);
+    }
 }

@@ -51,7 +51,7 @@ class LocationController extends Controller
             $entity->locations()->syncWithoutDetaching([$newLocation->id]);
         }
 
-        return redirect()->route($relationship . '.show', $entity->slug)->with('success', 'Location added!');
+        return redirect()->route('admin.' . $relationship . '.show', $entity->slug)->with('success', 'Location added!');
 
     }
 

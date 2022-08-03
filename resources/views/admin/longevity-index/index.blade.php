@@ -85,7 +85,7 @@
             @foreach($marketSnapshot->stockSnapshots as $stockSnapshot)
                 <tr>
                     <td>
-                        <a href="{{ route('organizations.show', $stockSnapshot->stock->organization->slug) }}">{{ $stockSnapshot->stock->name }}</a>
+                        <a href="{{ route('admin.organizations.show', $stockSnapshot->stock->organization->slug) }}">{{ $stockSnapshot->stock->name }}</a>
                     </td>
                     <td>
                         {{ $stockSnapshot->weight_percent }}%
@@ -112,8 +112,8 @@
         </table>
 
         <div class="mt-5">
-            <a href="{{ route('longevity-index.all') }}" class="btn btn-secondary">View past snapshots</a>
-            <a href="{{ route('longevity-index.update') }}" class="btn btn-tertiary">Update Index</a>
+            <a href="{{ route('admin.longevity-index.all') }}" class="btn btn-secondary">View past snapshots</a>
+            <a href="{{ route('admin.longevity-index.update') }}" class="btn btn-tertiary">Update Index</a>
         </div>
     </div>
 @endsection

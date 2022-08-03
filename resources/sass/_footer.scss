@@ -1,0 +1,51 @@
+.public-footer{
+    padding: 4rem 2rem;
+    background: transparent linear-gradient(270deg, #F0C84D 22%, #D1337C 100%) 0% 0% no-repeat padding-box;
+    text-align: center;
+    color: var(--color-white);
+
+    a {
+        color: var(--color-white);
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: $container-max-width;
+        margin: 0 auto;
+    }
+
+    .copyright-terms {
+        @include font-size-sm;
+        text-transform: uppercase;
+        margin-top: 4rem;
+    }
+
+    .logo {
+        height: 50px;
+        margin-bottom: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
+    }
+
+    ul.terms {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+
+        li {
+            margin: 0 .5rem .5rem .5rem;
+            font-weight: 700;
+            font-family: $font-family-subheadings;
+
+            a {
+                display: block;
+            }
+        }
+    }
+}

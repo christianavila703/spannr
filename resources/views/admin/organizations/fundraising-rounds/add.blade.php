@@ -1,7 +1,7 @@
 <div class="modal fade" id="addFundraisingRoundForm" tabindex="-1" aria-labelledby="addFundraisingRoundFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-            <form method="POST" action="{{ route('fundraising-rounds.store') }}">
+            <form method="POST" action="{{ route('admin.fundraising-rounds.store') }}">
                 @csrf
                 <input type="hidden" name="organization_id" value="{{ $organization->id }}">
                 <div class="modal-header">

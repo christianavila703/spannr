@@ -41,7 +41,7 @@
     let dataLow;
 
     console.log("Fetching data...");
-    getJSON("/organizations/{{ $slug }}/stock-data").then(data => {
+    getJSON("/admin/organizations/{{ $slug }}/stock-data").then(data => {
 
         labels = data.chartLabels.map(function (e) {
             return e;

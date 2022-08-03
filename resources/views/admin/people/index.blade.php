@@ -18,7 +18,7 @@
             @foreach($people as $person)
                 <tr>
                     <td>
-                        <a href="{{ route('people.show', $person->slug) }}">{{ $person->name }}</a>
+                        <a href="{{ route('admin.people.show', $person->slug) }}">{{ $person->name }}</a>
                     </td>
                     <td>{{ $person->byline }}</td>
                     <td>{{ $person->website }}</td>

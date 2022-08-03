@@ -11,19 +11,19 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$event->organizations" routeName="organizations.show" />
+        <x-entities.show.relationship-basic :records="$event->organizations" routeName="admin.organizations.show" />
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$event->investors" routeName="investors.show" />
+        <x-entities.show.relationship-basic :records="$event->investors" routeName="admin.investors.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-basic :records="$event->people" routeName="people.show" />
+        <x-entities.show.relationship-basic :records="$event->people" routeName="admin.people.show" />
 
         <x-entities.show.field-heading title="Locations" />
         @if($event->remote)
             <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
         @endif
-        <x-entities.show.relationship-basic :records="$event->locations" routeName="locations.show" />
+        <x-entities.show.relationship-basic :records="$event->locations" routeName="admin.locations.show" />
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">

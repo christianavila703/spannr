@@ -52,7 +52,7 @@
                     {{ Carbon\Carbon::parse($job->posted_date)->format('M d, Y') }}
                 </td>
                 <td class="text-nowrap">
-                    <a href="{{ route('jobs.show', $job->slug) }}">{{ $job->name }}</a>
+                    <a href="{{ route('admin.jobs.show', $job->slug) }}">{{ $job->name }}</a>
                     @if ($job->status === \App\Models\Job::STATUS_ARCHIVED)
                         <span class="badge bg-gray-medium text-dark ms-2">
                             Archived
@@ -90,7 +90,7 @@
                     @endif
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('jobs.edit', $job->id) }}">edit</a>
+                    <a href="{{ route('admin.jobs.edit', $job->id) }}">edit</a>
                 </td>
             </tr>
         @endforeach

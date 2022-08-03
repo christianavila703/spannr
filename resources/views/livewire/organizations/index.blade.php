@@ -39,7 +39,7 @@
         @foreach($organizations as $organization)
             <tr>
                 <td class="text-nowrap">
-                    <a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name }}</a>
+                    <a href="{{ route('admin.organizations.show', $organization->slug) }}">{{ $organization->name }}</a>
                 </td>
                 <td>{{ $organization->type }}</td>
                 <td>{{ $organization->founded_date }}</td>
@@ -63,19 +63,19 @@
                 <td>
                     <div class="max-width-600">
                         @foreach ($organization->investors as $investor)
-                            <a href="{{ route('investors.show', $investor->slug) }}">{{ $investor->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('admin.investors.show', $investor->slug) }}">{{ $investor->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </div>
                 </td>
                 <td>
                     <div class="max-width-600">
                         @foreach ($organization->people as $person)
-                            <a href="{{ route('people.show', $person->slug) }}">{{ $person->name }}</a> @if (!$loop->last) / @endif
+                            <a href="{{ route('admin.people.show', $person->slug) }}">{{ $person->name }}</a> @if (!$loop->last) / @endif
                         @endforeach
                     </div>
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('organizations.edit', $organization->id) }}">edit</a>
+                    <a href="{{ route('admin.organizations.edit', $organization->id) }}">edit</a>
                 </td>
             </tr>
         @endforeach

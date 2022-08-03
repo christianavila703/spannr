@@ -29,16 +29,16 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$investor->organizations" routeName="organizations.show" />
+        <x-entities.show.relationship-basic :records="$investor->organizations" routeName="admin.organizations.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-basic :records="$investor->people" routeName="people.show" />
+        <x-entities.show.relationship-basic :records="$investor->people" routeName="admin.people.show" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
         <x-entities.show.relationship-fundraising-round :records="$investor->fundraisingRounds" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$investor->locations" routeName="locations.show" />
+        <x-entities.show.relationship-basic :records="$investor->locations" routeName="admin.locations.show" />
 
         <x-entities.show.field-heading title="Description" />
         <div>
