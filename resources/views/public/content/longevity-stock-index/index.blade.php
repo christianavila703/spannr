@@ -111,4 +111,9 @@
             </tbody>
         </table>
     </div>
+    <div class="container pb-3">
+        @if($seo)
+            {!! $seo->content !!}
+        @endif
+    </div>
 @endsection

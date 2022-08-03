@@ -152,3 +152,37 @@ span.required {
     margin-left: .5rem;
     color: $red;
 }
+
+/* Lists on Pages / Posts */
+.single-post-wrapper,
+.single-page-content {
+
+    p + ul,
+    p + ol {
+        margin-top: $spacer-mobile * -.75;
+
+        @media (min-width: $bp-min-desktop) {
+            margin-top: $spacer-desktop * -.75;
+        }
+    }
+
+    ul, ol {
+        margin-left: $spacer-mobile;
+
+        @media (min-width: $bp-min-desktop) {
+            margin-left: $spacer-mobile;
+        }
+
+        li {
+            margin-bottom: .5rem;
+        }
+
+        li:last-of-type {
+            margin-bottom: 0;
+        }
+
+        ul, ol {
+            margin-bottom: 0;
+        }
+    }
+}

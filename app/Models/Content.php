@@ -27,6 +27,8 @@ class Content extends Model
         'home',
         'articles',
         'index',
+        'index-about',
+        'index-terms',
         'ventures',
         'terms',
         'privacy',

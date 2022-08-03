@@ -21,7 +21,7 @@ class ContentController extends Controller
 
     public function home() {
         $seo = Content::where('slug', 'home')->first();
-        return view('public.content.index', [
+        return view('public.content.home', [
             'showHeader' => true,
             'headerClass' => 'dark',
             'seo' => $seo
@@ -126,6 +126,20 @@ class ContentController extends Controller
         ]);
     }
 
+    public function longevityStockIndexAbout() {
+        $seo = Content::where('slug', 'index-about')->first();
+        return view('public.content.wordpress', [
+            'seo' => $seo
+        ]);
+    }
+
+    public function longevityStockIndexTerms() {
+        $seo = Content::where('slug', 'index-terms')->first();
+        return view('public.content.wordpress', [
+            'seo' => $seo
+        ]);
+    }
+
     public function longevityStockChart(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $marketSnapshots = MarketSnapshot::daily()
@@ -155,6 +169,16 @@ class ContentController extends Controller
         ];
 
         return response(json_encode($data, JSON_NUMERIC_CHECK));
+    }
+
+    public function companiesList() {
+        $organizations = Organization::whereHas('stock')->get();
+        $seo = Content::where('slug', 'companies')->first();
+
+        return view('public.content.organizations.index', [
+           'organizations' => $organizations,
+            'seo' => $seo
+        ]);
     }
 
     public function organizationShow($slug) {

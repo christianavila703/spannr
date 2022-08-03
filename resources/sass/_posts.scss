@@ -1,36 +1,6 @@
 /* Single Post */
 .single-post-wrapper {
 
-    /* Lists */
-    p + ul,
-    p + ol {
-        margin-top: $spacer-mobile * -.75;
-
-        @media (min-width: $bp-min-desktop) {
-            margin-top: $spacer-desktop * -.75;
-        }
-    }
-
-    ul, ol {
-        margin-left: $spacer-mobile * 1.5;
-
-        @media (min-width: $bp-min-desktop) {
-            margin-left: $spacer-desktop * 1.5;
-        }
-
-        li {
-            margin-bottom: .5rem;
-        }
-
-        li:last-of-type {
-            margin-bottom: 0;
-        }
-
-        ul, ol {
-            margin-bottom: 0;
-        }
-    }
-
     .container {
         display: flex;
         flex-direction: column;

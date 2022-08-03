@@ -30,7 +30,10 @@ Route::get('/articles/{slug}', [App\Http\Controllers\Public\ContentController::c
 Route::get('/glossary', [App\Http\Controllers\Public\ContentController::class, 'glossaryIndex'])->name('public.content.glossary.index');
 Route::get('/glossary/{slug}', [App\Http\Controllers\Public\ContentController::class, 'glossaryShow'])->name('public.content.glossary.show');
 Route::get('/index', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndex'])->name('public.content.longevity-index');
+Route::get('/index/about', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndexAbout'])->name('public.content.longevity-index.about');
+Route::get('/index/terms-and-disclaimers', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndexTerms'])->name('public.content.longevity-index.terms');
 Route::get('/longevity-stock-chart', [App\Http\Controllers\Public\ContentController::class, 'longevityStockChart'])->name('public.content.longevity-index.chart');
+Route::get('/companies/', [App\Http\Controllers\Public\ContentController::class, 'companiesList'])->name('public.content.organizations.index');
 Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::class, 'organizationShow'])->name('public.content.organizations.show');
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');

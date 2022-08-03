@@ -15,6 +15,10 @@
                     <td>
                         @if($contentItem->slug === 'home')
                             <a href="/" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
+                        @elseif($contentItem->slug === 'index-about')
+                            <a href="{{ route('public.content.longevity-index.about') }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
+                        @elseif($contentItem->slug === 'index-terms')
+                            <a href="{{ route('public.content.longevity-index.terms') }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
                         @else
                             <a href="/{{ $contentItem->slug }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
                         @endif
