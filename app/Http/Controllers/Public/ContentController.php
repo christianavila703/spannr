@@ -119,6 +119,8 @@ class ContentController extends Controller
         $seo = Content::where('slug', 'index')->first();
 
         $marketSnapshot = MarketSnapshot::orderByDesc('timestamp')
+            ->complete()
+            ->hourly()
             ->with(['stockSnapshots'])
             ->first();
 
@@ -145,6 +147,7 @@ class ContentController extends Controller
     public function longevityStockChart(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $marketSnapshots = MarketSnapshot::daily()
+            ->complete()
             ->orderBy('timestamp')
             ->get();
 
@@ -160,12 +163,11 @@ class ContentController extends Controller
             ];
         }
 
-        $now = Carbon::now();
-        $todayMarketOpens = Carbon::parse('today 8:45am', 'America/Chicago');
+        $lastMarketSnapshot = $marketSnapshots->last();
+        $latestHourly = MarketSnapshot::hourly()->complete()->orderByDesc('timestamp')->first();
 
-        if ($now > $todayMarketOpens) {
-            $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
-
+        if (Carbon::parse($lastMarketSnapshot->timestamp)->format('Y-m-d') !== Carbon::parse($latestHourly->timestamp)->format('Y-m-d')) {
+            $latestHourly = MarketSnapshot::hourly()->complete()->orderByDesc('timestamp')->first();
             $data[] = [
                 'date' => $latestHourly->formatted_date,
                 'value' => $latestHourly->index_value,

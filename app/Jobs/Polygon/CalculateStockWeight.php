@@ -3,6 +3,7 @@
 namespace App\Jobs\Polygon;
 
 use App\Models\MarketSnapshot;
+use App\Models\StockSnapshot;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,5 +40,8 @@ class CalculateStockWeight implements ShouldQueue
             $snapshot->weight = round($snapshot->market_cap / $this->marketSnapshot->market_cap, 4) * 100;
             $snapshot->save();
         }
+
+        $this->marketSnapshot->status = MarketSnapshot::STATUS_COMPLETE;
+        $this->marketSnapshot->save();
     }
 }

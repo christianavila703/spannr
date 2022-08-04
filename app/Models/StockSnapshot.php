@@ -37,6 +37,14 @@ class StockSnapshot extends Model
     }
 
     /**
+     * Scopes
+     */
+    public function scopeComplete($query)
+    {
+        return $query->where('status', self::STATUS_COMPLETE);
+    }
+
+    /**
      * Accessors
      */
     public function getChangeColorAttribute(): string

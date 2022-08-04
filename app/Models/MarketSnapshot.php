@@ -21,6 +21,9 @@ class MarketSnapshot extends Model
     const TYPE_HOURLY = 'hourly';
     const TYPE_REBALANCE = 'rebalance';
 
+    const STATUS_PENDING = 'pending';
+    const STATUS_COMPLETE = 'complete';
+
     /**
      * FUNCTIONS
      */
@@ -44,6 +47,11 @@ class MarketSnapshot extends Model
     /**
      * SCOPES
      */
+    public function scopeComplete($query)
+    {
+        return $query->where('status', self::STATUS_COMPLETE);
+    }
+
     public function scopeDaily($query)
     {
         return $query->where('type', self::TYPE_DAILY);
