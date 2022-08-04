@@ -81,6 +81,11 @@ class Organization extends Model
         return $this->morphToMany(Location::class, 'locatable' , 'location_relationships')->withTimestamps();
     }
 
+    public function mediaItems(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(MediaItem::class)->withTimestamps();
+    }
+
     public function stock(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Stock::class);

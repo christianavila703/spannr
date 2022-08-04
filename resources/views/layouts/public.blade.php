@@ -23,6 +23,7 @@
 
         gtag('config', 'G-TW8JCMEBZF');
     </script>
+    <script defer data-domain="spannr.com" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     @includeUnless($showHeader === false, 'public.includes.header')

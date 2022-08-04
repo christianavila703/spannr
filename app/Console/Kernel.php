@@ -36,6 +36,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('wordpress:sync-glossary')
             ->hourlyAt(20);
 
+        $schedule->command('polygon:get-news')
+            ->hourlyAt(25);
+
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');

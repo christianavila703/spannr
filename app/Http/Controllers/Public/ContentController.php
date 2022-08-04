@@ -197,7 +197,7 @@ class ContentController extends Controller
 
     public function organizationShow($slug) {
         $organization = Organization::whereHas('stock')
-            ->with(['locations', 'stock', 'stock.latestSnapshot'])
+            ->with(['locations', 'stock', 'stock.latestSnapshot', 'mediaItems'])
             ->where('slug', $slug)
             ->firstOrFail();
 

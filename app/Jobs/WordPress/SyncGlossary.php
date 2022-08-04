@@ -50,10 +50,14 @@ class SyncGlossary implements ShouldQueue
             $seo = str_replace('wp.spannr.com', 'spannr.com', $seo);
             $seo = str_replace('spannr.com/wp-content/uploads', 'wp.spannr.com/wp-content/uploads', $seo);
 
+            $content = html_entity_decode($wpPost['content']['rendered']);
+            $content = str_replace('//wp.spannr.com', '//spannr.com', $content);
+            $content = str_replace('//spannr.com/wp-content/uploads', '//wp.spannr.com/wp-content/uploads', $content);
+
             $attributes = [
                 'name' => html_entity_decode($wpPost['title']['rendered']),
                 'slug' => $wpPost['slug'],
-                'content' => html_entity_decode($wpPost['content']['rendered']),
+                'content' => $content,
                 'group' => strtoupper(substr($wpPost['title']['rendered'], 0, 1)),
                 'seo' => $seo
             ];

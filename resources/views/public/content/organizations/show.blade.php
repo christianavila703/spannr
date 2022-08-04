@@ -12,10 +12,10 @@
     <meta property="og:url" content="{{ route('public.content.organizations.show', $organization->slug) }}" />
     <meta property="og:site_name" content="Spannr" />
     <meta property="article:modified_time" content="2022-08-03T15:21:28+00:00" />
-    <meta property="og:image" content="https://spannr.com/wp-content/uploads/2022/04/social-share-white.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="628" />
-        <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image" content="https://wp.spannr.com/wp-content/uploads/2022/04/social-share-white.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="628" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@spannr_" />
 @endpush
@@ -35,17 +35,17 @@
                 <div class="logo" style="background-image: url({{ $organization->image_url }});"></div>
                 <div class="text">
                     <span class="d-block text-muted text-uppercase fw-bold">Organization</span>
-                    <h3 class="h2">{{ $organization->name }}</h3>
+                    <h1 class="h2">{{ $organization->name }}</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="mb-4">
-                        <h4 class="title">About</h4>
+                        <h2 class="title">About</h2>
                         <p>{!! $organization->description !!}</p>
                     </div>
                     <div class="mb-3 overview">
-                        <h4 class="title">Overview</h4>
+                        <h3 class="title">Overview</h3>
                         <div class="row">
                             <div class="col-12 col-md-6 col-xl-5">
                                 <div class="mb-3">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-5 offset-xl-1">
-                    <h4 class="title">Stock</h4>
+                    <h2 class="title">Stock</h2>
                     <div class="stock-details">
                         <span class="ticker">
                             {{ $organization->stock->ticker }}
@@ -97,6 +97,12 @@
                     <div>
                         @include('public.content.organizations.chart', ['slug' => $organization->slug])
                     </div>
+                </div>
+                <div class="col-12 col-md-6 mt-5">
+                    @if ($organization->mediaItems->count() > 0)
+                        <h2 class="title">Latest News</h2>
+                        <livewire:public.organization-news organizationId="{{ $organization->id }}"/>
+                    @endif
                 </div>
             </div>
         </div>
