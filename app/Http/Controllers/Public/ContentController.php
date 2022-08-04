@@ -160,15 +160,20 @@ class ContentController extends Controller
             ];
         }
 
-        $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
+        $now = Carbon::now();
+        $todayMarketOpens = Carbon::parse('today 8:45am', 'America/Chicago');
 
-        $data[] = [
-            'date' => $latestHourly->formatted_date,
-            'value' => $latestHourly->index_value,
-            'formatted_value' => $latestHourly->formatted_index_value,
-            'formatted_date' => $latestHourly->formatted_pretty_date,
-            'change' => $latestHourly->formatted_index_change
-        ];
+        if ($now > $todayMarketOpens) {
+            $latestHourly = MarketSnapshot::hourly()->orderByDesc('timestamp')->first();
+
+            $data[] = [
+                'date' => $latestHourly->formatted_date,
+                'value' => $latestHourly->index_value,
+                'formatted_value' => $latestHourly->formatted_index_value,
+                'formatted_date' => $latestHourly->formatted_pretty_date,
+                'change' => $latestHourly->formatted_index_change
+            ];
+        }
 
         return response(json_encode($data, JSON_NUMERIC_CHECK));
     }
