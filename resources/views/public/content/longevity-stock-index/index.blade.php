@@ -1,11 +1,11 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="longevity-stock-index-container container-fluid pt-4">
         @include('admin.includes.status-messages')
 
-        <div class="d-lg-flex align-items-start flex-shrink-0 pe-lg-5">
-            <div class="overview d-flex flex-column justify-content-center mt-lg-5 mb-3">
+        <div class="d-xl-flex align-items-start pe-lg-5">
+            <div class="overview d-flex flex-column flex-shrink-0 justify-content-center mt-lg-5 mb-3">
                 <h1 class="text-primary text-center">Longevity <span class="d-block">Stock Index</span></h1>
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="h3 pe-3 my-1">{{ $marketSnapshot->formatted_index_value }}</div>
@@ -18,8 +18,8 @@
                     <span class="me-3 text-nowrap">{{ $marketSnapshot->formatted_timestamp }} {{ $marketSnapshot->formatted_timezone }}</span>
                     <span class="text-nowrap">Market Cap: {{ $marketSnapshot->formatted_market_cap }}</span>
                 </p>
-                <div class="d-md-flex">
-                    <table class="table table-sm small">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <table class="table table-sm small width-auto" style="min-width: 200px">
                         <tr>
                             <td class="text-nowrap">Last</td><td class="text-right">{{ $marketSnapshot->formatted_index_value }}</td>
                         </tr>
@@ -37,7 +37,7 @@
                         </tr>
                     </table>
                     <div>&nbsp;&nbsp;&nbsp;</div>
-                    <table class="table table-sm small">
+                    <table class="table table-sm small width-auto" style="min-width: 200px">
                         <tr>
                             <td class="text-nowrap">Volume</td><td class="text-right">{{ $marketSnapshot->volume }}</td>
                         </tr>
@@ -57,55 +57,57 @@
                 </div>
             </div>
 
-            <div class="flex-grow-1">
-                <div class="chart-container py-3">
+            <div class="flex-grow-1 mx-auto me-xl-0">
+                <div class="chart-container py-3 border-white">
                     @include('public.content.longevity-stock-index.chart')
                 </div>
             </div>
         </div>
 
-        <table class="table small mb-5">
+{{--        @include('public.content.longevity-stock-index.cta-report')--}}
+
+        <table class="longevity-stock-index-table table small my-5">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Weight</th>
-                <th>Ticker</th>
-                <th>Current Price</th>
-                <th>Yesterday Close</th>
-                <th>Market Cap</th>
-                <th>Volume</th>
-                <th>Today's High</th>
-                <th>Today's Low</th>
-                <th><span class="d-block">Previous Day</span> Price Change</th>
-                <th><span class="d-block">Previous Day</span> % Change</th>
-                <th>Outstanding Shares</th>
+                <th class="name">Name</th>
+                <th class="weight">Weight</th>
+                <th class="ticker">Ticker</th>
+                <th class="current_price">Current Price</th>
+                <th class="yesterday_close">Yesterday Close</th>
+                <th class="market_cap">Market Cap</th>
+                <th class="volume">Volume</th>
+                <th class="today_high">Today's High</th>
+                <th class="today_low">Today's Low</th>
+                <th class="previous_change_dollar text-nowrap">$ Change</th>
+                <th class="previous_change_percent text-nowrap">% Change</th>
+                <th class="outstanding_shares">Outstanding Shares</th>
             </tr>
             </thead>
             <tbody>
             @foreach($marketSnapshot->stockSnapshots as $stockSnapshot)
                 <tr>
-                    <td>
+                    <td class="name">
                         <a href="{{ route('public.content.organizations.show', $stockSnapshot->stock->organization->slug) }}">{{ $stockSnapshot->stock->name }}</a>
                     </td>
-                    <td>
+                    <td class="weight">
                         {{ $stockSnapshot->weight_percent }}%
                     </td>
-                    <td>{{ $stockSnapshot->stock->ticker }}</td>
-                    <td>${{ number_format($stockSnapshot->current_price, 2) }}</td>
-                    <td>${{ number_format($stockSnapshot->yesterday_close, 2) }}</td>
-                    <td>${{ number_format($stockSnapshot->market_cap, 2) }}</td>
-                    <td>{{ number_format($stockSnapshot->volume, 0) }}</td>
-                    <td>${{ number_format($stockSnapshot->today_high, 2) }}</td>
-                    <td>${{ number_format($stockSnapshot->today_low, 2) }}</td>
-                    <td>
+                    <td class="ticker">{{ $stockSnapshot->stock->ticker }}</td>
+                    <td class="current_price">${{ number_format($stockSnapshot->current_price, 2) }}</td>
+                    <td class="yesterday_close">${{ number_format($stockSnapshot->yesterday_close, 2) }}</td>
+                    <td class="market_cap">${{ number_format($stockSnapshot->market_cap, 0) }}</td>
+                    <td class="volume">{{ number_format($stockSnapshot->volume, 0) }}</td>
+                    <td class="today_high">${{ number_format($stockSnapshot->today_high, 2) }}</td>
+                    <td class="today_low">${{ number_format($stockSnapshot->today_low, 2) }}</td>
+                    <td class="previous_change_dollar">
                         <span class="{{ $stockSnapshot->change_color }}">
                             ${{ number_format($stockSnapshot->previous_day_change_price, 2) }}
                         </span>
                     </td>
-                    <td>
+                    <td class="previous_change_percent">
                         {{ $stockSnapshot->previous_day_change_percent }}%
                     </td>
-                    <td>{{ number_format($stockSnapshot->outstanding_shares, 0) }}</td>
+                    <td class="outstanding_shares">{{ number_format($stockSnapshot->outstanding_shares, 0) }}</td>
                 </tr>
             @endforeach
             </tbody>
@@ -116,7 +118,7 @@
             {!! $seo->content !!}
         @endif
         <div class="d-flex flex-wrap align-items-center justify-content-center mb-3">
-            <a href="{{ route('public.content.longevity-index.about') }}" class="btn btn-link text-quaternary p-2">About the Index / Methodology</a>
+            <a href="{{ route('public.content.longevity-index.about') }}" class="btn btn-link text-quaternary p-2">Methodology / FAQ</a>
             <a href="{{ route('public.content.longevity-index.terms') }}" class="btn btn-link text-quaternary p-2">Terms &amp; Disclosures</a>
         </div>
     </div>

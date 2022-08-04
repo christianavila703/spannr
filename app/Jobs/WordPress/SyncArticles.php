@@ -49,6 +49,10 @@ class SyncArticles implements ShouldQueue
         $results = $response->json();
 
         foreach ($results as $wpPost) {
+            $seo = $wpPost['yoast_head'];
+            $seo = str_replace('wp.spannr.com', 'spannr.com', $seo);
+            $seo = str_replace('spannr.com/wp-content/uploads', 'wp.spannr.com/wp-content/uploads', $seo);
+
             $attributes = [
                 'date' => Carbon::parse($wpPost['date'])->format('Y-m-d H:i:s'),
                 'name' => html_entity_decode($wpPost['title']['rendered']),
@@ -56,7 +60,7 @@ class SyncArticles implements ShouldQueue
                 'status' => $wpPost['status'],
                 'content' => html_entity_decode($wpPost['content']['rendered']),
                 'sticky' => $wpPost['sticky'],
-                'seo' => $wpPost['yoast_head']
+                'seo' => $seo
             ];
 
             if ($wpPost['excerpt']['rendered'] != '') {

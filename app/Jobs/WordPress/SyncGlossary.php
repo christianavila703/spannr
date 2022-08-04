@@ -46,12 +46,16 @@ class SyncGlossary implements ShouldQueue
         $results = $response->json();
 
         foreach ($results as $wpPost) {
+            $seo = $wpPost['yoast_head'];
+            $seo = str_replace('wp.spannr.com', 'spannr.com', $seo);
+            $seo = str_replace('spannr.com/wp-content/uploads', 'wp.spannr.com/wp-content/uploads', $seo);
+
             $attributes = [
                 'name' => html_entity_decode($wpPost['title']['rendered']),
                 'slug' => $wpPost['slug'],
                 'content' => html_entity_decode($wpPost['content']['rendered']),
                 'group' => strtoupper(substr($wpPost['title']['rendered'], 0, 1)),
-                'seo' => $wpPost['yoast_head']
+                'seo' => $seo
             ];
 
             if ($wpPost['excerpt']['rendered'] != '') {

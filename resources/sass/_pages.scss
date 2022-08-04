@@ -246,6 +246,12 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
+.longevity-stock-index-container {
+    max-width: 2000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .longevity-stock-table-container {
     padding: 2rem 1rem;
 
@@ -258,10 +264,138 @@ main.page-glossary .single-post-wrapper .container {
         }
 
         td {
-            font-size: 1rem;
+            font-size: .85rem;
         }
     }
 }
+
+@media (max-width: 1119px) {
+    .longevity-stock-index-table > :not(:first-child) {
+        border-top: 2px solid #e0dfdf;
+    }
+
+    .longevity-stock-index-table thead {
+        display: none;
+    }
+
+    .longevity-stock-index-table tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        border-bottom: 2px solid #e0dfdf;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+    }
+
+    .longevity-stock-index-table td {
+        border-color: #fff;
+    }
+
+    .longevity-stock-index-table .name {
+        width: 100%;
+        order: 1;
+        font-size: 1.25rem;
+        line-height: 1.25;
+        font-weight: 600;
+    }
+
+    .longevity-stock-index-table .name a {
+        text-decoration: none;
+    }
+
+    .longevity-stock-index-table .ticker {
+        order: 2;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 600;
+        opacity: .75;
+    }
+
+    .longevity-stock-index-table .weight,
+    .longevity-stock-index-table .current_price,
+    .longevity-stock-index-table .yesterday_close,
+    .longevity-stock-index-table .market_cap,
+    .longevity-stock-index-table .volume,
+    .longevity-stock-index-table .today_high,
+    .longevity-stock-index-table .today_low,
+    .longevity-stock-index-table .previous_change_dollar,
+    .longevity-stock-index-table .previous_change_percent,
+    .longevity-stock-index-table .outstanding_shares {
+        width: 50%;
+        order: 3;
+    }
+
+    .longevity-stock-index-table .weight:before,
+    .longevity-stock-index-table .current_price:before,
+    .longevity-stock-index-table .yesterday_close:before,
+    .longevity-stock-index-table .market_cap:before,
+    .longevity-stock-index-table .volume:before,
+    .longevity-stock-index-table .today_high:before,
+    .longevity-stock-index-table .today_low:before,
+    .longevity-stock-index-table .previous_change_dollar:before,
+    .longevity-stock-index-table .previous_change_percent:before,
+    .longevity-stock-index-table .outstanding_shares:before {
+        margin-right: .25rem;
+        font-weight: 600;
+    }
+
+    .longevity-stock-index-table .weight:before {
+        content: "Weight:";
+    }
+
+    .longevity-stock-index-table .current_price:before {
+        content: "Current Price:";
+    }
+
+    .longevity-stock-index-table .yesterday_close:before {
+        content: "Yesterday Close:";
+    }
+
+    .longevity-stock-index-table .market_cap:before {
+        content: "Market Cap:";
+    }
+
+    .longevity-stock-index-table .volume:before {
+        content: "Volume:";
+    }
+
+    .longevity-stock-index-table .today_high:before {
+        content: "Today's High:";
+    }
+
+    .longevity-stock-index-table .today_low:before {
+        content: "Today's Low:";
+    }
+
+    .longevity-stock-index-table .previous_change_dollar:before {
+        content: "Previous Day $ Change:";
+    }
+
+    .longevity-stock-index-table .previous_change_percent:before {
+        content: "Previous Day % Change";
+    }
+
+    .longevity-stock-index-table .outstanding_shares:before {
+        content: "Outstanding Shares:";
+    }
+}
+
+@media (max-width: 499px) {
+    .longevity-stock-index-table .weight,
+    .longevity-stock-index-table .current_price,
+    .longevity-stock-index-table .yesterday_close,
+    .longevity-stock-index-table .market_cap,
+    .longevity-stock-index-table .volume,
+    .longevity-stock-index-table .today_high,
+    .longevity-stock-index-table .today_low,
+    .longevity-stock-index-table .previous_change_dollar,
+    .longevity-stock-index-table .previous_change_percent,
+    .longevity-stock-index-table .outstanding_shares {
+        width: 100%;
+        order: 3;
+    }
+}
+
 /* Companies */
 #longevity-companies {
     .company-card {

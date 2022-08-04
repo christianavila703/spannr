@@ -1,7 +1,6 @@
 <!-- HTML -->
 <div id="chart" data-chart="{{ route('public.content.longevity-index.chart') }}"></div>
 
-
 <style>
     #chart {
         width: 100%;

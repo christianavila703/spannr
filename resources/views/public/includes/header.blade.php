@@ -6,7 +6,7 @@
             </a>
         </div>
         <nav id="primary-public-nav" class="d-flex align-items-center justify-content-center mt-2">
-            <a href="{{ route('public.content.articles.index') }}">News</a>
+            <a href="{{ route('public.content.articles.index') }}">Insights</a>
             <span class="mx-2">&bull;</span>
             <a href="{{ route('public.content.longevity-index') }}">Index</a>
             <span class="mx-2">&bull;</span>

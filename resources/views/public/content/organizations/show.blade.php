@@ -25,7 +25,7 @@
         <div class="breadcrumbs mt-5 mb-0">
             <a href="{{ route('home') }}" class="home">Spannr</a>
             <span class="connector">&raquo;</span>
-            <a href="{{ route('public.content.longevity-index') }}" class="parent">Longevity Stock Index</a>
+            <a href="{{ route('public.content.organizations.index') }}" class="parent">Companies</a>
             <span class="connector">&raquo;</span>
             <span class="current">{{ $organization->name }}</span>
         </div>
