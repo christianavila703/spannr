@@ -51,6 +51,7 @@
                                     <a class="dropdown-item" href="{{ route('admin.jobs.index') }}">Jobs</a>
                                     <a class="dropdown-item" href="{{ route('admin.events.index') }}">Events</a>
                                     <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
+                                    <a class="dropdown-item" href="{{ route('admin.form-entries.index') }}">Form Entries</a>
                                 </div>
                             </li>
                         @endcan

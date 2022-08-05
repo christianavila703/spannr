@@ -37,19 +37,19 @@
                             <p class="mb-2 small @if($formType === 'vertical') text-muted @endif">
                                 An accredited investor is defined as someone who covers any of the following: 1. Individuals with net assets over $1 million, excluding the primary residence. 2. Have an annual income exceeding $200,000 ($300,000 for joint income) for the last two years with the expectation of earning the same or a higher income in the current year. 3. Is a financial professional holding a FINRA Series 7, 62, or 65. 4. An institution with over $5 million in assets.
                             </p>
-                            @error('accredited') <span class="form-error">{{ $message }}</span> @enderror
+                            @error('accredited') <span class="form-error">{{ $accredited }}</span> @enderror
                             <div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_yes" value="yes">
-                                    <label class="form-check-label" for="accredited_yes">Yes</label>
+                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_yes" value="{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_YES }}">
+                                    <label class="form-check-label" for="accredited_yes">{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_YES }}</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_no" value="no">
-                                    <label class="form-check-label" for="accredited_no">No</label>
+                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_no" value="{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_NO }}">
+                                    <label class="form-check-label" for="accredited_no">{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_NO }}</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_unsure" value="unsure">
-                                    <label class="form-check-label" for="accredited_unsure">Unsure</label>
+                                    <input class="form-check-input" type="radio" wire:model="accredited" id="accredited_unsure" value="{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_UNSURE }}">
+                                    <label class="form-check-label" for="accredited_unsure">{{ \App\Models\FormEntry::INVESTOR_ACCREDITED_UNSURE }}</label>
                                 </div>
                             </div>
                         </div>

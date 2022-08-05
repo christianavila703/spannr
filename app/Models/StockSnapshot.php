@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class StockSnapshot extends Model
 {
-    use HasFactory,
-        LogsActivity;
+    use HasFactory;
 
     protected $guarded = ['id'];
 
@@ -34,14 +32,6 @@ class StockSnapshot extends Model
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
-    }
-
-    /**
-     * Scopes
-     */
-    public function scopeComplete($query)
-    {
-        return $query->where('status', self::STATUS_COMPLETE);
     }
 
     /**

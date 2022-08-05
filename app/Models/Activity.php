@@ -53,7 +53,6 @@ class Activity extends SpatieActivity
             $route = route($routeName, $routeParam);
             $subjectLink = '<a href="' . $route . '">' . $this->subject->name . '</a>';
         } catch (\Throwable $throwable) {
-            Log::warning('Invalid route for activity # ' . $this->id);
             $subjectLink = '';
         }
 

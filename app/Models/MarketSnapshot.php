@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
-use App\Http\Traits\SearchableEntity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class MarketSnapshot extends Model
 {
-    use HasFactory,
-        LogsActivity,
-        SearchableEntity;
+    use HasFactory;
 
     protected $guarded = ['id'];
 
@@ -23,18 +18,6 @@ class MarketSnapshot extends Model
 
     const STATUS_PENDING = 'pending';
     const STATUS_COMPLETE = 'complete';
-
-    /**
-     * FUNCTIONS
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->useLogName(Activity::LOG_MARKET_SNAPSHOTS)
-            ->logUnguarded()
-            ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
-    }
 
     /**
      * Relationships

@@ -41,4 +41,9 @@ return [
         'password' => env('WORDPRESS_PASSWORD'),
     ],
 
+    'mailchimp' => [
+        'key' => env('MAILCHIMP_API_KEY'),
+        'server' => env('MAILCHIMP_SERVER', 'us14')
+    ],
+
 ];

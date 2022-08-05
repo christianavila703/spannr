@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
+Route::get('/test', [App\Http\Controllers\Public\ContentController::class, 'testMailchimp'])->name('test');
+
 /**
  * PUBLIC ROUTES
  */
@@ -45,7 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* @can edit records */
     Route::middleware(['can:edit records'])->group(function() {
-        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home');
         Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
         Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
         Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
@@ -55,6 +57,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('content', \App\Http\Controllers\Admin\ContentController::class);
+        Route::resource('form-entries', \App\Http\Controllers\Admin\FormEntryController::class);
 
         // Organization Routes & Relationships
         Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');
