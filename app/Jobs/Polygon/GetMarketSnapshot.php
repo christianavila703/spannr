@@ -64,17 +64,31 @@ class GetMarketSnapshot implements ShouldQueue
 
                 $stock = Stock::where('ticker', $ticker->ticker)->first();
 
-                $attributes = [
-                    'current_price' => $ticker->day->c,
-                    'volume' => $ticker->day->v,
-                    'yesterday_close' => $ticker->prevDay->c,
-                    'today_high' => $ticker->day->h,
-                    'today_low' => $ticker->day->l,
-                    'previous_day_change_price' => $ticker->todaysChange,
-                    'previous_day_change_percent' => $ticker->todaysChangePerc,
-                    'stock_id' => $stock->id,
-                    'market_snapshot_id' => $marketSnapshot->id
-                ];
+                if ($ticker->day->c !== 0) {
+                    $attributes = [
+                        'current_price' => $ticker->day->c,
+                        'volume' => $ticker->day->v,
+                        'yesterday_close' => $ticker->prevDay->c,
+                        'today_high' => $ticker->day->h,
+                        'today_low' => $ticker->day->l,
+                        'previous_day_change_price' => $ticker->todaysChange,
+                        'previous_day_change_percent' => $ticker->todaysChangePerc,
+                        'stock_id' => $stock->id,
+                        'market_snapshot_id' => $marketSnapshot->id
+                    ];
+                } else {
+                    $attributes = [
+                        'current_price' => $ticker->prevDay->c,
+                        'volume' => $ticker->prevDay->v,
+                        'yesterday_close' => $ticker->prevDay->c,
+                        'today_high' => $ticker->prevDay->h,
+                        'today_low' => $ticker->prevDay->l,
+                        'previous_day_change_price' => $ticker->todaysChange,
+                        'previous_day_change_percent' => $ticker->todaysChangePerc,
+                        'stock_id' => $stock->id,
+                        'market_snapshot_id' => $marketSnapshot->id
+                    ];
+                }
 
                 $stockSnapshot = StockSnapshot::create($attributes);
 

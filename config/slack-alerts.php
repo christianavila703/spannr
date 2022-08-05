@@ -6,7 +6,7 @@ return [
      */
     'webhook_urls' => [
         'default' => '', // #dev-updates
-        'index' => '', // #index
+        'index' => '', // #index-notifications
         'investing' => '', // #investing
         'website' => '', // #website
         'test' => '' // #test-notifications
