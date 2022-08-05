@@ -43,7 +43,11 @@ class GetMarketSnapshot implements ShouldQueue
     {
         $previousMarketSnapshot = MarketSnapshot::daily()->orderByDesc('timestamp')->first();
 
-        $stocks = Stock::active()->get()->pluck('ticker')->toArray();
+        $stocks = Stock::active()->get()->pluck('ticker', 'id')->toArray();
+
+        $stockCount = count($stocks);
+        $successfulTickerCount = 0;
+        $successfulTickerList = [];
 
         $stockList = implode(',', $stocks);
 
@@ -60,9 +64,12 @@ class GetMarketSnapshot implements ShouldQueue
 
             $tickerArray = json_decode($tickerData->body());
 
+            $successfulTickerCount = count($tickerArray->tickers);
+
             foreach ($tickerArray->tickers as $ticker) {
 
                 $stock = Stock::where('ticker', $ticker->ticker)->first();
+                $successfulTickerList[$stock->id] = $stock->ticker;
 
                 if ($ticker->day->c !== 0) {
                     $attributes = [
@@ -115,6 +122,28 @@ class GetMarketSnapshot implements ShouldQueue
         } catch(\Throwable $throwable) {
             $message = 'Failure during GetMarketSnapshot' . "\n" . $throwable->getMessage();
             Log::critical($message);
+            SlackAlert::to('index')->message("<@sydney> " . $message);
+        }
+
+        // Missing Tickers from Polygon
+        if ($stockCount !== $successfulTickerCount) {
+
+            $missingTickers = array_diff($stocks, $successfulTickerList);
+
+            $message = 'Missing tickers from hourly snapshot:' . "\n";
+            $message .= implode("\n", $missingTickers);
+
+            foreach ($missingTickers as $missingTicker) {
+                // find last one & clone it
+                $stockId = array_search($missingTicker, $stocks);
+                $stockSnapshot = StockSnapshot::orderByDesc('created_at')->where('stock_id', $stockId)->where('current_price', '>', 0)->first();
+                $newSnapshot = $stockSnapshot->replicate();
+                $newSnapshot->market_snapshot_id = $marketSnapshot->id;
+                $newSnapshot->save();
+                Log::info('Created clone ', $newSnapshot->toArray());
+            }
+
+            CalculateMarketSnapshotData::dispatch($marketSnapshot, $previousMarketSnapshot);
             SlackAlert::to('index')->message("<@sydney> " . $message);
         }
     }
