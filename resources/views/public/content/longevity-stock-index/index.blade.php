@@ -64,7 +64,7 @@
             </div>
         </div>
 
-{{--        @include('public.content.longevity-stock-index.cta-report')--}}
+        @include('public.content.longevity-stock-index.cta-report')
 
         <table class="longevity-stock-index-table table small my-5">
             <thead>

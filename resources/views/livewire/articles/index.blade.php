@@ -2,14 +2,12 @@
     @forelse ($articles as $article)
         <article class="single-post archive">
             <a href="{{ route('public.content.articles.show', $article->slug) }}" class="post-title {{ ($article->image) ? 'has-image' : '' }}">
-                <div class="overlay">
-                    <h2>{{ $article->name }}</h2>
-                </div>
                 @if($article->image)
-                    <img src="{{ $article->image_url }}" alt="{{ $article->name }}">
+                    <img src="{{ $article->image_url }}" alt="{{ $article->name }}" class="mb-3">
                 @endif
+                <h2 class="h1">{{ $article->name }}</h2>
             </a>
-            <div class="single-post-content">
+            <div class="single-post-content archive-excerpt">
                 {{ $article->excerpt }}
             </div>
         </article>

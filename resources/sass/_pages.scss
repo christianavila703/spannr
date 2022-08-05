@@ -534,6 +534,52 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
+/* Longevity Report CTA */
+.longevity-report-block {
+    background: linear-gradient(#e68c03, #ed008c);
+    color: $white;
+
+    .image-container {
+        min-width: 200px;
+        width: 100%;
+        max-width: 540px;
+        flex-shrink: 0;
+        padding: 1rem;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .content-container {
+        padding: 1rem;
+        flex-grow: 1;
+        max-width: 600px;
+        text-align: center;
+
+        .lead {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: $bp-min-desktop) {
+            max-width: 560px;
+            text-align: left;
+
+            .title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: $bp-min-desktop-xl) {
+            padding-right: 3rem;
+            max-width: 590px;
+        }
+    }
+}
+
 /* Errors Pages */
 .public-error-container {
     min-height: calc(100vh - 34.8rem);

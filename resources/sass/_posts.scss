@@ -27,55 +27,23 @@
     }
 }
 
-.single-post .post-title {
+.single-post a.post-title {
     text-decoration: none;
-    text-align: center;
     margin-bottom: .5rem;
     display: block;
     color: var(--color-black);
 }
 
-.single-post .post-title.has-image {
-    position: relative;
-    z-index: 1;
-
-    @media (min-width: $bp-min-tablet) {
-        .overlay {
-            position: absolute;
-            background: linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 80%);
-            padding: 4.5rem 1rem 4rem 1rem;
-            display: flex;
-            align-content: center;
-            justify-content: flex-end;
-            flex-direction: column;
-            flex-grow: 1;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 3;
-        }
-
-        h1, h2 {
-            color: var(--color-white);
-            text-shadow: 1px 1px .125rem rgba(0,0,0,.15);
-            text-align: center;
-            margin: 0 auto;
-            font-size: 3rem;
-            align-content: center;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        img {
-            position: relative;
-            z-index: 2;
-        }
-    }
+.single-post a.post-title:hover {
+    color: var(--color-maroon);
 }
 
 .single-post.archive {
     @include margin-bottom-lg;
+
+    .archive-excerpt {
+        color: $gray-700;
+    }
 }
 
 /* Breadcrumbs */

@@ -17,14 +17,10 @@
                 </div>
 
                 <article class="single-post">
-                    <div class="post-title {{ ($article->image) ? 'has-image' : '' }}">
-                        <div class="overlay">
-                            <h1>{{ $article->name }}</h1>
-                        </div>
-                        @if($article->image)
-                            <img src="{{ $article->image_full_url }}" alt="{{ $article->name }}">
-                        @endif
-                    </div>
+                    <h1 class="post-title">{{ $article->name }}</h1>
+                    @if($article->image)
+                        <img src="{{ $article->image_full_url }}" alt="{{ $article->name }}" class="mb-3">
+                    @endif
                     <div class="single-post-content">
                         {!! $article->content !!}
                     </div>
