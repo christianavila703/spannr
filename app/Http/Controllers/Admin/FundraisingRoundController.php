@@ -52,7 +52,7 @@ class FundraisingRoundController extends Controller
             ->event('added fundraising round')
             ->log('Fundraising Round added to ' . $organization->name);
 
-        return redirect()->route('organizations.show', $organization->slug)->with('success', $fundraisingRound->name . ' added!');
+        return redirect()->route('admin.organizations.show', $organization->slug)->with('success', $fundraisingRound->name . ' added!');
     }
 
     public function show($id)
