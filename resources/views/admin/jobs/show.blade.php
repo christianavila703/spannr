@@ -3,14 +3,7 @@
 @section('content')
 
     <x-entities.show>
-        <div>
-            <x-slot:title>{{ $job->name }}</x-slot:title>
-            <x-entities.show.field-summary>
-                <a href="{{ $job->owner_show_link }}">
-                    {{ $job->owner->name }}
-                </a>
-            </x-entities.show.field-summary>
-        </div>
+        <x-slot:breadcrumbs>{!! $job->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
             <a href="{{ route('admin.jobs.edit', $job->id) }}" class="btn btn-info me-3">Edit</a>
             <div class="dropdown mb-0">
@@ -19,10 +12,21 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="add-relationship">
                     <li><a class="dropdown-item" href="{{ route('admin.locations.attach', ['jobs', $job->id]) }}">Location</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>
                 </ul>
             </div>
         </x-slot:buttons>
+        <div>
+            <x-slot:title>{{ $job->name }}</x-slot:title>
+            <x-entities.show.field-summary>
+                <a href="{{ $job->owner_show_link }}">
+                    {{ $job->owner->name }}
+                </a>
+            </x-entities.show.field-summary>
+        </div>
         @include('admin.jobs.show-data')
     </x-entities.show>
+
+    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="jobs" entityName="{{ $job->name }}" entityId="{{ $job->id }}" />
 
 @endsection

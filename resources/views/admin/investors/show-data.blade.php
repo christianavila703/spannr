@@ -40,16 +40,21 @@
         <x-entities.show.field-heading title="Locations" />
         <x-entities.show.relationship-basic :records="$investor->locations" routeName="admin.locations.show" />
 
-        <x-entities.show.field-heading title="Description" />
-        <div>
-            {!! nl2br(e($investor->description)) !!}
-        </div>
+        <x-entities.show.field-heading title="Jobs" />
+        <x-entities.show.relationship-basic :records="$investor->jobs" routeName="admin.jobs.show" />
+
+        <x-entities.show.field-heading title="Tags" />
+        <x-entities.show.relationship-basic :records="$investor->tags" routeName="admin.tags.show" />
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">
             @if($investor->image != '')
                 <img src="{{ $investor->imageUrl }}" alt="{{ $investor->name }}" class="entity-show-image">
             @endif
+        </div>
+        <x-entities.show.field-heading title="Description" />
+        <div>
+            {!! nl2br(e($investor->description)) !!}
         </div>
     </div>
 </div>

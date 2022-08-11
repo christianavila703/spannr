@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
@@ -17,7 +18,8 @@ class Investor extends Model
         HasSocialMedia,
         LogsActivity,
         SearchableEntity,
-        HasImage;
+        HasImage,
+        HasBreadcrumbs;
 
     protected $guarded = ['id'];
 
@@ -67,6 +69,11 @@ class Investor extends Model
     public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Organization::class);
+    }
+
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     // People Relationships

@@ -3,7 +3,7 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:title>{{ $organization->name }}</x-slot:title>
+        <x-slot:breadcrumbs>{!! $organization->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
             <a href="{{ route('admin.organizations.edit', $organization->id) }}" class="btn btn-info me-3">Edit</a>
             <div class="dropdown mb-0">
@@ -15,14 +15,18 @@
                     <li><a class="dropdown-item" href="{{ route('admin.organizations.people', $organization->slug) }}" >People</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFundraisingRoundForm">Fundraising Round</a></li>
                     <li><a class="dropdown-item" href="{{ route('admin.locations.attach', ['organizations', $organization->id]) }}">Location</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>
                 </ul>
             </div>
         </x-slot:buttons>
+        <x-slot:title>{{ $organization->name }}</x-slot:title>
         @include('admin.organizations.show-data')
     </x-entities.show>
 
     @include('admin.organizations.investors.add')
     @include('admin.organizations.people.add')
     @include('admin.organizations.fundraising-rounds.add')
+
+    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="organizations" entityName="{{ $organization->name }}" entityId="{{ $organization->id }}" />
 
 @endsection

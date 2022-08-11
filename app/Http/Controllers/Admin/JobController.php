@@ -9,8 +9,6 @@ use App\Models\Investor;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\Organization;
-use Illuminate\Http\Request;
-use Laravel\Scout\Scout;
 
 class JobController extends Controller
 {
@@ -43,8 +41,6 @@ class JobController extends Controller
     public function store(StoreJobRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
-
-        $validated['owner_type'] = Organization::class;
 
         $job = Job::create($validated);
 

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -13,8 +12,7 @@ class JobCategory extends Model
     use HasFactory;
 
     use HasFactory,
-        LogsActivity,
-        SearchableEntity;
+        LogsActivity;
 
     protected $guarded = ['id'];
 

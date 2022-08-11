@@ -3,10 +3,13 @@
 namespace App\Search;
 
 use Algolia\ScoutExtended\Searchable\Aggregator;
+use App\Models\Event;
 use App\Models\FundraisingRound;
 use App\Models\Investor;
+use App\Models\Job;
 use App\Models\Organization;
 use App\Models\Person;
+use App\Models\Tag;
 
 class Entities extends Aggregator
 {
@@ -19,7 +22,10 @@ class Entities extends Aggregator
         Organization::class,
         Person::class,
         Investor::class,
-        FundraisingRound::class
+        FundraisingRound::class,
+        Tag::class,
+        Job::class,
+        Event::class
     ];
 
     /**

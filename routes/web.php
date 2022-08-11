@@ -58,6 +58,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('content', \App\Http\Controllers\Admin\ContentController::class);
         Route::resource('form-entries', \App\Http\Controllers\Admin\FormEntryController::class);
+        Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
+        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\TagController::class, 'tagsList'])->name('json.tags');
 
         // Organization Routes & Relationships
         Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');
@@ -68,6 +70,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
         Route::get('/organizations/{slug}/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'people'])->name('organizations.people');
         Route::post('/organization/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'savePerson'])->name('organizations.save-person');
+
+        Route::post('/tags/sync', [\App\Http\Controllers\Admin\TagController::class, 'syncEntities'])->name('tags.sync');
 
         // Investor Relationships
         Route::get('/investors/{slug}/people', [\App\Http\Controllers\Admin\InvestorController::class, 'people'])->name('investors.people');

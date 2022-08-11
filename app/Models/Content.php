@@ -38,4 +38,12 @@ class Content extends Model
         'glossary',
         'companies',
     ];
+
+    /**
+     * Relationships
+     */
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

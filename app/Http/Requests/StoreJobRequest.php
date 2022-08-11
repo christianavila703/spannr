@@ -29,6 +29,7 @@ class StoreJobRequest extends FormRequest
             'category_id' => 'required|integer',
             'status' => 'required',
             'owner_id' => 'required',
+            'owner_type' => 'required',
             'posted_date' => 'required',
             'exp_date' => 'date|nullable',
             'salary' => 'nullable|integer',

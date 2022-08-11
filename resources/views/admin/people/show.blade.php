@@ -3,7 +3,7 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:title>{{ $person->name }}</x-slot:title>
+        <x-slot:breadcrumbs>{!! $person->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
             <a href="{{ route('admin.people.edit', $person->id) }}" class="btn btn-info me-3">Edit</a>
 
@@ -13,10 +13,14 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="add-relationship">
                     <li><a class="dropdown-item" href="{{ route('admin.locations.attach', ['people', $person->id]) }}">Location</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>
                 </ul>
             </div>
         </x-slot:buttons>
+        <x-slot:title>{{ $person->name }}</x-slot:title>
         @include('admin.people.show-data')
     </x-entities.show>
+
+    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="people" entityName="{{ $person->name }}" entityId="{{ $person->id }}" />
 
 @endsection

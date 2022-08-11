@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasRichText;
 use App\Http\Traits\SearchableEntity;
 use Carbon\Carbon;
@@ -18,7 +19,8 @@ class Job extends Model
     use HasFactory,
         LogsActivity,
         SearchableEntity,
-        HasRichText;
+        HasRichText,
+        HasBreadcrumbs;
 
     protected $guarded = ['id'];
 
@@ -40,7 +42,7 @@ class Job extends Model
         self::TYPE_CONTRACT
     ];
 
-    private string $searchableRouteName = 'jobs.show';
+    private string $searchableRouteName = 'admin.jobs.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-briefcase';
 
@@ -72,6 +74,11 @@ class Job extends Model
     public function owner(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**

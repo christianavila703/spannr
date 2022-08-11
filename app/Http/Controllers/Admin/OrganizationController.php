@@ -8,6 +8,7 @@ use App\Models\Investor;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Location;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

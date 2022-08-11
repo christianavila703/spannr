@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\SearchableEntity;
 use Carbon\Carbon;
@@ -17,14 +18,15 @@ class Event extends Model
     use HasFactory,
         LogsActivity,
         SearchableEntity,
-        HasImage;
+        HasImage,
+        HasBreadcrumbs;
 
     protected $guarded = ['id'];
 
     const STATUS_CURRENT = 'current';
     const STATUS_PAST = 'past';
 
-    private string $searchableRouteName = 'events.show';
+    private string $searchableRouteName = 'admin.events.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-calendar';
 
@@ -71,6 +73,11 @@ class Event extends Model
     public function people(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Person::class, 'relatable' , 'event_relationships')->withTimestamps();
+    }
+
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
@@ -17,7 +18,8 @@ class Organization extends Model
         HasSocialMedia,
         LogsActivity,
         SearchableEntity,
-        HasImage;
+        HasImage,
+        HasBreadcrumbs;
 
     protected $guarded = ['id'];
 
@@ -91,7 +93,11 @@ class Organization extends Model
         return $this->hasOne(Stock::class);
     }
 
-    // People Relationships
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
     public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();

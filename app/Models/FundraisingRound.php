@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\SearchableEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,8 @@ class FundraisingRound extends Model
 {
     use HasFactory,
         LogsActivity,
-        SearchableEntity;
+        SearchableEntity,
+        HasBreadcrumbs;
 
     protected $guarded = ['id'];
 

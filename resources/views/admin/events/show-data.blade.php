@@ -24,6 +24,9 @@
             <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
         @endif
         <x-entities.show.relationship-basic :records="$event->locations" routeName="admin.locations.show" />
+
+        <x-entities.show.field-heading title="Tags" />
+        <x-entities.show.relationship-basic :records="$event->tags" routeName="admin.tags.show" />
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">
