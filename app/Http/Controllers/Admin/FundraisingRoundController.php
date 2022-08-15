@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FundraisingRoundRequest;
 use App\Models\FundraisingRound;
+use App\Models\Investor;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FundraisingRoundController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $fundraisingRounds = FundraisingRound::with(['organization', 'investors'])
             ->get();
@@ -26,10 +27,9 @@ class FundraisingRoundController extends Controller
         //
     }
 
-    public function store(FundraisingRoundRequest $request)
+    public function store(FundraisingRoundRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
-
         $organization = Organization::findOrFail($validated['organization_id']);
 
         $fundraisingRound = new FundraisingRound($validated);
@@ -55,27 +55,48 @@ class FundraisingRoundController extends Controller
         return redirect()->route('admin.organizations.show', $organization->slug)->with('success', $fundraisingRound->name . ' added!');
     }
 
-    public function show($id)
+    public function show($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $fundraisingRound = FundraisingRound::findOrFail($id);
+        $fundraisingRound = FundraisingRound::with(['organization', 'investors'])->findOrFail($id);
 
         return view('admin.fundraising-rounds.show', [
             'fundraisingRound' => $fundraisingRound
         ]);
     }
 
-    public function edit($id)
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        $fundraisingRound = FundraisingRound::with(['investors'])->findOrFail($id);
+        $allInvestors = Investor::orderBy('name')->get();
+        $currentInvestors = $fundraisingRound->investors->pluck('id')->toArray();
+
+        return view('admin.fundraising-rounds.edit', [
+            'fundraisingRound' => $fundraisingRound,
+            'allInvestors' => $allInvestors,
+            'currentInvestors' => $currentInvestors
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(FundraisingRoundRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $fundraisingRound = FundraisingRound::findOrFail($id);
+        $validated = $request->validated();
+        $organization = Organization::findOrFail($validated['organization_id']);
+        $fundraisingRound->name = $organization->name . ' - ' . $validated['round'];
+        $fundraisingRound->update($validated);
+        $fundraisingRound->save();
+
+        $fundraisingRound->investors()->sync($validated['investors']);
+        $organization->investors()->syncWithoutDetaching($validated['investors']);
+
+        return redirect()->route('admin.fundraising-rounds.show', $fundraisingRound->id)->with('success', $fundraisingRound->name . ' updated!');
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $fundraisingRound = FundraisingRound::findOrFail($id);
+        $message = $fundraisingRound->name . ' was deleted';
+        $fundraisingRound->delete();
+        return redirect()->route('admin.fundraising-rounds.index')->with('success', $message);
     }
 }
