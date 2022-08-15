@@ -64,7 +64,6 @@ class GetNews implements ShouldQueue
                 'external_id' => $result->id,
                 'date' => Carbon::parse($result->published_utc)->format('Y-m-d H:i:s'),
                 'url' => $result->article_url,
-                'summary' => $result->description,
                 'data' => json_encode($result)
             ];
 

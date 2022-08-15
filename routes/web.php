@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::get('/test', [App\Http\Controllers\Public\ContentController::class, 'testMailchimp'])->name('test');
-
 /**
  * PUBLIC ROUTES
  */

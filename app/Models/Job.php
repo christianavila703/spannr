@@ -97,8 +97,8 @@ class Job extends Model
     public function getOwnerShowLinkAttribute(): string
     {
         $ownerRoute = match($this->owner_type) {
-            Organization::class => 'organizations.show',
-            Investor::class => 'investors.show'
+            Organization::class => 'admin.organizations.show',
+            Investor::class => 'admin.investors.show'
         };
 
         try {

@@ -32,7 +32,7 @@
             {{ $jobs->total() }} results
         </div>
     </div>
-    <table class="table">
+    <table class="table align-middle">
         <thead>
         <tr>
             <th>Date</th>
@@ -65,10 +65,10 @@
                 <td>{{ $job->type }}</td>
                 <td>
                     @if($job->remote)
-                        <p class="m-0">Remote / Virtual</p>
+                        <p class="m-0 small text-quaternary">Remote / Virtual</p>
                     @endif
                     @if($job->locations->count() > 0)
-                        <x-entities.show.relationship-list :records="$job->locations" class="" />
+                        <x-entities.show.relationship-list :records="$job->locations" class="small" />
                     @endif
                 </td>
                 <td>
