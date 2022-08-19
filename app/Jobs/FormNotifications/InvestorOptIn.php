@@ -42,7 +42,7 @@ class InvestorOptIn implements ShouldQueue
     }
 
     private function sendToSlackIfAccredited($formEntry, $formFields) {
-        if ($formFields['accredited'] === 'yes') {
+        if ($formFields['accredited'] === FormEntry::INVESTOR_ACCREDITED_YES) {
             $message = '*Syndicate Application*' . "\n" .
                 ">" . $formEntry->first_name . ' ' . $formEntry->last_name . "\n" .
                 ">" . $formEntry->email . "\n" .
@@ -73,7 +73,7 @@ class InvestorOptIn implements ShouldQueue
         ]);
 
         try {
-            $response = $mailchimp->lists->addListMember("1dc3f748f8", $subscribeArray);
+            $response = $mailchimp->lists->setListMember("1dc3f748f8", $formEntry->email, $subscribeArray);
             $formEntry->mailchimp_response = json_encode($response);
             $formEntry->mailchimp_status = FormEntry::STATUS_MAILCHIMP_SUCCESS;
             $formEntry->save();
