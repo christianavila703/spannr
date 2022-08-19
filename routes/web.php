@@ -86,6 +86,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/longevity-index/chart', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chart'])->name('longevity-index.chart');
         Route::get('/longevity-index/chart.json', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chartData'])->name('longevity-index.chart-data');
         Route::get('/longevity-index/{id}', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'show'])->name('longevity-index.show');
+
+        // Articles
+        Route::get('/articles/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');
     });
 
     // PERMISSION: Admin Control

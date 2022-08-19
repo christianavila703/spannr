@@ -3,7 +3,9 @@
 @section('content')
     <div class="container-fluid">
 
-        @include('admin.includes.status-messages')
+        <div class="container">
+            @include('admin.includes.status-messages')
+        </div>
 
         <div class="container">
             <h2 class="h4">Database Stats</h2>

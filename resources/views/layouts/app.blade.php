@@ -53,6 +53,7 @@
                                     <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
                                     <a class="dropdown-item" href="{{ route('admin.form-entries.index') }}">Form Entries</a>
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">Tags</a>
+                                    <a class="dropdown-item" href="{{ route('admin.articles.sync') }}">Sync Articles</a>
                                 </div>
                             </li>
                         @endcan
