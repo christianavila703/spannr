@@ -24,7 +24,6 @@ class ContentController extends Controller
     public function home() {
         $seo = Content::where('slug', 'home')->first();
         return view('public.content.home', [
-            'showHeader' => true,
             'headerClass' => 'dark',
             'seo' => $seo
         ]);
@@ -254,5 +253,11 @@ class ContentController extends Controller
             'valuesHigh' => $valuesHigh,
             'valuesLow' => $valuesLow
         ], true);
+    }
+
+    public function leveragingLongevityEvent() {
+        return view('public.content.events.leveraging-longevity', [
+            'showHeader' => false,
+        ]);
     }
 }

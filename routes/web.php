@@ -37,6 +37,7 @@ Route::get('/companies/', [App\Http\Controllers\Public\ContentController::class,
 Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::class, 'organizationShow'])->name('public.content.organizations.show');
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');
+Route::get('/leveraging-longevity', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevityEvent'])->name('public.content.events.leveraging-longevity');
 
 /**
  * ADMIN ROUTES
