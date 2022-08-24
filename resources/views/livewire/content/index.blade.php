@@ -2,8 +2,9 @@
     <table class="table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Title</th>
-                <th>Slug</th>
+                <th>Slug / Link</th>
                 <th>Updated</th>
                 <th></th>
             </tr>
@@ -11,17 +12,12 @@
         <tbody>
             @forelse ($content as $contentItem)
                 <tr class="align-middle">
+                    <td>
+                        <a href="https://wp.spannr.com/wp-admin/post.php?post={{ $contentItem->id }}&action=edit">{{ $contentItem->id }}</a>
+                    </td>
                     <td>{{ $contentItem->name }}</td>
                     <td>
-                        @if($contentItem->slug === 'home')
-                            <a href="/" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
-                        @elseif($contentItem->slug === 'index-about')
-                            <a href="{{ route('public.content.longevity-index.about') }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
-                        @elseif($contentItem->slug === 'index-terms')
-                            <a href="{{ route('public.content.longevity-index.terms') }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
-                        @else
-                            <a href="/{{ $contentItem->slug }}" target="_blank" rel="noopener noreferrer">{{ $contentItem->slug }}</a>
-                        @endif
+                        <a href="{{ $contentItem->link }}">{{ $contentItem->slug }}</a>
                         <span>
                             @if (in_array($contentItem->slug, $pageSlugs))
                                 <span class="badge bg-primary">attached</span>
@@ -37,7 +33,7 @@
                             <form method="POST" action="{{ route('admin.content.destroy', $contentItem->id ) }}">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-link text-danger">
+                                <button type="submit" class="btn btn-link text-danger confirm-button">
                                     <i class="fa-duotone fa-trash-can me-1"></i>Delete
                                 </button>
                             </form>

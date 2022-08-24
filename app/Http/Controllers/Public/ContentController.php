@@ -130,14 +130,14 @@ class ContentController extends Controller
     }
 
     public function longevityStockIndexAbout() {
-        $seo = Content::where('slug', 'index-about')->first();
+        $seo = Content::where('slug', 'index--about')->first();
         return view('public.content.wordpress', [
             'seo' => $seo
         ]);
     }
 
     public function longevityStockIndexTerms() {
-        $seo = Content::where('slug', 'index-terms')->first();
+        $seo = Content::where('slug', 'index--terms-and-disclaimers')->first();
         return view('public.content.wordpress', [
             'seo' => $seo
         ]);
@@ -255,9 +255,18 @@ class ContentController extends Controller
         ], true);
     }
 
-    public function leveragingLongevityEvent() {
+    public function leveragingLongevitySanDiego(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $seo = Content::where('slug', 'events--leveraging-longevity-sd')->first();
+
         return view('public.content.events.leveraging-longevity', [
             'showHeader' => false,
+            'seo' => $seo
         ]);
+    }
+
+    public function eventsIndex(): \Illuminate\Http\RedirectResponse
+    {
+        return redirect()->route('public.content.events.leveraging-longevity-sd');
     }
 }

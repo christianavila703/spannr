@@ -69,9 +69,15 @@ class ContentController extends Controller
 
         $wpPage = $response->json();
 
+        $slug = $wpPage['yoast_head_json']['canonical'];
+        $slug = str_replace('https://spannr.com/', '', $slug);
+        $slug = rtrim($slug, '/');
+        $slug = str_replace('/', '--', $slug);
+
         $attributes = [
             'name' => html_entity_decode($wpPage['title']['rendered']),
-            'slug' => $wpPage['slug'],
+            'slug' => $slug,
+            'link' => $wpPage['yoast_head_json']['canonical'],
             'status' => $this->getStatus($wpPage['status']),
             'seo' => $wpPage['yoast_head'],
             'content' => html_entity_decode($wpPage['content']['rendered']),

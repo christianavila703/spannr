@@ -35,13 +35,13 @@
                         <strong>When:</strong> Friday, October 7, 2022
                     </li>
                     <li>
-                        <strong>Where:</strong> <a href="https://www.sidebarsd.com/">Side Bar</a> 536 Market Street in San Diego, California
+                        <strong>Where:</strong> <a href="https://www.sidebarsd.com/" target="_blank" rel="noopener noreferrer">Side Bar</a> 536 Market Street in San Diego, California
                     </li>
                     <li>
                         <strong>Schedule:</strong> Dinner + Speakers: 7pm – 9pm; Social: 9 pm – Late
                     </li>
                 </ul>
-                <p>While we’re all pushing to live longer, healthier lives… who says we can’t have some fun along the way?</p>
+                <p>While we're all pushing to live longer, healthier lives... who says we can't have some fun along the way?</p>
 
                 <p>We're inviting everyone (that's you!) in hopes of bringing together the industry's top entrepreneurs, investors, and researchers pushing the limits on human aging.</p>
 
@@ -71,17 +71,17 @@
                     </div>
                 </div>
 
-                <p>Stretching beyond a casual night of networking, we’ll be providing dinner, drinks, gifts and a roundup of special guests.</p>
+                <p>Stretching beyond a casual night of networking, we'll be providing dinner, drinks, gifts and a roundup of special guests.</p>
 
                 <p>Our intentions are friendly, not fancy.</p>
 
-                <p>Leveraging Longevity is an easy opportunity for anyone to get inside access to the fast moving, nascent world of longevity.</p>
+                <p>Lever<em>aging</em> Longevity is an easy opportunity for anyone to get inside access to the fast moving, nascent world of longevity.</p>
 
-                <p>The chance to meet with like-minded individuals and entrepreneurs all striving for the same goals of learning, networking, and advancing today’s burgeroing aging industry is second to none.</p>
+                <p>The chance to meet with like-minded individuals and entrepreneurs all striving for the same goals of learning, networking, and advancing today's burgeoning aging industry is second to none.</p>
 
-                <p>Tickets to the private, in-person event are currently going for $250. To book your seat at the table, simply fill out the form below.</p>
+                <p>Tickets to the private, in-person event are currently going for $250. To book your seat at the table, click the link below.</p>
 
-                <p>On behalf of the entire Spannr team, we’re looking forward to meeting you there!</p>
+                <p>On behalf of the entire Spannr team, we're looking forward to meeting you there!</p>
 
                 <div class="text-center">
                     <a href="https://buy.stripe.com/test_bIY7wx0rn4dBcKs7ss" class="btn btn-primary btn-xl btn-buy">Get Your Ticket</a>

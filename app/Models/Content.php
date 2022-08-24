@@ -27,8 +27,8 @@ class Content extends Model
         'home',
         'articles',
         'index',
-        'index-about',
-        'index-terms',
+        'index--about',
+        'index--terms-and-disclaimers',
         'ventures',
         'terms',
         'privacy',
@@ -37,6 +37,7 @@ class Content extends Model
         'articles',
         'glossary',
         'companies',
+        'events--leveraging-longevity-sd',
     ];
 
     /**
@@ -45,5 +46,22 @@ class Content extends Model
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Mutators
+     */
+    public function setContentAttribute($value) {
+        $this->attributes['content'] = $this->replaceUrls($value);
+    }
+
+    public function setSeoAttribute($value) {
+        $this->attributes['seo'] = $this->replaceUrls($value);
+    }
+
+    private function replaceUrls(string $value): string
+    {
+        $newValue = str_replace('//wp.spannr.com', '//spannr.com', $value);
+        return str_replace('//spannr.com/wp-content/uploads', '//wp.spannr.com/wp-content/uploads', $newValue);
     }
 }
