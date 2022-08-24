@@ -42,7 +42,22 @@
                 <div class="col-12 col-md-6">
                     <div class="mb-4">
                         <h2 class="title">About</h2>
-                        <p>{!! $organization->description !!}</p>
+                        <div>
+                            {!! $organization->description !!}
+                        </div>
+
+                        @if ($organization->extended_description)
+                            <div class="pb-3">
+                                <a class="btn btn-gray-medium text-dark" data-bs-toggle="collapse" href="#extended-description" role="button" aria-expanded="false" aria-controls="extended-description">
+                                    <span class="text">Read</span>
+                                </a>
+                                <div class="collapse" id="extended-description">
+                                    <article class="last-child-no-me pt-4">
+                                        {!! $organization->extended_description !!}
+                                    </article>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3 overview">
                         <h3 class="title">Overview</h3>

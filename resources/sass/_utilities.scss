@@ -203,6 +203,32 @@ input[type="submit"] {
     max-width: 800px;
 }
 
+/* Margins */
+.last-child-no-me {
+    :last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Collapse */
+[data-bs-toggle="collapse"] {
+    .text:after {
+        margin-left: .25rem;
+    }
+}
+
+[data-bs-toggle="collapse"][aria-expanded="true"] {
+    .text:after {
+        content: "Less";
+    }
+}
+
+[data-bs-toggle="collapse"][aria-expanded="false"] {
+    .text:after {
+        content: "More";
+    }
+}
+
 /* Forms */
 .form-error {
     margin-bottom: .5rem;

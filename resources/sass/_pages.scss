@@ -534,6 +534,30 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
+#extended-description {
+    article {
+        h1,
+        h2,
+        h3 {
+            font-family: $font-family-subheadings;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 1.3rem;
+            font-family: $font-family-sans-serif;
+            color: $gray-700;
+        }
+    }
+}
+
 /* Longevity Report CTA */
 .longevity-report-block {
     background: linear-gradient(#e68c03, #ed008c);
