@@ -19,3 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     .copy('resources/fonts', 'public/fonts')
     .copy('resources/images', 'public/images')
     .copy('resources/vendor', 'public/vendor');
+
+if (mix.inProduction()) {
+    mix.version();
+}
