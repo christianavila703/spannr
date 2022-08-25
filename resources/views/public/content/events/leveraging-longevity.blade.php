@@ -72,7 +72,7 @@
                 <p>On behalf of the entire Spannr team, we're looking forward to meeting you there!</p>
 
                 <div class="text-center">
-                    <a href="https://buy.stripe.com/test_bIY7wx0rn4dBcKs7ss" class="btn btn-primary btn-xl btn-buy">Get Your Ticket</a>
+                    <a href="https://buy.stripe.com/9AQaG03Rt01faGY5kk" class="btn btn-primary btn-xl btn-buy">Get Your Ticket</a>
                 </div>
             </div>
         </div>
