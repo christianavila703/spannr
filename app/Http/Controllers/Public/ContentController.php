@@ -269,4 +269,11 @@ class ContentController extends Controller
     {
         return redirect()->route('public.content.events.leveraging-longevity-sd');
     }
+
+    public function eventsConfirmed(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('public.content.events.confirmed', [
+            'showHeader' => false,
+        ]);
+    }
 }

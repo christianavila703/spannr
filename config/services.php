@@ -46,4 +46,8 @@ return [
         'server' => env('MAILCHIMP_SERVER', 'us14')
     ],
 
+    'stripe' => [
+        'api_key' => env('STRIPE_API_KEY'),
+    ],
+
 ];

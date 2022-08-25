@@ -1,12 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <header class="bg-quaternary text-white p-5 text-center">
-        <a href="/">
-            <img src="{{ asset('images/spannr-logo-white.svg') }}" alt="Spannr" class="max-width-420 mb-2">
-        </a>
-        <p class="h3 mb-0">End-to-End Longevity.</p>
-    </header>
+    @include('public.content.events._header')
     <main class="page-spannr-event">
         <div class="container text-center py-5 text-dark-gray">
             <p class="lead-lg mb-2">Introducing...</p>
@@ -14,14 +9,7 @@
             <h2 class="h4 max-width-600 mx-auto mb-5 line-space-lg">
                 Meet the entrepreneurs, investors, and scientists that are pushing the limits of human aging, and find out how you can get involved.
             </h2>
-            <div class="bg-primary text-white p-4 max-width-600 mx-auto">
-                <p class="h3 mt-1">
-                    October 7th, 2022<br>San Diego, California
-                </p>
-                <p class="h4">
-                    Event: 7pm &ndash; 9pm<span class="mx-2">/</span>Social: 9pm &ndash; Late
-                </p>
-            </div>
+            @include('public.content.events._sd-banner')
             <div class="mx-auto max-width-700 text-start mt-5">
                 <p>Spannr is pleased to announce that we'll be putting on our first-ever <strong>Lever<em>aging</em> Longevity event</strong> hosted in downtown San Diego, California on the evening of Friday, October 7, 2022.</p>
 

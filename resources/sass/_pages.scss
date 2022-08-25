@@ -608,3 +608,32 @@ main.page-glossary .single-post-wrapper .container {
 .public-error-container {
     min-height: calc(100vh - 34.8rem);
 }
+
+/* Events */
+.public-event-header {
+    min-height: 15.25rem;
+    background-color: $quaternary;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    .logo {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        margin-bottom: 1rem;
+
+        @media (min-width: $bp-min-tablet) {
+            width: 420px;
+        }
+    }
+}
+
+.page-spannr-event-confirmed {
+    @media (min-width: $bp-min-desktop) {
+        min-height: calc(100vh - 39.275rem);
+    }
+}

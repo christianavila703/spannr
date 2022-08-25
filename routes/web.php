@@ -40,6 +40,9 @@ Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentC
 
 Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');
+Route::get('/events/confirmed', [App\Http\Controllers\Public\ContentController::class, 'eventsConfirmed'])->name('public.content.events.confirmed');
+
+Route::get('/checkout/events', [App\Http\Controllers\Public\CheckoutController::class, 'eventConfirmation'])->name('public.content.checkout.events');
 
 /**
  * ADMIN ROUTES
