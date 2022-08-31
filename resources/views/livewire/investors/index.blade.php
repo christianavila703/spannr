@@ -22,9 +22,15 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Website</th>
+            <th class="sortable-column">Name
+                <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Type
+                <x-tables.sortable-button columnName="type" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Website
+                <x-tables.sortable-button columnName="website" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
             <th>Summary</th>
             <th>Fundraising Rounds</th>
             <th>Organizations</th>

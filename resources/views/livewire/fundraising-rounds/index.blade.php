@@ -66,10 +66,18 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Round</th>
-            <th>Amount Raised</th>
+            <th class="sortable-column">Date
+                <x-tables.sortable-button columnName="date" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Name
+                <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Round
+                <x-tables.sortable-button columnName="round" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Amount Raised
+                <x-tables.sortable-button columnName="amount_raised" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
             <th>Organization</th>
             <th>Investors</th>
         </tr>

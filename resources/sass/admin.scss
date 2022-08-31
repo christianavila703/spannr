@@ -1,0 +1,10 @@
+th.sortable-column,
+td.sortable-column {
+    padding-right: 45px;
+
+    span {
+        float: right;
+        margin-right: -40px;
+        cursor: pointer;
+    }
+}

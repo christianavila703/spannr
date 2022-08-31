@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Organizations;
 
 use App\Models\Organization;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,6 +21,9 @@ class Index extends Component
         'selected-types' => []
     ];
 
+    public $sortColumnName = 'name';
+    public $sortDirection = 'asc';
+
     public array $selectedTypes = [];
 
     public function updatingFilters()
@@ -33,12 +35,22 @@ class Index extends Component
         $this->reset('filters');
     }
 
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumnName === $columnName) {
+            $this->sortDirection = ($this->sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortColumnName = $columnName;
+    }
+
     public function render()
     {
         return view('livewire.organizations.index', [
             'typeOptions' => Organization::pluck('type')->unique()->toArray(),
-            'organizations' => Organization::orderByDesc('updated_at')
-                ->with(['people', 'investors', 'fundraisingRounds'])
+            'organizations' => Organization::with(['people', 'investors', 'fundraisingRounds'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
@@ -57,6 +69,7 @@ class Index extends Component
                 ->when($this->filters['selected-types'], function($query, $selectedTypes) {
                     return $query->whereIn('type', $selectedTypes);
                 })
+                ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)
         ]);
     }

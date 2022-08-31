@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\FundraisingRounds;
 
-use App\Models\Activity;
 use App\Models\FundraisingRound;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -24,6 +23,9 @@ class Index extends Component
         'date-max' => null,
     ];
 
+    public $sortColumnName = 'date';
+    public $sortDirection = 'desc';
+
     public function updatingFilters()
     {
         $this->resetPage();
@@ -41,11 +43,21 @@ class Index extends Component
         $this->filters[$filter] = null;
     }
 
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumnName === $columnName) {
+            $this->sortDirection = ($this->sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortColumnName = $columnName;
+    }
+
     public function render()
     {
         return view('livewire.fundraising-rounds.index', [
-            'fundraisingRounds' => FundraisingRound::orderByDesc('created_at')
-                ->with(['organization', 'investors'])
+            'fundraisingRounds' => FundraisingRound::with(['organization', 'investors'])
                 ->when($this->filters['date-min'], fn($query, $date) => $query->where('date', '>=', Carbon::parse($date)))
                 ->when($this->filters['date-max'], fn($query, $date) => $query->where('date', '<=', Carbon::parse($date)))
                 ->when($this->filters['amount-min'], fn($query, $amount) => $query->where('amount_raised', '>=', $amount))
@@ -57,6 +69,7 @@ class Index extends Component
                             $query->where('name', 'like', '%' . $search . '%');
                         });
                 })
+                ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)
         ]);
     }

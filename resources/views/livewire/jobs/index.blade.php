@@ -35,13 +35,21 @@
     <table class="table align-middle">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Job Title</th>
-            <th>Type</th>
+            <th class="sortable-column">Date
+                <x-tables.sortable-button columnName="posted_date" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Job Title
+                <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
+            <th class="sortable-column">Type
+                <x-tables.sortable-button columnName="type" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
             <th>Location</th>
             <th>Category</th>
             <th>Owner</th>
-            <th>Salary</th>
+            <th class="sortable-column">Salary
+                <x-tables.sortable-button columnName="salary" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+            </th>
             <th></th>
         </tr>
         </thead>

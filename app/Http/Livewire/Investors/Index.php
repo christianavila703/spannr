@@ -23,6 +23,9 @@ class Index extends Component
 
     public array $selectedTypes = [];
 
+    public $sortColumnName = 'name';
+    public $sortDirection = 'asc';
+
     public function updatingFilters()
     {
         $this->resetPage();
@@ -32,12 +35,22 @@ class Index extends Component
         $this->reset('filters');
     }
 
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumnName === $columnName) {
+            $this->sortDirection = ($this->sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortColumnName = $columnName;
+    }
+
     public function render()
     {
         return view('livewire.investors.index', [
             'typeOptions' => Investor::pluck('type')->unique()->toArray(),
-            'investors' => Investor::orderByDesc('created_at')
-                ->with(['organizations', 'fundraisingRounds'])
+            'investors' => Investor::with(['organizations', 'fundraisingRounds'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
@@ -53,6 +66,7 @@ class Index extends Component
                 ->when($this->filters['selected-types'], function($query, $selectedTypes) {
                     return $query->whereIn('type', $selectedTypes);
                 })
+                ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)
         ]);
     }

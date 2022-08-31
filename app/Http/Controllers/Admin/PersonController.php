@@ -12,11 +12,7 @@ class PersonController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $people = Person::all();
-
-        return view('admin.people.index', [
-            'people' => $people
-        ]);
+        return view('admin.people.index');
     }
 
     public function create(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

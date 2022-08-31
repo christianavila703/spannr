@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
     <link rel="stylesheet" href="{{ mix('css/choices.css') }}" />
+    <link rel="stylesheet" href="{{ mix('css/admin.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>

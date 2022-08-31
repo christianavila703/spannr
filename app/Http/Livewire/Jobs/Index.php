@@ -20,6 +20,9 @@ class Index extends Component
         'selected-types' => [],
     ];
 
+    public $sortColumnName = 'posted_date';
+    public $sortDirection = 'desc';
+
     public function updatingFilters()
     {
         $this->resetPage();
@@ -29,13 +32,23 @@ class Index extends Component
         $this->reset('filters');
     }
 
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumnName === $columnName) {
+            $this->sortDirection = ($this->sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortColumnName = $columnName;
+    }
+
     public function render()
     {
         return view('livewire.jobs.index', [
             'typeOptions' => Job::pluck('type')->unique()->toArray(),
             'statusOptions' => Job::pluck('status')->unique()->toArray(),
-            'jobs' => Job::orderByDesc('posted_date')
-                ->with(['owner'])
+            'jobs' => Job::with(['owner'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
@@ -51,6 +64,7 @@ class Index extends Component
                 ->when($this->filters['selected-status'], function($query, $selectedStatus) {
                     return $query->whereIn('status', $selectedStatus);
                 })
+                ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)
         ]);
     }
