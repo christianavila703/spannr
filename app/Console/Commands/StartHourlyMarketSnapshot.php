@@ -2,32 +2,25 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Polygon\CheckMarketHolidays;
 use App\Jobs\Polygon\GetMarketSnapshot;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class StartHourlyMarketSnapshot extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'snapshot:hourly';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Creates hourly Market Snapshot and gets all data via Polygon API for our index';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
+        $isHoliday = CheckMarketHolidays::checkHolidayStatus(Carbon::now());
+
+        if ($isHoliday === true) {
+            return 0;
+        }
+
         GetMarketSnapshot::dispatch();
         return 0;
     }
