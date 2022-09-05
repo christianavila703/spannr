@@ -2,14 +2,16 @@
 
 namespace App\Jobs\FormNotifications;
 
+use App\Helpers\SettingsHelper;
+use App\Mail\InvestorOptInCreated;
 use App\Models\FormEntry;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use MailchimpMarketing;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
@@ -19,6 +21,8 @@ class InvestorOptIn implements ShouldQueue
 
     protected FormEntry $formEntry;
 
+    protected array $formFields;
+
     /**
      * Create a new job instance.
      *
@@ -27,6 +31,7 @@ class InvestorOptIn implements ShouldQueue
     public function __construct(FormEntry $formEntry)
     {
         $this->formEntry = $formEntry;
+        $this->formFields = json_decode($formEntry->fields, true);
     }
 
     /**
@@ -36,22 +41,28 @@ class InvestorOptIn implements ShouldQueue
      */
     public function handle()
     {
-        $formFields = json_decode($this->formEntry->fields, true);
-        $this->sendToSlackIfAccredited($this->formEntry, $formFields);
-        $this->sendToMailChimp($this->formEntry, $formFields);
-    }
+        $this->sendToEmail();
+        $this->sendToMailChimp();
 
-    private function sendToSlackIfAccredited($formEntry, $formFields) {
-        if ($formFields['accredited'] === FormEntry::INVESTOR_ACCREDITED_YES) {
-            $message = '*Syndicate Application*' . "\n" .
-                ">" . $formEntry->first_name . ' ' . $formEntry->last_name . "\n" .
-                ">" . $formEntry->email . "\n" .
-                ">" . $formFields['phone'];
-            SlackAlert::to('investing')->message($message);
+        if ($this->formFields['accredited'] === FormEntry::INVESTOR_ACCREDITED_YES) {
+            $this->sendToSlackIfAccredited();
         }
     }
 
-    private function sendToMailChimp($formEntry, $formFields) {
+    private function sendToSlackIfAccredited()
+    {
+        $message = '*Syndicate Application*' . "\n" .
+            ">" . $this->formEntry->first_name . ' ' . $this->formEntry->last_name . "\n" .
+            ">" . $this->formEntry->email . "\n" .
+            ">" . $this->formFields['phone'];
+
+        SlackAlert::to('investing')->message($message);
+    }
+
+    private function sendToMailChimp()
+    {
+        $formEntry = $this->formEntry;
+        $formFields = $this->formFields;
 
         $subscribeArray = [
             "email_address" => $formEntry->email,
@@ -66,22 +77,31 @@ class InvestorOptIn implements ShouldQueue
         ];
 
         $mailchimp = new MailchimpMarketing\ApiClient();
-
         $mailchimp->setConfig([
-          'apiKey' => config('services.mailchimp.key'),
-          'server' => config('services.mailchimp.server')
+            'apiKey' => config('services.mailchimp.key'),
+            'server' => config('services.mailchimp.server')
         ]);
 
         try {
             $response = $mailchimp->lists->setListMember("1dc3f748f8", $formEntry->email, $subscribeArray);
             $formEntry->mailchimp_response = json_encode($response);
             $formEntry->mailchimp_status = FormEntry::STATUS_MAILCHIMP_SUCCESS;
-            $formEntry->save();
         } catch (ClientException $exception) {
             $errorMessage = $exception->getResponse()->getBody()->getContents();
             $formEntry->mailchimp_response = $errorMessage;
             $formEntry->mailchimp_status = FormEntry::STATUS_MAILCHIMP_FAILED;
-            $formEntry->save();
+        }
+
+        $formEntry->save();
+    }
+
+    private function sendToEmail()
+    {
+        $mail = new InvestorOptInCreated($this->formEntry, $this->formFields);
+        $recipientEmails = SettingsHelper::getEmailsArrayFromConfig('mail.form_emails.investor');
+
+        foreach ($recipientEmails as $recipient) {
+            Mail::to($recipient)->send($mail);
         }
     }
 }
