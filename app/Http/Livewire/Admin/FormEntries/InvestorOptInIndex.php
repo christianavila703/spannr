@@ -44,7 +44,7 @@ class InvestorOptInIndex extends Component
                                 ->orWhere('fields', 'like', '%' . $search . '%');
                         });
                 })
-                ->paginate($this->perPage)
+                ->paginate($this->perPage, ['*'], 'investorsPage')
         ]);
     }
 }

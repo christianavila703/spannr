@@ -1,4 +1,5 @@
 require('./bootstrap');
+import * as bootstrap from 'bootstrap';
 
 /* Tooltips */
 let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -16,3 +17,19 @@ confirmationButtons.forEach(button => {
         }
     });
 });
+
+/* Post Newsletter Optins */
+if (document.getElementById('post-newsletter')) {
+    let postOptIn = document.getElementById('post-newsletter');
+    let paragraphs = document.querySelectorAll('.single-post-content p');
+    let paragraphCount = paragraphs.length;
+
+    if (paragraphCount > 30) {
+        let paragraph = paragraphs[18];
+        paragraph.after(postOptIn);
+    } else {
+        let paraCount = parseInt(paragraphCount / 2);
+        let paragraph = paragraphs[paraCount];
+        paragraph.after(postOptIn);
+    }
+}

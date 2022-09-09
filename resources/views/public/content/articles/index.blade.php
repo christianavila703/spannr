@@ -7,8 +7,9 @@
                 <livewire:articles.index />
             </div>
             <div id="sidebar" class="sidebar">
-                <p>Join us for everything you need to know about the quest to extend healthy human lifespans.</p>
-                @include('public.includes.mailchimp-sidebar')
+                <div class="gray-newsletter-optin">
+                    <x-optins.newsletter showNameFields="true" />
+                </div>
             </div>
         </div>
     </div>

@@ -39,4 +39,29 @@ class Article extends Model
     {
         return route('public.content.articles.show', $this->slug);
     }
+
+    public function getShareableFacebookUrlAttribute(): string
+    {
+        return 'https://www.facebook.com/sharer.php?u=' . urlencode('https://spannr.com/articles/' . $this->slug);
+    }
+
+    public function getShareableTwitterUrlAttribute(): string
+    {
+        return 'https://twitter.com/intent/tweet?text=' . urlencode($this->name . ' https://spannr.com/articles/' . $this->slug);
+    }
+
+    public function getShareableLinkedinUrlAttribute(): string
+    {
+        return 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode('https://spannr.com/articles/' . $this->slug) . '&title=' . urlencode($this->name);
+    }
+
+    public function getShareableRedditUrlAttribute(): string
+    {
+        return 'https://www.reddit.com/submit?url=' . urlencode('https://spannr.com/articles/' . $this->slug) . '&title=' . urlencode($this->name);
+    }
+
+    public function getShareableHackerNewsUrlAttribute(): string
+    {
+        return 'https://news.ycombinator.com/submitlink?u=' . urlencode('https://spannr.com/articles/' . $this->slug) . '&t=' . $this->name;
+    }
 }

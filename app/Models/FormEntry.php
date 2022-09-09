@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Jobs\FormNotifications\InvestorOptIn;
+use App\Jobs\FormNotifications\NewsletterOptIn;
 use App\Jobs\FormNotifications\WebsiteContact;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +18,8 @@ class FormEntry extends Model
 
     const FORM_INVESTOR_OPTIN = 'Investor Opt-in';
     const FORM_CONTACT = 'Contact';
+    const FORM_NEWSLETTER_SIDEBAR = 'Newsletter Sidebar';
+    const FORM_NEWSLETTER_STICKY = 'Newsletter Sticky';
 
     const STATUS_MAILCHIMP_SUCCESS = 'Successful';
     const STATUS_MAILCHIMP_FAILED = 'Failed';
@@ -41,9 +44,16 @@ class FormEntry extends Model
             if ($formEntry->form === self::FORM_INVESTOR_OPTIN) {
                 InvestorOptIn::dispatch($formEntry);
             }
+
+            if ($formEntry->form === self::FORM_NEWSLETTER_SIDEBAR) {
+                NewsletterOptIn::dispatch($formEntry);
+            }
         });
     }
 
+    /**
+     * Scopes
+     */
     public function scopeWebsiteContact(Builder $query): Builder
     {
         return $query->where('form', self::FORM_CONTACT);
@@ -54,6 +64,14 @@ class FormEntry extends Model
         return $query->where('form', self::FORM_INVESTOR_OPTIN);
     }
 
+    public function scopeNewsletterOptin(Builder $query): Builder
+    {
+        return $query->whereIn('form', [self::FORM_NEWSLETTER_SIDEBAR, self::FORM_NEWSLETTER_STICKY]);
+    }
+
+    /**
+     * Accessors
+     */
     public function getNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -81,7 +99,8 @@ class FormEntry extends Model
         }
     }
 
-    public function getFormattedMailChimpResponseAttribute() {
+    public function getFormattedMailChimpResponseAttribute(): bool|string
+    {
         return print_r(json_decode($this->mailchimp_response), true);
     }
 }

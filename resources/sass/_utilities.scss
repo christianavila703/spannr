@@ -269,6 +269,11 @@ span.required {
     color: $red;
 }
 
+.form-control.dark {
+    background-color: $gray-900;
+    color: var(--color-aqua);
+}
+
 /* Lists on Pages / Posts */
 .single-post-wrapper,
 .single-page-content {

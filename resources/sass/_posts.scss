@@ -100,7 +100,7 @@
     padding-top: 1.25rem;
 
     @media (min-width: $bp-min-desktop) {
-        width: 340px;
+        width: 400px;
         margin-left: $spacer-desktop;
     }
 
@@ -133,4 +133,56 @@ ul.pagination {
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+}
+
+/* Mobile Newsletter Optin */
+.gray-newsletter-optin {
+    background: var(--color-gray-light);
+    padding: 1.5rem 1rem;
+
+    .title {
+        color: var(--color-magenta);
+    }
+}
+
+/* Sharing */
+.single-post-share-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1rem 0;
+
+    @media (min-width: $bp-min-desktop) {
+        padding: 0;
+    }
+
+    small {
+        display: block;
+        @include font-size-sm;
+        text-transform: uppercase;
+        color: $gray-600;
+        font-weight: bold;
+        margin-right: 1.5rem;
+
+        @media (min-width: $bp-min-desktop) {
+            margin-right: 1rem;
+        }
+    }
+
+    .social-icon {
+        display: block;
+        margin-right: 1.5rem;
+        font-size: 1.8rem;
+        color: var(--color-magenta);
+        transition: color .2s ease-in-out;
+
+        @media (min-width: $bp-min-desktop) {
+            margin-right: 1rem;
+            font-size: 1.4rem;
+        }
+    }
+
+    .social-icon:hover {
+        color: var(--color-blue);
+    }
 }
