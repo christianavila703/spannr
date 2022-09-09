@@ -148,7 +148,6 @@ ul.pagination {
 /* Sharing */
 .single-post-share-container {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     padding: 1rem 0;
 
@@ -162,7 +161,7 @@ ul.pagination {
         text-transform: uppercase;
         color: $gray-600;
         font-weight: bold;
-        margin-right: 1.5rem;
+        margin-right: 1.25rem;
 
         @media (min-width: $bp-min-desktop) {
             margin-right: 1rem;
@@ -171,8 +170,8 @@ ul.pagination {
 
     .social-icon {
         display: block;
-        margin-right: 1.5rem;
-        font-size: 1.8rem;
+        margin-right: 1.25rem;
+        font-size: 1.6rem;
         color: var(--color-magenta);
         transition: color .2s ease-in-out;
 

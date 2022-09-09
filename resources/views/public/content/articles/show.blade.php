@@ -49,7 +49,7 @@
                     </div>
                 </article>
             </div>
-            <div id="sidebar" class="sidebar">
+            <div id="sidebar" class="sidebar d-none d-lg-block">
                 <div class="gray-newsletter-optin">
                     <x-optins.newsletter showNameFields="true" />
                 </div>
