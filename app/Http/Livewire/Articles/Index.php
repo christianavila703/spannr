@@ -48,7 +48,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.articles.index', [
-            'articles' => Article::orderByDesc('id')
+            'articles' => Article::orderByDesc('date')
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
