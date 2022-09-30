@@ -32,14 +32,12 @@ class LongevityIndexController extends Controller
 
     public function all(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $marketSnapshots = MarketSnapshot::with(['stockSnapshots'])->orderByDesc('created_at')->get();
         $stocks = Stock::with(['snapshots'])
             ->orderBy('status')
             ->orderBy('name')
             ->get();
 
         return view('admin.longevity-index.all', [
-            'marketSnapshots' => $marketSnapshots,
             'stocks' => $stocks
         ]);
     }
