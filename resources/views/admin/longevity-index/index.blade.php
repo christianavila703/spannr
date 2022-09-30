@@ -111,9 +111,6 @@
             </tbody>
         </table>
 
-        <div class="mt-5">
-            <a href="{{ route('admin.longevity-index.all') }}" class="btn btn-secondary">View past snapshots</a>
-            <a href="{{ route('admin.longevity-index.update') }}" class="btn btn-tertiary">Update Index</a>
-        </div>
+        @include('admin.longevity-index._nav-group')
     </div>
 @endsection

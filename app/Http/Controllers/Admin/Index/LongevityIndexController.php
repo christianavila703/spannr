@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketSnapshot;
+use App\Models\Organization;
 use App\Models\Stock;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
+use Throwable;
 
 class LongevityIndexController extends Controller
 {
@@ -85,5 +89,35 @@ class LongevityIndexController extends Controller
     public function chart(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.longevity-index.chart');
+    }
+
+    public function addStock(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $inactiveStatus = Stock::STATUS_INACTIVE;
+
+        return view('admin.longevity-index.add-stock', [
+            'inactiveStatus' => $inactiveStatus
+        ]);
+    }
+
+    public function storeStock(Request $request) {
+        $organization = Organization::findOrFail($request->input('organization_id'));
+
+        $ticker = $request->input('ticker');
+
+        try {
+            Stock::create([
+                'name' => $organization->name,
+                'status' => $request->input('status') ?? Stock::STATUS_ACTIVE,
+                'slug' => Str::slug($ticker),
+                'ticker' => $ticker,
+                'organization_id' => $organization->id,
+                'date_added' => $request->input('date_added') ?? Carbon::now()
+            ]);
+        } catch (Throwable $throwable) {
+            return redirect()->back()->with('error', $throwable->getMessage());
+        }
+
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Successfully added ' . $organization->name . ' to the index!');
     }
 }

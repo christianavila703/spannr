@@ -43,6 +43,9 @@
                                     @if($stock->date_removed)
                                         <span class="small text-muted">removed {{ $stock->date_removed }}</span>
                                     @endif
+                                    @if($stock->date_added)
+                                        <span class="small text-success">added {{ $stock->date_added }}</span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -50,5 +53,6 @@
                 </table>
             </div>
         </div>
+        @include('admin.longevity-index._nav-group')
     </div>
 @endsection

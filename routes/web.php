@@ -62,7 +62,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('content', \App\Http\Controllers\Admin\ContentController::class);
         Route::resource('form-entries', \App\Http\Controllers\Admin\FormEntryController::class);
         Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
-        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\TagController::class, 'tagsList'])->name('json.tags');
+
+        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\TagController::class, 'tagsList'])->name('json.tags'); // TODO: DELETE
+//        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'tags'])->name('json.tags');
+        Route::get('/json/organizations.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'organizations'])->name('json.organizations');
+        Route::get('/json/investors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'investors'])->name('json.investors');
+        Route::get('/json/people.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'people'])->name('json.people');
+        Route::get('/json/jobs.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'jobs'])->name('json.jobs');
+        Route::get('/json/events.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'events'])->name('json.events');
+        Route::get('/json/fundraising-rounds.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'fundraisingRounds'])->name('json.fundraising-rounds');
+        Route::get('/json/users.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'users'])->name('json.users');
 
         // Organization Routes & Relationships
         Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');
@@ -90,6 +99,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/longevity-index/all', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'all'])->name('longevity-index.all');
         Route::get('/longevity-index/chart', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chart'])->name('longevity-index.chart');
         Route::get('/longevity-index/chart.json', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chartData'])->name('longevity-index.chart-data');
+        Route::get('/longevity-index/add-stock', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'addStock'])->name('longevity-index.stocks.create');
+        Route::post('/longevity-index/add-stock', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'storeStock'])->name('longevity-index.stocks.store');
         Route::get('/longevity-index/{id}', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'show'])->name('longevity-index.show');
 
         // Articles
