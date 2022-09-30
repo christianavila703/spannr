@@ -39,7 +39,7 @@ class GetEndOfDayMarketSnapshot implements ShouldQueue
      */
     public function handle()
     {
-        $previousSnapshot = MarketSnapshot::daily()->orderByDesc('timestamp')->first();
+        $previousSnapshot = MarketSnapshot::daily()->complete()->orderByDesc('timestamp')->first();
 
         $date = Carbon::parse($previousSnapshot->timestamp)->addWeekdays(1)->format('Y-m-d');
         $dateTime = Carbon::parse($previousSnapshot->timestamp)->addWeekdays(1)->format('Y-m-d H:i:s');
