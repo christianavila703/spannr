@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Index;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\Polygon\CalculateMarketSnapshotData;
+use App\Jobs\Polygon\GetEndOfDayMarketSnapshot;
 use App\Models\MarketSnapshot;
 use App\Models\Organization;
 use App\Models\Stock;
@@ -46,10 +48,16 @@ class LongevityIndexController extends Controller
         ]);
     }
 
-    public function updateIndex(): \Illuminate\Http\RedirectResponse
+    public function getHourlySnapshot(): \Illuminate\Http\RedirectResponse
     {
         Artisan::call('snapshot:hourly');
-        return redirect()->route('longevity-index')->with('success', 'Getting new market snapshot... standby!');
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Getting new hourly market snapshot... standby!');
+    }
+
+    public function getEndOfDaySnapshot(): \Illuminate\Http\RedirectResponse
+    {
+        GetEndOfDayMarketSnapshot::dispatch();
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Getting new end of day market snapshot... standby!');
     }
 
     public function chartData(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
@@ -91,33 +99,18 @@ class LongevityIndexController extends Controller
         return view('admin.longevity-index.chart');
     }
 
-    public function addStock(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        $inactiveStatus = Stock::STATUS_INACTIVE;
+    public function edit($id) {
+        $marketSnapshot = MarketSnapshot::findOrFail($id);
 
-        return view('admin.longevity-index.add-stock', [
-            'inactiveStatus' => $inactiveStatus
+        return view('admin.longevity-index.edit', [
+            'marketSnapshot' => $marketSnapshot
         ]);
     }
 
-    public function storeStock(Request $request) {
-        $organization = Organization::findOrFail($request->input('organization_id'));
-
-        $ticker = $request->input('ticker');
-
-        try {
-            Stock::create([
-                'name' => $organization->name,
-                'status' => $request->input('status') ?? Stock::STATUS_ACTIVE,
-                'slug' => Str::slug($ticker),
-                'ticker' => $ticker,
-                'organization_id' => $organization->id,
-                'date_added' => $request->input('date_added') ?? Carbon::now()
-            ]);
-        } catch (Throwable $throwable) {
-            return redirect()->back()->with('error', $throwable->getMessage());
-        }
-
-        return redirect()->route('admin.longevity-index.all')->with('success', 'Successfully added ' . $organization->name . ' to the index!');
+    public function recalculate($id) {
+        $marketSnapshot = MarketSnapshot::findOrFail($id);
+        $previousSnapshot = MarketSnapshot::daily()->where('id', '<', $marketSnapshot->id)->orderByDesc('id')->first();
+        CalculateMarketSnapshotData::dispatch($marketSnapshot, $previousSnapshot);
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Recalculating the index for ' . $marketSnapshot->formatted_date);
     }
 }

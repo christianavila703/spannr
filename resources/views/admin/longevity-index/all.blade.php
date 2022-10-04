@@ -14,13 +14,14 @@
             </div>
             <div class="col-12 col-xl-4">
                 <h2 class="h5 text-tertiary">Index Stocks</h2>
-                <table class="table width-auto">
+                <table class="table width-auto align-middle">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Ticker</th>
                             <th>Status</th>
                             <th>Latest Market Cap</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -41,11 +42,14 @@
                                 </td>
                                 <td>
                                     @if($stock->date_removed)
-                                        <span class="small text-muted">removed {{ $stock->date_removed }}</span>
+                                        <span class="small text-danger d-block">removed {{ $stock->date_removed }}</span>
                                     @endif
-                                    @if($stock->date_added)
-                                        <span class="small text-success">added {{ $stock->date_added }}</span>
+                                    @if($stock->date_added != '2022-05-10')
+                                        <span class="small text-success d-block">added {{ $stock->date_added }}</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.longevity-index.stocks.edit', $stock->id) }}">edit</a>
                                 </td>
                             </tr>
                         @endforeach

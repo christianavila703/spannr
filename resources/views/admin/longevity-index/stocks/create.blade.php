@@ -24,7 +24,7 @@
                 <div class="form-check form-check-inline d-flex align-items-center">
                     <input class="form-check-input" type="checkbox" name="status" id="status-{{ $inactiveStatus }}" value="{{ $inactiveStatus }}">
                     <label class="form-check-label fw-bold text-uppercase mt-1 ms-2 text-tertiary" for="status-{{ $inactiveStatus }}">
-                        Mark this {{ ucwords($inactiveStatus) }}
+                        Mark this {{ $inactiveStatus }}
                     </label>
                 </div>
             </div>

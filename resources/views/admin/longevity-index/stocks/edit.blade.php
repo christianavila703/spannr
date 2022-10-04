@@ -1,0 +1,43 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        @include('admin.includes.status-messages')
+
+        <h1>Update {{ $stock->name }}</h1>
+
+        <form action="{{ route('admin.longevity-index.stocks.update', $stock->id) }}" method="POST" class="max-width-420">
+            @csrf
+            <div class="mb-3">
+                <label for="date_added" class="fw-bold">Ticker</label>
+                <input type="text" name="ticker" value="{{ $stock->ticker }}" aria-label="Ticker symbol" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="date_added" class="fw-bold">Date Added</label>
+                <input type="date" class="form-control" name="date_added" id="date_added" value="{{ $stock->date_added }}">
+            </div>
+            <div class="mb-3">
+                <label for="date_removed" class="fw-bold">Date Removed</label>
+                <input type="date" class="form-control" name="date_removed" id="date_removed" value="{{ $stock->date_removed }}">
+            </div>
+            <div class="mb-3">
+                <label for="status" class="fw-bold text-nowrap me-3">Status</label>
+                <div class="d-flex flex-wrap">
+                    @foreach (\App\Models\Stock::STATUSES as $status)
+                        <div class="form-check form-check-inline d-flex align-items-center">
+                            <input class="form-check-input" type="radio" name="status" id="status-{{ $status }}" value="{{ $status }}" @if ($stock->status === $status) checked @endif>
+                            <label class="form-check-label text-uppercase mt-1 ms-2" for="status-{{ $status }}">
+                                {{ $status }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+
+@endsection

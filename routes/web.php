@@ -95,13 +95,19 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/locations/{id}', [\App\Http\Controllers\Admin\LocationController::class, 'show'])->name('locations.show');
 
         Route::get('/longevity-index', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
-        Route::get('/longevity-index/update', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'updateIndex'])->name('longevity-index.update');
+        Route::get('/longevity-index/snapshot/hourly', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'getHourlySnapshot'])->name('longevity-index.snapshots.hourly');
+        Route::get('/longevity-index/snapshot/eod', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'getEndOfDaySnapshot'])->name('longevity-index.snapshots.eod');
         Route::get('/longevity-index/all', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'all'])->name('longevity-index.all');
         Route::get('/longevity-index/chart', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chart'])->name('longevity-index.chart');
         Route::get('/longevity-index/chart.json', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chartData'])->name('longevity-index.chart-data');
-        Route::get('/longevity-index/add-stock', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'addStock'])->name('longevity-index.stocks.create');
-        Route::post('/longevity-index/add-stock', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'storeStock'])->name('longevity-index.stocks.store');
-        Route::get('/longevity-index/{id}', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'show'])->name('longevity-index.show');
+        Route::get('/longevity-index/{id}/show', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'show'])->name('longevity-index.show');
+        Route::get('/longevity-index/{id}/edit', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'edit'])->name('longevity-index.edit');
+        Route::get('/longevity-index/{id}/recalculate', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'recalculate'])->name('longevity-index.recalculate');
+
+        Route::get('/longevity-index/stocks/create', [\App\Http\Controllers\Admin\Index\StockController::class, 'create'])->name('longevity-index.stocks.create');
+        Route::post('/longevity-index/stocks/create', [\App\Http\Controllers\Admin\Index\StockController::class, 'store'])->name('longevity-index.stocks.store');
+        Route::get('/longevity-index/stocks/{id}', [\App\Http\Controllers\Admin\Index\StockController::class, 'edit'])->name('longevity-index.stocks.edit');
+        Route::post('/longevity-index/stocks/{id}', [\App\Http\Controllers\Admin\Index\StockController::class, 'update'])->name('longevity-index.stocks.update');
 
         // Articles
         Route::get('/articles/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');

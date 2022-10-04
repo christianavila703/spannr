@@ -4,6 +4,7 @@ namespace App\Http\Livewire\LongevityIndex;
 
 use App\Models\Job;
 use App\Models\MarketSnapshot;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,7 +19,7 @@ class MarketSnapshots extends Component
 
     public $filters = [
         'search' => '',
-        'selected-types' => [],
+        'selected-types' => [MarketSnapshot::TYPE_DAILY],
         'date-min' => null,
         'date-max' => null,
     ];
