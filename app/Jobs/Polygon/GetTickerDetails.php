@@ -49,7 +49,13 @@ class GetTickerDetails implements ShouldQueue
 
         try {
             $this->stockSnapshot->market_cap = $tickerDetailsArray->results->market_cap;
-            $this->stockSnapshot->outstanding_shares = $tickerDetailsArray->results->share_class_shares_outstanding;
+
+            if (property_exists($tickerDetailsArray->results, 'share_class_shares_outstanding')) {
+                $this->stockSnapshot->outstanding_shares = $tickerDetailsArray->results->share_class_shares_outstanding;
+            } else {
+                $this->stockSnapshot->outstanding_shares = $tickerDetailsArray->results->weighted_shares_outstanding;
+            }
+
             $this->stockSnapshot->save();
         } catch (\Throwable $throwable) {
             $message = 'Failure during GetTickerDetails ' . $this->stockSnapshot->stock->ticker . "\n" . $throwable->getMessage() . "\n" . '```' . print_r($tickerDetailsArray, true) . '```';
