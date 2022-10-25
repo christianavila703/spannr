@@ -1,5 +1,6 @@
-require('./bootstrap');
+import './bootstrap';
 import * as bootstrap from 'bootstrap';
+import '../sass/app.scss';
 
 /* Tooltips */
 let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

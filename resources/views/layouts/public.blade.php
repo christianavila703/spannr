@@ -11,8 +11,8 @@
         @stack('seo')
     @endisset
     <title>{{ config('app.name', 'Spannr') }}</title>
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite('resources/js/app.js')
+    @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF"></script>
