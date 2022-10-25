@@ -8,11 +8,11 @@
 
     @stack('head')
     @vite('resources/js/app.js')
-    @vite('resources/css/app.css')
+    @vite('resources/sass/app.scss')
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
-    @vite('resources/css/choices.css')
-    @vite('resources/css/admin.css')
+    @vite('resources/sass/choices.scss')
+    @vite('resources/sass/admin.scss')
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
