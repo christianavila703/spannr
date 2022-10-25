@@ -12,7 +12,7 @@
     @endisset
     <title>{{ config('app.name', 'Spannr') }}</title>
     @vite('resources/js/app.js')
-    @vite('resources/css/app.css')
+    @vite('resources/sass/app.scss')
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF"></script>
