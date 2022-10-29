@@ -12,8 +12,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link href="{{ asset('vendor/laravel_backup_panel/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/laravel_backup_panel/app.css') }}" rel="stylesheet">
+    <link href="{{ Vite::asset('resources/vendor/laravel_backup_panel/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ Vite::asset('resources/vendor/laravel_backup_panel/app.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
 <body>

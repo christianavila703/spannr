@@ -5,7 +5,7 @@
     <section class="ventures-hero-container">
         <div class="container">
             <div class="content">
-                <img src="{{ asset('images/spannr-ventures-logo-white.png') }}" alt="spannr ventures" class="logo">
+                <img src="{{ Vite::asset('resources/images/spannr-ventures-logo-white.png') }}" alt="spannr ventures" class="logo">
                 <div>
                     <p>Across the globe, scientists are working on ways to extend healthy human lifespans beyond what we know. Significant advances have attracted serious investment and the force of this movement is changing the way we look at life.</p>
                     <h1>Invest in the future of humanity.</h1>
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img src="{{ asset('images/ventures/ventures-hero.png') }}" alt="Invest in the future of humanity">
+                <img src="{{ Vite::asset('resources/images/ventures/ventures-hero.png') }}" alt="Invest in the future of humanity">
             </div>
         </div>
     </section>
@@ -27,7 +27,7 @@ a number of like-minded investors. Through our experience-led, data-driven inves
 you can be confident that the deals you see are some of the best opportunities in the industry.</p>
             </div>
             <div class="image-container">
-                <img src="{{ asset('images/ventures/network.png') }}" alt="The spannr syndicate">
+                <img src="{{ Vite::asset('resources/images/ventures/network.png') }}" alt="The spannr syndicate">
             </div>
         </div>
     </section>
@@ -48,27 +48,27 @@ you can be confident that the deals you see are some of the best opportunities i
             </div>
             <div class="row icon-container">
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/icon-investments.png') }}" alt="Our curated investments" class="icon">
+                    <img src="{{ Vite::asset('resources/images/ventures/icon-investments.png') }}" alt="Our curated investments" class="icon">
                 </div>
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/icon-expertise.png') }}" alt="Our investment expertise" class="icon">
+                    <img src="{{ Vite::asset('resources/images/ventures/icon-expertise.png') }}" alt="Our investment expertise" class="icon">
                 </div>
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/icon-platform.png') }}" alt="Our platform" class="icon">
+                    <img src="{{ Vite::asset('resources/images/ventures/icon-platform.png') }}" alt="Our platform" class="icon">
                 </div>
             </div>
             <div class="row arrow-container">
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
-                    <img src="{{ asset('images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
                 </div>
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
-                    <img src="{{ asset('images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
                 </div>
                 <div class="col-4">
-                    <img src="{{ asset('images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
-                    <img src="{{ asset('images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-mobile.png') }}" alt="" class="arrow mobile">
+                    <img src="{{ Vite::asset('resources/images/ventures/arrow-desktop.png') }}" alt="" class="arrow desktop">
                 </div>
             </div>
         </div>
@@ -79,43 +79,43 @@ you can be confident that the deals you see are some of the best opportunities i
             <h2 class="h1">Some of the companies our team has invested in or advised</h2>
             <div class="investment-logos-container">
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/juvenescence.png') }}" alt="Juvenescence">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/juvenescence.png') }}" alt="Juvenescence">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/rejuveron.png') }}" alt="Rejuveron">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/rejuveron.png') }}" alt="Rejuveron">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/character.png') }}" alt="Character">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/character.png') }}" alt="Character">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/rejuvenation-tech.png') }}" alt="Rejuvenation Technologies">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/rejuvenation-tech.png') }}" alt="Rejuvenation Technologies">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/kernalbio.png') }}" alt="kernalbio">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/kernalbio.png') }}" alt="kernalbio">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/blackrock-neurotech.png') }}" alt="Blackrock Neurotech">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/blackrock-neurotech.png') }}" alt="Blackrock Neurotech">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/mind-portal.png') }}" alt="MindPortal">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/mind-portal.png') }}" alt="MindPortal">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/paradromics.png') }}" alt="Paradromics">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/paradromics.png') }}" alt="Paradromics">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/colossal.png') }}" alt="Colossal">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/colossal.png') }}" alt="Colossal">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/endiatix.png') }}" alt="Endiatix">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/endiatix.png') }}" alt="Endiatix">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/aria.png') }}" alt="ARIA Pharmaceuticals">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/aria.png') }}" alt="ARIA Pharmaceuticals">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/rain.png') }}" alt="RAIN Neuromorphics">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/rain.png') }}" alt="RAIN Neuromorphics">
                 </div>
                 <div class="logo">
-                    <img src="{{ asset('images/ventures/logos/gerostate-alpha.png') }}" alt="gerostate-alpha">
+                    <img src="{{ Vite::asset('resources/images/ventures/logos/gerostate-alpha.png') }}" alt="gerostate-alpha">
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@ you can be confident that the deals you see are some of the best opportunities i
         </div>
         <div class="container copyright-container pt-5">
             <a href="/">
-                <img src="{{ asset('images/spannr-logo-tagline.png') }}" alt="spannr" class="logo">
+                <img src="{{ Vite::asset('resources/images/spannr-logo-tagline.png') }}" alt="spannr" class="logo">
             </a>
             <p>
                 Copyright &copy; <?php echo date('Y'); ?> Spannr

@@ -39,22 +39,22 @@
                 <div class="logos-list">
                     <div class="logo-item">
                         <a href="https://www.explorerequity.com" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ asset('images/logos/explorer-equity-group.png') }}" alt="Explorer Equity Group" />
+                            <img src="{{ Vite::asset('resources/images/logos/explorer-equity-group.png') }}" alt="Explorer Equity Group" />
                         </a>
                     </div>
                     <div class="logo-item">
                         <a href="https://codyshirk.com" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ asset('images/logos/explorer-report.png') }}" alt="Explorer Report" />
+                            <img src="{{ Vite::asset('resources/images/logos/explorer-report.png') }}" alt="Explorer Report" />
                         </a>
                     </div>
                     <div class="logo-item">
                         <a href="https://age-rate.com" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ asset('images/logos/age-rate.webp') }}" alt="age-rate.com" />
+                            <img src="{{ Vite::asset('resources/images/logos/age-rate.webp') }}" alt="age-rate.com" />
                         </a>
                     </div>
                     <div class="logo-item">
                         <a href="https://xivix.co/" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ asset('images/logos/xivix.png') }}" alt="xivix" />
+                            <img src="{{ Vite::asset('resources/images/logos/xivix.png') }}" alt="xivix" />
                         </a>
                     </div>
                 </div>

@@ -5,7 +5,6 @@ namespace App\Jobs\Polygon;
 use App\Models\MarketSnapshot;
 use App\Models\Stock;
 use App\Models\StockSnapshot;
-use App\Notifications\FailedPolygonNotification;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

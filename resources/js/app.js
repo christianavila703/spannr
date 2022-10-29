@@ -2,6 +2,11 @@ import './bootstrap';
 import * as bootstrap from 'bootstrap';
 import '../sass/app.scss';
 
+/* Images */
+import.meta.glob([
+    '../images/**'
+]);
+
 /* Tooltips */
 let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

@@ -24,7 +24,7 @@
             <!--End mc_embed_signup-->
         </div>
         <div class="image-container">
-            <img src="{{ asset('images/longevity-company-report-2022-08-august.png') }}" alt="The Spannr Longevity Company Report">
+            <img src="{{ Vite::asset('resources/images/longevity-company-report-2022-08-august.png') }}" alt="The Spannr Longevity Company Report">
         </div>
     </div>
 </div>

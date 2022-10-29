@@ -20,7 +20,7 @@
         <nav id="primary-nav" class="navbar navbar-expand-lg navbar-dark bg-gradient-yellow-pink text-white align-items-center">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo-color.svg') }}" alt="spannr">
+                    <img src="{{ Vite::asset('resources/images/logo-color.svg') }}" alt="spannr">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

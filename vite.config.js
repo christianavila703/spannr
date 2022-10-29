@@ -17,6 +17,8 @@ export default defineConfig({
                 'resources/sass/choices.scss',
                 'resources/js/app.js',
                 'resources/js/longevity-stock-chart.js',
+                'resources/vendor/laravel_backup_panel/app.css',
+                'resources/vendor/laravel_backup_panel/bootstrap.css'
             ],
             refresh: true,
         }),
