@@ -24,14 +24,24 @@ class FundraisingRound extends Model
     const ROUND_SERIES_C = 'Series C';
     const ROUND_SERIES_D = 'Series D';
     const ROUND_UNKNOWN = 'Unknown';
+    const ROUND_PRE_SEED = 'Pre-seed';
+    const ROUND_DEBT = 'Debt';
+    const ROUND_GRANTS = 'Grants';
+    const ROUND_IPO = 'IPO';
+    const ROUND_POST_IPO = 'Post-IPO Equity';
 
     const ROUNDS = [
+        self::ROUND_PRE_SEED,
         self::ROUND_SEED,
         self::ROUND_SERIES_A,
         self::ROUND_SERIES_B,
         self::ROUND_SERIES_C,
         self::ROUND_SERIES_D,
-        self::ROUND_UNKNOWN
+        self::ROUND_UNKNOWN,
+        self::ROUND_DEBT,
+        self::ROUND_GRANTS,
+        self::ROUND_IPO,
+        self::ROUND_POST_IPO
     ];
 
     private string $searchableRouteName = 'admin.fundraising-rounds.show';
