@@ -86,8 +86,10 @@ class FundraisingRoundController extends Controller
         $fundraisingRound->update($validated);
         $fundraisingRound->save();
 
-        $fundraisingRound->investors()->sync($validated['investors']);
-        $organization->investors()->syncWithoutDetaching($validated['investors']);
+        if (!empty($validated['investors'])) {
+            $fundraisingRound->investors()->sync($validated['investors']);
+            $organization->investors()->syncWithoutDetaching($validated['investors']);
+        }
 
         return redirect()->route('admin.fundraising-rounds.show', $fundraisingRound->id)->with('success', $fundraisingRound->name . ' updated!');
     }

@@ -36,6 +36,10 @@ class MediaItem extends Model
 
     public function getShortSummaryAttribute(): string
     {
-        return Str::words($this->summary, 25);
+        if ($this->summary) {
+            return Str::words($this->summary, 25);
+        } else {
+            return '';
+        }
     }
 }
