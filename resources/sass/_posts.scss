@@ -46,6 +46,11 @@
     }
 }
 
+.single-post-content a {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 /* Breadcrumbs */
 .breadcrumbs {
     @include margin-bottom-md;
