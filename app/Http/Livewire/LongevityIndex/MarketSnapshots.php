@@ -2,20 +2,21 @@
 
 namespace App\Http\Livewire\LongevityIndex;
 
-use App\Models\Job;
+use App\Http\Livewire\DataTable\WithBulkActions;
+use App\Http\Livewire\DataTable\WithCachedRows;
+use App\Http\Livewire\DataTable\WithPerPagePagination;
+use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\MarketSnapshot;
-use App\Models\Stock;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class MarketSnapshots extends Component
 {
-    use WithPagination;
+    use WithPerPagePagination, WithBulkActions, WithCachedRows, WithSorting;
     protected $paginationTheme = 'bootstrap';
 
     public $search;
-    public $perPage = 28;
 
     public $filters = [
         'search' => '',
@@ -37,11 +38,9 @@ class MarketSnapshots extends Component
         $this->filters[$filter] = null;
     }
 
-    public function render()
+    public function getRowsQueryProperty()
     {
-        return view('livewire.longevity-index.market-snapshots', [
-            'typeOptions' => MarketSnapshot::pluck('type')->unique()->toArray(),
-            'marketSnapshots' => MarketSnapshot::orderByDesc('timestamp')
+        $query = MarketSnapshot::orderByDesc('timestamp')
                 ->with(['stockSnapshots'])
                 ->when($this->filters['date-min'], fn($query, $date) => $query->where('timestamp', '>=', Carbon::parse($date)))
                 ->when($this->filters['date-max'], fn($query, $date) => $query->where('timestamp', '<=', Carbon::parse($date)))
@@ -51,12 +50,28 @@ class MarketSnapshots extends Component
                         ->orWhere('timestamp', 'like', '%' . $search . '%')
                         ->orWhere('index_change', 'like', '%' . $search . '%')
                         ->orWhere('index_value', 'like', '%' . $search . '%')
-                        ->orWhere('cumulative_change', 'like', '%' . $search . '%');
+                        ->orWhere('cumulative_change', 'like', '%' . $search . '%')
+                        ->orWhere('market_cap', 'like', '%' . $search . '%');
                 })
                 ->when($this->filters['selected-types'], function($query, $selectedTypes) {
                     return $query->whereIn('type', $selectedTypes);
-                })
-                ->paginate($this->perPage)
+                });
+
+        return $this->applySorting($query);
+    }
+
+    public function getRowsProperty()
+    {
+        return $this->cache(function () {
+            return $this->applyPagination($this->rowsQuery);
+        });
+    }
+
+    public function render()
+    {
+        return view('livewire.longevity-index.market-snapshots', [
+            'typeOptions' => MarketSnapshot::pluck('type')->unique()->toArray(),
+            'marketSnapshots' => $this->rows,
         ]);
     }
 }

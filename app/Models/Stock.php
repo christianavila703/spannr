@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Stock extends Model
 {
-    use HasFactory,
-        LogsActivity;
+    use HasFactory;
 
     protected $guarded = ['id'];
 
@@ -43,18 +40,6 @@ class Stock extends Model
                 $query->hourly();
             })->latest();
 
-    }
-
-    /**
-     * Functions
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->useLogName(Activity::LOG_STOCKS)
-            ->logUnguarded()
-            ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
 
     /**
