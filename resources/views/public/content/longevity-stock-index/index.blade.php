@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <p class="mb-1 text-center small text-muted px-2">
-                    <span class="me-3 text-nowrap">{{ $marketSnapshot->formatted_timestamp }} {{ $marketSnapshot->formatted_timezone }}</span>
+                    <span class="me-3 text-nowrap">{{ $marketSnapshot->formatted_eastern_timestamp }}</span>
                     <span class="text-nowrap">Market Cap: {{ $marketSnapshot->formatted_market_cap }}</span>
                 </p>
                 <div class="d-flex flex-wrap justify-content-center">
