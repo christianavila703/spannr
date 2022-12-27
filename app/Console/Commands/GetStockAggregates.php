@@ -29,7 +29,7 @@ class GetStockAggregates extends Command
      */
     public function handle()
     {
-        $stocks = Stock::indexed()->get();
+        $stocks = Stock::active()->get();
 
         foreach ($stocks as $stock) {
             GetOrganizationStockChart::dispatch($stock);

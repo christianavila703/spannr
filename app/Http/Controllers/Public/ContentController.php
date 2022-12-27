@@ -8,9 +8,7 @@ use App\Models\Content;
 use App\Models\Glossary;
 use App\Models\MarketSnapshot;
 use App\Models\Organization;
-use App\Models\Stock;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -21,7 +19,8 @@ class ContentController extends Controller
        View::share ('showHeader', true);
     }
 
-    public function home() {
+    public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'home')->first();
         return view('public.content.home', [
             'headerClass' => 'dark',
@@ -29,7 +28,8 @@ class ContentController extends Controller
         ]);
     }
 
-    public function ventures() {
+    public function ventures(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'ventures')->first();
         return view('public.content.ventures', [
             'showHeader' => false,
@@ -38,35 +38,40 @@ class ContentController extends Controller
         ]);
     }
 
-    public function terms() {
+    public function terms(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'terms')->first();
         return view('public.content.terms', [
             'seo' => $seo
         ]);
     }
 
-    public function privacy() {
+    public function privacy(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'privacy')->first();
         return view('public.content.privacy', [
             'seo' => $seo
         ]);
     }
 
-    public function contact() {
+    public function contact(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'contact')->first();
         return view('public.content.contact', [
             'seo' => $seo
         ]);
     }
 
-    public function emailConfirmed() {
+    public function emailConfirmed(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'confirmed')->first();
         return view('public.content.email-confirmed', [
             'seo' => $seo
         ]);
     }
 
-    public function articlesIndex() {
+    public function articlesIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'articles')->first();
         return view('public.content.articles.index', [
             'seo' => $seo
@@ -114,7 +119,8 @@ class ContentController extends Controller
         ]);
     }
 
-    public function longevityStockIndex() {
+    public function longevityStockIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'index')->first();
 
         $marketSnapshot = MarketSnapshot::orderByDesc('timestamp')
@@ -129,14 +135,16 @@ class ContentController extends Controller
         ]);
     }
 
-    public function longevityStockIndexAbout() {
+    public function longevityStockIndexAbout(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'index--about')->first();
         return view('public.content.wordpress', [
             'seo' => $seo
         ]);
     }
 
-    public function longevityStockIndexTerms() {
+    public function longevityStockIndexTerms(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $seo = Content::where('slug', 'index--terms-and-disclaimers')->first();
         return view('public.content.wordpress', [
             'seo' => $seo
@@ -179,9 +187,10 @@ class ContentController extends Controller
         return response(json_encode($data, JSON_NUMERIC_CHECK));
     }
 
-    public function companiesList() {
+    public function companiesList(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $organizations = Organization::whereHas('stock', function (Builder $query) {
-                $query->where('status', Stock::STATUS_ACTIVE);
+                $query->indexed()->active();
             })
             ->orderBy('name')
             ->get();
@@ -194,7 +203,8 @@ class ContentController extends Controller
         ]);
     }
 
-    public function organizationShow($slug) {
+    public function organizationShow($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $organization = Organization::whereHas('stock')
             ->with(['locations', 'stock', 'stock.latestSnapshot', 'mediaItems'])
             ->where('slug', $slug)
@@ -205,14 +215,16 @@ class ContentController extends Controller
         ]);
     }
 
-    public function organizationChart($slug) {
+    public function organizationChart($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $organization = Organization::where('slug', $slug)->firstOrFail();
         return view('public.content.organizations.chart', [
             'slug' => $organization->slug
         ]);
     }
 
-    public function organizationChartData($slug) {
+    public function organizationChartData($slug): bool|string
+    {
         $organization = Organization::where('slug', $slug)->firstOrFail();
         $chartData = json_decode($organization->stock->data, true);
 

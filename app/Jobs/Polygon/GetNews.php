@@ -40,7 +40,12 @@ class GetNews implements ShouldQueue
     {
         $url = 'https://api.polygon.io/v2/reference/news?ticker=' . $this->organization->stock->ticker . '&limit=10&apiKey=' . config('services.polygon.key');
 
-        $news = Http::get($url);
+        $news = Http::withHeaders([
+            'X-Polygon-Edge-ID' => config('services.polygon.edge-id'),
+            'X-Polygon-Edge-IP-Address' => config('services.polygon.edge-ip'),
+            'X-Polygon-Edge-User-Agent' => config('services.polygon.edge-user-agent')
+        ])->get($url);
+
         $newsArray = json_decode($news->body());
 
         foreach ($newsArray->results as $result) {

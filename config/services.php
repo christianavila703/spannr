@@ -33,6 +33,9 @@ return [
 
     'polygon' => [
         'key' => env('POLYGON_KEY'),
+        'edge-id' => 'spannr',
+        'edge-ip' => '144.202.43.148',
+        'edge-user-agent' => 'spannr'
     ],
 
     'wordpress' => [

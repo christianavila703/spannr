@@ -16,19 +16,19 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Market Snapshots
-//        $schedule->command('snapshot:EOD')
-//            ->weekdays()
-//            ->dailyAt('1:00');
+        $schedule->command('snapshot:EOD')
+            ->weekdays()
+            ->dailyAt('1:00');
 
-//        $schedule->command('snapshot:hourly')
-//            ->weekdays()
-//            ->everyFifteenMinutes()
-//            ->between('8:45', '15:30');
+        $schedule->command('snapshot:hourly')
+            ->weekdays()
+            ->everyFifteenMinutes()
+            ->between('8:45', '15:30');
 
-//        $schedule->command('stocks:get-aggregates')
-//            ->weekdays()
-//            ->everyFifteenMinutes()
-//            ->between('8:45', '15:30');
+        $schedule->command('stocks:get-aggregates')
+            ->weekdays()
+            ->everyFifteenMinutes()
+            ->between('8:45', '15:30');
 
         $schedule->command('wordpress:sync-articles')
             ->hourlyAt(15);
@@ -36,8 +36,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('wordpress:sync-glossary')
             ->hourlyAt(20);
 
-//        $schedule->command('polygon:get-news')
-//            ->hourlyAt(25);
+        $schedule->command('polygon:get-news')
+            ->hourlyAt(25);
 
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');

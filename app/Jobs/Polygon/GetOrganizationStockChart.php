@@ -40,7 +40,12 @@ class GetOrganizationStockChart implements ShouldQueue
         $end = Carbon::now()->format('Y-m-d');
 
         $url = 'https://api.polygon.io/v2/aggs/ticker/' . $this->stock->ticker . '/range/1/day/' . $start . '/' . $end . '?adjusted=true&sort=asc&apiKey=' . config('services.polygon.key');
-        $request = Http::get($url);
+
+        $request = Http::withHeaders([
+            'X-Polygon-Edge-ID' => config('services.polygon.edge-id'),
+            'X-Polygon-Edge-IP-Address' => config('services.polygon.edge-ip'),
+            'X-Polygon-Edge-User-Agent' => config('services.polygon.edge-user-agent')
+        ])->get($url);
 
         $response = json_decode($request->body(), true);
 

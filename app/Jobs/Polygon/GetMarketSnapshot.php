@@ -55,47 +55,37 @@ class GetMarketSnapshot implements ShouldQueue
             'timestamp' => Carbon::now()
         ]);
 
-        $url = 'https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=' . $stockList .'&apiKey=' . config('services.polygon.key');
+        $url = 'https://api.polygon.io/v1/summaries?ticker.any_of=' . $stockList .'&apiKey=' . config('services.polygon.key');
 
         $batchArray = [];
 
         try {
-            $tickerData = Http::get($url);
+            $tickerData = Http::withHeaders([
+                'X-Polygon-Edge-ID' => config('services.polygon.edge-id'),
+                'X-Polygon-Edge-IP-Address' => config('services.polygon.edge-ip'),
+                'X-Polygon-Edge-User-Agent' => config('services.polygon.edge-user-agent')
+            ])->get($url);
 
-            $tickerArray = json_decode($tickerData->body());
+            $results = json_decode($tickerData->body());
+            $tickers = $results->results;
+            $successfulTickerCount = count($tickers);
 
-            $successfulTickerCount = count($tickerArray->tickers);
-
-            foreach ($tickerArray->tickers as $ticker) {
+            foreach ($tickers as $ticker) {
 
                 $stock = Stock::where('ticker', $ticker->ticker)->first();
                 $successfulTickerList[$stock->id] = $stock->ticker;
 
-                if ($ticker->day->c !== 0) {
-                    $attributes = [
-                        'current_price' => $ticker->day->c,
-                        'volume' => $ticker->day->v,
-                        'yesterday_close' => $ticker->prevDay->c,
-                        'today_high' => $ticker->day->h,
-                        'today_low' => $ticker->day->l,
-                        'previous_day_change_price' => $ticker->todaysChange,
-                        'previous_day_change_percent' => $ticker->todaysChangePerc,
-                        'stock_id' => $stock->id,
-                        'market_snapshot_id' => $marketSnapshot->id
-                    ];
-                } else {
-                    $attributes = [
-                        'current_price' => $ticker->prevDay->c,
-                        'volume' => $ticker->prevDay->v,
-                        'yesterday_close' => $ticker->prevDay->c,
-                        'today_high' => $ticker->prevDay->h,
-                        'today_low' => $ticker->prevDay->l,
-                        'previous_day_change_price' => $ticker->todaysChange,
-                        'previous_day_change_percent' => $ticker->todaysChangePerc,
-                        'stock_id' => $stock->id,
-                        'market_snapshot_id' => $marketSnapshot->id
-                    ];
-                }
+                $attributes = [
+                    'current_price' => $ticker->price,
+                    'volume' => $ticker->session->volume,
+                    'yesterday_close' => $ticker->session->previous_close,
+                    'today_high' => $ticker->session->high,
+                    'today_low' => $ticker->session->low,
+                    'previous_day_change_price' => $ticker->session->change,
+                    'previous_day_change_percent' => $ticker->session->change_percent,
+                    'stock_id' => $stock->id,
+                    'market_snapshot_id' => $marketSnapshot->id
+                ];
 
                 $stockSnapshot = StockSnapshot::create($attributes);
 

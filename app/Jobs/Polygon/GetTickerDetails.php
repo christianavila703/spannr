@@ -44,7 +44,12 @@ class GetTickerDetails implements ShouldQueue
 
         $url = 'https://api.polygon.io/v3/reference/tickers/' . $this->stockSnapshot->stock->ticker . '?apiKey=' . config('services.polygon.key');
 
-        $tickerDetails = Http::get($url);
+        $tickerDetails = Http::withHeaders([
+            'X-Polygon-Edge-ID' => config('services.polygon.edge-id'),
+            'X-Polygon-Edge-IP-Address' => config('services.polygon.edge-ip'),
+            'X-Polygon-Edge-User-Agent' => config('services.polygon.edge-user-agent')
+        ])->get($url);
+
         $tickerDetailsArray = json_decode($tickerDetails->body());
 
         try {
@@ -58,9 +63,18 @@ class GetTickerDetails implements ShouldQueue
 
             $this->stockSnapshot->save();
         } catch (\Throwable $throwable) {
+            $previousStockSnapshot = StockSnapshot::orderByDesc('created_at')
+                ->where('stock_id', $this->stockSnapshot->stock_id)
+                ->whereNotNull('market_cap')
+                ->first();
+
+            $this->stockSnapshot->outstanding_shares = $previousStockSnapshot->outstanding_shares;
+            $this->stockSnapshot->market_cap = $previousStockSnapshot->market_cap;
+            $this->stockSnapshot->save();
+
             $message = 'Failure during GetTickerDetails ' . $this->stockSnapshot->stock->ticker . "\n" . $throwable->getMessage() . "\n" . '```' . print_r($tickerDetailsArray, true) . '```';
             Log::critical($message);
-            SlackAlert::to('index')->message("<@sydney> " . $message);
+            SlackAlert::to('index')->message($message);
         }
     }
 }

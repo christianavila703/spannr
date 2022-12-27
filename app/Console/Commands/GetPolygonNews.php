@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Jobs\Polygon\GetNews;
 use App\Models\Organization;
+use App\Models\Stock;
 use Illuminate\Console\Command;
 
 class GetPolygonNews extends Command
@@ -29,12 +30,10 @@ class GetPolygonNews extends Command
      */
     public function handle()
     {
-        $organizations = Organization::whereHas(['stock' => function ($query) {
-            $query->indexed();
-        }])->get();
+        $stocks = Stock::with('organization')->active()->get();
 
-        foreach ($organizations as $organization) {
-            GetNews::dispatch($organization);
+        foreach ($stocks as $stock) {
+            GetNews::dispatch($stock->organization);
         }
 
         return 0;
