@@ -15,9 +15,11 @@ class StockController extends Controller
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $inactiveStatus = Stock::STATUS_INACTIVE;
+        $organizations = Organization::doesntHave('stock')->orderBy('name')->pluck('name', 'id');
 
         return view('admin.longevity-index.stocks.create', [
-            'inactiveStatus' => $inactiveStatus
+            'inactiveStatus' => $inactiveStatus,
+            'organizations' => $organizations,
         ]);
     }
 
@@ -30,7 +32,8 @@ class StockController extends Controller
         try {
             Stock::create([
                 'name' => $organization->name,
-                'status' => $request->input('status') ?? Stock::STATUS_ACTIVE,
+                'status' => $request->input('status', Stock::STATUS_ACTIVE),
+                'indexed' => $request->input('indexed', 0),
                 'slug' => Str::slug($ticker),
                 'ticker' => $ticker,
                 'organization_id' => $organization->id,
@@ -40,7 +43,13 @@ class StockController extends Controller
             return redirect()->back()->with('error', $throwable->getMessage());
         }
 
-        return redirect()->route('admin.longevity-index.all')->with('success', 'Successfully added ' . $organization->name . ' to the index!');
+        if ($request->input('redirect')) {
+            $redirectRoute = 'admin.organizations.index';
+        } else {
+            $redirectRoute = 'admin.longevity-index.all';
+        }
+
+        return redirect()->route($redirectRoute)->with('success', 'Successfully added Stock to the ' . $organization->name . '!');
     }
 
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -56,6 +65,6 @@ class StockController extends Controller
         $stock = Stock::findOrFail($id);
         $fields = $request->input();
         $stock->update($fields);
-        return redirect()->route('admin.longevity-index.all')->with('success', 'Updated ' . $stock->name . '!');
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Stock successfully updated for ' . $stock->name . '!');
     }
 }

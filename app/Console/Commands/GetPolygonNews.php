@@ -29,7 +29,9 @@ class GetPolygonNews extends Command
      */
     public function handle()
     {
-        $organizations = Organization::whereHas('stock')->get();
+        $organizations = Organization::whereHas(['stock' => function ($query) {
+            $query->indexed();
+        }])->get();
 
         foreach ($organizations as $organization) {
             GetNews::dispatch($organization);

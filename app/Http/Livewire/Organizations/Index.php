@@ -18,13 +18,15 @@ class Index extends Component
         'search' => '',
         'amount-min' => null,
         'amount-max' => null,
-        'selected-types' => []
+        'selected-types' => [],
+        'hasStock' => 0
     ];
 
     public $sortColumnName = 'name';
     public $sortDirection = 'asc';
 
     public array $selectedTypes = [];
+    public $hasStock;
 
     public function updatingFilters()
     {
@@ -50,7 +52,7 @@ class Index extends Component
     {
         return view('livewire.organizations.index', [
             'typeOptions' => Organization::pluck('type')->unique()->toArray(),
-            'organizations' => Organization::with(['people', 'investors', 'fundraisingRounds'])
+            'organizations' => Organization::with(['people', 'investors', 'fundraisingRounds', 'stock'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
@@ -68,6 +70,9 @@ class Index extends Component
                 })
                 ->when($this->filters['selected-types'], function($query, $selectedTypes) {
                     return $query->whereIn('type', $selectedTypes);
+                })
+                ->when($this->filters['hasStock'] == 1, function($query) {
+                    return $query->whereHas('stock');
                 })
                 ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)

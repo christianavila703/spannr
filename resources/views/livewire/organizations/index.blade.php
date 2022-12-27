@@ -4,7 +4,15 @@
             <input wire:model="filters.search" type="text" class="form-control" placeholder="Search...">
         </div>
         <div class="me-4 d-flex align-items-center">
-            <strong class="d-block me-3">Type</strong>
+            <div class="form-check me-3">
+                <input wire:model="filters.hasStock" class="form-check-input" type="checkbox" value="1" id="filter-has-stock" @if(isset($filters['hasStock']) && $filters['hasStock']) checked @endif>
+                <label class="form-check-label" for="filter-has-stock">
+                    <strong>With Ticker</strong>
+                </label>
+            </div>
+        </div>
+        <div class="me-4 d-flex align-items-center">
+            <strong class="d-block me-3">Type:</strong>
             @foreach ($typeOptions as $type)
                 <div class="form-check me-3">
                     <input wire:model="filters.selected-types" class="form-check-input" type="checkbox" value="{{ $type }}" id="filter-type-{{ $type }}" @if(in_array($type, $filters['selected-types'])) checked @endif>
@@ -48,6 +56,9 @@
             <tr>
                 <td class="text-nowrap">
                     <a href="{{ route('admin.organizations.show', $organization->slug) }}">{{ $organization->name }}</a>
+                    @if($organization->stock)
+                        <br><span class="badge bg-primary">{{ $organization->stock->ticker }}</span>
+                    @endif
                 </td>
                 <td>{{ $organization->type }}</td>
                 <td>{{ $organization->founded_date }}</td>

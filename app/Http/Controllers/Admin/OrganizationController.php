@@ -134,6 +134,10 @@ class OrganizationController extends Controller
             $organization->storeImage($request->file('image'));
         }
 
+        if ($request->input('remove_stock') && $organization->stock->indexed === 0) {
+            $organization->stock()->delete();
+        }
+
         return redirect()->route('admin.organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');
     }
 

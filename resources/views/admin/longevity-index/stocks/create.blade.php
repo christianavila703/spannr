@@ -4,13 +4,20 @@
     <div class="container">
         @include('admin.includes.status-messages')
 
-        <h1>Add Company to Index</h1>
+        <h1>Add Stock to Organization</h1>
 
         <form action="{{ route('admin.longevity-index.stocks.store') }}" method="POST" class="max-width-420">
             @csrf
+            @if(request()->get('redirect'))
+                <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}" />
+            @endif
+
             <div class="mb-3">
                 <select name="organization_id" id="organization_id" class="js-choice-tag" aria-label="Organization" required>
                     <option value="">Select Organization</option>
+                    @foreach($organizations as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="mb-3">
@@ -28,6 +35,14 @@
                     </label>
                 </div>
             </div>
+            <div class="mb-3">
+                <div class="form-check form-check-inline d-flex align-items-center">
+                    <input class="form-check-input" type="checkbox" name="indexed" id="indexed" value="1">
+                    <label class="form-check-label fw-bold text-uppercase mt-1 ms-2 text-tertiary" for="indexed" >
+                        Participate in index?
+                    </label>
+                </div>
+            </div>
             <div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
@@ -36,14 +51,5 @@
 
     <script>
         const tagChoice = new Choices('.js-choice-tag');
-
-        tagChoice.setChoices(async () => {
-            try {
-                const items = await fetch('/admin/json/organizations.json');
-                return items.json();
-            } catch (err) {
-                console.error(err);
-            }
-        });
     </script>
 @endsection

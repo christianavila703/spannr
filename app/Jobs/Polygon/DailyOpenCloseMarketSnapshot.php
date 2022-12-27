@@ -23,7 +23,7 @@ class DailyOpenCloseMarketSnapshot implements ShouldQueue
      */
     public function __construct()
     {
-        $stocks = Stock::all()->pluck('ticker')->toArray();
+        $stocks = Stock::indexed()->pluck('ticker')->toArray();
 
         $stockList = implode(',', $stocks);
 

@@ -50,6 +50,11 @@ class Stock extends Model
         $query->where('status', self::STATUS_ACTIVE);
     }
 
+    public function scopeIndexed($query)
+    {
+        $query->where('indexed', 1);
+    }
+
     /**
      * Accessors
      */

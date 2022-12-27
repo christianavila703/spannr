@@ -53,6 +53,19 @@
                 <label for="image" class="form-label"><x-entities.show.field-heading title="Logo" /></label>
                 <input class="form-control" type="file" name="image" id="image">
             </div>
+
+            @if(isset($organization) && $organization->stock !== null)
+                <div class="mb-3">
+                    <p class="h5 text-uppercase mb-0">Stock and ticker:</p>
+                    <span class="badge bg-primary">{{ $organization->stock->ticker }}</span>
+                    @if($organization->stock->indexed === 0)
+                    <label for="remove_stock">
+                        <input type="checkbox" id="remove_stock" name="remove_stock" value="1" /> Remove assigned ticker?
+                        <small class="text-muted">(only if the stock doesn't participate in the index)</small>
+                    </label>
+                    @endif
+                </div>
+            @endif
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Save</button>

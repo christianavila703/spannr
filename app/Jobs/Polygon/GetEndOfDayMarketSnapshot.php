@@ -49,7 +49,7 @@ class GetEndOfDayMarketSnapshot implements ShouldQueue
         $marketSnapshot->type = MarketSnapshot::TYPE_DAILY;
         $marketSnapshot->save();
 
-        $stocks = Stock::active()->where('date_added', '<', $date)->get();
+        $stocks = Stock::active()->indexed()->where('date_added', '<', $date)->get();
 
         $batchArray = [];
 

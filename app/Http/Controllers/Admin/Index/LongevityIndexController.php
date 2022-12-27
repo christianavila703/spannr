@@ -38,7 +38,8 @@ class LongevityIndexController extends Controller
 
     public function all(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $stocks = Stock::with(['snapshots'])
+        $stocks = Stock::indexed()
+            ->with(['snapshots'])
             ->orderBy('status')
             ->orderBy('name')
             ->get();

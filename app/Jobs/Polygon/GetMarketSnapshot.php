@@ -43,7 +43,7 @@ class GetMarketSnapshot implements ShouldQueue
     {
         $previousMarketSnapshot = MarketSnapshot::daily()->complete()->orderByDesc('timestamp')->first();
 
-        $stocks = Stock::active()->get()->pluck('ticker', 'id')->toArray();
+        $stocks = Stock::active()->indexed()->get()->pluck('ticker', 'id')->toArray();
 
         $stockCount = count($stocks);
         $successfulTickerCount = 0;
