@@ -50,7 +50,7 @@
             @foreach($marketSnapshots as $marketSnapshot)
                 <tr>
                     <td>
-                        <a href="{{ route('admin.longevity-index.show', $marketSnapshot->id) }}">{{ $marketSnapshot->formatted_timestamp }}</a>
+                        <a href="{{ route('admin.longevity-index.show', $marketSnapshot->id) }}">{{ $marketSnapshot->formatted_pretty_date }}</a>
                     </td>
                     <td>
                         <span class="{{ $marketSnapshot->type_color }}">

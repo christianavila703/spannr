@@ -345,3 +345,28 @@ span.required {
         }
     }
 }
+
+/* Polygon */
+.powered-by-polygon {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: $font-family-subheadings;
+
+    a {
+        display: inline-flex;
+        flex-direction: column;
+        text-decoration: none;
+        align-items: center;
+        justify-content: center;
+        color: #5E5CFF;
+    }
+
+    a:hover {
+        color: #5E5CFF;
+    }
+
+    span {
+        display: block;
+        margin-bottom: .5rem;
+    }
+}

@@ -61,7 +61,7 @@ class MarketSnapshot extends Model
 
     public function getFormattedPrettyDateAttribute(): string
     {
-        return Carbon::parse($this->timestamp)->format('M j, Y H:i T');
+        return Carbon::parse($this->timestamp)->setTimeZone('America/New_York')->format('M j, Y H:i T');
     }
 
     public function getFormattedDateJsonAttribute(): string
