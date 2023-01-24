@@ -3,6 +3,7 @@
 namespace App\Jobs\WordPress;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -11,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -58,13 +60,14 @@ class SyncArticles implements ShouldQueue
             $content = str_replace('//spannr.com/wp-content/uploads', '//wp.spannr.com/wp-content/uploads', $content);
 
             $attributes = [
-                'date' => Carbon::parse($wpPost['date'])->format('Y-m-d H:i:s'),
+                'date' => $wpPost['date'],
                 'name' => html_entity_decode($wpPost['title']['rendered']),
                 'slug' => $wpPost['slug'],
                 'status' => $wpPost['status'],
                 'content' => $content,
                 'sticky' => $wpPost['sticky'],
-                'seo' => $seo
+                'seo' => $seo,
+                'user_id' => $this->matchAuthorToUser($wpPost['author'])
             ];
 
             if ($wpPost['excerpt']['rendered'] != '') {
@@ -74,6 +77,10 @@ class SyncArticles implements ShouldQueue
             } else {
                 $excerpt = strip_tags(html_entity_decode($wpPost['content']['rendered']));
                 $attributes['excerpt'] = Str::words($excerpt, 40);
+            }
+
+            if (array_key_exists('description', $wpPost['yoast_head_json'])) {
+                $attributes['meta_description'] = $wpPost['yoast_head_json']['description'];
             }
 
             $article = Article::updateOrCreate(
@@ -93,6 +100,27 @@ class SyncArticles implements ShouldQueue
                 $article->save();
 
             }
+
+            try {
+                $categories = $wpPost['yoast_head_json']['schema']['@graph'][0]['articleSection'];
+                $tags = Tag::whereIn('name', $categories)->pluck('id')->toArray();
+                $article->tags()->syncWithoutDetaching($tags);
+
+            } catch(\Throwable $exception) {
+                Log::warning('Error with article categories ' . $exception->getMessage(), $wpPost);
+            }
         }
+    }
+
+    private function matchAuthorToUser($authorId): ?int
+    {
+        return match($authorId) {
+            1 => 1, // Syd
+            2 => 5, // Dillon
+            3 => 7, // Luke,
+            4 => 4, // Cody
+            5 => 11, // Jack
+            default => NULL
+        };
     }
 }

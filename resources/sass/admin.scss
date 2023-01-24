@@ -1,10 +1,153 @@
+@import 'variables';
+@import 'fonts';
+@import 'mixins';
+
+/* Sortable Tables */
 th.sortable-column,
 td.sortable-column {
-    padding-right: 45px;
+    padding-right: 3rem !important;
+    position: relative;
 
-    span {
-        float: right;
-        margin-right: -40px;
+    .table-sort-buttons {
+        position: absolute;
+        right: .5rem;
+    }
+
+    .table-sort-buttons:hover {
         cursor: pointer;
+    }
+}
+
+/* Articles - Media Listing */
+.media-listing-container {
+    word-break: break-word;
+
+    .media-listing-item {
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .delete-warning {
+            background-color: var(--color-orange-yellow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 .5rem;
+            @include subheadings-font;
+        }
+    }
+}
+
+/* Articles
+    Create/Edit Image Control Articles
+    Long form container & move submit button to fixed side
+    Image control bar
+ */
+@media (min-width: 992px) {
+    .has-long-form {
+        .alert,
+        .heading-container{
+            margin-left: 15rem;
+        }
+    }
+
+    #long-form-container {
+        padding-left: 15rem;
+        position: relative;
+
+        button[type=submit] {
+            position: fixed;
+            top: 6rem;
+            margin-left: -15rem;
+        }
+    }
+
+    #image-controls {
+        position: fixed;
+        top: 12.5rem;
+        width: 14rem;
+        padding-right: 1rem;
+        max-height: calc(100vh - 13rem);
+        overflow-y: auto;
+
+        #view-post {
+            top: 9.5rem;
+            position: fixed;
+        }
+    }
+
+    #upload-image {
+        margin-left: 15rem;
+    }
+}
+
+// Articles - Images
+.post-image-widget-item {
+
+    img {
+        border: 2px solid $gray-200;
+        transition: border-color .2s ease-in-out;
+    }
+
+    .text-small {
+        font-size: .8rem;
+        line-height: 1rem;
+        word-break: break-word;
+    }
+
+    .post-inline-image {
+        width: 120px;
+        height: auto;
+
+        @media (min-width: 1500px) {
+            width: 150px;
+        }
+    }
+}
+
+.post-image-widget-item:hover {
+    img {
+        border-color: var(--color-green);
+        cursor: grab;
+    }
+}
+
+.copy-button {
+
+    .copy-icons {
+        position: relative;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+
+        .icon-copy {
+            z-index: 2;
+        }
+
+        .icon-copied {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+            color: $success;
+        }
+    }
+
+    .copy-icons.copied {
+        .icon-copy {
+            opacity: 0;
+        }
+
+        .icon-copied {
+            display: block;
+        }
     }
 }

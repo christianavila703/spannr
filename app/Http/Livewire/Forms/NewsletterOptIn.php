@@ -15,7 +15,7 @@ class NewsletterOptIn extends Component
     public $showNameFields = false;
 
     public $showSuccess = false;
-    public $formType = 'vertical';
+    public $form = FormEntry::FORM_NEWSLETTER_SIDEBAR;
     public $formClass = '';
     public $successClass = 'lead text-tertiary fw-bold';
 
@@ -32,7 +32,7 @@ class NewsletterOptIn extends Component
         $validated = $this->validate();
 
         FormEntry::create([
-            'form' => FormEntry::FORM_NEWSLETTER_SIDEBAR,
+            'form' => $this->form,
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],

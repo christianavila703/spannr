@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -14,8 +15,19 @@ class Glossary extends Model
     protected $table = 'glossary';
     protected $guarded = [];
 
+    const STATUS_PUBLISHED = 'publish';
+    const STATUS_DRAFT = 'draft';
+
+    const STATUSES = [
+        self::STATUS_PUBLISHED,
+        self::STATUS_DRAFT
+    ];
+
     private string $modelName = 'glossary';
 
+    /**
+     * Attributes
+     */
     public function getHtmlEncodedNameAttribute(): string
     {
         return htmlentities($this->name);
@@ -28,6 +40,39 @@ class Glossary extends Model
 
     public function getUrlAttribute(): string
     {
-        return route('public.content.articles.show', $this->slug);
+        return route('public.content.glossary.show', $this->slug);
+    }
+
+    public function getFormattedCreatedDateAttribute(): string
+    {
+        return Carbon::parse($this->created_at)->format('M d, Y H:i');
+    }
+
+    public function getFormattedUpdatedDateAttribute(): string
+    {
+        return Carbon::parse($this->updated_at)->format('M d, Y H:i');
+    }
+
+    public function getContentWordCountAttribute(): string
+    {
+        return strip_tags(str_word_count($this->content));
+    }
+
+    public function getExcerptWordCountAttribute(): string
+    {
+        return strip_tags(str_word_count($this->excerpt));
+    }
+
+    public function getShortExcerptAttribute(): string
+    {
+        return Str::words($this->excerpt, 20);
+    }
+
+    /**
+     * Mutators
+     */
+    public function setNameAttribute($value) {
+        $this->attributes['name'] = $value;
+        $this->attributes['group'] = substr($value, 0, 1);
     }
 }

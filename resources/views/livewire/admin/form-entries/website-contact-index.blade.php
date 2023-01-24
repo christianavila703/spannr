@@ -16,6 +16,7 @@
             <th>Date/Time</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Subject</th>
             <th></th>
         </tr>
         </thead>
@@ -25,29 +26,45 @@
                     <td class="text-nowrap">{{ $formEntry->formatted_date }}</td>
                     <td class="text-nowrap">{{ $formEntry->name }}</td>
                     <td class="text-nowrap">{!! $formEntry->email_link !!}</td>
+                    <td>{{ $formEntry->formatted_subject_field }}</td>
                     <td>
                         <a class="btn btn-link" data-bs-toggle="modal" data-bs-target="#form-{{ $formEntry->id }}">
                             View Message
                         </a>
+                        <div class="modal fade" id="form-{{ $formEntry->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            Website Contact from {{ $formEntry->name }}
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-borderless width-auto">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <td>{!! $formEntry->email_link !!}</td>
+                                                </tr>
+                                                @if($formEntry->formatted_subject_field)
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <td>{{ $formEntry->formatted_subject_field }}</td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <th>Message</th>
+                                                    <td>{{ $formEntry->formatted_message_field }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
-                <div class="modal fade" id="form-{{ $formEntry->id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">
-                                Website Contact from {{ $formEntry->name }}
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="mb-2"><strong>Email:</strong> {!! $formEntry->email_link !!}</p>
-                            <p class="mb-1"><strong>Message:</strong></p>
-                            {{ $formEntry->formatted_message_field }}
-                        </div>
-                    </div>
-                    </div>
-                </div>
             @empty
                 <tr>
                     <td colspan="4">No entries match your query</td>

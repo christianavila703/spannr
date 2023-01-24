@@ -6,6 +6,9 @@
         <x-slot:breadcrumbs>{!! $organization->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
             <a href="{{ route('admin.organizations.edit', $organization->id) }}" class="btn btn-info me-3">Edit</a>
+            @if($organization->stock)
+                <a href="{{ route('public.content.organizations.show', $organization->slug) }}" class="btn btn-quaternary me-3">View Public</a>
+            @endif
             <div class="dropdown mb-0">
                 <button class="btn btn-tertiary dropdown-toggle" type="button" id="add-relationship" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-plus me-1"></i>Add

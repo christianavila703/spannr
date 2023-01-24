@@ -43,7 +43,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-    font-size: 2.15rem; // 48px
+    font-size: 2.25rem; // 48px
 }
 
 h3, .h3 {
@@ -52,17 +52,17 @@ h3, .h3 {
 
 h4, .h4 {
     font-size: 1.5rem;
-    font-family: $font-family-subheadings;
+    @include subheadings-font;
 }
 
 h5, .h5 {
     font-size: 1.25rem;
-    font-family: $font-family-subheadings;
+    @include subheadings-font;
 }
 
 h6, .h6 {
     font-size: 1.15rem;
-    font-family: $font-family-subheadings;
+    @include subheadings-font;
 }
 
 /* Paragraphs & Font Sizes */
@@ -108,7 +108,7 @@ ol {
 /* Buttons */
 .btn,
 input[type="submit"] {
-    font-family: $font-family-subheadings;
+    @include subheadings-font;
 }
 
 .btn-link {
@@ -121,15 +121,6 @@ input[type="submit"] {
 
 .btn-link:hover {
     opacity: 1;
-}
-
-.btn {
-    @include font-size-md;
-    font-family: $font-family-subheadings;
-    border: 2px solid transparent;
-    padding: .25rem .5rem;
-    text-decoration: none;
-    display: inline-block;
 }
 
 .btn-outline {
@@ -149,11 +140,6 @@ input[type="submit"] {
     border-radius: 1.625rem;
 }
 
-.btn-xl {
-    font-size: 2rem;
-    padding: 1rem 2rem;
-}
-
 .btn-buy {
     background-color: var(--color-blue);
     color: var(--color-white);
@@ -166,41 +152,45 @@ input[type="submit"] {
     color: var(--color-white);
 }
 
+/* Fancy Links */
+.link-black-underline-gradient {
+    color: var(--color-black);
+    @include subheadings-font;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    span {
+        @include gradient-link-underline-span
+    }
+}
+
+.link-black-underline-gradient:hover {
+    color: var(--color-black);
+
+    span {
+        @include gradient-link-underline-hover;
+    }
+}
+
 /* Width */
 .width-auto {
     width: auto;
 }
 
-.min-width-120 {
-    min-width: 120px;
+$min-widths: 120 150 180;
+
+@each $size in $min-widths {
+    .min-width-#{$size} {
+        min-width: #{$size}px;
+    }
 }
 
-.min-width-150 {
-    min-width: 150px;
-}
+$max-widths: 200 300 320 420 500 540 600 700 800 1080;
 
-.min-width-180 {
-    min-width: 180px;
-}
-
-.max-width-300 {
-    max-width: 300px;
-}
-
-.max-width-420 {
-    max-width: 420px;
-}
-
-.max-width-600 {
-    max-width: 600px;
-}
-
-.max-width-700 {
-    max-width: 700px;
-}
-
-.max-width-800 {
-    max-width: 800px;
+@each $size in $max-widths {
+    .max-width-#{$size} {
+        max-width: #{$size}px;
+    }
 }
 
 /* Margins */
@@ -227,6 +217,13 @@ input[type="submit"] {
     .text:after {
         content: "More";
     }
+}
+
+/* Forced Word Wrapping */
+pre.wrap-words {
+    word-break: break-all;
+    white-space: pre-wrap;
+    overflow: hidden;
 }
 
 /* Forms */
@@ -346,6 +343,7 @@ span.required {
     }
 }
 
+
 /* Polygon */
 .powered-by-polygon {
     text-align: center;
@@ -369,4 +367,84 @@ span.required {
         display: block;
         margin-bottom: .5rem;
     }
+}
+
+/* Horizontal Line */
+hr.dark {
+    opacity: 1;
+    height: 2.5px;
+}
+
+/* Tiny Editor Height */
+.tiny-editor .tox-tinymce {
+    min-height: 1000px;
+}
+
+.tox-promotion {
+    display: none;
+}
+
+/* Fun Bouncy Balls */
+.bouncy-balls-container {
+    position: relative;
+    outline: 1px solid cyan;
+    height: 450px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+
+    .ball {
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border: 3px solid dodgerblue;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Truncate -- 3 Lines of Regular Text */
+.truncate-three-lines {
+    --max-lines: 3;
+    position: relative;
+    max-height: calc(1.875rem * 3);
+    overflow: hidden;
+    padding-right: 1rem; /* space for ellipsis */
+    text-align: justify;
+}
+
+.truncate-three-lines::before {
+    position: absolute;
+    content: "...";
+    inset-block-end: 0; /* "bottom" */
+    inset-inline-end: 0; /* "right" */
+}
+
+.truncate-three-lines::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 0; /* "right" */
+    width: 1.95rem;
+    height: 1.95rem;
+}
+
+/* User Photos */
+.image-bg-container-100 {
+    width: 100px;
+    height: 100px;
+    display: block;
+    background-size: cover;
+    background-position: center center;
 }

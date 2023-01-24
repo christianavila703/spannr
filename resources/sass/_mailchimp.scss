@@ -48,6 +48,10 @@
     @media (min-width: $bp-min-tablet) {
         margin-bottom: 0;
     }
+
+    @media (min-width: $bp-min-desktop) {
+        padding: .75rem 1.25rem;
+    }
 }
 
 #mce-EMAIL.sidebar-form {
@@ -57,14 +61,19 @@
 }
 
 #mc-embedded-subscribe {
-    background-color: var(--color-blue);
-    border: 2px solid transparent;
+    background-color: transparent;
+    border: 2px solid var(--color-white);
     outline: 0 !important;
     padding: .75rem 2.5rem;
-    transition: all .2s ease-in-out;
     flex-shrink: 0;
-    font-size: 1.15rem;
+    font-size: 1rem;
     color: $white;
+
+    @media (min-width: $bp-min-desktop) {
+        margin-bottom: 0;
+        font-size: 1.15rem;
+        padding: .75rem 2.5rem;
+    }
 }
 
 #mc_embed_signup input.mce_inline_error {
@@ -78,6 +87,7 @@
 
 #mc-embedded-subscribe:hover {
     background-color: var(--color-purple);
+    border-color: var(--color-purple);
 }
 
 div#mce-responses {
@@ -86,5 +96,84 @@ div#mce-responses {
     @media (min-width: $bp-min-tablet) {
         position: absolute;
         bottom: -2.5rem;
+    }
+}
+
+/* White / Transparent Horizontal Form with Email Only */
+.email-signup-horizontal-white,
+.email-signup-horizontal-purple-hover {
+
+    .form-group-container {
+        display: flex;
+
+        .name-fields {
+            display: none;
+        }
+
+        .email-field {
+            flex-grow: 1;
+        }
+
+        .submit-field {
+            flex-shrink: 1;
+        }
+    }
+
+    .form-control {
+        height: 3.5rem;
+        width: 100%;
+        border: 2px solid var(--color-white);
+    }
+
+    .form-control.is-invalid {
+        border: 2px solid var(--color-white);
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+    }
+
+    button {
+        background: transparent;
+        color: var(--color-white);
+        border: 2px solid var(--color-white);
+        min-width: 150px;
+        height: 3.5rem;
+        transition: none;
+    }
+
+    button:hover,
+    button:focus {
+        color: var(--color-white);
+        white-space: nowrap;
+    }
+
+    .form-error {
+        color: var(--color-white) !important;
+    }
+}
+
+/* Purple Hover Email Signup Horizontal -- Same as above but purple hover button */
+.email-signup-horizontal-purple-hover {
+
+    button:hover,
+    button:focus {
+        color: var(--color-white);
+        background: var(--color-purple);
+        border-color: var(--color-purple);
+    }
+
+    .form-error {
+        color: var(--color-white) !important;
+        opacity: .8;
+        font-weight: bold;
+        position: absolute;
+        bottom: -.75rem;
+    }
+
+    .email-field {
+        position: relative;
+        padding-bottom: 1.5rem;
+        margin-bottom: 0 !important;
     }
 }

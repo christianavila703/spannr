@@ -1,23 +1,37 @@
 /* Hero */
 .ventures-hero-container {
-    background: var(--color-magenta) linear-gradient(270deg, #FFC413 22%, #D1337C 100%) 0 0 no-repeat padding-box;
+    @include gradient-pink-to-yellow;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 1023px) {
+        .container {
+            padding: 0;
+        }
+
+        .image-container,
+        .content {
+            padding: 0 2rem;
+
+            p {
+                max-width: 640px;
+                margin-left: 0;
+            }
+        }
+
+        .content {
+            background: var(--color-magenta);
+        }
+    }
 
     .content {
         color: var(--color-white);
         padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-bottom: 2.5rem;
 
-         p {
-              @include text-shadow-sm;
-         }
-    }
-
-    .logo {
-        width: 10rem;
-        height: auto;
-        margin: 0 auto 2.5rem auto;
+        p {
+            @include text-shadow-sm;
+        }
     }
 
     h1 {
@@ -26,12 +40,29 @@
 
     .image-container {
         text-align: center;
+        display: flex;
+        justify-content: flex-start;
 
-        img {
-            width: 80%;
-            max-width: 500px;
+        .hero-image {
             height: auto;
-            margin: 0 auto;
+            flex-grow: 1;
+            text-align: left;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+                max-width: 400px;
+                margin-left: 0;
+            }
+        }
+
+        .ventures-logo {
+            display: block;
+            width: 120px;
+            height: auto;
+            margin: 2rem auto;
+            flex-shrink: 0;
         }
     }
 }
@@ -40,42 +71,37 @@
     .ventures-hero-container {
         .container {
             display: flex;
-            align-items: stretch;
-            justify-content: space-between;
         }
 
         .content {
             display: flex;
             align-self: stretch;
             flex-direction: column;
-            justify-content: space-between;
-            padding-right: 2rem;
-            padding-bottom: 4rem;
+            justify-content: center;
+            padding-left: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
             max-width: 740px;
-            width: 65%;
+            width: 50%;
         }
 
         .image-container {
-            min-width: 35%;
+            width: 50%;
             flex-grow: 1;
-            padding-top: 2rem;
-            align-self: flex-end;
+            text-align: center;
 
-            img {
-                width: 100%;
-                height: auto;
-                margin: 0 auto;
+            .hero-image {
+                display: flex;
+                justify-content: flex-end;
+
+                img {
+                    width: 90%;
+                    height: auto;
+                    margin: 0 auto;
+                    justify-self: flex-end;
+                    max-width: 600px;
+                }
             }
-        }
-
-        .logo {
-            margin-left: 0;
-            margin-top: 2rem;
-        }
-
-        h1 {
-            font-size: 3.75rem;
-            max-width: 600px;
         }
     }
 }
@@ -123,13 +149,11 @@
         }
 
         .image-container {
-            order: 1;
             min-width: 35%;
             flex-grow: 1;
         }
 
         .content {
-            order: 2;
             max-width: 740px;
             width: 60%;
             padding-top: 4rem;
@@ -139,10 +163,8 @@
 
 /* Reasons */
 .ventures-reasons-container {
-    background-color: var(--color-blue);
-    background: var(--color-blue) linear-gradient(120deg, #20D1FD 22%, #A332FE 100%) 0 0 no-repeat padding-box;
-    padding-top: 5rem;
-    color: var(--color-white);
+    background-color: var(--color-gray-light);
+    text-align: center;
 
     h2 {
         max-width: 960px;
@@ -151,81 +173,27 @@
         margin-bottom: 3rem;
     }
 
-    .heading-container {
-        align-items: flex-end;
-    }
-
-    .icon-container {
-        align-items: flex-end;
-    }
-
-    .arrow-container {
-        .col-4 {
-            padding-left: .25rem;
-            padding-right: .25rem;
-        }
-    }
-
     .reason-title {
-        font-size: 1rem;
-        margin-bottom: 2rem;
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        @include subheadings-font;
     }
 
-    .icon {
-        width: 100%;
-        max-width: 80px;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 2rem;
+    .reason-stat {
+        @include subheadings-font;
+        font-size: 6rem;
+        line-height: 6rem;
+        margin-bottom: 1.5rem;
+        color: var(--color-magenta);
     }
 
-    .arrow {
-        width: 100%;
-        max-width: 280px;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    .reason-subtitle {
+        font-size: 2rem;
+        line-height: 2rem;
+        @include subheadings-font;
 
-    .desktop {
-        display: none;
-    }
-}
-
-@media (min-width: $bp-min-tablet) {
-    .ventures-reasons-container {
-        .mobile {
-            display: none;
-        }
-
-        .desktop {
+        span {
             display: block;
-        }
-
-        .reason-title {
-            font-size: 1.15rem;
-            margin-bottom: 2rem;
-        }
-    }
-}
-
-@media (min-width: $bp-min-desktop) {
-    .ventures-reasons-container {
-        padding-top: 8rem;
-
-        .icon {
-            width: 40%;
-            max-width: 110px;
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
-        }
-
-        .reason-title {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
         }
     }
 }
@@ -240,9 +208,9 @@
         margin-bottom: 1.5rem;
     }
 
-     p {
-         max-width: 740px;
-     }
+    p {
+        max-width: 740px;
+    }
 }
 
 @media (min-width: $bp-min-desktop) {
@@ -255,23 +223,35 @@
 .investment-logos-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 
     .logo {
-        width: 45%;
-        padding: .5rem 0;
+        width: 30%;
+        padding: .5rem 1rem;
+
+        @media (min-width: 600px) {
+            width: 30%;
+            padding: .5rem 1.5rem;
+        }
+
+        @media (min-width: $bp-min-tablet) {
+            width: 20%;
+        }
+
+        @media (min-width: $bp-min-desktop) {
+            padding: .5rem 1.5rem;
+            width: 16%;
+        }
+
+        @media (min-width: $bp-min-desktop-xl) {
+            padding: .75rem 2rem;
+        }
 
         img {
             width: 100%;
             height: auto;
-        }
-    }
-}
-
-@media (min-width: $bp-min-tablet) {
-    .investment-logos-container {
-        .logo {
-            width: 16%;
+            filter: grayscale(100%);
+            opacity: .6;
         }
     }
 }
@@ -280,7 +260,7 @@
 .ventures-form-container {
     padding-top: 5rem;
     padding-bottom: 2rem;
-    background: var(--color-magenta) linear-gradient(270deg, #FFC413 22%, #D1337C 100%) 0 0 no-repeat padding-box;
+    @include gradient-pink-to-yellow;
     background-size: cover;
     background-position: center center;
     color: var(--color-white);
@@ -318,14 +298,14 @@
 
 #gform_submit_button_3 {
     border: 2px solid var(--color-white);
-    color:  var(--color-white);
+    color: var(--color-white);
     background: transparent;
     padding: .58rem 3.75rem .5rem 3.75rem;
     border-radius: 1.625rem;
 }
 
 #gform_submit_button_3:hover {
-    color:  var(--color-white);
+    color: var(--color-white);
     background: var(--color-purple);
     border-color: var(--color-purple);
     transition: all .1s ease-in-out;
@@ -334,7 +314,7 @@
 @media (min-width: $bp-min-desktop) {
     .ventures-form-container {
         padding-top: 8rem;
-        padding-bottom: 1rem;
+        padding-bottom: 4rem;
     }
 }
 
@@ -356,8 +336,29 @@
 
 .ventures-optin-form {
     color: $white;
+    max-width: 600px;
 
+    .text-muted,
     span.required {
-        color: $white;
+        color: $white !important;
     }
+
+    .field-group-name {
+        .col-12 {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .field-group-email {
+        width: 100%;
+    }
+
+    .field-group-phone {
+        width: 100%;
+    }
+
+    .field-group-accredited {
+
+    }
+
 }

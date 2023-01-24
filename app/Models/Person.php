@@ -80,6 +80,11 @@ class Person extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Functions
      */

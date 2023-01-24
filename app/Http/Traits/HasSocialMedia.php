@@ -18,6 +18,11 @@ trait HasSocialMedia {
         return '<a href="https://www.linkedin.com/' . $this->linkedin . '" target="_blank" rel="noopener noreferrer">' . $this->linkedin . '</a>';
     }
 
+    public function getLinkedinUrlAttribute(): string
+    {
+        return 'https://www.linkedin.com/' . $this->linkedin;
+    }
+
     public function getInstagramLinkAttribute(): string
     {
         return '<a href="https://www.instagram.com/' . $this->instagram . '" target="_blank" rel="noopener noreferrer">' . $this->instagram . '</a>';

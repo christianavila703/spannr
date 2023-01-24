@@ -28,8 +28,8 @@
                         <span class="d-block">{{ $formEntry->name }}</span>
                         {!! $formEntry->email_link !!}
                     </td>
-                    <td>
-                        <input type="text" class="form-control" value="{{ $formEntry->url }}">
+                    <td style="width: 30%">
+                        <input type="text" class="form-control form-control-sm" value="{{ $formEntry->url }}" aria-label="Enter URL">
                     </td>
                     <td>{{ $formEntry->mailchimp_status }}</td>
                     <td>

@@ -22,24 +22,25 @@
 
 @section('content')
     <div class="container">
-        <div class="breadcrumbs mt-5 mb-0">
-            <a href="{{ route('home') }}" class="home">Spannr</a>
-            <span class="connector">&raquo;</span>
-            <a href="{{ route('public.content.organizations.index') }}" class="parent">Companies</a>
-            <span class="connector">&raquo;</span>
-            <span class="current">{{ $organization->name }}</span>
+        <div class="breadcrumbs mt-4">
+            <x-nav.breadcrumbs parentUrl="{{ route('public.content.organizations.index') }}" parentLabel="Companies" currentLabel="{{ $organization->name }}"/>
         </div>
 
         <div class="organization-details-container mb-5">
             <div class="heading-group border-bottom mb-4">
                 <div class="logo" style="background-image: url({{ $organization->image_url }});"></div>
                 <div class="text">
-                    <span class="d-block text-muted text-uppercase fw-bold">Organization</span>
-                    <h1 class="h2">{{ $organization->name }}</h1>
+                    <span class="d-block text-muted text-uppercase fw-bold mb-2">{{ $organization->type }} Company</span>
+                    <h1 class="h2 mb-0">{{ $organization->name }}</h1>
+                    @if($organization->website)
+                        <div class="small fw-bold mb-3">
+                            <a href="{{ $organization->website }}" target="_blank" rel="noopener noreferrer">{{ $organization->website }}</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <div class="mb-4">
                         <h2 class="title">About</h2>
                         <div>
@@ -83,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-xl-5 offset-xl-1">
+                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h2 class="title">Stock</h2>
                     @include('public.content.organizations.stock-data')
                     @if ($organization->stock->data)
@@ -92,11 +93,21 @@
                     </div>
                     @endif
                 </div>
-                <div class="col-12 col-md-6 mt-5">
+                <div class="col-12 col-lg-6 mt-5">
                     @if ($organization->mediaItems->count() > 0)
                         <h2 class="title">Latest News</h2>
                         <livewire:public.organization-news organizationId="{{ $organization->id }}"/>
                     @endif
+                </div>
+                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                    <div class="my-5 mx-auto" style="max-width: 350px">
+                        <div class="outline-newsletter-optin">
+                            <x-optins.newsletter showNameFields="true" />
+                        </div>
+                        <div class="mt-5">
+                            <livewire:public.random-glossary-item-widget />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

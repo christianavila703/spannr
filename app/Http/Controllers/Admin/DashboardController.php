@@ -10,11 +10,22 @@ use App\Models\Job;
 use App\Models\Organization;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function index()
     {
+        $user = Auth::user();
+
+        if (!$user->can('edit records')) {
+            if ($user->can('edit articles')) {
+                return redirect()->route('admin.articles.index');
+            }
+
+            abort(403);
+        }
+
         $organizations = Organization::all()->count();
         $people = Person::all()->count();
         $investors = Investor::all()->count();

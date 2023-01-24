@@ -24,6 +24,8 @@ Route::get('/ventures', [App\Http\Controllers\Public\ContentController::class, '
 Route::get('/terms', [App\Http\Controllers\Public\ContentController::class, 'terms'])->name('public.content.terms');
 Route::get('/privacy', [App\Http\Controllers\Public\ContentController::class, 'privacy'])->name('public.content.privacy');
 Route::get('/contact', [App\Http\Controllers\Public\ContentController::class, 'contact'])->name('public.content.contact');
+Route::get('/about', [App\Http\Controllers\Public\ContentController::class, 'about'])->name('public.content.about');
+Route::get('/about/{slug}', [App\Http\Controllers\Public\ContentController::class, 'aboutUser'])->name('public.content.about.user');
 Route::get('/confirmed', [App\Http\Controllers\Public\ContentController::class, 'emailConfirmed'])->name('public.content.email-confirmed');
 Route::get('/articles', [App\Http\Controllers\Public\ContentController::class, 'articlesIndex'])->name('public.content.articles.index');
 Route::get('/articles/{slug}', [App\Http\Controllers\Public\ContentController::class, 'articleShow'])->name('public.content.articles.show');
@@ -37,6 +39,7 @@ Route::get('/companies/', [App\Http\Controllers\Public\ContentController::class,
 Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::class, 'organizationShow'])->name('public.content.organizations.show');
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');
+Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
 
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 //Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');
@@ -48,9 +51,22 @@ Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentC
  */
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
+    // Home
+    Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home');
+
+    /* @can edit articles */
+    Route::middleware(['can:edit articles'])->group(function() {
+        Route::resource('articles', \App\Http\Controllers\Admin\ArticlesController::class);
+        Route::get('/articles/media/{id}', [\App\Http\Controllers\Admin\ArticlesController::class, 'media'])->name('articles.media');
+    });
+
+    /* @can edit users */
+    Route::middleware(['can:edit users'])->group(function() {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    });
+
     /* @can edit records */
     Route::middleware(['can:edit records'])->group(function() {
-        Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home');
         Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
         Route::resource('investors', \App\Http\Controllers\Admin\InvestorController::class);
         Route::resource('people', \App\Http\Controllers\Admin\PersonController::class);
@@ -58,13 +74,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('jobs', \App\Http\Controllers\Admin\JobController::class);
         Route::resource('job-categories', \App\Http\Controllers\Admin\JobCategoryController::class);
         Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
-        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('content', \App\Http\Controllers\Admin\ContentController::class);
         Route::resource('form-entries', \App\Http\Controllers\Admin\FormEntryController::class);
         Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
+        Route::resource('glossary', \App\Http\Controllers\Admin\GlossaryController::class);
 
-        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\TagController::class, 'tagsList'])->name('json.tags'); // TODO: DELETE
-//        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'tags'])->name('json.tags');
+        Route::get('/json/tags.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'tags'])->name('json.tags');
         Route::get('/json/organizations.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'organizations'])->name('json.organizations');
         Route::get('/json/investors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'investors'])->name('json.investors');
         Route::get('/json/people.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'people'])->name('json.people');
@@ -72,6 +87,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/json/events.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'events'])->name('json.events');
         Route::get('/json/fundraising-rounds.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'fundraisingRounds'])->name('json.fundraising-rounds');
         Route::get('/json/users.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'users'])->name('json.users');
+        Route::get('/json/authors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'authors'])->name('json.authors');
 
         // Organization Routes & Relationships
         Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');
@@ -110,7 +126,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/longevity-index/stocks/{id}', [\App\Http\Controllers\Admin\Index\StockController::class, 'update'])->name('longevity-index.stocks.update');
 
         // Articles
-        Route::get('/articles/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');
+        Route::get('/wordpress/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');
+//        Route::post('/articles/upload-image', [\App\Http\Controllers\Admin\ArticlesController::class, 'uploadImage'])->name('articles.image-upload');
     });
 
     // PERMISSION: Admin Control

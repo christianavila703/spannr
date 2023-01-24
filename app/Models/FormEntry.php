@@ -20,6 +20,9 @@ class FormEntry extends Model
     const FORM_CONTACT = 'Contact';
     const FORM_NEWSLETTER_SIDEBAR = 'Newsletter Sidebar';
     const FORM_NEWSLETTER_STICKY = 'Newsletter Sticky';
+    const FORM_NEWSLETTER_HOMEPAGE_HERO = 'Newsletter Homepage Hero';
+    const FORM_NEWSLETTER_FOOTER = 'Newsletter Footer';
+    const FORM_NEWSLETTER_ABOUT = 'Newsletter About';
 
     const STATUS_MAILCHIMP_SUCCESS = 'Successful';
     const STATUS_MAILCHIMP_FAILED = 'Failed';
@@ -90,6 +93,15 @@ class FormEntry extends Model
     public function getFormattedMessageFieldAttribute() {
         $fields = json_decode($this->fields);
         return $fields->message;
+    }
+
+    public function getFormattedSubjectFieldAttribute() {
+        $fields = json_decode($this->fields);
+        if (property_exists($fields, 'subject')) {
+            return $fields->subject;
+        } else {
+            return '';
+        }
     }
 
     public function getFormattedAccreditedFieldAttribute() {

@@ -6,6 +6,11 @@
 
         @include('admin.includes.status-messages')
 
+        <div class="mb-5">
+            <h3>Profile</h3>
+            <livewire:users.user-profile :user="$user" />
+        </div>
+
         <div class="mb-5 max-width-600">
             @include('users._password')
         </div>

@@ -10,6 +10,7 @@ class Contact extends Component
     public $first_name;
     public $last_name;
     public $email;
+    public $subject = "";
     public $message;
 
     public $showSuccess = false;
@@ -20,6 +21,7 @@ class Contact extends Component
         'last_name' => 'required',
         'email' => 'required|email',
         'message' => 'required',
+        'subject' => 'required'
     ];
 
     public function submit() {
@@ -39,6 +41,15 @@ class Contact extends Component
 
     public function render()
     {
-        return view('livewire.forms.contact');
+        return view('livewire.forms.contact', [
+            'reasons' => [
+                "Investing in other companies",
+                "Investing in Spannr",
+                "Partnerships",
+                "Newsletter sponsorship & advertising",
+                "Corporate development services",
+                "Jobs"
+            ]
+        ]);
     }
 }

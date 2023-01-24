@@ -45,8 +45,11 @@ class WebsiteContact implements ShouldQueue
 
     private function sendToSlack() {
 
-        $message = '<!here> *Website Contact* ' . "\n" . '>' . $this->formEntry->first_name . ' ' .
-            $this->formEntry->last_name . "\n" . '>' . $this->formEntry->email . "\n\n" . "```" .
+        $message = '<!here> *Website Contact* ' . "\n" .
+            '>' . $this->formEntry->first_name . ' ' . $this->formEntry->last_name . "\n" .
+            '>' . $this->formEntry->email . "\n" .
+            '>' . $this->formFields['subject'] .
+            "\n\n" . "```" .
             $this->formFields['message'] . "```";
 
         SlackAlert::to('website')->message($message);

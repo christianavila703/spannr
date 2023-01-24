@@ -46,7 +46,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-5">
             <div class="form-floating mb-3">
-                <textarea class="form-control floating-textarea-xl" id="description" name="description" placeholder="Description">{{ $organization->description ?? old('description') }}</textarea>
+                <textarea class="form-control floating-textarea-xl" id="description" name="description" placeholder="Description">{!! $organization->description ?? old('description') !!}</textarea>
                 <label for="description">Description / Content Area</label>
             </div>
             <div class="mb-3">
@@ -66,6 +66,11 @@
                     @endif
                 </div>
             @endif
+        </div>
+        <div class="col-12 mb-3">
+            <x-tiny-mce.tiny-config />
+            <x-entities.show.field-heading title="Extended Description" />
+            <x-tiny-mce.tiny-editor id="extended_description" name="extended_description" value="{{ $organization->extended_description ?? old('extended_description') }}"/>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Save</button>

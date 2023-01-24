@@ -37,32 +37,32 @@ class Tag extends Model
 
     public function articles(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Article::class, 'taggable');
+        return $this->morphedByMany(Article::class, 'taggable')->withTimestamps();
     }
 
     public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Event::class, 'taggable');
+        return $this->morphedByMany(Event::class, 'taggable')->withTimestamps();
     }
 
     public function investors(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Investor::class, 'taggable');
+        return $this->morphedByMany(Investor::class, 'taggable')->withTimestamps();
     }
 
     public function jobs(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Job::class, 'taggable');
+        return $this->morphedByMany(Job::class, 'taggable')->withTimestamps();
     }
 
     public function organizations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Organization::class, 'taggable');
+        return $this->morphedByMany(Organization::class, 'taggable')->withTimestamps();
     }
 
     public function people(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphedByMany(Person::class, 'taggable');
+        return $this->morphedByMany(Person::class, 'taggable')->withTimestamps();
     }
 
     /**
@@ -93,6 +93,17 @@ class Tag extends Model
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
+
+    /**
+     * Attributes
+     */
+    public function getColorBadgeAttribute(): string
+    {
+        return match($this->name) {
+            Article::TAG_TOP_INSIGHTS => 'bg-quaternary text-white',
+            default => 'text-dark bg-gray-medium'
+        };
     }
 
 }

@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="spannr-app">
         <nav id="primary-nav" class="navbar navbar-expand-lg navbar-dark bg-gradient-yellow-pink text-white align-items-center">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -34,10 +34,7 @@
                         @endcan
                         @can('view records')
                             <li class="nav-item">
-                                <a href="{{ route('admin.home') }}" class="nav-link">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.longevity-index') }}" class="nav-link">Longevity Stock Index</a>
+                                <a href="{{ route('admin.longevity-index') }}" class="nav-link"><span class="d-lg-none d-xl-inline-block">Longevity Stock</span> Index</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -54,6 +51,8 @@
                                     <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
                                     <a class="dropdown-item" href="{{ route('admin.form-entries.index') }}">Form Entries</a>
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">Tags</a>
+                                    <a class="dropdown-item" href="{{ route('admin.articles.index') }}">Articles</a>
+                                    <a class="dropdown-item" href="{{ route('admin.glossary.index') }}">Glossary</a>
                                     <a class="dropdown-item" href="{{ route('admin.articles.sync') }}">Sync WordPress</a>
                                 </div>
                             </li>
@@ -72,6 +71,21 @@
                                     <a href="{{ route('admin.jobs.create') }}" class="dropdown-item">Job</a>
                                     <a href="{{ route('admin.events.create') }}" class="dropdown-item">Event</a>
                                     <a href="{{ route('admin.content.create') }}" class="dropdown-item">Content</a>
+                                    <a href="{{ route('admin.articles.create') }}" class="dropdown-item">Article</a>
+                                    <a href="{{ route('admin.glossary.create') }}" class="dropdown-item">Glossary Item</a>
+                                </div>
+                            </li>
+                        @endcan
+
+                        @can('edit articles')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Articles
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
+                                    <a class="dropdown-item" href="{{ route('admin.articles.index') }}">Articles List</a>
+                                    <a class="dropdown-item" href="{{ route('admin.articles.create') }}">New Article</a>
                                 </div>
                             </li>
                         @endcan
@@ -104,7 +118,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    <i class="fa-sharp fa-solid fa-user-bounty-hunter me-2"></i><span class="d-lg-none d-xl-inline-block">{{ Auth::user()->name }}</span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

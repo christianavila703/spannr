@@ -17,6 +17,12 @@ main.page-glossary .single-post-wrapper .container {
     margin-top: 0;
 }
 
+.glossary-index {
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .glossary-list {
 
     .glossary-list-group {
@@ -61,7 +67,7 @@ main.page-glossary .single-post-wrapper .container {
                 .title {
                     @include font-size-lg;
                     color: var(--color-gray-dark);
-                    font-family: $font-family-subheadings;
+                    @include subheadings-font;
                     margin-bottom: .5rem;
                 }
 
@@ -108,17 +114,23 @@ main.page-glossary .single-post-wrapper .container {
         @include font-size-xxl;
         margin: .75rem .75rem .5rem .75rem;
 
-        @media (min-width: 1200px) {
-            @include font-size-xl;
+        @media (min-width: $bp-min-desktop) {
+            font-size: 1.7rem;
+            margin: .75rem .35rem .25rem .35rem;
+        }
+
+        @media (min-width: $bp-min-desktop-xl) {
+            font-size: 2rem;
             margin: .75rem .5rem .25rem .5rem;
         }
+
         a {
             display: block;
             width: 100%;
             height: 100%;
             padding: .25rem;
             text-decoration: none;
-            font-family: $font-family-subheadings;
+            @include subheadings-font;
         }
     }
 }
@@ -159,6 +171,30 @@ main.page-glossary .single-post-wrapper .container {
 
 .glossary-nav-menu.fixed-nav.open {
     max-height: none;
+}
+
+.sidebar-glossary-widget {
+    background: $light-blue;
+    padding: 1rem;
+    transition: background .3s ease-in-out;
+
+    a {
+        display: block;
+        text-decoration: none;
+        color: var(--color-black);
+    }
+
+    a:hover {
+        color: var(--color-black);
+    }
+
+    .text {
+        @include font-size-sm;
+    }
+}
+
+.sidebar-glossary-widget:hover {
+    background: darken($light-blue, 3%);
 }
 
 /* Longevity Stock Index */
@@ -246,8 +282,59 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
+.index-four-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+
+    a {
+        width: calc((100% - 1rem) / 2);
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+
+        span {
+            @include gradient-link-underline-span;
+            background-image: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0),
+                rgba(0, 0, 0, 0)
+            ),
+            linear-gradient(
+                to right,
+                $indigo,
+                $pink,
+                $yellow
+            );
+            display: inline-flex;
+            padding-left: .5rem;
+            padding-right: .5rem;
+            padding-bottom: .25rem;
+            margin-top: .25rem;
+        }
+    }
+
+    a:hover span {
+        @include gradient-link-underline-hover;
+    }
+}
+
+@media (min-width: 1200px) {
+    .index-four-buttons-container {
+        flex-wrap: nowrap;
+
+        a {
+            width: calc((100% - 3rem) / 4);
+        }
+    }
+}
+
 .longevity-stock-index-container {
-    max-width: 2000px;
+    max-width: $container-max-width;
     margin-left: auto;
     margin-right: auto;
 }
@@ -269,7 +356,25 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
-@media (max-width: 1119px) {
+.snapshot-toggle {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .snapshot-toggle {
+        padding: 0 1rem;
+        display: block;
+
+        svg {
+            width: 1.5rem;
+            height: auto;
+        }
+    }
+
+    .snapshot-toggle.flipped {
+        transform: scaleY(-1);
+    }
+
     .longevity-stock-index-table > :not(:first-child) {
         border-top: 2px solid #e0dfdf;
     }
@@ -311,7 +416,12 @@ main.page-glossary .single-post-wrapper .container {
         opacity: .75;
     }
 
-    .longevity-stock-index-table .weight,
+    .longevity-stock-index-table .weight {
+        width: 50%;
+        order: 3;
+        font-size: 1rem;
+    }
+
     .longevity-stock-index-table .current_price,
     .longevity-stock-index-table .yesterday_close,
     .longevity-stock-index-table .market_cap,
@@ -322,7 +432,9 @@ main.page-glossary .single-post-wrapper .container {
     .longevity-stock-index-table .previous_change_percent,
     .longevity-stock-index-table .outstanding_shares {
         width: 50%;
-        order: 3;
+        order: 4;
+        display: none;
+        font-size: 1rem;
     }
 
     .longevity-stock-index-table .weight:before,
@@ -380,7 +492,7 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
-@media (max-width: 499px) {
+@media (max-width: 767px) {
     .longevity-stock-index-table .weight,
     .longevity-stock-index-table .current_price,
     .longevity-stock-index-table .yesterday_close,
@@ -393,6 +505,22 @@ main.page-glossary .single-post-wrapper .container {
     .longevity-stock-index-table .outstanding_shares {
         width: 100%;
         order: 3;
+    }
+}
+
+@media (min-width: 1024px) {
+    .longevity-stock-index-table .weight,
+    .longevity-stock-index-table .current_price,
+    .longevity-stock-index-table .yesterday_close,
+    .longevity-stock-index-table .market_cap,
+    .longevity-stock-index-table .volume,
+    .longevity-stock-index-table .today_high,
+    .longevity-stock-index-table .today_low,
+    .longevity-stock-index-table .previous_change_dollar,
+    .longevity-stock-index-table .previous_change_percent,
+    .longevity-stock-index-table .outstanding_shares {
+        width: auto;
+        display: table-cell !important;
     }
 }
 
@@ -471,7 +599,7 @@ main.page-glossary .single-post-wrapper .container {
         border-bottom: 1px solid var(--color-gray-dark);
         text-transform: uppercase;
         margin-bottom: .5rem;
-        font-family: $font-family-subheadings;
+        @include subheadings-font;
         font-size: 1.5rem;
     }
 
@@ -539,7 +667,7 @@ main.page-glossary .single-post-wrapper .container {
         h1,
         h2,
         h3 {
-            font-family: $font-family-subheadings;
+            @include subheadings-font;
             font-size: 1.5rem;
         }
 
@@ -560,19 +688,28 @@ main.page-glossary .single-post-wrapper .container {
 
 /* Longevity Report CTA */
 .longevity-report-block {
-    background: linear-gradient(#e68c03, #ed008c);
+    background-image:linear-gradient(to bottom, #e68c03, #ed008c 33.33333%, #ed008c 66.66666%, #fe8c0c);
+    background-size: 100% 300%;
+    transition: background 1s ease-out;
     color: $white;
 
     .image-container {
-        min-width: 200px;
-        width: 100%;
-        max-width: 540px;
-        flex-shrink: 0;
-        padding: 1rem;
+        display: none;
+    }
 
-        img {
+    @media (min-width: $bp-min-desktop) {
+        .image-container {
+            display: block;
+            min-width: 200px;
             width: 100%;
-            height: auto;
+            max-width: 540px;
+            flex-shrink: 0;
+            padding: 1rem;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
         }
     }
 
@@ -601,6 +738,19 @@ main.page-glossary .single-post-wrapper .container {
             padding-right: 3rem;
             max-width: 590px;
         }
+    }
+}
+
+.longevity-report-block:hover {
+    background-position: bottom left 100%;
+}
+
+.longevity-index-disclosure-box {
+    background: $gray-100;
+    padding: 1rem;
+
+    p:last-of-type {
+        margin-bottom: 0;
     }
 }
 
@@ -637,3 +787,161 @@ main.page-glossary .single-post-wrapper .container {
         min-height: calc(100vh - 39.275rem);
     }
 }
+
+/* About */
+.page-about .hero {
+    @include gradient-maroon-to-pink;
+    color: $white;
+    padding: 4rem 0;
+
+    @media (max-width: $bp-min-tablet - 1px) {
+        padding: 2rem 0;
+
+        .h2 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+    }
+}
+
+.page-about {
+    #team,
+    #contributors {
+        .title {
+            color: var(--color-magenta);
+            @include subheadings-font;
+            margin-bottom: 1rem;
+            font-size: 1.15rem;
+        }
+    }
+}
+
+.about-team-card {
+    a {
+        display: block;
+        text-decoration: none;
+        color: $black;
+
+        .user-name span {
+            @include gradient-link-underline-span;
+            background-image: linear-gradient(
+                    to right,
+                    rgba(255, 255, 255, 1),
+                    rgba(255, 255, 255, 1)
+            ),
+            linear-gradient(
+                    to right,
+                    $indigo,
+                    $pink,
+                    $yellow
+            );
+        }
+    }
+
+    a:hover {
+        color: $black;
+        transform: scale(1.01);
+
+        .user-name span {
+            @include gradient-link-underline-hover;
+        }
+
+    }
+}
+
+.page-about {
+    position: relative;
+    z-index: 1;
+
+    #about,
+    #fuel,
+    #trust,
+    #team,
+    #newsletter {
+        position: relative;
+    }
+
+    #about {
+        z-index: 2;
+    }
+
+    #fuel {
+        z-index: 3;
+    }
+
+    #trust {
+        z-index: 4;
+    }
+
+    #team {
+        z-index: 5;
+    }
+
+    #newsletter {
+        z-index: 6;
+        @include gradient-maroon-to-pink;
+
+        .lead {
+            @include subheadings-font;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 560px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+        }
+    }
+
+    blockquote {
+        font-size: 1.4rem;
+        line-height: 1.6;
+        padding: 1rem 1.5rem;
+        margin: 0 auto;
+    }
+
+    blockquote.first {
+        background: $cyan;
+    }
+
+    blockquote.second {
+        background: var(--color-light-purple);
+        font-size: 1.4rem;
+        color: $white;
+    }
+
+    blockquote.third {
+        background: $yellow;
+
+        strong {
+            @include subheadings-font;
+            display: block;
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    blockquote.first,
+    blockquote.second,
+    blockquote.third {
+        margin-top: 1.5rem;
+    }
+}
+
+.about-text-content {
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    .about-text-content {
+        font-size: 1.15rem;
+    }
+
+    .about-page blockquote {
+        font-size: 1.6rem;
+    }
+}
+

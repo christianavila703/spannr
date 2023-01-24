@@ -1,167 +1,247 @@
-.home-hero-container {
-    background-color: var(--color-magenta);
-    color: var(--color-white);
-    background-image: url('../images/spanner_mobile_hero_grid.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 2rem;
-
-    .container {
-        color: var(--white);
-        padding: 0;
-
-        .content {
-            max-width: 340px;
-            margin-left: 0;
+#home-hero {
+    @media (max-width: calc($bp-min-tablet - 1px)) {
+        .image {
+            display: none;
+            height: 0;
         }
+    }
 
-        .logo {
-            height: 42px;
-            width: auto;
-            margin-bottom: 2rem;
+    @media (min-width: $bp-min-tablet) {
+        min-height: 70vh;
+    }
+}
+
+#home-insights {
+    position: relative;
+    z-index: 2;
+    background: var(--color-white);
+}
+
+/* HOME REDESIGN */
+.page-redesign .hero {
+    display: flex;
+    flex-direction: column;
+
+    .content,
+    .image {
+        width: 100%;
+
+        .inner {
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+        }
+    }
+
+    .content {
+        @include gradient-maroon-to-pink;
+        color: $white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .inner {
+            width: 100%;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         h1 {
-            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
+            line-height: .95;
+            margin-bottom: 1rem;
             @include text-shadow-sm;
         }
 
         p {
             margin-bottom: 2rem;
-            @include font-size-xl;
+            max-width: 500px;
             @include text-shadow-sm;
         }
     }
 
-    @media (min-width: $bp-min-tablet) {
-        background-image: url('../images/spannr_alternate_hero.jpg');
+    .image {
+        background-image: url('../images/home-hero-bg.webp');
+        background-size: cover;
+        background-position: bottom right;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .inner {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0 2rem;
+        }
+
+        .mobile-phone {
+            background-image: url('../images/home-hero-phone.webp');
+            background-position: top 1rem center;
+            background-repeat: no-repeat;
+            background-size: auto 120%;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            align-self: stretch;
+            min-height: 400px;
+        }
     }
+}
 
-    @media (min-width: $bp-min-desktop) {
+@media (min-width: 768px) {
+    .page-redesign .hero {
+        flex-direction: row;
 
-        .container {
-            .content {
-                max-width: 100%;
+        .content,
+        .image {
+            width: 50%;
+        }
+
+        .content {
+
+            h1 {
+                font-size: 3.5rem;
+                line-height: .95;
+            }
+
+            .inner {
+                margin-left: auto;
+                margin-right: 0;
+                padding: 6rem 2rem;
+            }
+        }
+
+        .image .inner {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .image .mobile-phone {
+            background-image: url('../images/home-hero-phone.webp');
+            background-position: top 10vh center;
+            background-repeat: no-repeat;
+            background-size: auto 110%;
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: $bp-min-desktop) {
+    .page-redesign .hero {
+        .content .inner {
+            padding: 8rem 4rem;
+        }
+    }
+}
+
+@media (min-width: $bp-min-desktop-xl) {
+    .page-redesign .hero {
+        .content {
+
+            .inner {
+                padding: 8rem 4rem;
             }
 
             h1 {
-                width: 40%;
+                font-size: 5rem;
+                margin-bottom: 2rem;
+
+                span {
+                    display: block;
+                }
             }
 
             p {
-                width: 45%;
+                font-size: 1.3125rem;
+                line-height: 1.75rem;
             }
         }
-    }
 
-    @media (min-width: 1200px) {
-        .container {
-            .content {
-                margin-left: 4rem;
-            }
+        .mailchimp-form {
+            margin-top: 2rem;
         }
     }
 }
 
-.home-content-container {
-    text-align: center;
-    padding-top: 5.5rem;
-    padding-bottom: 5.5rem;
-
-    .section-title {
-        max-width: 1140px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 3rem;
-    }
-
-    .content {
-
-        .image {
-            display: none;
+.page-redesign .index-investors {
+    @media (min-width: 992px) {
+        .border-lg-right {
+            border-right: 1px solid $white;
         }
-
-        .text {
-            text-align: left;
-
-            ul {
-                text-align: left;
-                max-width: 440px;
-                margin-left: auto;
-                margin-right: auto;
-                list-style: none;
-                margin-bottom: 0;
-
-                li {
-                    margin-bottom: 2rem;
-                    background-repeat: no-repeat;
-                    background-size: 3.5rem 3.5rem;
-                    padding-left: 4.5rem;
-                    @include font-size-lg;
-
-                    p {
-                        margin-bottom: 0;
-                    }
-                }
-
-                li.comprehensive {
-                    background-image: url('../images/icon-comprehensive.png');
-                }
-                li.uncomplicated {
-                    background-image: url('../images/icon-uncomplicated.png');
-                }
-                li.independent {
-                    background-image: url('../images/icon-independent.png');
-                }
-
-                li:last-of-type {
-                    margin-bottom: 0;
-                }
-            }
-        }
-
-        @media (min-width: $bp-min-desktop) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .image {
-                display: block;
-                width: 50%;
-            }
-
-            .text {
-                padding-left: 5rem;
-            }
-        }
-
     }
 }
 
-.home-email-signup {
-    background: transparent linear-gradient(180deg, #EC008C 22%, #9E1F63 100%) 0% 0% no-repeat padding-box;
-    text-align: center;
-    color: var(--color-white);
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+.explore-companies {
+    padding: 0 2rem;
+    position: relative;
 
-    .logo-mark {
-        width: 3.75rem;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 2.6rem;
+    .swiper-button-next, .swiper-rtl .swiper-button-prev {
+        right: -1rem;
+        color: $gray-500;
     }
 
-    p {
-        max-width: 1140px;
-        margin-bottom: 2.6rem;
-        margin-left: auto;
-        margin-right: auto;
+    .swiper-button-prev, .swiper-rtl .swiper-button-next {
+        left: -1rem;
+        color: $gray-500;
+    }
+}
+
+.company-carousel {
+
+    .carousel-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-self: stretch;
+        width: 100%;
+        height: 100%;
+        padding: .5rem 1rem 2rem 1rem;
+    }
+
+    .company-carousel-item {
+        background-image: url('../images/company-logo-bg.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: left center;
+        transition: 1s background-position ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-self: stretch;
+        width: 100%;
+        height: 100%;
+        padding: 0 2rem;
+        @include box-shadow-lg;
+
+        .logo {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    .company-carousel-item:hover {
+        background-position: center right;
+    }
+
+}
+
+@keyframes animatedBackground {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 100% 0;
     }
 }

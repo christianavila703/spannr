@@ -2,12 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-primary">Users</h1>
+        <div class="d-flex flex-wrap justify-content-between">
+            <h1 class="text-primary me-5">Users</h1>
+            <div>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-quaternary">Create User</a>
+            </div>
+        </div>
 
         @include('admin.includes.status-messages')
 
-        <livewire:users.index />
+        <livewire:admin.users.index />
 
-        <livewire:users.roles-list />
+        <livewire:admin.users.roles-list />
     </div>
 @endsection

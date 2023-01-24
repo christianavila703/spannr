@@ -1,52 +1,68 @@
+/* Gradients */
+@mixin gradient-pink-to-yellow {
+    background: transparent linear-gradient(270deg, #F0C84D 22%, #D1337C 100%) 0 0 no-repeat padding-box;
+}
+
+@mixin gradient-maroon-to-pink {
+    background: transparent linear-gradient(180deg, #9E1F63 22%, #EC008C 100%) 0 0 no-repeat padding-box;
+}
+
+/* Gradient Links */
+@mixin gradient-link-underline-span {
+    background-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 1)
+    ),
+    linear-gradient(
+            to right,
+            $indigo,
+            $pink,
+            $yellow
+    );
+    background-size: 100% 3px, 0 3px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 420ms ease-in-out;
+    display: block;
+    width: auto;
+}
+
+@mixin gradient-link-underline-hover {
+    background-size: 0 3px, 100% 3px;
+}
+
+/* Fonts */
+@mixin subheadings-font {
+    font-family: $font-family-subheadings;
+    letter-spacing: -.5px;
+    font-weight: 700;
+}
+
 /* Font Sizes */
 @mixin font-size-sm {
     font-size: 0.875rem; // 14px
     line-height: 1.5rem;
-
-    @media (min-width: $bp-min-desktop) {
-        font-size: .9rem; // 16px
-        line-height: $spacer-desktop * .75;
-    }
 }
 
 @mixin font-size-md {
     font-size: 1rem; // 16px
     line-height: $spacer-mobile * 1.5;
-
-    @media (min-width: $bp-min-desktop) {
-        font-size: 1.125rem; // 18px
-        line-height: $spacer-desktop;
-    }
 }
 
 @mixin font-size-lg {
     font-size: 1.3125rem; // 21px
     line-height: 1.875rem;
-
-    @media (min-width: $bp-min-desktop) {
-        font-size: 1.5rem; // 24px
-        line-height: 2.25rem;
-    }
 }
 
 @mixin font-size-xl {
     font-size: 1.5rem; // 24px
     line-height: 1.875rem;
-
-    @media (min-width: $bp-min-desktop) {
-        font-size: 1.75rem; // 28px
-        line-height: 2.25rem;
-    }
 }
 
 @mixin font-size-xxl {
     font-size: 2rem; // 32px
     line-height: 2.375rem;
-
-    @media (min-width: $bp-min-desktop) {
-        font-size: 2.25rem; // 36px
-        line-height: 2.75rem;
-    }
 }
 
 /* Text Shadows */
@@ -90,10 +106,10 @@
 
 /* Margin Bottom */
 @mixin margin-bottom-sm {
-    margin-bottom: $spacer-mobile / 2;
+    margin-bottom: calc($spacer-mobile / 2);
 
     @media (min-width: $bp-min-desktop) {
-        margin-bottom: $spacer-desktop / 2;
+        margin-bottom: calc($spacer-desktop / 2);
     }
 }
 
@@ -106,18 +122,18 @@
 }
 
 @mixin margin-bottom-lg {
-    margin-bottom: $spacer-mobile * 2;
+    margin-bottom: calc($spacer-mobile * 2);
 
     @media (min-width: $bp-min-desktop) {
-        margin-bottom: $spacer-desktop * 2;
+        margin-bottom: calc($spacer-desktop * 2);
     }
 }
 
 @mixin margin-top-sm {
-    margin-top: $spacer-mobile / 2;
+    margin-top: calc($spacer-mobile / 2);
 
     @media (min-width: $bp-min-desktop) {
-        margin-top: $spacer-desktop / 2;
+        margin-top: calc($spacer-desktop / 2);
     }
 }
 
@@ -130,9 +146,9 @@
 }
 
 @mixin margin-top-lg {
-    margin-top: $spacer-mobile * 2;
+    margin-top: calc($spacer-mobile * 2);
 
     @media (min-width: $bp-min-desktop) {
-        margin-top: $spacer-desktop * 2;
+        margin-top: calc($spacer-desktop * 2);
     }
 }

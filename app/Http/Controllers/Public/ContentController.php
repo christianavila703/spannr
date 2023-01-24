@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Glossary;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\MarketSnapshot;
 use App\Models\Organization;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\SchemaOrg\Graph;
+use Spatie\SchemaOrg\Schema;
 
 class ContentController extends Controller
 {
@@ -22,18 +27,22 @@ class ContentController extends Controller
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'home')->first();
-        return view('public.content.home', [
-            'headerClass' => 'dark',
-            'seo' => $seo
+        $articles = Article::topInsights()->orderByDesc('date')->with('media')->take(6)->get();
+        $organizations = Organization::whereHas('stock', function(Builder $query) {
+            $query->indexed()->active();
+        })->orderByDesc('updated_at')->take(12)->get();
+
+        return view('public.content.home-redesign', [
+            'seo' => $seo,
+            'articles' => $articles,
+            'organizations' => $organizations
         ]);
     }
 
     public function ventures(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'ventures')->first();
-        return view('public.content.ventures', [
-            'showHeader' => false,
-            'showFooter' => false,
+        return view('public.content.ventures.index', [
             'seo' => $seo
         ]);
     }
@@ -62,6 +71,45 @@ class ContentController extends Controller
         ]);
     }
 
+    public function about(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $team = User::orderBy('order')
+            ->with('media')
+            ->whereHas('roles', function (Builder $query) {
+                $query->where('name', Role::ROLE_SPANNR_TEAM);
+            })
+            ->get();
+
+        $contributors = User::with('media')
+            ->whereHas('roles', function (Builder $query) {
+                $query->where('name', Role::ROLE_SPANNR_CONTRIBUTOR);
+            })
+            ->get();
+
+        return view('public.content.about.index', [
+            'team' => $team,
+            'contributors' => $contributors
+        ]);
+    }
+
+    public function aboutUser($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $user = User::where('slug', $slug)
+            ->whereHas('articles')
+            ->with('articles')
+            ->firstOrFail();
+
+        $graph = new Graph();
+        $graph->person()
+            ->givenName($user->name)
+            ->familyName($user->last_name);
+
+        return view('public.content.about.user', [
+            'user' => $user,
+            'graph' => $graph
+        ]);
+    }
+
     public function emailConfirmed(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'confirmed')->first();
@@ -81,9 +129,32 @@ class ContentController extends Controller
     public function articleShow($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $article = Article::where('slug', $slug)->firstOrFail();
+        $featuredImage = $article->getFirstMediaUrl('featured');
+
+        $graph = new Graph();
+        $graph->article()
+            ->description($article->meta_description)
+            ->author(Schema::person()
+                ->name($article->author_byline)
+                ->url($article->author->about_page_url)
+                ->jobTitle($article->author->title)
+            )
+            ->datePublished($article->date)
+            ->dateModified($article->updated_at)
+            ->publisher(Schema::organization()
+                ->url(route('home'))
+                ->name('Spannr')
+            )
+            ->breadcrumbList(Schema::breadcrumbList()
+                ->itemListElement(Schema::listItem()->position(1)->name('Spannr')->identifier(route('home')))
+                ->itemListElement(Schema::listItem()->position(2)->name('Insights')->identifier(route('public.content.articles.index')))
+                ->itemListElement(Schema::listItem()->position(3)->name($article->name)->identifier(route('public.content.articles.show', $article->slug)))
+            );
 
         return view('public.content.articles.show', [
-            'article' => $article
+            'article' => $article,
+            'featuredImage' => $featuredImage,
+            'graph' => $graph
         ]);
     }
 
@@ -123,6 +194,8 @@ class ContentController extends Controller
     {
         $seo = Content::where('slug', 'index')->first();
 
+        $articles = Article::investing()->orderByDesc('date')->take(6)->get();
+
         $marketSnapshot = MarketSnapshot::orderByDesc('timestamp')
             ->complete()
             ->hourly()
@@ -131,7 +204,8 @@ class ContentController extends Controller
 
         return view('public.content.longevity-stock-index.index', [
             'marketSnapshot' => $marketSnapshot,
-            'seo' => $seo
+            'seo' => $seo,
+            'articles' => $articles
         ]);
     }
 
@@ -223,7 +297,7 @@ class ContentController extends Controller
         ]);
     }
 
-    public function organizationChartData($slug): bool|string
+    public function organizationChartData($slug): string
     {
         $organization = Organization::where('slug', $slug)->firstOrFail();
         $chartData = json_decode($organization->stock->data, true);
@@ -265,6 +339,15 @@ class ContentController extends Controller
             'valuesHigh' => $valuesHigh,
             'valuesLow' => $valuesLow
         ], true);
+    }
+
+    public function ventureLogos(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $hideHeader = $request->input('embed') ?? false;
+
+        return view('public.content.ventures.logos', [
+            'hideHeader' => $hideHeader
+        ]);
     }
 
     public function leveragingLongevitySanDiego(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

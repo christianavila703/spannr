@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.matter-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    --logoSize: 100px;
+}
+
+.matter-logo {
+    position: absolute;
+    height: var(--logoSize);
+    width: var(--logoSize);
+    top: calc(-0.5 * var(--logoSize));
+    left: calc(-0.5 * var(--logoSize));
+    padding: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.matter-logo.loaded {
+    opacity: 1;
+}
+
+.matter-logo:hover {
+    cursor: pointer;
+}
+
+.matter-logo > * {
+    pointer-events: none;
+}
+
+.welcome {
+    font-family: "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+a {
+    color: #ed008c;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #5625ca;
+}

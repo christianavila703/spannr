@@ -10,8 +10,10 @@ class SettingsController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $apiKeys = Auth::user()->tokens;
+        $user = Auth::user();
+        $apiKeys = $user->tokens;
         return view ('users.settings', [
+            'user' => $user,
             'apiKeys' => $apiKeys
         ]);
     }

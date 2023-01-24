@@ -25,8 +25,10 @@
     --color-pink: #fe52c2;
 
     --color-purple: #5625ca;
+    --color-light-purple: #8462D5;
     --color-blue: #0ac7fe;
     --color-aqua: #00ffff;
+    --color-light-blue: #DFF1FE;
     --color-lime: #88f200;
     --color-green: #61ac01;
     --color-neon-yellow: #ffff00;
@@ -46,6 +48,19 @@ body {
     overflow-x: hidden;
     @include font-size-md;
     font-family: $font-family-sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header,
+footer {
+    flex-shrink: 0;
+}
+
+.public-main {
+    align-self: stretch;
+    flex-grow: 1;
 }
 
 /* Scrollbar */
@@ -92,12 +107,7 @@ a:hover {
 // Navbar
 .navbar-dark {
     .navbar-nav > li.nav-item {
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
-        font-family: $font-family-subheadings;
-    }
-
-    .dropdown-item {
-        text-shadow: none;
+        @include subheadings-font;
     }
 }
 
@@ -111,7 +121,7 @@ a:hover {
 
 // Tables
 .table th {
-    font-family: $font-family-subheadings;
+    @include subheadings-font;
 }
 
 // Global Search
