@@ -12,6 +12,7 @@ use App\Models\MarketSnapshot;
 use App\Models\Organization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\SchemaOrg\Graph;
@@ -43,7 +44,8 @@ class ContentController extends Controller
     {
         $seo = Content::where('slug', 'ventures')->first();
         return view('public.content.ventures.index', [
-            'seo' => $seo
+            'seo' => $seo,
+            'headerClass' => 'ventures-page'
         ]);
     }
 
@@ -129,26 +131,59 @@ class ContentController extends Controller
     public function articleShow($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $article = Article::where('slug', $slug)->firstOrFail();
+
+        if ($article->status === Article::STATUS_DRAFT) {
+            if (!Auth::check()) {
+                abort(404);
+            }
+
+            $user = Auth::user();
+            if (!$user->can('edit articles')) {
+                abort(404);
+            }
+        }
+
         $featuredImage = $article->getFirstMediaUrl('featured');
 
         $graph = new Graph();
+
+        $graph->breadcrumblist()->setProperty('@id', '#breadcrumb');
+        $graph->breadcrumbList()->itemListElement([
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 1)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                ->name('Spannr')
+                ->url(route('home'))
+                ->setProperty('@id', route('home'))),
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 2)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                ->name('Insights')
+                ->url(route('public.content.articles.index'))
+                ->setProperty('@id', route('public.content.articles.index'))),
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 3)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                ->name($article->name)
+                ->url($article->url)
+                ->setProperty('@id', $article->url))
+        ]);
+
         $graph->article()
+            ->headline($article->name)
+            ->image($article->shareable_image_url)
+            ->mainEntityOfPage($article->url)
             ->description($article->meta_description)
             ->author(Schema::person()
                 ->name($article->author_byline)
                 ->url($article->author->about_page_url)
                 ->jobTitle($article->author->title)
             )
-            ->datePublished($article->date)
+            ->datePublished($article->meta_published_time)
             ->dateModified($article->updated_at)
             ->publisher(Schema::organization()
                 ->url(route('home'))
                 ->name('Spannr')
-            )
-            ->breadcrumbList(Schema::breadcrumbList()
-                ->itemListElement(Schema::listItem()->position(1)->name('Spannr')->identifier(route('home')))
-                ->itemListElement(Schema::listItem()->position(2)->name('Insights')->identifier(route('public.content.articles.index')))
-                ->itemListElement(Schema::listItem()->position(3)->name($article->name)->identifier(route('public.content.articles.show', $article->slug)))
             );
 
         return view('public.content.articles.show', [

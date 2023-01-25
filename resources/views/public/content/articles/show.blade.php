@@ -23,7 +23,7 @@ og:image:type
 <meta property="og:url" content="{{ $article->url }}" />
 <meta property="og:site_name" content="Spannr" />
 <meta property="article:published_time" content="{{ $article->meta_published_time }}" />
-<meta property="og:image" content="{{ $article->image_full_url }}" />
+<meta property="og:image" content="{{ $article->shareable_image_url }}" />
 <meta property="og:image:width" content="1616" />
 <meta property="og:image:height" content="824" />
 <meta property="og:image:type" content="image/jpeg" />

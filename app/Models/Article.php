@@ -158,6 +158,19 @@ class Article extends Model implements HasMedia
         }
     }
 
+    public function getShareableImageUrlAttribute(): string
+    {
+        if ($this->getFirstMediaUrl('featured')) {
+            return $this->getFirstMediaUrl('featured');
+        }
+
+        if ($this->image) {
+            return url('/') . '/storage/images/' . $this->modelName . '/' . $this->image;
+        }
+
+        return 'https://wp.spannr.com/wp-content/uploads/2022/04/social-share-white.jpg';
+    }
+
     public function getShortExcerptAttribute(): string
     {
          return Str::words($this->excerpt, 20);

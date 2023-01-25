@@ -24,19 +24,21 @@ import 'tinymce/plugins/charmap';
 import 'tinymce/plugins/visualblocks';
 import 'tinymce/plugins/visualchars';
 import 'tinymce/plugins/wordcount';
+import 'tinymce/plugins/autosave';
 
 /* content UI CSS is required */
 import contentCss from '../sass/tinymce.scss';
 
 tinymce.init({
     selector: 'textarea.tiny-editor',
-    plugins: 'advlist code table lists media image link autoresize charmap visualblocks visualchars wordcount',
-    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount',
+    plugins: 'advlist code table lists media image link autoresize charmap visualblocks visualchars wordcount autosave',
+    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount restoredraft',
     browser_spellcheck: true,
     block_unsupported_drop: false,
     automatic_uploads: true,
     file_picker_types: 'image',
     relative_urls: false,
     toolbar_sticky: true,
-    content_style: contentCss.toString()
+    content_style: contentCss.toString(),
+    autosave_ask_before_unload: true
 });
