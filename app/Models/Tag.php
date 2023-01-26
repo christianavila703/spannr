@@ -40,6 +40,11 @@ class Tag extends Model
         return $this->morphedByMany(Article::class, 'taggable')->withTimestamps();
     }
 
+    public function content(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Content::class, 'taggable')->withTimestamps();
+    }
+
     public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Event::class, 'taggable')->withTimestamps();

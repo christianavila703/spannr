@@ -8,7 +8,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FeaturedImage extends Component
 {
-
     public Article $article;
 
     public function render()

@@ -42,7 +42,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Excerpt" name="meta_description" id="meta_description"
+                <textarea class="form-control" placeholder="Meta Description" name="meta_description" id="meta_description"
                           style="height: 180px">{{ $article->meta_description ?? old('meta_description') }}</textarea>
                 <label for="meta_description">Meta Description</label>
                 <div class="small">

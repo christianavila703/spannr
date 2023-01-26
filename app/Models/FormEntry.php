@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\FormNotifications\InvestorOptIn;
 use App\Jobs\FormNotifications\NewsletterOptIn;
+use App\Jobs\FormNotifications\ReportOptIn;
 use App\Jobs\FormNotifications\WebsiteContact;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +24,7 @@ class FormEntry extends Model
     const FORM_NEWSLETTER_HOMEPAGE_HERO = 'Newsletter Homepage Hero';
     const FORM_NEWSLETTER_FOOTER = 'Newsletter Footer';
     const FORM_NEWSLETTER_ABOUT = 'Newsletter About';
+    const FORM_REPORT_LONGEVITY_2022 = 'Longevity Report 2022';
 
     const STATUS_MAILCHIMP_SUCCESS = 'Successful';
     const STATUS_MAILCHIMP_FAILED = 'Failed';
@@ -50,6 +52,10 @@ class FormEntry extends Model
 
             if ($formEntry->form === self::FORM_NEWSLETTER_SIDEBAR) {
                 NewsletterOptIn::dispatch($formEntry);
+            }
+
+            if ($formEntry->form === self::FORM_REPORT_LONGEVITY_2022) {
+                ReportOptIn::dispatch($formEntry, "23e01b7e78");
             }
         });
     }

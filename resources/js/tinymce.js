@@ -29,10 +29,45 @@ import 'tinymce/plugins/autosave';
 /* content UI CSS is required */
 import contentCss from '../sass/tinymce.scss';
 
+const dialogConfig = {
+    title: 'Insert iFrame',
+    body: {
+        type: 'panel',
+        items: [
+            {
+                type: 'input',
+                name: 'iframeUrl',
+                label: 'Embed URL'
+            }
+        ]
+    },
+    buttons: [
+        {
+            type: 'cancel',
+            name: 'closeButton',
+            text: 'Cancel'
+        },
+        {
+            type: 'submit',
+            name: 'submitButton',
+            text: 'Insert',
+            buttonType: 'primary'
+        }
+    ],
+    initialData: {
+        iframeUrl: '',
+    },
+    onSubmit: (api) => {
+        const data = api.getData();
+        tinymce.activeEditor.execCommand('mceInsertContent', false, `<div class="ratio ratio-16x9"><iframe src="${data.iframeUrl}" scrolling="no" frameborder="0" style="border: none;" data-external="1"></iframe></div>`);
+        api.close();
+    }
+};
+
 tinymce.init({
     selector: 'textarea.tiny-editor',
     plugins: 'advlist code table lists media image link autoresize charmap visualblocks visualchars wordcount autosave',
-    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount restoredraft',
+    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount restoredraft insert-iframe',
     browser_spellcheck: true,
     block_unsupported_drop: false,
     automatic_uploads: true,
@@ -40,5 +75,11 @@ tinymce.init({
     relative_urls: false,
     toolbar_sticky: true,
     content_style: contentCss.toString(),
-    autosave_ask_before_unload: true
+    autosave_ask_before_unload: true,
+    setup: (editor) => {
+        editor.ui.registry.addButton('insert-iframe', {
+            icon: 'embed-page',
+            onAction: () => editor.windowManager.open(dialogConfig)
+        })
+    }
 });

@@ -40,6 +40,7 @@ Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
+Route::get('/reports/research/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
 
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 //Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');
@@ -128,6 +129,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         // Articles
         Route::get('/wordpress/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');
 //        Route::post('/articles/upload-image', [\App\Http\Controllers\Admin\ArticlesController::class, 'uploadImage'])->name('articles.image-upload');
+
+        Route::get('/content/create-from-wordpress', [\App\Http\Controllers\Admin\ContentController::class, 'createFromWordpress'])->name('content.create-from-wordpress');
     });
 
     // PERMISSION: Admin Control

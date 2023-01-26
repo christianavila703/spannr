@@ -61,4 +61,16 @@
         padding-left: 1rem;
     }
 
+    #optin-report1,
+    #optin-report2 {
+        outline: 2px dashed #0ac7fe;
+        text-align: center;
+        height: 1.2rem;
+    }
+
+    #optin-report1:after,
+    #optin-report2:after {
+        content: "Report Opt-in";
+    }
+
 }

@@ -27,8 +27,11 @@
                     <td>{{ $contentItem->updated_at }}</td>
                     <td class="flex-grow-1 text-end">
                         <div class="d-flex align-items-center justify-content-end">
-                            <a class="btn-link text-quaternary me-4" data-bs-toggle="modal" data-bs-target="#{{ $contentItem->slug }}">
+                            <button class="btn btn-link text-quaternary me-4" data-bs-toggle="modal" data-bs-target="#{{ $contentItem->slug }}">
                                 View SEO
+                            </button>
+                            <a class="btn-link text-primary me-4" href="{{ route('admin.content.edit', $contentItem->id) }}">
+                                <i class="fa-duotone fa-pen-to-square me-1"></i>Edit
                             </a>
                             <form method="POST" action="{{ route('admin.content.destroy', $contentItem->id ) }}">
                                 @method('DELETE')

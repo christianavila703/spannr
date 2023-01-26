@@ -85,7 +85,7 @@ class ArticlesController extends Controller
         $validated = $request->validated();
         $article = Article::findOrFail($id);
 
-        if ($validated['tags']) {
+        if (array_key_exists('tags', $validated)) {
             $article->tags()->sync($validated['tags']);
             unset($validated['tags']);
         }

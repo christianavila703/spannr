@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Content extends Model
+class Content extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     public $incrementing = false;
     protected $guarded = [];
@@ -38,6 +41,7 @@ class Content extends Model
         'glossary',
         'companies',
         'events--leveraging-longevity-sd',
+        'reports--research--2022-longevity-funding'
     ];
 
     /**
@@ -46,6 +50,34 @@ class Content extends Model
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Accessors
+     */
+    public function getShareableFacebookUrlAttribute(): string
+    {
+        return 'https://www.facebook.com/sharer.php?u=' . urlencode('https://spannr.com/reports/' . $this->slug);
+    }
+
+    public function getShareableTwitterUrlAttribute(): string
+    {
+        return 'https://twitter.com/intent/tweet?text=' . urlencode($this->name . ' https://spannr.com/reports/' . $this->slug);
+    }
+
+    public function getShareableLinkedinUrlAttribute(): string
+    {
+        return 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode('https://spannr.com/reports/' . $this->slug) . '&title=' . urlencode($this->name);
+    }
+
+    public function getShareableRedditUrlAttribute(): string
+    {
+        return 'https://www.reddit.com/submit?url=' . urlencode('https://spannr.com/reports/' . $this->slug) . '&title=' . urlencode($this->name);
+    }
+
+    public function getShareableHackerNewsUrlAttribute(): string
+    {
+        return 'https://news.ycombinator.com/submitlink?u=' . urlencode('https://spannr.com/reports/' . $this->slug) . '&t=' . $this->name;
     }
 
     /**
@@ -59,9 +91,53 @@ class Content extends Model
         $this->attributes['seo'] = $this->replaceUrls($value);
     }
 
+    public function setSlugAttribute($value) {
+        $this->attributes['slug'] = $value;
+
+        $link = url('/');
+
+        $slugParts = explode('--', $value);
+
+        foreach ($slugParts as $part) {
+            $link .= "/" . $part;
+        }
+
+        $this->attributes['link'] = $link;
+    }
+
     private function replaceUrls(string $value): string
     {
         $newValue = str_replace('//wp.spannr.com', '//spannr.com', $value);
         return str_replace('//spannr.com/wp-content/uploads', '//wp.spannr.com/wp-content/uploads', $newValue);
+    }
+
+    /**
+     * Functions
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('featured')
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('small')
+                    ->width(488)
+                    ->height(275)
+                    ->nonQueued();
+
+                $this
+                    ->addMediaConversion('medium')
+                    ->width(768)
+                    ->height(432)
+                    ->nonQueued();
+        });
+
+        $this->addMediaCollection('images')
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('post')
+                    ->width(600)
+                    ->nonQueued();
+        });
     }
 }

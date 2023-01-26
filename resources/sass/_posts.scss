@@ -116,6 +116,14 @@
     @media (min-width: $bp-min-desktop) {
         margin: 0;
     }
+
+    .ratio {
+        margin-bottom: 2rem;
+
+        @media (min-width: 1024px) {
+            margin-bottom: 3rem;
+        }
+    }
 }
 
 .glossary-post .single-post-content {
@@ -145,14 +153,14 @@
         flex-direction: row;
 
         .sidebar-container {
-            padding-left: 2rem;
+            padding-left: 3rem;
         }
     }
 
-    @media (min-width: $bp-min-desktop-xl) {
+    @media (min-width: 1200px) {
 
         .sidebar-container {
-            padding-left: 3rem;
+            padding-left: 6rem;
         }
     }
 }
@@ -624,13 +632,13 @@ ul.pagination {
                 position: relative;
 
                 @media (min-width: $bp-min-tablet) {
-                    margin-bottom: 0 !important;
+                    margin-bottom: 0;
                 }
             }
 
             .email-field {
                 flex-grow: 1;
-                margin-bottom: .75rem !important;
+                margin-bottom: .75rem;
 
                 @media (min-width: $bp-min-tablet) {
                     margin-bottom: 0;
@@ -652,6 +660,43 @@ ul.pagination {
             flex-grow: 1;
             width: 100%;
         }
+    }
+}
+
+.outline-newsletter-optin.horizontal.report {
+    .form-wrapper,
+    .livewire-report-optin-component {
+        width: 100%;
+    }
+
+    .form-container {
+        flex-wrap: wrap;
+    }
+
+    .text-content {
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    .description {
+        max-width: 100%;
+        width: 100%;
+        font-size: 1.25rem;
+        line-height: 1.5;
+    }
+
+    .form-group-container {
+        padding: 1rem 0 0 0;
+    }
+
+    .email-field .form-control,
+    .submit-field .btn {
+        height: 3rem;
+    }
+
+    .email-field {
+        margin-bottom: 0;
+        flex-grow: 1;
     }
 }
 

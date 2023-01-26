@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\StoreContentRequest;
+use App\Http\Requests\Admin\Content\UpdateContentRequest;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ContentController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $content = Content::all();
         $pageSlugs = Content::PAGES;
@@ -20,7 +22,7 @@ class ContentController extends Controller
         ]);
     }
 
-    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function createFromWordpress(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $currentContent = Content::pluck('id')->toArray();
 
@@ -54,7 +56,20 @@ class ContentController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('admin.content.create');
+    }
+
+    public function store(StoreContentRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        $validated = $request->validated();
+        $content = Content::create($validated);
+        return redirect()->route('admin.content.index')->with('success', 'Successfully created ' . $content->name . '!');
+    }
+
+    public function storeWordpress(Request $request): \Illuminate\Http\RedirectResponse
+    {
         $validated = $request->validate([
             'wordpress' => 'required',
         ]);
@@ -96,14 +111,30 @@ class ContentController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        $content = Content::findOrFail($id);
+        $currentTags = $content->tags()->pluck('id')->toArray();
+
+        $tagUrl = route('admin.json.tags');
+
+        if (!empty($currentTags)) {
+            $tagUrl .= '?default=' . implode(',', $currentTags);
+        }
+
+        return view('admin.content.edit', [
+            'content' => $content,
+            'tagUrl' => $tagUrl
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateContentRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $content = Content::findOrFail($id);
+
+        $content->update($validated);
+        return redirect()->route('admin.content.index')->with('success', 'Updated ' . $content->name);
     }
 
     public function destroy($id)
