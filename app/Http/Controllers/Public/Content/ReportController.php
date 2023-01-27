@@ -18,7 +18,7 @@ class ReportController extends Controller
 
     public function longevityReport2022(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $content = Content::where('slug', 'reports--research--2022-longevity-funding')->first();
+        $content = Content::where('slug', 'reports--2022-longevity-funding')->first();
         $featuredImage = $content->getFirstMediaUrl('featured');
 
         $graph = new Graph();

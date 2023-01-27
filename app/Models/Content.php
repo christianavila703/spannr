@@ -42,7 +42,7 @@ class Content extends Model implements HasMedia
         'glossary',
         'companies',
         'events--leveraging-longevity-sd',
-        'reports--research--2022-longevity-funding'
+        'reports--2022-longevity-funding'
     ];
 
     /**
