@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Content;
+namespace App\Http\Livewire\Admin\HasMedia;
 
-use App\Models\Article;
-use App\Models\Content;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,7 +10,7 @@ class UploadFeaturedImage extends Component
 {
     use WithFileUploads;
 
-    public Content $content;
+    public Model $model;
 
     public $mediaComponentNames = ['featuredImage'];
 
@@ -25,10 +24,10 @@ class UploadFeaturedImage extends Component
             'featuredImage' => 'image|max:1024', // 1MB Max
         ]);
 
-        $this->content
+        $this->model
             ->addMedia($this->featuredImage->getRealPath())
-            ->setName($this->content->name)
-            ->usingFileName($this->content->slug . '.' . $this->featuredImage->extension())
+            ->setName($this->model->name)
+            ->usingFileName($this->model->slug . '.' . $this->featuredImage->extension())
             ->toMediaCollection('featured');
 
         $this->message = 'Featured image was set :)';
@@ -36,6 +35,6 @@ class UploadFeaturedImage extends Component
 
     public function render()
     {
-        return view('livewire.admin.content.upload-featured-image');
+        return view('livewire.admin.has-media.upload-featured-image');
     }
 }

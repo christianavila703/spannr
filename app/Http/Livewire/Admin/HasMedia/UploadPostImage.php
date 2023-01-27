@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Articles;
+namespace App\Http\Livewire\Admin\HasMedia;
 
-use App\Models\Article;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -14,7 +13,7 @@ class UploadPostImage extends Component
 {
     use WithFileUploads;
 
-    public Article $article;
+    public Model $model;
 
     public $mediaComponentNames = ['image'];
 
@@ -30,14 +29,14 @@ class UploadPostImage extends Component
             'description' => 'required|string'
         ]);
 
-        $this->article
+        $this->model
             ->addMedia($this->image->getRealPath())
             ->setName($this->description)
             ->withCustomProperties($this->getCustomImageProperties($this->image->getRealPath()))
             ->usingFileName(Str::slug(Str::words($this->description, 5)) . '.' . $this->image->extension())
             ->toMediaCollection('images');
 
-        $this->message = 'Image uploaded to article';
+        $this->message = 'Image uploaded!';
         $this->reset('image');
         $this->reset('description');
     }
@@ -93,6 +92,6 @@ class UploadPostImage extends Component
 
     public function render()
     {
-        return view('livewire.admin.articles.upload-post-image');
+        return view('livewire.admin.has-media.upload-post-image');
     }
 }

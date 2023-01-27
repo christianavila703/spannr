@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -55,6 +56,11 @@ class Content extends Model implements HasMedia
     /**
      * Accessors
      */
+    public function getUrlAttribute(): string
+    {
+        return $this->link;
+    }
+
     public function getShareableFacebookUrlAttribute(): string
     {
         return 'https://www.facebook.com/sharer.php?u=' . urlencode('https://spannr.com/reports/' . $this->slug);
@@ -78,6 +84,21 @@ class Content extends Model implements HasMedia
     public function getShareableHackerNewsUrlAttribute(): string
     {
         return 'https://news.ycombinator.com/submitlink?u=' . urlencode('https://spannr.com/reports/' . $this->slug) . '&t=' . $this->name;
+    }
+
+    public function getReadingTimeMinutesAttribute(): string
+    {
+        $word_count = str_word_count( strip_tags($this->content) );
+        return ceil($word_count / 100);
+    }
+
+    public function getShareableImageUrlAttribute(): string
+    {
+        if ($this->getFirstMediaUrl('featured')) {
+            return $this->getFirstMediaUrl('featured');
+        }
+
+        return 'https://wp.spannr.com/wp-content/uploads/2022/04/social-share-white.jpg';
     }
 
     /**

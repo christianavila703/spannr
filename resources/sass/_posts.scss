@@ -700,6 +700,28 @@ ul.pagination {
     }
 }
 
+.livewire-report-optin-component {
+    .form-group-container {
+        display: flex;
+    }
+
+    .email-field {
+        flex-grow: 1;
+    }
+
+    .email-field .form-control,
+    .submit-field .btn {
+        height: 3rem;
+    }
+}
+
+.bold-border-pink {
+    border-top: 2px solid var(--color-magenta);
+    border-bottom: 2px solid var(--color-magenta);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 /* Single Post Meta Container */
 .single-post .post-meta-container {
     display: flex;

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Articles;
+namespace App\Http\Livewire\Admin\HasMedia;
 
-use App\Models\Article;
-use Livewire\Component;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Component;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PostImages extends Component
@@ -16,7 +16,7 @@ class PostImages extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public Article $article;
+    public Model $model;
 
     public $filters = [
         'search' => ''
@@ -52,7 +52,7 @@ class PostImages extends Component
     public function getRowsQueryProperty()
     {
         $query = Media::query()->whereHas('model', function($query) {
-            $query->where('id', $this->article->id)
+            $query->where('id', $this->model->id)
             ->where('collection_name', 'images');
         });
 
@@ -68,7 +68,7 @@ class PostImages extends Component
 
     public function render()
     {
-        return view('livewire.admin.articles.post-images', [
+        return view('livewire.admin.has-media.post-images', [
             'images' => $this->rows
         ]);
     }

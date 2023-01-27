@@ -187,8 +187,6 @@ class Article extends Model implements HasMedia
         return ceil($word_count / 100);
     }
 
-    // TODO: READING TIME ATTRIBUTE for show page
-
     /**
      * Functions
      */

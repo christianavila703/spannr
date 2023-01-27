@@ -12,11 +12,13 @@
         </div>
         <div id="image-controls">
             <a id="view-post" href="{{ $article->url }}" class="btn btn-sm btn-quaternary">View Post</a>
-            <h4 class="text-decoration-underline">
-                <a href="{{ route('admin.articles.media', $article->id) }}">Images</a>
-            </h4>
-            <div class="mb-4">
-                <livewire:admin.articles.post-images-widget :article="$article" />
+            <div>
+                <livewire:admin.has-media.featured-image :model="$article" />
+                <a href="#upload-image" class="small">Set new featured image</a>
+            </div>
+            <div class="mt-4">
+                <p class="h6">Images</p>
+                <livewire:admin.has-media.post-images-widget :model="$article" />
             </div>
             <div>
                 <a href="#upload-image" class="btn btn-sm btn-quintary mx-auto">
@@ -26,7 +28,12 @@
             </div>
         </div>
         <div id="upload-image" class="mt-5">
-            <livewire:admin.articles.upload-post-image :article="$article" />
+            <div class="max-width-600">
+                <livewire:admin.has-media.upload-featured-image :model="$article" />
+            </div>
+            <div class="mt-4">
+                <livewire:admin.has-media.upload-post-image :model="$article" />
+            </div>
         </div>
     </x-entities.create>
 

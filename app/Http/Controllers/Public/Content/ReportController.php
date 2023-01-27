@@ -48,7 +48,7 @@ class ReportController extends Controller
                 ->url(route('home'))
                 ->name('Spannr')
             )
-            ->datePublished($content->meta_published_time)
+            ->datePublished($content->created_at)
             ->dateModified($content->updated_at)
             ->publisher(Schema::organization()
                 ->url(route('home'))
