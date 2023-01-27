@@ -219,6 +219,16 @@
     }
 }
 
+#toc-toggle {
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+}
+
+#hide-toc {
+    width: 3.625rem;
+}
+
 #toc-toggle-button {
     padding: 1rem;
 }

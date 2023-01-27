@@ -104,11 +104,11 @@
             <i class="fa-sharp fa-solid fa-up"></i>
         </button>
     </div>
-    <div id="toc-toggle" class="fixed-bottom d-lg-none d-flex" style="display: none">
-        <button id="toc-toggle-button" class="btn btn-dark flex-grow-1">
+    <div id="toc-toggle" class="fixed-bottom d-lg-none" style="display: none">
+        <button id="toc-toggle-button" class="btn btn-dark flex-grow-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Toggle Table of Contents">
             <i class="fa-sharp fa-solid fa-list-tree me-2"></i>Table of Contents
         </button>
-        <button id="hide-toc" class="btn btn-link text-dark bg-white" aria-label="Hide Table of Contents button">
+        <button id="hide-toc" class="btn btn-link text-dark" aria-label="Hide Table of Contents button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hide ToC Menu">
             <i class="fa-sharp fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -159,18 +159,23 @@
                 let window_top = $(window).scrollTop();
                 let postContentTop = $('.post-content').offset().top;
 
-                if (window.innerWidth < 1024 && window_top > postContentTop) {
-                    $('#toc-toggle').show();
+                if (window.innerWidth < 1024) {
+                    if (window_top > postContentTop) {
+                        $('#toc-toggle').show();
+                    } else {
+                        $('#toc-toggle').hide();
+                    }
                 } else {
                     $('#toc-toggle').hide();
-                }
-
-                if (window.innerWidth >= 1024) {
-                    $('#sticky-sidebar-contents').removeClass('fixed-bottom');
                 }
             }
 
             $(window).on('scroll', function() {
+                showReturnTopButton();
+                showTableOfContentsButton();
+            });
+
+            $(window).on('load', function() {
                 showReturnTopButton();
                 showTableOfContentsButton();
             });
