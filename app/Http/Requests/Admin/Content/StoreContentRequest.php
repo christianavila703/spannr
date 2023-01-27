@@ -38,7 +38,8 @@ class StoreContentRequest extends FormRequest
             ],
             'status' => 'required',
             'meta_description' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'sidebar' => 'nullable',
         ];
     }
 }

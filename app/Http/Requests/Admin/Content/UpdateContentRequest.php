@@ -34,6 +34,7 @@ class UpdateContentRequest extends FormRequest
             'status' => 'required',
             'meta_description' => 'required',
             'content' => 'required',
+            'sidebar' => 'nullable',
             'tags' => 'nullable|array'
         ];
     }

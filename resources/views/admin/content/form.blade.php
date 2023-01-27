@@ -47,6 +47,10 @@
         <div class="col-12 my-3">
             <x-tiny-mce.tiny-editor id="content" name="content" value="{{ $content->content ?? old('content') }}"/>
         </div>
+        <div class="col-12 my-3">
+            <p class="h4">Sidebar</p>
+            <x-tiny-mce.tiny-editor id="sidebar" name="sidebar" value="{{ $content->sidebar ?? old('sidebar') }}"/>
+        </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary h5">Save Content</button>
         </div>

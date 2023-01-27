@@ -84,44 +84,9 @@
                             <div id="sidebar" class="sidebar">
                                 <div id="sticky-stabilizer" style="height: 20px;"></div>
                                 <div id="sticky-sidebar-contents">
-                                    <h3 class="h5">Table of Contents</h3>
-                                    <ol class="table-of-contents mb-5">
-                                        <li>
-                                            <a href="#intro">Introduction</a>
-                                        </li>
-                                        <li>
-                                            <a href="#about">About the Author</a>
-                                        </li>
-                                        <li>
-                                            <a href="#summary">Executive Summary</a>
-                                        </li>
-                                        <li>
-                                            <a href="#overview">2022 Fundraising Overview</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#deals-by-location">Funding Deals by Location</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#deals-by-type">Funding Deals by Type</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#deals-by-size">Funding Deals by Size</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#average-deals">Average Deal Size</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#monthly">Month-over-Month</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#quarterly">Quarterly</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="deep-dive">The Deep Dive</a>
-                                        </li>
-                                    </ol>
+                                    @if($content->sidebar)
+                                        {!! $content->sidebar !!}
+                                    @endif
                                     <div class="mt-4">
                                         <livewire:public.random-glossary-item-widget />
                                     </div>
