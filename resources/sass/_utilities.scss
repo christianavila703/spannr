@@ -152,6 +152,19 @@ input[type="submit"] {
     color: var(--color-white);
 }
 
+.btn-dark-magenta-hover {
+    background-color: var(--color-black);
+    border-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.btn-dark-magenta-hover:hover,
+.btn-dark-magenta-hover:focus {
+    background-color: var(--color-magenta);
+    border-color: var(--color-magenta);
+    color: var(--color-white);
+}
+
 /* Fancy Links */
 .link-black-underline-gradient {
     color: var(--color-black);
@@ -478,3 +491,25 @@ ol.table-of-contents {
         color: var(--color-magenta);
     }
 }
+
+/* Ratios */
+.ratio-md-16x9 {
+    @include media-breakpoint-up(md) {
+        --bs-aspect-ratio: calc(9 / 16 * 100%);
+    }
+}
+
+/* Return to Top Button */
+#return-top {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    #return-top {
+        display: block;
+        position: fixed;
+        bottom: .5rem;
+        right: .5rem;
+    }
+}
+

@@ -1,30 +1,10 @@
-{{--<div class="outline-newsletter-optin horizontal report mb-4">--}}
-{{--    <div class="sidebar-optin">--}}
-{{--        <div class="icon-group">--}}
-{{--            <svg xmlns="http://www.w3.org/2000/svg" width="19.695" height="23.969" viewBox="0 0 19.695 23.969">--}}
-{{--                <g id="Spannr_logo_mark_Color" transform="translate(-96.28 -0.49)">--}}
-{{--                <path id="Path_179" data-name="Path 179" d="M652.876,206.01a1.448,1.448,0,1,0,0,2.9h.517a1.448,1.448,0,1,0,0-2.9Z" transform="translate(-542.82 -200.959)" fill="#0ac6ff"/>--}}
-{{--                <path id="Path_180" data-name="Path 180" d="M125.626,757.355a1.448,1.448,0,1,0,0-2.9h-.239a1.448,1.448,0,1,0,0,2.9Z" transform="translate(-27.036 -737.237)" fill="#0ac6ff"/>--}}
-{{--                <path id="Path_181" data-name="Path 181" d="M112.718,10.281a7.959,7.959,0,0,0-4.494-1.129c-.478,0-2.317.006-4.035.014l-2.3.009c-.586,0-.873,0-1.014.022V9.178a.661.661,0,0,1-.469-.193.651.651,0,0,1-.194-.465.663.663,0,0,1,.664-.659l5.572,0A1.452,1.452,0,0,0,107.9,6.419a1.428,1.428,0,0,0-.427-1.022,1.449,1.449,0,0,0-1.028-.424h-1.608a.659.659,0,1,1,0-1.319l7.681,0a1.259,1.259,0,0,0,.394-.08,1.581,1.581,0,0,0,0-3.01,1.557,1.557,0,0,0-.4-.077h-8.35a7.826,7.826,0,0,0-4.652,14.159,6.8,6.8,0,0,0,3.216,1.137c.376,0,1.4,0,2.609.008l.1-.012a1.346,1.346,0,0,0-.337-2.651h-.643l-.045,0a.562.562,0,0,1,.045-1.122H109.8a.562.562,0,1,1,0,1.124h-1.112a1.355,1.355,0,0,0-1.357,1.349,1.336,1.336,0,0,0,.4.954,1.37,1.37,0,0,0,.771.376l2.483.019a.692.692,0,1,1,0,1.384h-9.043a1.478,1.478,0,1,0,0,2.955h4.785l.055,0a.692.692,0,0,1-.055,1.382H99.994a.617.617,0,0,0-.1-.008h-.522a1.457,1.457,0,1,0,0,2.914h8.719a7.867,7.867,0,0,0,7.881-7.835A7.258,7.258,0,0,0,112.718,10.281Z" transform="translate(0 0)" fill="#0ac6ff"/>--}}
-{{--                </g>--}}
-{{--            </svg>--}}
-{{--        </div>--}}
-{{--        <div class="form-container">--}}
-{{--            <div class="text-content">--}}
-{{--                <p class="description">To access the full report &amp; all our fundraising data for 2022, please enter your email below:</p>--}}
-{{--            </div>--}}
-{{--            <livewire:forms.report-opt-in />--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
-
 <div class="bold-border-pink">
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
         <div class="max-width-300 mx-auto pe-md-3">
             <img src="{{ Vite::asset('resources/images/longevity-report-optin.jpg') }}" alt="Get the report">
         </div>
         <div class="text-center text-md-start">
-            <p class="h4 text-quaternary mb-4">
+            <p class="h4 text-quaternary mb-3">
                 To access the full report &amp; all our fundraising data for 2022, please enter your email below:
             </p>
             <livewire:forms.report-opt-in />

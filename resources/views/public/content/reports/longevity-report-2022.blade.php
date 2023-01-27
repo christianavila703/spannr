@@ -81,13 +81,13 @@
                             </div>
                         </article>
                         <div class="sidebar-container">
-                            <div id="sidebar" class="sidebar">
+                            <div id="sidebar" class="sidebar report-sidebar">
                                 <div id="sticky-stabilizer" style="height: 20px;"></div>
                                 <div id="sticky-sidebar-contents">
                                     @if($content->sidebar)
                                         {!! $content->sidebar !!}
                                     @endif
-                                    <div class="mt-4">
+                                    <div class="mt-4 glossary-widget-container">
                                         <livewire:public.random-glossary-item-widget />
                                     </div>
                                 </div>
@@ -98,6 +98,19 @@
                 <div class="after-single-post"></div>
             </div>
         </div>
+    </div>
+    <div id="return-top">
+        <button id="return-top-button" class="btn btn-quaternary btn-dark-magenta-hover" aria-label="Return to top">
+            <i class="fa-sharp fa-solid fa-up"></i>
+        </button>
+    </div>
+    <div id="toc-toggle" class="fixed-bottom d-lg-none d-flex" style="display: none">
+        <button id="toc-toggle-button" class="btn btn-dark flex-grow-1">
+            <i class="fa-sharp fa-solid fa-list-tree me-2"></i>Table of Contents
+        </button>
+        <button id="hide-toc" class="btn btn-link text-dark bg-white" aria-label="Hide Table of Contents button">
+            <i class="fa-sharp fa-solid fa-xmark"></i>
+        </button>
     </div>
 @endsection
 
@@ -111,13 +124,64 @@
         #optin-1 {
             margin-bottom: 3rem;
         }
+
     </style>
     <script>
+        let topButton = document.getElementById('return-top-button');
+        topButton.addEventListener('click', function() {
+            window.scrollTo(0, 0);
+        });
+
+        let tocButton = document.getElementById('toc-toggle-button');
+        let sidebar = document.getElementById('sticky-sidebar-contents');
+
+        tocButton.addEventListener('click', function() {
+            sidebar.classList.toggle('fixed-bottom');
+            console.log("clicked");
+        });
+
         $( document ).ready(function() {
             $("#optin-1").appendTo("#optin-report1");
-        });
-        $( document ).ready(function() {
             $("#optin-2").appendTo("#optin-report2");
+
+            function showReturnTopButton() {
+                let window_top = $(window).scrollTop();
+                let postContentTop = $('.post-content').offset().top;
+
+                if (window.innerWidth >= 1024 && window_top > postContentTop) {
+                    $('#return-top').show();
+                } else {
+                    $('#return-top').hide();
+                }
+            }
+
+            function showTableOfContentsButton() {
+                let window_top = $(window).scrollTop();
+                let postContentTop = $('.post-content').offset().top;
+
+                if (window.innerWidth < 1024 && window_top > postContentTop) {
+                    $('#toc-toggle').show();
+                } else {
+                    $('#toc-toggle').hide();
+                }
+
+                if (window.innerWidth >= 1024) {
+                    $('#sticky-sidebar-contents').removeClass('fixed-bottom');
+                }
+            }
+
+            $(window).on('scroll', function() {
+                showReturnTopButton();
+                showTableOfContentsButton();
+            });
+
+            $('.table-of-contents a').click(function() {
+                $('#sticky-sidebar-contents').removeClass('fixed-bottom');
+            });
+
+            $('#hide-toc').on('click', function() {
+                $('#toc-toggle').remove();
+            });
         });
     </script>
 @endpush
