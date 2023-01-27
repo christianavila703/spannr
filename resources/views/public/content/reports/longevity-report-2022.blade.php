@@ -105,10 +105,10 @@
         </button>
     </div>
     <div id="toc-toggle" class="fixed-bottom d-lg-none" style="display: none">
-        <button id="toc-toggle-button" class="btn btn-dark flex-grow-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Toggle Table of Contents">
+        <button id="toc-toggle-button" class="btn btn-dark flex-grow-1">
             <i class="fa-sharp fa-solid fa-list-tree me-2"></i>Table of Contents
         </button>
-        <button id="hide-toc" class="btn btn-link text-dark" aria-label="Hide Table of Contents button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hide ToC Menu">
+        <button id="hide-toc" class="btn btn-link text-dark" aria-label="Hide Table of Contents button">
             <i class="fa-sharp fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -130,14 +130,6 @@
         let topButton = document.getElementById('return-top-button');
         topButton.addEventListener('click', function() {
             window.scrollTo(0, 0);
-        });
-
-        let tocButton = document.getElementById('toc-toggle-button');
-        let sidebar = document.getElementById('sticky-sidebar-contents');
-
-        tocButton.addEventListener('click', function() {
-            sidebar.classList.toggle('fixed-bottom');
-            console.log("clicked");
         });
 
         $( document ).ready(function() {
@@ -180,12 +172,18 @@
                 showTableOfContentsButton();
             });
 
-            $('.table-of-contents a').click(function() {
+            $('.table-of-contents a').on('click', function() {
                 $('#sticky-sidebar-contents').removeClass('fixed-bottom');
+                $('body').removeClass('no-scroll');
             });
 
             $('#hide-toc').on('click', function() {
                 $('#toc-toggle').remove();
+            });
+
+            $('#toc-toggle-button').on('click', function() {
+                $('#sticky-sidebar-contents').toggleClass('fixed-bottom');
+                $('body').toggleClass('no-scroll');
             });
         });
     </script>
