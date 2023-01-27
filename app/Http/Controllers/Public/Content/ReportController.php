@@ -16,6 +16,11 @@ class ReportController extends Controller
        View::share ('showHeader', true);
     }
 
+    public function index(): \Illuminate\Http\RedirectResponse
+    {
+        return redirect()->route('public.content.reports.longevity-report-2022');
+    }
+
     public function longevityReport2022(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $content = Content::where('slug', 'reports--2022-longevity-funding')->first();

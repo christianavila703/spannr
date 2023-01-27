@@ -40,6 +40,7 @@ Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::
 Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
+Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::class, 'index'])->name('public.content.reports.index');
 Route::get('/reports/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
 
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
