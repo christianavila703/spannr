@@ -123,8 +123,18 @@ class ContentController extends Controller
     public function articlesIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'articles')->first();
+        $report = Content::where('slug', 'reports--2022-longevity-funding')->first();
+
+        if ($report) {
+            $reportImage = $report->getFirstMediaUrl('featured');
+        } else {
+            $reportImage = NULL;
+        }
+
         return view('public.content.articles.index', [
-            'seo' => $seo
+            'seo' => $seo,
+            'report' => $report,
+            'reportImage' => $reportImage
         ]);
     }
 
