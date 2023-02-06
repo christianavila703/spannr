@@ -48,7 +48,7 @@
             <th>Category</th>
             <th>Owner</th>
             <th class="sortable-column">Salary
-                <x-tables.sortable-button columnName="salary" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+                <x-tables.sortable-button columnName="salary_min" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
             </th>
             <th></th>
         </tr>
@@ -90,8 +90,8 @@
                     </a>
                 </td>
                 <td>
-                    @if($job->salary)
-                        ${{ number_format($job->salary, 0) }}
+                    @if($job->salary_min)
+                        ${{ number_format($job->salary_min, 0) }}{{$job->salary_max ? ' - ' . number_format($job->salary_max, 0) : null }}
                     @endif
                     @if($job->hourly)
                         ${{ number_format($job->hourly, 0) }} / hour

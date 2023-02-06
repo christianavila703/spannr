@@ -161,7 +161,8 @@
 
             <div class="row">
                 <div class="col-12 col-lg-6">
-                    <x-forms.input type="number" name="salary" label="Salary" class="mb-3" value="{{ $job->salary ?? old('salary') }}" />
+                    <x-forms.input type="number" name="salary_min" label="Salary min" class="mb-3" value="{{ $job->salary_min ?? old('salary_min') }}" required/>
+                    <x-forms.input type="number" name="salary_max" label="Salary max" class="mb-3" value="{{ $job->salary_max ?? old('salary_max') }}" />
                 </div>
                 <div class="col-12 col-lg-6">
                     <x-forms.input type="number" name="hourly" label="Hourly" class="mb-3" value="{{ $job->hourly ?? old('hourly') }}" />

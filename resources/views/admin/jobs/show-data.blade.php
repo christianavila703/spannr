@@ -27,8 +27,8 @@
             @endif
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-money-check-dollar" tooltip="Salary">
-            @if($job->salary)
-                ${{ number_format($job->salary, 0) }}
+            @if($job->salary_min)
+                ${{ number_format($job->salary_min, 0) }}{{$job->salary_max ? ' - ' . number_format($job->salary_max, 0) : null }}
             @endif
             @if($job->hourly)
                 ${{ number_format($job->hourly, 0) }} / hour
