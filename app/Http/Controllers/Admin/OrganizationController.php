@@ -42,7 +42,7 @@ class OrganizationController extends Controller
     public function show($slug): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $organization = Organization::where('slug', $slug)
-            ->with(['stock.latestSnapshot'])
+            ->with(['stock', 'stock.latestSnapshot'])
             ->firstOrFail();
 
         $investors = Investor::orderBy('name')->get();

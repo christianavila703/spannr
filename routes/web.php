@@ -101,6 +101,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/organizations/{slug}/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'people'])->name('organizations.people');
         Route::post('/organization/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'savePerson'])->name('organizations.save-person');
 
+        Route::prefix('/organizations/stock')->name('organizations.stock.')->group(function () {
+            Route::get('/{slug}/add', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'add'])->name('add');
+            Route::get('/create', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'create'])->name('create');
+            Route::post('/create', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'store'])->name('store');
+            Route::get('/{id}', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'destroy'])->name('destroy');
+        });
+
         Route::post('/tags/sync', [\App\Http\Controllers\Admin\TagController::class, 'syncEntities'])->name('tags.sync');
 
         // Investor Relationships

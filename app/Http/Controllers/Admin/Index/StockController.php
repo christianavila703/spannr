@@ -33,7 +33,6 @@ class StockController extends Controller
             Stock::create([
                 'name' => $organization->name,
                 'status' => $request->input('status', Stock::STATUS_ACTIVE),
-                'indexed' => $request->input('indexed', 0),
                 'slug' => Str::slug($ticker),
                 'ticker' => $ticker,
                 'organization_id' => $organization->id,
@@ -43,13 +42,7 @@ class StockController extends Controller
             return redirect()->back()->with('error', $throwable->getMessage());
         }
 
-        if ($request->input('redirect')) {
-            $redirectRoute = 'admin.organizations.index';
-        } else {
-            $redirectRoute = 'admin.longevity-index.all';
-        }
-
-        return redirect()->route($redirectRoute)->with('success', 'Successfully added Stock to the ' . $organization->name . '!');
+        return redirect()->route('admin.longevity-index.all')->with('success', 'Successfully added stock to the ' . $organization->name . '!');
     }
 
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -65,6 +58,7 @@ class StockController extends Controller
         $stock = Stock::findOrFail($id);
         $fields = $request->input();
         $stock->update($fields);
+
         return redirect()->route('admin.longevity-index.all')->with('success', 'Stock successfully updated for ' . $stock->name . '!');
     }
 }

@@ -19,6 +19,13 @@
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFundraisingRoundForm">Fundraising Round</a></li>
                     <li><a class="dropdown-item" href="{{ route('admin.locations.attach', ['organizations', $organization->id]) }}">Location</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>
+                    @if($organization->type == \App\Models\Organization::TYPE_PUBLIC)
+                        @if($organization->stock)
+                            <li><a class="dropdown-item" href="{{ route('admin.organizations.stock.edit', $organization->stock->id) }}">Edit Stock</a></li>
+                        @else
+                            <li><a class="dropdown-item" href="{{ route('admin.organizations.stock.add', $organization->slug) }}">Stock</a></li>
+                        @endif
+                    @endif
                 </ul>
             </div>
         </x-slot:buttons>

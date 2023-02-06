@@ -7,7 +7,7 @@
         @include('admin.includes.status-messages')
 
         <div class="mt-4 mb-4">
-            <a href="{{ route('admin.longevity-index.stocks.create', ['redirect' => 1]) }}" class="btn btn-info">Add Stock to Organization</a>
+            <a href="{{ route('admin.organizations.stock.create') }}" class="btn btn-info">Add Stock to Organization</a>
         </div>
 
         <livewire:organizations.index/>
