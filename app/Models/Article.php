@@ -34,6 +34,8 @@ class Article extends Model implements HasMedia
     const TAG_INVESTING = 'Investing';
     const TAG_TOP_INSIGHTS = 'Top Insights';
 
+    protected $dates = ['date'];
+
     private string $searchableRouteName = 'public.content.articles'; // TODO: update all these!!
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-buildings';
@@ -69,6 +71,15 @@ class Article extends Model implements HasMedia
         return $query->whereHas('tags', function(Builder $query) {
             $query->where('name', self::TAG_TOP_INSIGHTS);
         });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     */
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
     }
 
     /**

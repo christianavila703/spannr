@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -24,6 +25,19 @@ class Glossary extends Model
     ];
 
     private string $modelName = 'glossary';
+
+    /**
+     * Scopes
+     */
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     */
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
+    }
 
     /**
      * Attributes

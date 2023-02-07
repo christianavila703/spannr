@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -44,6 +45,19 @@ class Content extends Model implements HasMedia
         'events--leveraging-longevity-sd',
         'reports--2022-longevity-funding'
     ];
+
+    /**
+     * Scopes
+     */
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     */
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
+    }
 
     /**
      * Relationships

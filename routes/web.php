@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
+Route::get('sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index' ]);
+
 /**
  * PUBLIC ROUTES
  */
