@@ -76,6 +76,12 @@ tinymce.init({
     toolbar_sticky: true,
     content_style: contentCss.toString(),
     autosave_ask_before_unload: true,
+    paste_webkit_styles: 'strong font-style',
+    paste_preprocess: (editor, args) => {
+        let content = args.content;
+        let newContent = content.replaceAll(' dir="ltr"', '');
+        args.content = newContent.replaceAll('</p><br /><p', '</p><p');
+    },
     setup: (editor) => {
         editor.ui.registry.addButton('insert-iframe', {
             icon: 'embed-page',

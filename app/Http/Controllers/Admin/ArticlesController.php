@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\Admin\Articles\StoreArticleRequest;
+use App\Http\Requests\Admin\Articles\UpdateArticleRequest;
 use App\Jobs\WordPress\SyncArticles;
 use App\Jobs\WordPress\SyncGlossary;
 use App\Models\Article;
-use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

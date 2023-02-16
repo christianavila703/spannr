@@ -68,7 +68,9 @@
                     {{ $article->formatted_date }}
                 </td>
                 <td class="text-center">
-                    <img src="{{ $article->image_url }}" alt="{{ $article->name }}" style="width: 80px">
+                    @if ($article->image_url)
+                        <img src="{{ $article->image_url }}" alt="{{ $article->name }}" style="width: 80px">
+                    @endif
                 </td>
                 <td class="text-center">
                     <span class="d-block">
