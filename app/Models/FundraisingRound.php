@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\SearchableEntity;
+use App\Models\Contracts\EntityContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class FundraisingRound extends Model
+class FundraisingRound extends Model implements EntityContract
 {
     use HasFactory,
         LogsActivity,
@@ -72,5 +74,48 @@ class FundraisingRound extends Model
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    public static function getFieldsMapping()
+    {
+        return [
+            //attributes
+            'name' => [
+                'type' => FieldsMapping::TYPE_STRING,
+                'required' => true,
+            ],
+            'round' => [
+                'type' => FieldsMapping::TYPE_ENUM,
+                'values' => self::ROUNDS,
+                'required' => true,
+            ],
+            'date' => [
+                'type' => FieldsMapping::TYPE_DATE,
+                'required' => true,
+            ],
+            'amount_raised' => [
+                'type' => FieldsMapping::TYPE_FLOAT,
+            ],
+            'announcement_url' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'description' => [
+                'type' => FieldsMapping::TYPE_TEXT,
+            ],
+            'valuation' => [
+                'type' => FieldsMapping::TYPE_FLOAT,
+            ],
+            //relations
+            'organization' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_ONE_ONE,
+                'relationField' => 'name',
+            ],
+            'investors' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+            ],
+        ];
     }
 }

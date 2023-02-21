@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\SearchableEntity;
+use App\Models\Contracts\EntityContract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,7 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Event extends Model
+class Event extends Model implements EntityContract
 {
     use HasFactory,
         LogsActivity,
@@ -127,5 +129,71 @@ class Event extends Model
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFieldsMapping()
+    {
+        return [
+            //attributes
+            'name' => [
+                'type' => FieldsMapping::TYPE_STRING,
+                'required' => true,
+            ],
+            'slug' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'start_date' => [
+                'type' => FieldsMapping::TYPE_DATE,
+            ],
+            'end_date' => [
+                'type' => FieldsMapping::TYPE_DATE,
+            ],
+            'website' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'description' => [
+                'type' => FieldsMapping::TYPE_TEXT,
+            ],
+            'image' => [
+                'type' => FieldsMapping::TYPE_IMAGE,
+            ],
+            'remote' => [
+                'type' => FieldsMapping::TYPE_BOOLEAN,
+            ],
+            //relations
+            'eventTypes' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'investors' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'locations' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'organizations' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'people' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'tags' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+        ];
     }
 }

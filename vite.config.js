@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/longevity-stock-chart.js',
                 'resources/js/longevity-stock-chart-home.js',
+                'resources/js/entity-duplicate-merge.js',
                 'resources/vendor/laravel_backup_panel/app.css',
                 'resources/vendor/laravel_backup_panel/bootstrap.css',
                 'resources/js/company-carousel.js',

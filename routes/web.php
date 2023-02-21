@@ -143,6 +143,17 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 //        Route::post('/articles/upload-image', [\App\Http\Controllers\Admin\ArticlesController::class, 'uploadImage'])->name('articles.image-upload');
 
         Route::get('/content/create-from-wordpress', [\App\Http\Controllers\Admin\ContentController::class, 'createFromWordpress'])->name('content.create-from-wordpress');
+
+        //Entity Duplicate
+        Route::prefix('entity-duplicate')
+            ->name('entity-duplicate.')
+            ->group(function() {
+                Route::get('/', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'index'])->name('index');
+                Route::post('/', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'merge'])->name('merge');
+
+            Route::get('/getEntityListJson', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'getEntityListJson'])->name('get-entity-list-json');
+            Route::get('/getEntityForm', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'getEntityForm'])->name('get-entity-form');
+        });
     });
 
     // PERMISSION: Admin Control

@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
+use App\Models\Contracts\EntityContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Organization extends Model
+class Organization extends Model implements EntityContract
 {
     use HasFactory,
         HasSocialMedia,
@@ -114,5 +116,102 @@ class Organization extends Model
     public function getSeoDescriptionAttribute(): string
     {
         return Str::words($this->description, 25);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFieldsMapping()
+    {
+        return [
+            //attributes
+            'name' => [
+                'type' => FieldsMapping::TYPE_STRING,
+                'required' => true,
+            ],
+            'slug' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'type' => [
+                'type' => FieldsMapping::TYPE_ENUM,
+                'values' => self::TYPES,
+                'required' => true,
+            ],
+            'website' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'summary' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'description' => [
+                'type' => FieldsMapping::TYPE_TEXT,
+            ],
+            'extended_description' => [
+                'type' => FieldsMapping::TYPE_TEXT,
+            ],
+            'founded_date' => [
+                'type' => FieldsMapping::TYPE_DATE,
+                'format' => 'Y'
+            ],
+            'facebook' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'twitter' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'instagram' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'linkedin' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'image' => [
+                'type' => FieldsMapping::TYPE_IMAGE,
+            ],
+            //relations
+            'fundraisingRounds' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_ONE_N,
+                'relationField' => 'name',
+            ],
+            'investors' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+            ],
+            'jobs' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_ONE_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'locations' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'mediaItems' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+            ],
+            'stock' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_ONE_N,
+                'relationField' => 'name',
+            ],
+            'tags' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'people' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+                'pivotColumns' => [
+                    'role',
+                ],
+            ],
+        ];
     }
 }

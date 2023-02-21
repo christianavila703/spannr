@@ -33,4 +33,10 @@ trait HasImage {
         $this->image = $fileName;
         $this->save();
     }
+
+    public function removeImageFile() {
+        if ($this->image) {
+            Storage::delete($this->imageUrlStoragePath . DIRECTORY_SEPARATOR . $this->image);
+        }
+    }
 }

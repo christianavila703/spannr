@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
+use App\Models\Contracts\EntityContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Person extends Model
+class Person extends Model implements EntityContract
 {
     use HasFactory,
         HasSocialMedia,
@@ -97,4 +99,68 @@ class Person extends Model
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
     }
 
+    /**
+     * @return array
+     */
+    public static function getFieldsMapping()
+    {
+        return [
+            //attributes
+            'name' => [
+                'type' => FieldsMapping::TYPE_STRING,
+                'required' => true,
+            ],
+            'slug' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'byline' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'job_type' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'website' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'bio' => [
+                'type' => FieldsMapping::TYPE_TEXT,
+            ],
+            'facebook' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'instagram' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'linkedin' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'google_scholar' => [
+                'type' => FieldsMapping::TYPE_STRING,
+            ],
+            'image' => [
+                'type' => FieldsMapping::TYPE_IMAGE,
+            ],
+            //relations
+            'investors' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+            ],
+            'organizations' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N,
+                'relationField' => 'name',
+            ],
+            'locations' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+            'tags' => [
+                'type' => FieldsMapping::TYPE_RELATION,
+                'relation' => FieldsMapping::RELATION_N_N_MORPHABLE,
+                'relationField' => 'name',
+            ],
+        ];
+    }
 }
