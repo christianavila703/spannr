@@ -60,11 +60,16 @@
             </div>
         @endisset
         <div class="col-12 my-3">
+            <p class="h4">Content</p>
             <x-tiny-mce.tiny-editor id="content" name="content" value="{{ $article->content ?? old('content') }}"/>
         </div>
         <div class="col-12 my-3">
             <p class="h4">Sources</p>
             <x-tiny-mce.tiny-editor id="sources" name="sources" value="{{ $article->sources ?? old('sources') }}"/>
+        </div>
+        <div class="col-12 my-3">
+            <p class="h4">Sidebar</p>
+            <x-tiny-mce.tiny-editor id="sidebar" name="sidebar" value="{{ $article->sidebar ?? old('sidebar') }}"/>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary h5">Save Post</button>

@@ -42,6 +42,7 @@ class StoreArticleRequest extends FormRequest
             'meta_description' => 'required|max:250',
             'content' => 'required',
             'sources' => 'nullable',
+            'sidebar' => 'nullable',
             'user_id' => 'required'
         ];
     }

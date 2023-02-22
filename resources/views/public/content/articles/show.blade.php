@@ -132,6 +132,9 @@ og:image:type
                             <div id="sidebar" class="sidebar">
                                 <div id="sticky-stabilizer" style="height: 20px;"></div>
                                 <div id="sticky-sidebar-contents">
+                                    @if($article->sidebar)
+                                        <div>{!! $article->sidebar !!}</div>
+                                    @endif
                                     <div class="outline-newsletter-optin">
                                         <x-optins.newsletter showNameFields="true" />
                                     </div>

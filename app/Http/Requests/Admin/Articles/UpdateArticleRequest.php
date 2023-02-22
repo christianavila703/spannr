@@ -41,8 +41,9 @@ class UpdateArticleRequest extends FormRequest
             'excerpt' => 'string|nullable',
             'meta_description' => 'string|max:250|nullable',
             'content' => 'required',
-            'user_id' => 'required',
             'sources' => 'nullable',
+            'sidebar' => 'nullable',
+            'user_id' => 'required',
             'tags' => 'array|nullable'
         ];
     }
