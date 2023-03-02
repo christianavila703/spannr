@@ -13,7 +13,8 @@
                 <div>
                     <p>Across the globe, scientists are working on ways to extend healthy human lifespans beyond what we know. Significant advances have attracted serious investment and the force of this movement is changing the way we look at life.</p>
                     <h1>Invest in the future of humanity.</h1>
-                    <a href="#signup" class="btn btn-rounded btn-outline">Sign Up</a>
+                    <a href="#signup" class="btn btn-rounded btn-outline my-1 me-1">Apply to invest</a>
+                    <a href="#signup" class="btn btn-rounded btn-outline my-1">Apply for funding</a>
                 </div>
             </div>
         </div>
@@ -150,8 +151,16 @@ you can be confident that the deals you see are some of the best opportunities i
 
     <section id="signup" class="ventures-form-container">
         <div class="container">
-            <h3 class="h1 text-center">Join us to learn more</h3>
-            <livewire:forms.investor-opt-in formType="ventures" formClass="ventures-optin-form" successClass="lead fw-bold" />
+            <div class="row">
+                <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+                    <h3 class="h1 text-center">Join us to learn more</h3>
+                    <livewire:forms.investor-opt-in formType="ventures" formClass="ventures-optin-form" successClass="lead fw-bold" />
+                </div>
+                <div class="col-12 col-lg-6">
+                    <h3 class="h1 text-center">Apply for funding</h3>
+                    <livewire:forms.funding-applicant formType="ventures" formClass="ventures-funding-form" successClass="lead fw-bold" />
+                </div>
+            </div>
         </div>
     </section>
 </main>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\FormNotifications\FundingApplicant;
 use App\Jobs\FormNotifications\InvestorOptIn;
 use App\Jobs\FormNotifications\NewsletterOptIn;
 use App\Jobs\FormNotifications\ReportOptIn;
@@ -18,6 +19,7 @@ class FormEntry extends Model
     protected $guarded = ['id'];
 
     const FORM_INVESTOR_OPTIN = 'Investor Opt-in';
+    const FORM_FUNDING_APPLICANT = 'Funding Applicant';
     const FORM_CONTACT = 'Contact';
     const FORM_NEWSLETTER_SIDEBAR = 'Newsletter Sidebar';
     const FORM_NEWSLETTER_STICKY = 'Newsletter Sticky';
@@ -42,20 +44,26 @@ class FormEntry extends Model
     protected static function booted()
     {
         static::created(function ($formEntry) {
-            if ($formEntry->form === self::FORM_CONTACT) {
-                WebsiteContact::dispatch($formEntry);
-            }
+            switch ($formEntry->form) {
+                case self::FORM_CONTACT:
+                    WebsiteContact::dispatch($formEntry);
+                    break;
 
-            if ($formEntry->form === self::FORM_INVESTOR_OPTIN) {
-                InvestorOptIn::dispatch($formEntry);
-            }
+                case self::FORM_INVESTOR_OPTIN:
+                    InvestorOptIn::dispatch($formEntry);
+                    break;
 
-            if ($formEntry->form === self::FORM_NEWSLETTER_SIDEBAR) {
-                NewsletterOptIn::dispatch($formEntry);
-            }
+                case self::FORM_FUNDING_APPLICANT:
+                    FundingApplicant::dispatch($formEntry);
+                    break;
 
-            if ($formEntry->form === self::FORM_REPORT_LONGEVITY_2022) {
-                ReportOptIn::dispatch($formEntry, "23e01b7e78");
+                case self::FORM_NEWSLETTER_SIDEBAR:
+                    NewsletterOptIn::dispatch($formEntry);
+                    break;
+
+                case self::FORM_REPORT_LONGEVITY_2022:
+                    ReportOptIn::dispatch($formEntry, "23e01b7e78");
+                    break;
             }
         });
     }
@@ -71,6 +79,11 @@ class FormEntry extends Model
     public function scopeInvestorOptin(Builder $query): Builder
     {
         return $query->where('form', self::FORM_INVESTOR_OPTIN);
+    }
+
+    public function scopeFundingApplicant(Builder $query): Builder
+    {
+        return $query->where('form', self::FORM_FUNDING_APPLICANT);
     }
 
     public function scopeNewsletterOptin(Builder $query): Builder
@@ -97,24 +110,15 @@ class FormEntry extends Model
     }
 
     public function getFormattedMessageFieldAttribute() {
-        $fields = json_decode($this->fields);
-        return $fields->message;
+        return $this->fields['message'] ?? '';
     }
 
     public function getFormattedSubjectFieldAttribute() {
-        $fields = json_decode($this->fields);
-        if (property_exists($fields, 'subject')) {
-            return $fields->subject;
-        } else {
-            return '';
-        }
+        return $this->fields['subject'] ?? '';
     }
 
     public function getFormattedAccreditedFieldAttribute() {
-        $fields = json_decode($this->fields);
-        if (property_exists($fields, 'accredited')) {
-            return $fields->accredited;
-        }
+        return $this->fields['accredited'] ?? '';
     }
 
     public function getFormattedMailChimpResponseAttribute(): bool|string
