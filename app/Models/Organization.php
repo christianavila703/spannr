@@ -8,6 +8,7 @@ use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\ReviewAndAudit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -21,7 +22,8 @@ class Organization extends Model implements EntityContract
         LogsActivity,
         SearchableEntity,
         HasImage,
-        HasBreadcrumbs;
+        HasBreadcrumbs,
+        ReviewAndAudit;
 
     protected $guarded = ['id'];
 
@@ -49,6 +51,8 @@ class Organization extends Model implements EntityContract
 
     private string $modelName = 'organizations';
     private string $imageUrlStoragePath = 'public/images/organizations';
+
+    public static $routeParameterField = 'slug';
 
     /**
      * Functions

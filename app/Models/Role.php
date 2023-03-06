@@ -13,6 +13,7 @@ class Role extends \Spatie\Permission\Models\Role
     const ROLE_USER_FREE = 'Free User';
     const ROLE_SPANNR_TEAM = 'Spannr Team';
     const ROLE_SPANNR_CONTRIBUTOR = 'Spannr Contributor';
+    const ROLE_REVIEWER = 'Reviewer';
 
     public function getColorAttribute(): string
     {

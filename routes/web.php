@@ -160,6 +160,20 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::middleware(['can:admin control'])->group(function () {
         Route::get('/activity-log', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-log.index');
     });
+
+    Route::middleware(['can:review records'])
+        ->prefix('/entity-reviews')
+        ->name('entity-reviews.')
+        ->group(function() {
+        Route::get('/', [\App\Http\Controllers\Admin\EntityReviewsController::class, 'index'])->name('index');
+        Route::get('/reviews/{type}', [\App\Http\Controllers\Admin\EntityReviewsController::class, 'reviews'])->name('reviews');
+        Route::post('/reviews/approve', [\App\Http\Controllers\Admin\EntityReviewsController::class, 'approveReview'])->name('reviews.approve');
+        Route::get('/audits/{type}', [\App\Http\Controllers\Admin\EntityReviewsController::class, 'audits'])->name('audits');
+        Route::post('/audits/approve', [\App\Http\Controllers\Admin\EntityReviewsController::class, 'approveAudit'])->name('audits.approve');
+
+        Route::post('/note', [\App\Http\Controllers\Admin\EntityReviewNotesController::class, 'add'])->name('note.add');
+        Route::delete('/note/{id}', [\App\Http\Controllers\Admin\EntityReviewNotesController::class, 'delete'])->name('note.delete');
+    });
 });
 
 /**

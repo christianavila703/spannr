@@ -28,6 +28,8 @@
                     @endif
                 </ul>
             </div>
+
+            @include('admin.entity-reviews.includes.entity-form', ['entity' => $organization])
         </x-slot:buttons>
         <x-slot:title>{{ $organization->name }}</x-slot:title>
         @include('admin.organizations.show-data')

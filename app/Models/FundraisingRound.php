@@ -6,6 +6,7 @@ use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\ReviewAndAudit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -16,7 +17,8 @@ class FundraisingRound extends Model implements EntityContract
     use HasFactory,
         LogsActivity,
         SearchableEntity,
-        HasBreadcrumbs;
+        HasBreadcrumbs,
+        ReviewAndAudit;
 
     protected $guarded = ['id'];
 
@@ -49,6 +51,8 @@ class FundraisingRound extends Model implements EntityContract
     private string $searchableRouteName = 'admin.fundraising-rounds.show';
     private string $searchableRouteField = 'id';
     private string $searchableIcon = 'fa-duotone fa-sack-dollar';
+
+    public static $routeParameterField = 'id';
 
     /**
      * Relationships
