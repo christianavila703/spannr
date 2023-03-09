@@ -58,6 +58,7 @@ class FormEntry extends Model
                     break;
 
                 case self::FORM_NEWSLETTER_SIDEBAR:
+                case self::FORM_NEWSLETTER_HOMEPAGE_HERO:
                     NewsletterOptIn::dispatch($formEntry);
                     break;
 
@@ -88,7 +89,7 @@ class FormEntry extends Model
 
     public function scopeNewsletterOptin(Builder $query): Builder
     {
-        return $query->whereIn('form', [self::FORM_NEWSLETTER_SIDEBAR, self::FORM_NEWSLETTER_STICKY]);
+        return $query->whereIn('form', [self::FORM_NEWSLETTER_SIDEBAR, self::FORM_NEWSLETTER_HOMEPAGE_HERO]);
     }
 
     /**
