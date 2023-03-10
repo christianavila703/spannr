@@ -27,7 +27,8 @@ class NewsletterOptIn extends Component
         'ip' => 'nullable',
     ];
 
-    public function submit() {
+    public function submit()
+    {
 
         $validated = $this->validate();
 
@@ -41,7 +42,10 @@ class NewsletterOptIn extends Component
         ]);
 
         $this->showSuccess = true;
+
+        return redirect()->route('public.content.email-confirmed');
     }
+
     public function mount()
     {
         $this->url = url()->current();
