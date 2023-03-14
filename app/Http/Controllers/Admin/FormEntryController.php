@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\FormNotifications\ResubmitMailchimpApplicableForms;
 use Illuminate\Http\Request;
 
 class FormEntryController extends Controller
@@ -40,5 +41,12 @@ class FormEntryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function resubmitMailchimpApplicableForms()
+    {
+        ResubmitMailchimpApplicableForms::dispatch();
+
+        return redirect()->back()->with('success', 'Mailchimp applicable Form Entries with an empty response will be resubmitted.');
     }
 }

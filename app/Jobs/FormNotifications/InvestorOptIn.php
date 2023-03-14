@@ -23,15 +23,18 @@ class InvestorOptIn implements ShouldQueue
 
     protected array $formFields;
 
+    protected $onlyMailchimp;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(FormEntry $formEntry)
+    public function __construct(FormEntry $formEntry, $onlyMailchimp = false)
     {
         $this->formEntry = $formEntry;
         $this->formFields = json_decode($formEntry->fields, true);
+        $this->onlyMailchimp = $onlyMailchimp;
     }
 
     /**
@@ -41,11 +44,14 @@ class InvestorOptIn implements ShouldQueue
      */
     public function handle()
     {
-        $this->sendToEmail();
         $this->sendToMailChimp();
 
-        if ($this->formFields['accredited'] === FormEntry::INVESTOR_ACCREDITED_YES) {
-            $this->sendToSlackIfAccredited();
+        if ($this->onlyMailchimp === false) {
+            $this->sendToEmail();
+
+            if ($this->formFields['accredited'] === FormEntry::INVESTOR_ACCREDITED_YES) {
+                $this->sendToSlackIfAccredited();
+            }
         }
     }
 

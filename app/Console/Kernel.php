@@ -45,6 +45,8 @@ class Kernel extends ConsoleKernel
 
         // Horizon
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+
+        $schedule->command('form-entry:resubmit-mailchimp')->dailyAt('17:00');
     }
 
     /**

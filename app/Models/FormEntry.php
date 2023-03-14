@@ -41,6 +41,14 @@ class FormEntry extends Model
         self::INVESTOR_ACCREDITED_UNSURE,
     ];
 
+    const MAILCHIMP_APPLICABLE_FORMS = [
+        self::FORM_INVESTOR_OPTIN => InvestorOptIn::class,
+        self::FORM_FUNDING_APPLICANT => FundingApplicant::class,
+        self::FORM_NEWSLETTER_SIDEBAR => NewsletterOptIn::class,
+        self::FORM_NEWSLETTER_HOMEPAGE_HERO => NewsletterOptIn::class,
+        self::FORM_REPORT_LONGEVITY_2022 => ReportOptIn::class,
+    ];
+
     protected static function booted()
     {
         static::created(function ($formEntry) {
@@ -63,7 +71,9 @@ class FormEntry extends Model
                     break;
 
                 case self::FORM_REPORT_LONGEVITY_2022:
-                    ReportOptIn::dispatch($formEntry, "23e01b7e78");
+                    $interestId = config('mailchimp.interest_ids.longevity_report_2022');
+
+                    ReportOptIn::dispatch($formEntry, $interestId);
                     break;
             }
         });
