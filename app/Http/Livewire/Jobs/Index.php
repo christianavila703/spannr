@@ -48,7 +48,7 @@ class Index extends Component
         return view('livewire.jobs.index', [
             'typeOptions' => Job::pluck('type')->unique()->toArray(),
             'statusOptions' => Job::pluck('status')->unique()->toArray(),
-            'jobs' => Job::with(['owner'])
+            'jobs' => Job::with(['owner', 'jobApplications'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')

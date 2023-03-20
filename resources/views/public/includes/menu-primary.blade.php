@@ -10,6 +10,9 @@
 <li class="nav-item {{ (Route::currentRouteName() === 'public.content.ventures') ? 'current' : '' }}">
     <a class="nav-link" href="{{ route('public.content.ventures') }}">Investing</a>
 </li>
+<li class="nav-item {{ (Route::currentRouteName() === 'public.content.jobs.index') ? 'current' : '' }}">
+    <a class="nav-link" href="{{ route('public.content.jobs.index') }}">Jobs</a>
+</li>
 <li class="nav-item {{ (Route::currentRouteName() === 'public.content.glossary.index') ? 'current' : '' }}">
     <a href="{{ route('public.content.glossary.index') }}" class="nav-link">Glossary</a>
 </li>

@@ -40,6 +40,11 @@ class Location extends Model
         return $this->morphedByMany(Person::class, 'locatable', 'location_relationships')->withTimestamps();
     }
 
+    public function jobApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     /**
      * Mutators
      */

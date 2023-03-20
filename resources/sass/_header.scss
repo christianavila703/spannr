@@ -28,11 +28,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-
-        @media (max-width: 1023px) {
-            padding-left: 0;
-            padding-right: 0;
-        }
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .navbar-toggler {

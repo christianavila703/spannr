@@ -3,7 +3,7 @@
         <div class="mb-2">
             <x-entities.show.field-heading title="Job Description" />
             <div>
-                {!! $job->trixRender('description') !!}
+                {!! $job->description !!}
             </div>
         </div>
     </div>

@@ -22,7 +22,6 @@ class UpdateJobRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('jobs')->ignore($this->name, 'name'),
                 'max:255'
             ],
             'type' => 'required',
@@ -35,9 +34,10 @@ class UpdateJobRequest extends FormRequest
             'salary_min' => 'required|integer',
             'salary_max' => 'nullable|integer',
             'hourly' => 'nullable|numeric',
-            'url' => 'required|url',
+            'url' => 'nullable|url',
             'remote' => 'integer|nullable',
-            'job-trixFields' => 'required'
+            'description' => 'required',
+            'qualifications' => 'nullable'
         ];
     }
 }

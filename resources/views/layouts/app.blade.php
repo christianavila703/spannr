@@ -94,6 +94,19 @@
                             </li>
                         @endcan
 
+                        @can('recruiting')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-records" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Recruiting
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-records">
+                                    <a class="dropdown-item" href="{{ route('admin.recruiting.index') }}">Job Listings</a>
+                                    <a class="dropdown-item" href="{{ route('admin.recruiting.applications') }}">Applications</a>
+                                </div>
+                            </li>
+                        @endcan
+
                         @can('admin control')
                             <li class="nav-item dropdown">
                                 <a id="navbar-dropdown-admin" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

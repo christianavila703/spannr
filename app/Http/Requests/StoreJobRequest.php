@@ -22,7 +22,6 @@ class StoreJobRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('jobs'),
                 'max:255'
             ],
             'type' => 'required',
@@ -37,7 +36,8 @@ class StoreJobRequest extends FormRequest
             'hourly' => 'nullable|numeric',
             'url' => 'required|url',
             'remote' => 'integer|nullable',
-            'job-trixFields' => 'required'
+            'description' => 'required',
+            'qualifications' => 'nullable'
         ];
     }
 }

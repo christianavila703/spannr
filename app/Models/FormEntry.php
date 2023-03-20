@@ -27,6 +27,7 @@ class FormEntry extends Model
     const FORM_NEWSLETTER_FOOTER = 'Newsletter Footer';
     const FORM_NEWSLETTER_ABOUT = 'Newsletter About';
     const FORM_REPORT_LONGEVITY_2022 = 'Longevity Report 2022';
+    const FORM_JOB_POSTING = 'Job Posting';
 
     const STATUS_MAILCHIMP_SUCCESS = 'Successful';
     const STATUS_MAILCHIMP_FAILED = 'Failed';

@@ -14,6 +14,8 @@ class JobCategory extends Model
     use HasFactory,
         LogsActivity;
 
+    const CATEGORY_OTHER = 'Other';
+
     protected $guarded = ['id'];
 
     public function getActivitylogOptions(): LogOptions

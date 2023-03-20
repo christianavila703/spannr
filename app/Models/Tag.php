@@ -22,6 +22,10 @@ class Tag extends Model
 
     private string $modelName = 'tags';
 
+    const TAG_PEOPLE = 'People';
+    CONST TAG_JOB_APPLICANT = 'Job Applicant';
+    const TAG_HIRING_MANAGER = 'Hiring Manager';
+
     /**
      * Relationships
      */

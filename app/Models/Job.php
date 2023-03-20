@@ -9,6 +9,7 @@ use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
 use App\Models\Traits\Lockable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +31,12 @@ class Job extends Model implements EntityContract
 
     const STATUS_OPEN = 'Open';
     const STATUS_ARCHIVED = 'Archived';
+    const STATUS_PENDING = 'Pending';
 
     const STATUSES = [
         self::STATUS_OPEN,
-        self::STATUS_ARCHIVED
+        self::STATUS_ARCHIVED,
+        self::STATUS_PENDING
     ];
 
     const TYPE_FULL_TIME = 'Full Time';
@@ -41,9 +44,17 @@ class Job extends Model implements EntityContract
     const TYPE_CONTRACT = 'Contract';
 
     const TYPES = [
-        self::TYPE_FULL_TIME,
-        self::TYPE_PART_TIME,
-        self::TYPE_CONTRACT
+        'full-time' => self::TYPE_FULL_TIME,
+        'part-time' => self::TYPE_PART_TIME,
+        'contract' => self::TYPE_CONTRACT
+    ];
+
+    const PAYMENT_OPTION_MONTHLY = 'Monthly';
+    const PAYMENT_OPTION_RECRUITER = 'Recruiter';
+
+    const PAYMENT_OPTIONS = [
+        self::PAYMENT_OPTION_MONTHLY,
+        self::PAYMENT_OPTION_RECRUITER
     ];
 
     private string $searchableRouteName = 'admin.jobs.show';
@@ -52,15 +63,6 @@ class Job extends Model implements EntityContract
 
     private string $modelName = 'jobs';
     private string $imageUrlStoragePath = 'public/images/jobs';
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->useLogName(Activity::LOG_JOBS)
-            ->logUnguarded()
-            ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
-    }
 
     /**
      * Relationships
@@ -83,6 +85,24 @@ class Job extends Model implements EntityContract
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function jobApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeOpen(Builder $query): void
+    {
+        $query->where('status', self::STATUS_OPEN);
+    }
+
+    public function scopeRecent(Builder $query): void
+    {
+        $query->where('posted_date', '>=', Carbon::now()->subMonths(4)->format('Y-m-d'));
     }
 
     /**
@@ -123,7 +143,31 @@ class Job extends Model implements EntityContract
      */
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::of($value)->slug('-');
+        $this->attributes['slug'] = self::generateUniqueSlug($value);
+    }
+
+    /**
+     * Functions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName(Activity::LOG_JOBS)
+            ->logUnguarded()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    public static function generateUniqueSlug($name): string
+    {
+        $slug = Str::slug($name);
+        $slugCount = Job::where('slug', $slug)->count();
+
+        if ($slugCount > 0) {
+            $slug = $slug . '-' . uniqid();
+        }
+
+        return $slug;
     }
 
     public static function getFieldsMapping()

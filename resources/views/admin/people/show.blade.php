@@ -22,7 +22,7 @@
             </div>
         </x-slot:buttons>
         <x-slot:title>{{ $person->name }}</x-slot:title>
-        @include('admin.people.show-data')
+        <x-entities.data.person-data :person="$person" />
     </x-entities.show>
 
     <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="people" entityName="{{ $person->name }}" entityId="{{ $person->id }}" />

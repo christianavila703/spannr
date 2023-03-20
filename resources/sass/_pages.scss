@@ -945,3 +945,149 @@ main.page-glossary .single-post-wrapper .container {
     }
 }
 
+/* Jobs */
+.jobs-index-container {
+    display: flex;
+    flex-direction: column;
+
+    .jobs-filters {
+        margin-bottom: 2rem;
+    }
+
+    .current-filters {
+        font-size: .9rem;
+        text-transform: uppercase;
+    }
+
+    .current-filter-value-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .current-filter-value-group.full-size {
+        width: 100%;
+    }
+
+    .current-filter-value {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-top: .15rem;
+        padding-bottom: .15rem;
+
+        span {
+            display: block;
+            font-weight: bold;
+            color: var(--color-purple);
+        }
+    }
+
+    @media (min-width: $bp-min-desktop) {
+        flex-direction: row;
+
+        .jobs-filters {
+            margin-right: 3rem;
+            margin-bottom: 0;
+            width: 350px;
+            flex-shrink: 0;
+        }
+
+        .jobs-admin-filters {
+            width: 300px;
+        }
+
+        .jobs-container {
+
+        }
+    }
+
+    .job-posting-item {
+        display: block;
+        background-color: lighten(#f1f1f1, 3%);
+        padding: 0 0 0 .5rem;
+        transition: background-color .3s ease-in-out;
+
+        .job-title {
+            @include subheadings-font;
+            font-size: 1.7rem;
+            margin-bottom: .75rem;
+        }
+
+        .job-posting-item-content {
+            background-color: lighten(#f1f1f1, 3%);
+            padding: 1.25rem 1.5rem;
+            transition: background-color .3s ease-in-out;
+            font-size: $font-size-base * 1.1;
+
+            @media (min-width: $bp-min-desktop) {
+                padding: 1.75rem 2rem;
+            }
+        }
+    }
+
+    .job-posting-item:hover {
+        background-color: var(--color-lime);
+        cursor: pointer;
+
+        .job-posting-item-content {
+            background: var(--color-gray-extra-light);
+        }
+    }
+}
+
+.job-description-offcanvas {
+    height: 100vh !important;
+    width: 100vw;
+    max-width: 940px !important;
+    margin-left: auto;
+    margin-right: auto;
+
+    .btn-close {
+        position: relative;
+    }
+
+    .offcanvas-header-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .submit-job-sidebar {
+        width: 320px;
+    }
+}
+
+.select-organization-button {
+    font-family: $font-family-sans-serif;
+    font-weight: normal;
+    letter-spacing: normal;
+    color: var(--color-black);
+    display: flex;
+
+    .icon {
+        margin-top: .25rem;
+        margin-right: .5rem;
+    }
+
+    span {
+        display: block;
+        text-align: left;
+    }
+}
+
+.select-organization-button:hover {
+    color: var(--color-purple);
+}
+
+.page-jobs .tiny-editor .tox-tinymce {
+    min-height: 500px;
+}
+
+.pseudo-textarea {
+    text-indent: -99999px;
+    height: 0;
+    overflow: hidden;
+}

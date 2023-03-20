@@ -572,6 +572,8 @@ ul.pagination {
     margin-right: auto;
     justify-content: center;
     @include subheadings-font;
+    display: flex;
+    flex-wrap: wrap;
 
     .page-item {
         margin-left: .5rem;

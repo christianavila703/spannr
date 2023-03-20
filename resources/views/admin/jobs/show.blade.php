@@ -28,7 +28,7 @@
                 </a>
             </x-entities.show.field-summary>
         </div>
-        @include('admin.jobs.show-data')
+        <x-entities.data.job-data :job="$job" />
     </x-entities.show>
 
     <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="jobs" entityName="{{ $job->name }}" entityId="{{ $job->id }}" />

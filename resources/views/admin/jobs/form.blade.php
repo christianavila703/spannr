@@ -1,7 +1,3 @@
-@push('head')
-    @trixassets
-@endpush
-
 <form method="POST" action="{{ $route }}" enctype="multipart/form-data">
     @csrf
     @isset($method)
@@ -10,15 +6,42 @@
     <div class="row">
         <div class="col-12 col-lg-6">
             <div class="mb-3">
-                @isset($job)
-                    {!! $job->trix('description') !!}
+                <p class="h6 text-uppercase">Job Description</p>
+                <x-tiny-mce.tiny-editor id="description" name="description" value="{{ $job->description ?? old('description') }}"/>
+                <p class="h6 text-uppercase mt-4">Minimum Qualifications</p>
+                <x-tiny-mce.tiny-editor id="qualifications" name="qualifications" value="{{ $job->qualifications ?? old('qualifications') }}"/>
 
-                @else
-                    @trix(\App\Models\Job::class, 'description')
-                @endisset
+{{--                <div class="mb-4">--}}
+{{--                    <label for="description" class="h6">--}}
+{{--                        <span>Job Description</span>--}}
+{{--                        @error('description') <span class="form-error font-sans-serif fw-normal m-0">{{ $message }}</span> @enderror--}}
+{{--                    </label>--}}
+{{--                    <div class="pseudo-textarea">--}}
+{{--                        <textarea wire:model="description" id="description"></textarea>--}}
+{{--                    </div>--}}
+{{--                    <div wire:ignore>--}}
+{{--                        <div class="tiny-editor">--}}
+{{--                            <textarea id="job-description" name="job-description" aria-label="Content Editor"></textarea>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="mb-4">--}}
+{{--                    <label for="qualifications" class="h6">--}}
+{{--                        <span>Minimum Qualifications</span>--}}
+{{--                        @error('qualifications') <span class="form-error font-sans-serif fw-normal m-0">{{ $message }}</span> @enderror--}}
+{{--                    </label>--}}
+{{--                    <div wire:ignore>--}}
+{{--                        <div class="pseudo-textarea">--}}
+{{--                            <textarea wire:model.lazy="qualifications" id="qualifications" wire:ignore></textarea>--}}
+{{--                        </div>--}}
+{{--                        <div class="tiny-editor">--}}
+{{--                            <textarea id="job-qualifications" name="job-qualifications" aria-label="Content Editor">{{ old('qualifications') }}</textarea>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 mt-4">
 
             <x-forms.input type="text" name="name" label="Job Title" class="mb-3" value="{{ $job->name ?? old('name') }}" />
 
@@ -246,4 +269,10 @@
             ownerIdElement.value = value;
         }
     </script>
+    @vite('resources/js/tinymce.js')
+    <style>
+        .tiny-editor .tox-tinymce {
+            min-height: 325px;
+        }
+    </style>
 </form>

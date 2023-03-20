@@ -34,77 +34,29 @@
     </div>
     <table class="table align-middle">
         <thead>
-        <tr>
-            <th class="sortable-column">Date
-                <x-tables.sortable-button columnName="posted_date" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
-            </th>
-            <th class="sortable-column">Job Title
-                <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
-            </th>
-            <th class="sortable-column">Type
-                <x-tables.sortable-button columnName="type" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
-            </th>
-            <th>Location</th>
-            <th>Category</th>
-            <th>Owner</th>
-            <th class="sortable-column">Salary
-                <x-tables.sortable-button columnName="salary_min" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
-            </th>
-            <th></th>
-        </tr>
+            <tr>
+                <th class="sortable-column">Date
+                    <x-tables.sortable-button columnName="posted_date" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+                </th>
+                <th class="sortable-column">Job Title
+                    <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+                </th>
+                <th class="sortable-column">Type
+                    <x-tables.sortable-button columnName="type" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+                </th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Owner</th>
+                <th class="sortable-column">Salary
+                    <x-tables.sortable-button columnName="salary_min" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
+                </th>
+                <th></th>
+            </tr>
         </thead>
+
         <tbody>
         @foreach($jobs as $job)
-            <tr>
-                <td class="text-nowrap">
-                    {{ Carbon\Carbon::parse($job->posted_date)->format('M d, Y') }}
-                </td>
-                <td class="text-nowrap">
-                    <a href="{{ route('admin.jobs.show', $job->slug) }}">{{ $job->name }}</a>
-                    @if ($job->status === \App\Models\Job::STATUS_ARCHIVED)
-                        <span class="badge bg-gray-medium text-dark ms-2">
-                            Archived
-                            @if ($job->exp_date)
-                                {{ $job->pretty_exp_date }}
-                            @endif
-                        </span>
-                    @endif
-                </td>
-                <td>{{ $job->type }}</td>
-                <td>
-                    @if($job->remote)
-                        <p class="m-0 small text-quaternary">Remote / Virtual</p>
-                    @endif
-                    @if($job->locations->count() > 0)
-                        <x-entities.show.relationship-list :records="$job->locations" class="small" />
-                    @endif
-                </td>
-                <td>
-                    <div class="max-width-300">
-                        {{ $job->category->name }}
-                    </div>
-                </td>
-                <td>
-                    <a href="{{ $job->owner_show_link }}">
-                        {{ $job->owner->name }}
-                    </a>
-                </td>
-                <td>
-                    @if($job->salary_min)
-                        ${{ number_format($job->salary_min, 0) }}{{$job->salary_max ? ' - ' . number_format($job->salary_max, 0) : null }}
-                    @endif
-                    @if($job->hourly)
-                        ${{ number_format($job->hourly, 0) }} / hour
-                    @endif
-                </td>
-                <td class="text-right">
-                    @if($job->isLocked && $job->lockedById !== auth()->user()->id)
-                        <x-entities.locked-label :record="$job" />
-                    @else
-                        <a href="{{ route('admin.jobs.edit', $job->id) }}">edit</a>
-                    @endif
-                </td>
-            </tr>
+            <x-admin.jobs.table-row-data :job="$job" />
         @endforeach
         </tbody>
     </table>

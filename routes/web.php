@@ -44,6 +44,9 @@ Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentC
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
 Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::class, 'index'])->name('public.content.reports.index');
 Route::get('/reports/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
+Route::get('/jobs', [App\Http\Controllers\Public\Content\JobsController::class, 'index'])->name('public.content.jobs.index');
+Route::get('/jobs/submit/job', [App\Http\Controllers\Public\Content\JobsController::class, 'submit'])->name('public.content.jobs.submit');
+Route::get('/jobs/apply/{slug}', [App\Http\Controllers\Public\Content\JobsController::class, 'apply'])->name('public.content.jobs.apply');
 
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 //Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');
@@ -158,9 +161,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         });
     });
 
-    // PERMISSION: Admin Control
+    /* @can admin control */
     Route::middleware(['can:admin control'])->group(function () {
         Route::get('/activity-log', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-log.index');
+    });
+
+    /* @can recruiting */
+    Route::middleware(['can:recruiting'])->group(function() {
+        Route::get('/recruiting', [\App\Http\Controllers\Admin\RecruitingController::class, 'index'])->name('recruiting.index');
+        Route::get('/recruiting/applications', [\App\Http\Controllers\Admin\RecruitingController::class, 'applications'])->name('recruiting.applications');
     });
 
     Route::middleware(['can:review records'])

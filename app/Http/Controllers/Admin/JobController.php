@@ -44,8 +44,6 @@ class JobController extends Controller
 
         $job = Job::create($validated);
 
-        $job->saveTrixRichText($request->input('job-trixFields'));
-
         return redirect()->route('admin.jobs.index')->with('success', 'Added ' . $job->name);
     }
 
@@ -99,8 +97,6 @@ class JobController extends Controller
         }
 
         $job->update($validated);
-
-        $job->saveTrixRichText($request->input('job-trixFields'));
 
         return redirect()->route('admin.jobs.show', $job->slug)->with('success', $job->name . ' updated!');
     }

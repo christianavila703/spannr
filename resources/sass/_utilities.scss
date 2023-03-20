@@ -105,6 +105,11 @@ ol {
     font-size: 1.6rem;
 }
 
+.font-sans-serif {
+    font-family: $font-family-sans-serif !important;
+    letter-spacing: 0 !important;
+}
+
 /* Buttons */
 .btn,
 input[type="submit"] {
@@ -190,7 +195,7 @@ input[type="submit"] {
     width: auto;
 }
 
-$min-widths: 120 150 180;
+$min-widths: 80 100 120 150 180 200 250;
 
 @each $size in $min-widths {
     .min-width-#{$size} {
@@ -198,7 +203,7 @@ $min-widths: 120 150 180;
     }
 }
 
-$max-widths: 200 300 320 420 500 540 600 700 800 1080;
+$max-widths: 200 300 320 400 420 450 500 540 600 700 800 840 1080;
 
 @each $size in $max-widths {
     .max-width-#{$size} {
@@ -282,6 +287,28 @@ span.required {
 .form-control.dark {
     background-color: $gray-900;
     color: var(--color-aqua);
+}
+
+.form-check-input {
+    margin-top: .4em;
+}
+
+.form-check.lead {
+    .form-check-input {
+        margin-top: .35rem;
+    }
+}
+
+.form-check.h5 {
+    .form-check-input {
+        margin-top: .125rem;
+    }
+}
+
+.form-errors-danger {
+    .form-error {
+        color: var(--color-orange-dark);
+    }
 }
 
 /* Lists on Pages / Posts */
@@ -385,7 +412,7 @@ span.required {
 /* Horizontal Line */
 hr.dark {
     opacity: 1;
-    height: 2.5px;
+    border-top: 2.5px solid var(--color-black);
 }
 
 /* Tiny Editor Height */
@@ -453,6 +480,13 @@ hr.dark {
     height: 1.95rem;
 }
 
+.truncate-250 {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* User Photos */
 .image-bg-container-100 {
     width: 100px;
@@ -517,4 +551,3 @@ body.no-scroll {
     height: 100vh;
     overflow: hidden;
 }
-

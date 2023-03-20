@@ -7,6 +7,10 @@
     background: transparent linear-gradient(180deg, #9E1F63 22%, #EC008C 100%) 0 0 no-repeat padding-box;
 }
 
+@mixin gradient-purple-blue-green {
+    background: transparent linear-gradient(90deg, #5625ca 0%, #0ac7fe 50%, #88f200 100%) 0 0 no-repeat padding-box;
+}
+
 /* Gradient Links */
 @mixin gradient-link-underline-span {
     background-image: linear-gradient(

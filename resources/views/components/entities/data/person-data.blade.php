@@ -10,6 +10,12 @@
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Website">
             {!! $person->websiteLink !!}
         </x-entities.show.field-group>
+        <x-entities.show.field-group icon="fa-duotone fa-phone" tooltip="Phone">
+            {!! $person->phone_link !!}
+        </x-entities.show.field-group>
+        <x-entities.show.field-group icon="fa-duotone fa-at" tooltip="Email">
+            {!! $person->email_link !!}
+        </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Social Media" />
 

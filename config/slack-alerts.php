@@ -8,6 +8,7 @@ return [
         'default' => '', // #dev-updates
         'index' => '', // #index-notifications
         'investing' => '', // #investing
+        'jobs' => '', // #jobs
         'website' => '', // #website
         'test' => '' // #test-notifications
     ],

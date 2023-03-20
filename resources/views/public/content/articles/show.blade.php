@@ -46,7 +46,7 @@ og:image:type
                 <hr class="dark mb-5">
 
                 <div class="single-post pb-4">
-                    <h1 class="post-title post-title-xl mb-4">{{ $article->name }}</h1>
+                    <h1 class="post-title mb-4">{{ $article->name }}</h1>
                     @if($featuredImage)
                         <img src="{{ $featuredImage }}" alt="{{ $article->name }}" class="mb-3 w-100" width="1616" height="824">
                     @elseif($article->image)

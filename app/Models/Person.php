@@ -58,7 +58,20 @@ class Person extends Model implements EntityContract
      */
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::of($value)->slug('-');
+        $this->attributes['slug'] = self::generateUniqueSlug($value);
+    }
+
+    /**
+     * Attributes
+     */
+    public function getPhoneLinkAttribute(): string
+    {
+        return '<a href="tel:' . $this->phone . '">' . $this->phone . '</a>';
+    }
+
+    public function getEmailLinkAttribute(): string
+    {
+        return '<a href="mailto:' . $this->email . '">' . $this->email . '</a>';
     }
 
     /**
@@ -89,6 +102,11 @@ class Person extends Model implements EntityContract
         return $this->belongsTo(User::class);
     }
 
+    public function jobApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     /**
      * Functions
      */
@@ -99,6 +117,18 @@ class Person extends Model implements EntityContract
             ->logUnguarded()
             ->logOnlyDirty()
             ->setDescriptionForEvent(fn(string $eventName) => $this->name . " was {$eventName}");
+    }
+
+    public static function generateUniqueSlug($name): string
+    {
+        $slug = Str::slug($name);
+        $slugCount = Person::where('slug', $slug)->count();
+
+        if ($slugCount > 0) {
+            $slug = $slug . '-' . uniqid();
+        }
+
+        return $slug;
     }
 
     /**
