@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Traits\HasImage;
+use App\Models\Traits\Lockable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,8 @@ class Article extends Model implements HasMedia
 {
     use HasFactory,
         HasImage,
-        InteractsWithMedia;
+        InteractsWithMedia,
+        Lockable;
 
     public $incrementing = false;
     protected $guarded = [];

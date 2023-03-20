@@ -7,6 +7,7 @@ use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasRichText;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\Lockable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +23,8 @@ class Job extends Model implements EntityContract
         LogsActivity,
         SearchableEntity,
         HasRichText,
-        HasBreadcrumbs;
+        HasBreadcrumbs,
+        Lockable;
 
     protected $guarded = ['id'];
 

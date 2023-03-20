@@ -8,6 +8,7 @@ use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\Lockable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -21,7 +22,8 @@ class Person extends Model implements EntityContract
         LogsActivity,
         SearchableEntity,
         HasImage,
-        HasBreadcrumbs;
+        HasBreadcrumbs,
+        Lockable;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
     const ORGANIZATION_ROLE_TEAM = 'Team';

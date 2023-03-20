@@ -41,9 +41,13 @@ class PersonController extends Controller
         ]);
     }
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $person = Person::findOrFail($id);
+
+        if ($person->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.people.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
 
         return view('admin.people.edit', [
             'person' => $person
@@ -54,6 +58,11 @@ class PersonController extends Controller
     {
         $validated = $request->validated();
         $person = Person::findOrFail($id);
+
+        if ($person->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.people.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $person->update($validated);
 
         if (isset($validated['image'])) {

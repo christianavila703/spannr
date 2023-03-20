@@ -5,7 +5,12 @@
     <x-entities.show>
         <x-slot:breadcrumbs>{!! $organization->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
-            <a href="{{ route('admin.organizations.edit', $organization->id) }}" class="btn btn-info me-3">Edit</a>
+            @if($organization->isLocked && $organization->lockedById !== auth()->user()->id)
+                <x-entities.locked-label :record="$organization" />
+            @else
+                <a href="{{ route('admin.organizations.edit', $organization->id) }}" class="btn btn-info me-3">Edit</a>
+            @endif
+
             @if($organization->stock)
                 <a href="{{ route('public.content.organizations.show', $organization->slug) }}" class="btn btn-quaternary me-3">View Public</a>
             @endif

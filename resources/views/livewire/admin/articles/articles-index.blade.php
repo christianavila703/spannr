@@ -109,7 +109,11 @@
                     @endif
                 </td>
                 <td class="text-end">
+                    @if($article->isLocked && $article->lockedById !== auth()->user()->id)
+                        <x-entities.locked-label :record="$article" />
+                    @else
                     <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-sm btn-primary me-2 mb-1">edit</a>
+
 
                     <button type="button" class="btn btn-sm btn-tertiary" data-bs-toggle="modal" data-bs-target="#seo-modal-{{ $article->id }}">
                         yoast
@@ -129,6 +133,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </td>
             </tr>
         @endforeach

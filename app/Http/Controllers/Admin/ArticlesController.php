@@ -62,11 +62,15 @@ class ArticlesController extends Controller
 
     }
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $article = Article::with('tags')->findOrFail($id);
-        $currentTags = $article->tags()->pluck('id')->toArray();
 
+        if ($article->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.articles.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
+        $currentTags = $article->tags()->pluck('id')->toArray();
         $tagUrl = route('admin.json.tags');
 
         if (!empty($currentTags)) {
@@ -83,6 +87,10 @@ class ArticlesController extends Controller
     {
         $validated = $request->validated();
         $article = Article::findOrFail($id);
+
+        if ($article->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.articles.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
 
         if (array_key_exists('tags', $validated)) {
             $article->tags()->sync($validated['tags']);

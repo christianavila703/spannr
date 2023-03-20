@@ -94,7 +94,11 @@
                     </div>
                 </td>
                 <td class="text-right">
-                    <a href="{{ route('admin.organizations.edit', $organization->id) }}">edit</a>
+                    @if($organization->isLocked && $organization->lockedById !== auth()->user()->id)
+                        <x-entities.locked-label :record="$organization" />
+                    @else
+                        <a href="{{ route('admin.organizations.edit', $organization->id) }}">edit</a>
+                    @endif
                 </td>
             </tr>
         @endforeach

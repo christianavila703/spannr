@@ -6,6 +6,7 @@ use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\Lockable;
 use App\Models\Traits\ReviewAndAudit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,8 @@ class FundraisingRound extends Model implements EntityContract
         LogsActivity,
         SearchableEntity,
         HasBreadcrumbs,
-        ReviewAndAudit;
+        ReviewAndAudit,
+        Lockable;
 
     protected $guarded = ['id'];
 

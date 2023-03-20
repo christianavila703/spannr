@@ -48,9 +48,13 @@ class InvestorController extends Controller
         ]);
     }
 
-    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $investor = Investor::findOrFail($id);
+
+        if ($investor->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.investors.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
 
         return view('admin.investors.edit', [
             'investor' => $investor
@@ -61,6 +65,11 @@ class InvestorController extends Controller
     {
         $validated = $request->validated();
         $investor = Investor::findOrFail($id);
+
+        if ($investor->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.investors.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $investor->update($validated);
 
         if (isset($validated['image'])) {

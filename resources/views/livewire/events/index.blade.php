@@ -62,9 +62,13 @@
                     </div>
                     @can('edit records')
                         <div class="card-footer">
-                            <div class="edit-link">
-                                <a href="{{ route('admin.events.edit', $event->id) }}">Edit</a>
-                            </div>
+                            @if($event->isLocked && $event->lockedById !== auth()->user()->id)
+                                <x-entities.locked-label :record="$event" />
+                            @else
+                                <div class="edit-link">
+                                    <a href="{{ route('admin.events.edit', $event->id) }}">Edit</a>
+                                </div>
+                            @endif
                         </div>
                     @endcan
                 </div>

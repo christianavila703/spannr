@@ -5,7 +5,12 @@
     <x-entities.show>
         <x-slot:breadcrumbs>{!! $event->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
-            <a href="{{ route('admin.events.edit', $event->id) }}" class="btn btn-info me-3">Edit</a>
+            @if($event->isLocked && $event->lockedById !== auth()->user()->id)
+                <x-entities.locked-label :record="$event" />
+            @else
+                <a href="{{ route('admin.events.edit', $event->id) }}" class="btn btn-info me-3">Edit</a>
+            @endif
+
             <div class="dropdown mb-0">
                 <button class="btn btn-tertiary dropdown-toggle" type="button" id="add-relationship" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-plus me-1"></i>Add

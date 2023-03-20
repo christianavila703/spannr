@@ -64,9 +64,14 @@ class FundraisingRoundController extends Controller
         ]);
     }
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $fundraisingRound = FundraisingRound::with(['investors'])->findOrFail($id);
+
+        if ($fundraisingRound->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.fundraising-rounds.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $allInvestors = Investor::orderBy('name')->get();
         $currentInvestors = $fundraisingRound->investors->pluck('id')->toArray();
 
@@ -80,6 +85,11 @@ class FundraisingRoundController extends Controller
     public function update(FundraisingRoundRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         $fundraisingRound = FundraisingRound::findOrFail($id);
+
+        if ($fundraisingRound->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.fundraising-rounds.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $validated = $request->validated();
         $organization = Organization::findOrFail($validated['organization_id']);
         $fundraisingRound->name = $organization->name . ' - ' . $validated['round'];

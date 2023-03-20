@@ -59,19 +59,23 @@ class EventController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit($id) :\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        $eventTypes = EventType::orderBy('name')->get();
-        $organizations = Organization::orderBy('name')->get();
-        $investors = Investor::orderBy('name')->get();
-        $people = Person::orderBy('name')->get();
-
         $event = Event::with([
             'organizations',
             'investors',
             'people',
             'eventTypes'
         ])->findOrFail($id);
+
+        if ($event->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.events.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
+        $eventTypes = EventType::orderBy('name')->get();
+        $organizations = Organization::orderBy('name')->get();
+        $investors = Investor::orderBy('name')->get();
+        $people = Person::orderBy('name')->get();
 
         return view('admin.events.edit', [
             'event' => $event,
@@ -86,6 +90,11 @@ class EventController extends Controller
     {
         $validated = $request->validated();
         $event = Event::findOrFail($id);
+
+        if ($event->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.events.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $event->update($validated);
 
         $this->syncRelationships($event, $validated, $request);

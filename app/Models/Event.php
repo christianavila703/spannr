@@ -7,6 +7,7 @@ use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\Lockable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,7 +22,8 @@ class Event extends Model implements EntityContract
         LogsActivity,
         SearchableEntity,
         HasImage,
-        HasBreadcrumbs;
+        HasBreadcrumbs,
+        Lockable;
 
     protected $guarded = ['id'];
 

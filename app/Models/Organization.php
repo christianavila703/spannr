@@ -8,6 +8,7 @@ use App\Http\Traits\HasImage;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
+use App\Models\Traits\Lockable;
 use App\Models\Traits\ReviewAndAudit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +24,8 @@ class Organization extends Model implements EntityContract
         SearchableEntity,
         HasImage,
         HasBreadcrumbs,
-        ReviewAndAudit;
+        ReviewAndAudit,
+        Lockable;
 
     protected $guarded = ['id'];
 

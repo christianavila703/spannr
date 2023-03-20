@@ -111,13 +111,17 @@ class OrganizationController extends Controller
         ]);
     }
 
-    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $organization = Organization::with([
             'investors',
             'people',
             'fundraisingRounds'
         ])->findOrFail($id);
+
+        if ($organization->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.organizations.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
 
         return view('admin.organizations.edit', [
             'organization' => $organization
@@ -128,6 +132,11 @@ class OrganizationController extends Controller
     {
         $validated = $request->validated();
         $organization = Organization::findOrFail($id);
+
+        if ($organization->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.organizations.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $organization->update($validated);
 
         if (isset($validated['image'])) {

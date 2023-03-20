@@ -5,7 +5,11 @@
     <x-entities.show>
         <x-slot:breadcrumbs>{!! $investor->breadcrumb !!}</x-slot:breadcrumbs>
         <x-slot:buttons>
-            <a href="{{ route('admin.investors.edit', $investor->id) }}" class="btn btn-info me-3">Edit</a>
+            @if($investor->isLocked && $investor->lockedById !== auth()->user()->id)
+                <x-entities.locked-label :record="$investor" />
+            @else
+                <a href="{{ route('admin.investors.edit', $investor->id) }}" class="btn btn-info me-3">Edit</a>
+            @endif
 
             <div class="dropdown mb-0">
                 <button class="btn btn-tertiary dropdown-toggle" type="button" id="add-relationship" data-bs-toggle="dropdown" aria-expanded="false">

@@ -58,8 +58,17 @@ class JobController extends Controller
         ]);
     }
 
-    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
+        $job = Job::with([
+            'owner',
+            'category'
+        ])->findOrFail($id);
+
+        if ($job->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.jobs.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $jobCategories = JobCategory::all();
 
         $ownerTypes = collect([
@@ -71,11 +80,6 @@ class JobController extends Controller
             'organization' => Organization::all(),
             'investor' => Investor::all()
         ];
-
-        $job = Job::with([
-            'owner',
-            'category'
-        ])->findOrFail($id);
 
         return view('admin.jobs.edit', [
             'job' => $job,
@@ -89,6 +93,10 @@ class JobController extends Controller
     {
         $validated = $request->validated();
         $job = Job::findOrFail($id);
+
+        if ($job->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.jobs.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
 
         $job->update($validated);
 

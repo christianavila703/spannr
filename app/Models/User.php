@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function getFullNameAttribute(): string
     {
-        return $this->name . ' ' . $this->last_name;
+        return $this->name . ($this->last_name ? ' ' . $this->last_name : '');
     }
 
     public function getTeamPhotoAttribute(): ?string
@@ -96,9 +96,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         }
     }
 
-    public function getShortBioAttribute(): string
+    public function getShortBioAttribute(): string|null
     {
-        return Str::words($this->bio, 20);
+        return $this->bio ? Str::words($this->bio, 20) : null;
     }
 
     /**
