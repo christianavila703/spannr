@@ -207,6 +207,7 @@ class Article extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
+            ->keepOriginalImageFormat()
             ->crop(Manipulations::CROP_CENTER, 300, 300)
             ->nonQueued();
     }
@@ -234,6 +235,7 @@ class Article extends Model implements HasMedia
                 $this
                     ->addMediaConversion('post')
                     ->width(600)
+                    ->keepOriginalImageFormat()
                     ->nonQueued();
         });
     }
