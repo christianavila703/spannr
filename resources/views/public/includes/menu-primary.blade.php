@@ -16,9 +16,3 @@
 <li class="nav-item {{ (Route::currentRouteName() === 'public.content.glossary.index') ? 'current' : '' }}">
     <a href="{{ route('public.content.glossary.index') }}" class="nav-link">Glossary</a>
 </li>
-{{--<li class="nav-item">--}}
-{{--    <a class="nav-link" href="#">Data</a>--}}
-{{--</li>--}}
-{{--<li class="nav-item">--}}
-{{--    <a class="nav-link" href="#">Jobs</a>--}}
-{{--</li>--}}

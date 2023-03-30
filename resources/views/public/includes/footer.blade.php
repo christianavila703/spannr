@@ -21,22 +21,22 @@
         </div>
         <div class="social-icons">
             <div>
-                <a href="https://www.facebook.com/spannr" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/spannr" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
             </div>
             <div>
-                <a href="http://www.twitter.com/spannr_" target="_blank" rel="noopener noreferrer">
+                <a href="http://www.twitter.com/spannr_" target="_blank" rel="noopener noreferrer" title="Follow us on Twitter">
                     <i class="fa-brands fa-twitter"></i>
                 </a>
             </div>
             <div>
-                <a href="https://www.linkedin.com/company/spannr" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/spannr" target="_blank" rel="noopener noreferrer" title="Follow us on LinkedIn">
                     <i class="fa-brands fa-linkedin"></i>
                 </a>
             </div>
             <div>
-                <a href="https://www.instagram.com/spannr_/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/spannr_/" target="_blank" rel="noopener noreferrer" title="Follow us on Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>

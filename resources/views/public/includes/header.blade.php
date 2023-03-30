@@ -21,7 +21,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto me-0 mt-2 mt-lg-0 text-start">
                         @include('public.includes.menu-primary')
-                        <x-nav.contact-link />
                         <x-nav.admin-link />
                     </ul>
                 </div>
