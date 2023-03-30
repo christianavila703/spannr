@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Articles\StoreArticleRequest;
 use App\Http\Requests\Admin\Articles\UpdateArticleRequest;
-use App\Jobs\WordPress\SyncArticles;
-use App\Jobs\WordPress\SyncGlossary;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,13 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends Controller
 {
-    public function sync(): \Illuminate\Http\RedirectResponse
-    {
-        SyncArticles::dispatch();
-        SyncGlossary::dispatch();
-        return redirect()->route('admin.home')->with('success', 'Articles and glossary items are syncing!');
-    }
-
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.articles.create', [

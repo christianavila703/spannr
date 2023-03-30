@@ -22,40 +22,6 @@ class ContentController extends Controller
         ]);
     }
 
-    public function createFromWordpress(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        $currentContent = Content::pluck('id')->toArray();
-
-        $username = config('services.wordpress.username');
-        $password = config('services.wordpress.password');
-
-        $rest_api_url = config('services.wordpress.url') . "/wp-json/wp/v2/pages";
-
-        $response = Http::withBasicAuth($username, $password)
-            ->get($rest_api_url, [
-                'per_page' => 99,
-            ]);
-
-        $results = $response->json();
-
-        $wordpressPages = [];
-
-        foreach ($results as $result) {
-            if (!in_array($result['id'], $currentContent)) {
-                $wordpressPages[] = [
-                    'value' => $result['id'],
-                    'label' => $result['title']['rendered']
-                ];
-            }
-        }
-
-        $wordpressPages = json_encode($wordpressPages, true);
-
-        return view('admin.content.create', [
-            'wordpressPages' => $wordpressPages
-        ]);
-    }
-
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.content.create');

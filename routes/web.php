@@ -143,12 +143,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/longevity-index/stocks/{id}', [\App\Http\Controllers\Admin\Index\StockController::class, 'edit'])->name('longevity-index.stocks.edit');
         Route::post('/longevity-index/stocks/{id}', [\App\Http\Controllers\Admin\Index\StockController::class, 'update'])->name('longevity-index.stocks.update');
 
-        // Articles
-        Route::get('/wordpress/sync', [\App\Http\Controllers\Admin\ArticlesController::class, 'sync'])->name('articles.sync');
-//        Route::post('/articles/upload-image', [\App\Http\Controllers\Admin\ArticlesController::class, 'uploadImage'])->name('articles.image-upload');
-
-        Route::get('/content/create-from-wordpress', [\App\Http\Controllers\Admin\ContentController::class, 'createFromWordpress'])->name('content.create-from-wordpress');
-
         //Entity Duplicate
         Route::prefix('entity-duplicate')
             ->name('entity-duplicate.')

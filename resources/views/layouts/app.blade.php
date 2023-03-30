@@ -53,7 +53,6 @@
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">Tags</a>
                                     <a class="dropdown-item" href="{{ route('admin.articles.index') }}">Articles</a>
                                     <a class="dropdown-item" href="{{ route('admin.glossary.index') }}">Glossary</a>
-                                    <a class="dropdown-item" href="{{ route('admin.articles.sync') }}">Sync WordPress</a>
                                     <a class="dropdown-item" href="{{ route('admin.entity-duplicate.index') }}">Duplicate Merge</a>
                                     @can('review records')
                                         <a class="dropdown-item" href="{{ route('admin.entity-reviews.index') }}">Review / Audit</a>
