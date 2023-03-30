@@ -174,7 +174,7 @@ main.page-glossary .single-post-wrapper .container {
 }
 
 .sidebar-glossary-widget {
-    background: $light-blue;
+    background: $light-gray;
     padding: 1rem;
     transition: background .3s ease-in-out;
 
@@ -194,7 +194,7 @@ main.page-glossary .single-post-wrapper .container {
 }
 
 .sidebar-glossary-widget:hover {
-    background: darken($light-blue, 3%);
+    background: darken($light-gray, 3%);
 }
 
 /* Longevity Stock Index */

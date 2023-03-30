@@ -28,7 +28,7 @@ class ContentController extends Controller
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'home')->first();
-        $articles = Article::topInsights()->orderByDesc('date')->with('media')->take(6)->get();
+        $articles = Article::topInsights()->orderByDesc('date')->with('media')->take(3)->get();
         $organizations = Organization::whereHas('stock', function(Builder $query) {
             $query->indexed()->active();
         })->orderByDesc('updated_at')->take(12)->get();

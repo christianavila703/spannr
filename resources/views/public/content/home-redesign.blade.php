@@ -7,8 +7,8 @@
                 <div class="inner">
                     <h1>We cover the industry of <span>life extension</span></h1>
                     <div>
-                        <p>Spannr is the <strong>easiest</strong> place to stay up to date on the complex world of longevity, age-defying research, and the businesses shaping the future of healthcare.</p>
-                        <p>Join thousands of longevity leaders today.</p>
+                        <p class="lead">Spannr is the <strong>easiest</strong> place to stay up to date on the complex world of longevity, age-defying research, and the businesses shaping the future of healthcare.</p>
+                        <p class="lead">Join thousands of longevity leaders today.</p>
                     </div>
                     <div class="mailchimp-form">
                         <livewire:forms.newsletter-opt-in
@@ -40,11 +40,11 @@
             </div>
         </div>
 
-        <div id="home-investors" class="fade-in-when-visible index-investors bg-light-blue py-6">
+        <div id="home-investors" class="fade-in-when-visible index-investors">
             <div class="container">
-                <h2 class="h1 text-center">Invest in the future <span class="d-block">of humanity.</span></h2>
-                <p class="text-center max-width-1080 mx-auto mb-2">Across the globe, scientists are working on ways to extend healthy human lifespans beyond what was historically possible. Significant advances have attracted serious investment, and the force of this movement is changing the way we look at life.</p>
-                <p class="text-center max-width-1080 mx-auto">Interested in investing in solutions to some of the world’s most pressing problems?</p>
+                <h2 class="h1 text-center">Invest in the future of humanity.</h2>
+                <p class="text-center max-width-1100 mx-auto mb-2 lead">Across the globe, scientists are working on ways to extend healthy human lifespans beyond what was historically possible. Significant advances have attracted serious investment, and the force of this movement is changing the way we look at life.</p>
+                <p class="text-center max-width-1100 mx-auto lead">Interested in investing in solutions to some of the world’s most pressing problems?</p>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
@@ -67,18 +67,24 @@
                             <div class="w-100 text-center">
                                 <h3 class="h4">Invest in Private Startups</h3>
                                 <div class="image-container max-width-500 mx-auto">
-                                    <img src="{{ Vite::asset('resources/images/ventures/network.webp') }}" alt="The Spannr Syndicate" class="d-md-none">
+                                    <img src="{{ Vite::asset('resources/images/ventures/network-logos.webp') }}" alt="The Spannr Syndicate" class="d-md-none" width="500" height="550">
                                     <iframe id="kittens" src="{{ route('public.content.ventures.logos') }}?embed=true" loading="lazy" style="width: 100%;height: 480px" class="d-none d-md-block"></iframe>
                                 </div>
                             </div>
                             <div class="mt-3 mx-auto">
                                 <a href="{{ route('public.content.ventures') }}" class="btn btn-lg btn-outline-dark">
-                                    Visit Spannr Ventures<i class="fa-sharp fa-solid fa-arrow-right ms-2"></i>
+                                    Visit Spannr <span>Ventures<i class="fa-sharp fa-solid fa-arrow-right ms-2"></i></span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="container mt-6">
+            <div id="post-newsletter" class="outline-newsletter-optin horizontal homepage max-width-1100 mx-auto">
+                <x-optins.newsletter />
             </div>
         </div>
 

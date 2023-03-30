@@ -694,7 +694,7 @@ ul.pagination {
             width: 100%;
 
             @media (min-width: $bp-min-tablet) {
-                padding: 1rem;
+                padding: 1rem 0 1rem 1rem;
             }
 
             .email-field,
@@ -731,6 +731,34 @@ ul.pagination {
             flex-grow: 1;
             width: 100%;
         }
+    }
+}
+
+.outline-newsletter-optin.horizontal.homepage {
+
+    .form-container {
+        padding-top: 2rem;
+        align-items: flex-start;
+    }
+
+    .icon-group {
+        padding-top: 1.85rem;
+    }
+
+    .text-content,
+    .description {
+        width: auto;
+        max-width: 100%;
+        padding-right: 1.5rem;
+    }
+
+    .description {
+        padding-bottom: 1rem;
+    }
+
+    .form-group-container {
+        flex-direction: row;
+        padding: .25rem 0 0 0;
     }
 }
 
