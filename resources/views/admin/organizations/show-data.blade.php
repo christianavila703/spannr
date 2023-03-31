@@ -44,7 +44,7 @@
         <x-entities.show.relationship-basic :records="$organization->locations" routeName="admin.locations.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-basic :records="$organization->tags" routeName="admin.tags.show" />
+        <x-entities.show.relationship-tags :entity="$organization"/>
 
         <x-entities.show.field-heading title="Jobs" />
         <x-entities.show.relationship-basic :records="$organization->jobs" routeName="admin.jobs.show" />

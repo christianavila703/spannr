@@ -41,7 +41,7 @@
         <x-entities.show.relationship-basic :records="$job->locations" routeName="admin.locations.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-basic :records="$job->tags" routeName="admin.tags.show" />
+        <x-entities.show.relationship-tags :entity="$job"/>
 
         <x-entities.show.field-heading title="Application URL" />
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Application URL">

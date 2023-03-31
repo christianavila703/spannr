@@ -25,6 +25,6 @@
         @include('admin.events.show-data')
     </x-entities.show>
 
-    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="events" entityName="{{ $event->name }}" entityId="{{ $event->id }}" />
+    <x-tags.add :entity="$event" />
 
 @endsection

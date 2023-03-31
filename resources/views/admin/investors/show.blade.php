@@ -26,6 +26,6 @@
         @include('admin.investors.show-data')
     </x-entities.show>
 
-    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="investors" entityName="{{ $investor->name }}" entityId="{{ $investor->id }}" />
+    <x-tags.add :entity="$investor" />
 
 @endsection

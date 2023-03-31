@@ -36,6 +36,7 @@ export default defineConfig({
                 'resources/js/job-applicant-location.js',
                 'resources/js/recruiting.js',
                 'resources/js/job-submission-location.js',
+                'resources/js/entity-tags.js',
             ],
             refresh: true,
         }),

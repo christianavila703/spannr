@@ -44,6 +44,6 @@
     @include('admin.organizations.people.add')
     @include('admin.organizations.fundraising-rounds.add')
 
-    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="organizations" entityName="{{ $organization->name }}" entityId="{{ $organization->id }}" />
+    <x-tags.add :entity="$organization" />
 
 @endsection

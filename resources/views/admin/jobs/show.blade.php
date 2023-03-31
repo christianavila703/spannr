@@ -31,6 +31,6 @@
         <x-entities.data.job-data :job="$job" />
     </x-entities.show>
 
-    <x-tags.add route="{{ route('admin.tags.sync') }}" entityType="jobs" entityName="{{ $job->name }}" entityId="{{ $job->id }}" />
+    <x-tags.add :entity="$job" />
 
 @endsection

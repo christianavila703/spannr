@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\TagDetachRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Article;
 use App\Models\Content;
@@ -105,21 +106,39 @@ class TagController extends Controller
     public function syncEntities(Request $request): \Illuminate\Http\RedirectResponse
     {
         $tagIds = $request->input('tags');
-        $entityType = $request->input('entity_type');
+        $taggableId = $request->input('taggable_id');
+        $taggableType = $request->input('taggable_type');
+        $routes = config('route-mapping.admin.' . $taggableType);
 
-        $model = match($entityType) {
-            'organizations' => Organization::class,
-            'people' => Person::class,
-            'investors' => Investor::class,
-            'jobs' => Job::class,
-            'events' => Event::class,
-            'articles' => Article::class
-        };
+        try {
+            $taggable = $taggableType::findOrFail($taggableId);
+            $taggable->tags()->sync($tagIds);
+        } catch (\Throwable $throwable) {
+            return redirect()->back()->with('error', $throwable->getMessage());
+        }
 
-        $record = $model::findOrFail($request->input('entity_id'));
-        $record->tags()->syncWithoutDetaching($tagIds);
+        return redirect()->route($routes['show'], $taggable->slug)->with('success', 'Tags added!');
+    }
 
-        return redirect()->route('admin.' . $entityType . '.show', $record->slug)->with('success', 'Tags added!');
+    public function detachFromEntity(TagDetachRequest $request)
+    {
+        $tagId = $request->input('tag_id');
+        $taggableId = $request->input('taggable_id');
+        $taggableType = $request->input('taggable_type');
+
+        try {
+            $taggable = $taggableType::findOrFail($taggableId);
+            $taggable->tags()->detach($tagId);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $throwable->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 
     private function getDepth($tagAttributes): int

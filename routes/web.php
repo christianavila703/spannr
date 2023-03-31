@@ -118,6 +118,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/form-entries/resubmit/mailchimp', [\App\Http\Controllers\Admin\FormEntryController::class, 'resubmitMailchimpApplicableForms'])->name('form-entries.resubmit-mailchimp');
 
         Route::post('/tags/sync', [\App\Http\Controllers\Admin\TagController::class, 'syncEntities'])->name('tags.sync');
+        Route::post('/tags/detach', [\App\Http\Controllers\Admin\TagController::class, 'detachFromEntity'])->name('tags.detach');
 
         // Investor Relationships
         Route::get('/investors/{slug}/people', [\App\Http\Controllers\Admin\InvestorController::class, 'people'])->name('investors.people');

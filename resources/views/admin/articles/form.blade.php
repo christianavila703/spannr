@@ -93,7 +93,9 @@
             }
         });
 
-        const tagChoice = new Choices('#tags');
+        const tagChoice = new Choices('#tags', {
+            removeItemButton: true,
+        });
         const tagUrl = document.getElementById('tags').getAttribute('data-url');
 
         tagChoice.setChoices(async () => {
