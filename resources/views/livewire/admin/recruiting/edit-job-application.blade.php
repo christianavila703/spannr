@@ -6,7 +6,7 @@
         </div>
         <div class="mb-3">
             <span class="h6 d-block">Position</span>
-            <span>{{ $jobApplication->job->name }}</span>
+            <span>{{ $jobApplication->job ? $jobApplication->job->name : 'General' }}</span>
         </div>
         <div class="mb-3">
             <label for="status" class="h6">Status</label>

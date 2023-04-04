@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\FormNotifications\FundingApplicant;
 use App\Jobs\FormNotifications\InvestorOptIn;
+use App\Jobs\FormNotifications\JobPostingSubmitted;
 use App\Jobs\FormNotifications\NewsletterOptIn;
 use App\Jobs\FormNotifications\ReportOptIn;
 use App\Jobs\FormNotifications\WebsiteContact;
@@ -75,6 +76,10 @@ class FormEntry extends Model
                     $interestId = config('mailchimp.interest_ids.longevity_report_2022');
 
                     ReportOptIn::dispatch($formEntry, $interestId);
+                    break;
+
+                case self::FORM_JOB_POSTING:
+                    JobPostingSubmitted::dispatch($formEntry);
                     break;
             }
         });

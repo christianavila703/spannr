@@ -46,7 +46,10 @@ Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::cl
 Route::get('/reports/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
 Route::get('/jobs', [App\Http\Controllers\Public\Content\JobsController::class, 'index'])->name('public.content.jobs.index');
 Route::get('/jobs/submit/job', [App\Http\Controllers\Public\Content\JobsController::class, 'submit'])->name('public.content.jobs.submit');
-Route::get('/jobs/apply/{slug}', [App\Http\Controllers\Public\Content\JobsController::class, 'apply'])->name('public.content.jobs.apply');
+Route::get('/jobs/apply/{slug?}', [App\Http\Controllers\Public\Content\JobsController::class, 'apply'])->name('public.content.jobs.apply');
+Route::get('/jobs/subscription/confirmed', [App\Http\Controllers\Public\ContentController::class, 'jobPostingSubscriptionConfirmed'])->name('public.content.jobs.subscription.confirmed');
+
+Route::get('/checkout/job-posting-subscription', [App\Http\Controllers\Public\CheckoutController::class, 'jobPostingSubscription']);
 
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 //Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');

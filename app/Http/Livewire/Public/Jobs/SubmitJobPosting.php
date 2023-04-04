@@ -177,6 +177,12 @@ class SubmitJobPosting extends Component
             $this->reset('error');
             $this->success = "Awesome! We've received your job posting and will get back to you as soon as possible. Thanks!";
 
+            //redirect to subscription payment page
+            if ($this->monthly) {
+                $stripeSubscriptionUrl = config('services.stripe.job_posting_subscription_url');
+
+                $this->redirect($stripeSubscriptionUrl);
+            }
         } catch(\Throwable $exception) {
             Log::critical('Error during job submission ' . $exception->getMessage(), $attributes);
             $this->error = "We're having trouble with your submission. Please double check the fields below and if there's still an issue, please contact sydney@spannr.com";

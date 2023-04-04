@@ -8,6 +8,7 @@
                 <div class="offcanvas-xl offcanvas-start" tabindex="-1" id="jobFiltersMenu" aria-labelledby="jobFiltersMenuLabel">
                     <div class="offcanvas-header">
                         <h3 class="h4 offcanvas-title mt-1" id="jobFiltersMenuLabel">Filters</h3>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" data-bs-target="#jobFiltersMenu" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <div>
@@ -33,8 +34,8 @@
                                 <div class="h6">Job Type</div>
                                 <div>
                                     @foreach($typeOptions as $id => $option)
-                                        <div wire:key="type-{{ $id }}" class="form-check">
-                                            <input wire:model="filters.type" class="form-check-input" type="checkbox" value="{{ $option }}" id="filter-type-{{ $id }}">
+                                        <div class="form-check">
+                                            <input wire:model="filters.type.{{ $option }}" class="form-check-input" type="checkbox" value="{{ $option }}" id="filter-type-{{ $id }}">
                                             <label class="form-check-label" for="filter-type-{{ $id }}">
                                                 {{ $option }}
                                             </label>
@@ -46,8 +47,8 @@
                                 <div class="h6">Job Category</div>
                                 <div class="long-list-expandable">
                                     @foreach($categoryOptions as $id => $option)
-                                        <div wire:key="category-{{ $id }}" class="form-check">
-                                            <input wire:model="filters.category" class="form-check-input" type="checkbox" value="{{ $option }}" id="filter-category-{{ $id }}">
+                                        <div class="form-check">
+                                            <input wire:model="filters.category.{{ $option }}" class="form-check-input" type="checkbox" value="{{ $option }}" id="filter-category-{{ $id }}">
                                             <label class="form-check-label" for="filter-category-{{ $id }}">
                                                 {{ $option }}
                                             </label>
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+
         <div class="jobs-container flex-grow-1">
             @include('components.admin.jobs.job-current-filters')
             @forelse($records as $job)

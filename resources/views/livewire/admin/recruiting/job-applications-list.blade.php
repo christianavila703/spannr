@@ -70,8 +70,8 @@
                                      </div>
                                  </td>
                                  <td>
-                                     <div class="max-width-420">{{ $record->job->name }}</div>
-                                     <div class="text-muted">{{ $record->job->owner->name }}</div>
+                                     <div class="max-width-420">{{ $record->job ? $record->job->name : 'General' }}</div>
+                                     <div class="text-muted">{{ $record->job ? $record->job->owner->name : null }}</div>
                                  </td>
                                  <td>
                                     <a href="mailto:{{ $record->person->email }}">{{ $record->person->email }}</a>
@@ -134,7 +134,7 @@
             @if ($selectedPerson AND $selectedJobApplication)
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="jobApplicationModalLabel">{{ $selectedPerson->name }} - {{ $selectedJobApplication->job->name }}</h4>
+                        <h4 class="modal-title" id="jobApplicationModalLabel">{{ $selectedPerson->name }} - {{ $selectedJobApplication->job ? $selectedJobApplication->job->name : 'General' }}</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -160,14 +160,16 @@
                                 </div>
                             </div>
                             <div class="col-12 col-xl-6">
-                                <p class="border-bottom border-dark d-flex justify-content-between align-items-end">
-                                    <span class="h4 mb-0" style="margin-top: .15rem">Job Details</span>
-                                    @can('edit records')
-                                        <a href="{{ route('admin.jobs.show', $selectedJobApplication->job->slug) }}" class="ms-4 btn btn-sm btn-link">View Job</a>
-                                    @endcan
-                                </p>
-                                <p class="lead mb-0 text-muted">{{ $selectedJobApplication->job->name }} at {{ $selectedJobApplication->job->owner->name }}</p>
-                                <x-entities.data.job-data :job="$selectedJobApplication->job" />
+                                @if($selectedJobApplication->job)
+                                    <p class="border-bottom border-dark d-flex justify-content-between align-items-end">
+                                        <span class="h4 mb-0" style="margin-top: .15rem">Job Details</span>
+                                        @can('edit records')
+                                            <a href="{{ route('admin.jobs.show', $selectedJobApplication->job->slug) }}" class="ms-4 btn btn-sm btn-link">View Job</a>
+                                        @endcan
+                                    </p>
+                                    <p class="lead mb-0 text-muted">{{ $selectedJobApplication->job->name }} at {{ $selectedJobApplication->job->owner->name }}</p>
+                                    <x-entities.data.job-data :job="$selectedJobApplication->job" />
+                                @endif
                             </div>
                         </div>
                     </div>

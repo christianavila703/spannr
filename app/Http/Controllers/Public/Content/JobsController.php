@@ -27,9 +27,14 @@ class JobsController extends Controller
         return view('public.content.jobs.submit');
     }
 
-    public function apply($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function apply($slug = null): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $job = Job::where('slug', $slug)->firstOrFail();
+        $job = null;
+
+        if ($slug) {
+            $job = Job::where('slug', $slug)->firstOrFail();
+        }
+        
         return view('public.content.jobs.apply', [
             'job' => $job
         ]);

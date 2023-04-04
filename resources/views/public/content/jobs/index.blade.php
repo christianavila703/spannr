@@ -4,6 +4,8 @@
     <div class="page-jobs">
         <div class="single-post-wrapper">
             <div class="container pt-5 pt-lg-6 pb-5">
+                @include('admin.includes.status-messages')
+
                 <div class="d-xl-flex align-items-end">
                     <div class="me-xl-5 mb-4 flex-sh">
                         <h1>Longevity Industry Jobs</h1>
@@ -16,7 +18,7 @@
                         </div>
                         <div class="border border-quaternary border-2 p-3 mb-4">
                             <p class="h5 mb-3"><span class="text-nowrap">Looking to get hired in</span> <span class="d-block text-nowrap">the longevity industry?</span></p>
-                            <a href="" class="btn btn-tertiary">Get Hired</a>
+                            <a href="{{ route('public.content.jobs.apply') }}" class="btn btn-tertiary">Get Hired</a>
                         </div>
                     </div>
                 </div>

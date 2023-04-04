@@ -416,4 +416,11 @@ class ContentController extends Controller
             'showHeader' => false,
         ]);
     }
+
+    public function jobPostingSubscriptionConfirmed()
+    {
+        return view('public.content.jobs.subscription-confirmed', [
+            'showHeader' => false,
+        ]);
+    }
 }

@@ -68,4 +68,29 @@ class CheckoutController extends Controller
 
         return redirect()->route('public.content.events.confirmed');
     }
+
+    public function jobPostingSubscription(Request $request)
+    {
+        try {
+            $checkoutId = $request->input('checkout');
+            $stripe = new StripeClient(config('services.stripe.api_key'));
+            $checkoutDetails = $stripe->checkout->sessions->retrieve($checkoutId);
+
+            if ($checkoutDetails->payment_status !== 'paid') {
+                throw new \Exception('There was error with your payment. Please contact admin@spannr.com and we’ll get right on it!');
+            }
+
+            return redirect()->route('public.content.jobs.subscription.confirmed');
+        } catch (\Throwable $throwable) {
+            $errorMessage = $throwable->getMessage();
+
+            Log::critical('Error during checkout for Job posting subscription', $errorMessage);
+            $message = '<@Sydney> *Error during checkout for Job Posting subscription*' . "\n" .
+                ">Checkout ID: " . $checkoutId;
+
+            SlackAlert::to('jobs')->message($message);
+
+            return redirect()->route('public.content.jobs.index')->with('error', $errorMessage);
+        }
+    }
 }

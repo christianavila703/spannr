@@ -1,52 +1,53 @@
 <div class="current-filters d-flex align-items-center flex-wrap">
+    @if($filters['category'])
     <div class="current-filter-value-group full-size">
-        @if($filters['category'])
-            @foreach($filters['category'] as $id => $category)
-                <div class="current-filter-value">
-                    @if ($category)
-                        <span>{{ $category }}</span>
-                        <button wire:click="resetFilterArray('category', '{{ $id }}')" class="btn btn-sm btn-link text-muted me-3">
-                            <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
-                        </button>
-                        @endif
-                </div>
-            @endforeach
-        @endif
+        @foreach($filters['category'] as $category)
+            @if($category !== false)
+            <div class="current-filter-value">
+                <span>{{ $category }}</span>
+                <button wire:click="removeFilterArrayItem('category', '{{ $category }}')" class="btn btn-sm btn-link text-muted me-3">
+                    <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
+                </button>
+            </div>
+            @endif
+        @endforeach
     </div>
+    @endif
 
+    @if($search)
     <div class="current-filter-value">
-        @if($search)
-            <span>{{ $search }}</span>
-            <button wire:click="resetSearch" class="btn btn-sm btn-link text-muted me-3">
-                <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
-            </button>
-        @endif
+        <span>{{ $search }}</span>
+        <button wire:click="resetSearch" class="btn btn-sm btn-link text-muted me-3">
+            <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
+        </button>
     </div>
+    @endif
 
+    @if($filters['type'])
     <div class="current-filter-value-group">
-        @if($filters['type'])
-            @foreach($filters['type'] as $id => $type)
-                <div class="current-filter-value">
-                    @if($type)
-                        <span>{{ $type }}</span>
-                        <button wire:click="resetFilterArray('type', '{{ $id }}')" class="btn btn-sm btn-link text-muted me-3">
-                            <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
-                        </button>
-                    @endif
-                </div>
-            @endforeach
-        @endif
+        @foreach($filters['type'] as $type)
+            @if($type !== false)
+            <div class="current-filter-value">
+                <span>{{ $type }}</span>
+                <button wire:click="removeFilterArrayItem('type', '{{ $type }}')" class="btn btn-sm btn-link text-muted me-3">
+                    <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
+                </button>
+            </div>
+            @endif
+        @endforeach
     </div>
+    @endif
 
+    @if($filters['remote'])
     <div class="current-filter-value">
-        @if($filters['remote'])
-            <span class="text-primary">Remote</span>
-            <button wire:click="resetFilter('remote')" class="btn btn-sm btn-link text-muted me-3">
-                <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
-            </button>
-        @endif
+        <span class="text-primary">Remote</span>
+        <button wire:click="resetFilter('remote')" class="btn btn-sm btn-link text-muted me-3">
+            <i class="fa-sharp fa-regular fa-xmark fa-lg"></i>
+        </button>
     </div>
+    @endif
 </div>
+
 <div class="d-md-flex justify-content-between align-items-center">
     @if($search OR $filters['type'] OR $filters['category'] OR $filters['remote'])
         <p class="text-muted mb-0 mb-3">{{ $records->total() }} results</p>

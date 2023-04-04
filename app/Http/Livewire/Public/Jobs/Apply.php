@@ -15,7 +15,7 @@ class Apply extends Component
 {
     use WithFileUploads;
 
-    public Job $job;
+    public $job;
     public $first_name;
     public $last_name;
     public $email;
@@ -81,14 +81,14 @@ class Apply extends Component
 
             $jobApplication = JobApplication::create([
                 'person_id' => $person->id,
-                'job_id' => $this->job->id,
+                'job_id' => $this->job !== null ? $this->job->id : null,
                 'location_id' => $location->id,
                 'message' => $this->message,
                 'recruiter' => $this->recruiter,
             ]);
 
             $jobApplication->addMedia($this->resume->getRealPath())
-                ->setName($person->name . ' Resume ' . $this->job->owner->name)
+                ->setName($person->name . ' Resume ' . ($this->job ? $this->job->owner->name : ''))
                 ->usingFileName($person->slug . '-resume.' . $this->resume->extension())
                 ->toMediaCollection('resume');
 

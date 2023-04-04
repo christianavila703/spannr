@@ -28,6 +28,17 @@ class JobsIndex extends Component
         'remote' => null
     ];
 
+    public $jobTypes;
+    public $categoryOptions;
+    public $locationOptions;
+
+    public function mount()
+    {
+        $this->jobTypes = Job::select('type')->distinct()->pluck('type')->toArray();
+        $this->categoryOptions = JobCategory::has('jobs')->pluck('name', 'id')->toArray();
+        $this->locationOptions = $this->customLocations();
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -50,11 +61,12 @@ class JobsIndex extends Component
         $this->resetPage();
     }
 
-    public function resetFilterArray($filter, $key) {
-        $filterArray = $this->filters[$filter];
+    public function removeFilterArrayItem($filterName, $categoryId) {
+        $key = array_search($categoryId, $this->filters[$filterName]);
 
-        unset($filterArray[$key]);
-        $this->filters[$filter] = $filterArray;
+        if ($key !== false) {
+            unset($this->filters[$filterName][$key]);
+        }
 
         $this->resetPage();
     }
@@ -73,12 +85,12 @@ class JobsIndex extends Component
                             $query->where('name', 'like', '%' . $search . '%');
                         });
                 })
-                ->when($this->filters['category'], function($query, $categories) {
+                ->when(array_filter($this->filters['category']), function($query, $categories) {
                     return $query->whereHas('category', function($query) use ($categories) {
                          $query->whereIn('name', $categories);
                     });
                 })
-                ->when($this->filters['type'], fn($query, $type) => $query->whereIn('type', $type))
+                ->when(array_filter($this->filters['type']), fn($query, $type) => $query->whereIn('type', $type))
                 ->when($this->filters['remote'], fn($query) => $query->where('remote', true));
 
         return $this->applySorting($query);
@@ -95,9 +107,9 @@ class JobsIndex extends Component
     {
         return view('livewire.public.jobs.jobs-index', [
             'records' => $this->rows,
-            'typeOptions' => Job::TYPES,
-            'locationOptions' => $this->customLocations(),
-            'categoryOptions' => JobCategory::has('jobs')->pluck('name', 'id')->toArray()
+            'typeOptions' => $this->jobTypes,
+            'locationOptions' => $this->locationOptions,
+            'categoryOptions' => $this->categoryOptions,
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -41,6 +42,17 @@ class JobApplication extends Model implements HasMedia
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+
+    /* Scopes */
+    public function scopeWithJobs(Builder $query)
+    {
+        return $query->whereNotNull('job_id');
+    }
+
+    public function scopeGeneral(Builder $query)
+    {
+        return $query->whereNull('job_id');
     }
 
     /* Attributes */

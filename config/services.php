@@ -51,6 +51,7 @@ return [
 
     'stripe' => [
         'api_key' => env('STRIPE_API_KEY'),
+        'job_posting_subscription_url' => 'https://buy.stripe.com/test_28o6stb618tR25OcMN'
     ],
 
 ];
