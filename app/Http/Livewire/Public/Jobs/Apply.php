@@ -98,8 +98,14 @@ class Apply extends Component
                 $this->success = "We've received your job application. We'll forward it to the hiring company. Thanks!";
             }
 
+            $jobDescriptionMessage = "General job";
+
+            if ($jobApplication->job) {
+                $jobDescriptionMessage = $jobApplication->job->name  . " for " . $jobApplication->job->owner->name;
+            }
+
             SlackAlert::to('jobs')->message("*Job Application from {$jobApplication->person->name}*" . "\n" .
-                $jobApplication->job->name  . " for {$jobApplication->job->owner->name}" . "\n" . "<{$jobApplication->admin_link_url}|View Application>");
+                $jobDescriptionMessage . "\n" . "<{$jobApplication->admin_link_url}|View Application>");
 
             $this->reset('error');
 
