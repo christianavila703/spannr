@@ -115,6 +115,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     /**
+     * Relationships
+     */
+    public function magicLinkTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MagicLinkToken::class);
+    }
+
+    /**
      * Functions
      */
     public function registerMediaConversions(Media $media = null): void

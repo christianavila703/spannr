@@ -37,6 +37,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');
 
+        //Clear outdated tokens
+        $schedule->command('magic-link-tokens:clear')->dailyAt('02:30');
+
         // Horizon
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
+Route::get('login/link', [\App\Http\Controllers\Auth\MagicLoginController::class, 'showLoginForm'])->name('login.link');
+Route::post('login/link', [\App\Http\Controllers\Auth\MagicLoginController::class, 'sendLoginLink']);
+Route::get('login/link/{token}', [\App\Http\Controllers\Auth\MagicLoginController::class, 'login'])->name('login.link.token');
+
 Route::get('sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index' ]);
 
 /**
