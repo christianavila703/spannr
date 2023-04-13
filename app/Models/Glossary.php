@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Lockable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,8 @@ use Illuminate\Support\Str;
 
 class Glossary extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        Lockable;
 
     public $incrementing = false;
     protected $table = 'glossary';

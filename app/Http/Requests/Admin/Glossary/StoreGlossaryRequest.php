@@ -36,8 +36,10 @@ class StoreGlossaryRequest extends FormRequest
                 Rule::unique('glossary'),
                 'max:255'
             ],
-            'excerpt' => 'nullable',
+            'status' => 'required',
+            'excerpt' => 'required',
             'content' => 'nullable',
+            'page_title' => 'nullable',
         ];
     }
 }

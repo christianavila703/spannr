@@ -35,6 +35,11 @@ class GlossaryController extends Controller
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $glossary = Glossary::findOrFail($id);
+
+        if ($glossary->enableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.glossary.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         return view('admin.glossary.edit', [
             'glossary' => $glossary
         ]);
@@ -44,6 +49,11 @@ class GlossaryController extends Controller
     {
         $validated = $request->validated();
         $glossary = Glossary::findOrFail($id);
+
+        if ($glossary->disableLock(auth()->user()->id) === false) {
+            return redirect()->route('admin.glossary.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
         $glossary->update($validated);
 
         return redirect()->route('public.content.glossary.show', $glossary->slug);

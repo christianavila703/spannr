@@ -36,8 +36,10 @@ class UpdateGlossaryRequest extends FormRequest
                 Rule::unique('glossary')->ignore($this->name, 'name'),
                 'max:255'
             ],
-            'excerpt' => 'nullable',
+            'status' => 'required',
+            'excerpt' => 'required',
             'content' => 'nullable',
+            'page_title' => 'nullable',
         ];
     }
 }

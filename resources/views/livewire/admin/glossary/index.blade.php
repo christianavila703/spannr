@@ -3,6 +3,15 @@
         <div class="me-4">
             <input wire:model="filters.search" type="text" class="form-control" placeholder="Search...">
         </div>
+        <div class="me-4 d-flex align-items-center">
+            <strong class="d-block me-3">Status:</strong>
+            <select wire:model="filters.status" class="form-control">
+                <option value="" selected>All</option>
+                @foreach(\App\Models\Glossary::STATUSES as $status)
+                    <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+                @endforeach
+            </select>
+        </div>
         <div>
             <button wire:click="resetFilters" class="btn btn-sm">Reset Filters</button>
         </div>
@@ -19,6 +28,7 @@
             <th class="sortable-column" style="width: 300px">Name
                 <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}" />
             </th>
+            <th>Status</th>
             <th>Excerpt</th>
             <th class="text-end">Word Count</th>
             <th></th>
@@ -33,6 +43,13 @@
                 <td>
                     <div class="max-width-300">
                         <a href="{{ $item->url }}">{{ $item->name }}</a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <span class="badge {{ $item->status === \App\Models\Glossary::STATUS_PUBLISHED ? 'bg-success' : 'bg-secondary' }}">
+                            {{ ucfirst($item->status) }}
+                        </span>
                     </div>
                 </td>
                 <td>

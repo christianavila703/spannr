@@ -10,7 +10,13 @@
     @else
         @stack('seo')
     @endisset
-    <title>{{ config('app.name', 'Spannr') }}</title>
+
+    @isset($pageTitle)
+        <title>{{ $pageTitle }}</title>
+    @else
+        <title>{{ config('app.name', 'Spannr') }}</title>
+    @endisset
+
     @vite('resources/js/app.js')
     @vite('resources/sass/app.scss')
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>

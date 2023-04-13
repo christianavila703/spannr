@@ -10,6 +10,17 @@
         <div class="col-12 col-md-6">
             <x-forms.input type="text" name="slug" label="Slug" class="mb-3 flex-grow-1" value="{{ $glossary->slug ?? old('slug') }}" />
         </div>
+        <div class="col-12 col-md-6">
+            <x-forms.select name="status" label="Status">
+                @foreach (\App\Models\Glossary::STATUSES as $status)
+                    <option value="{{ $status }}"
+                        {{ (isset($glossary) && $glossary->status == $status) || old('status') == $status ? 'selected' :  '' }}>{{ $status }}</option>
+                @endforeach
+            </x-forms.select>
+        </div>
+        <div class="col-12 col-md-6">
+            <x-forms.input type="text" name="page_title" label="Page title" class="mb-3" value="{{ $glossary->page_title ?? old('page_title') }}" />
+        </div>
         <div class="col-12">
             <div class="d-flex flex-wrap">
             </div>

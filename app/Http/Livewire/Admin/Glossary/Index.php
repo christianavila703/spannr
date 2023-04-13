@@ -15,7 +15,8 @@ class Index extends Component
     public $perPage = 25;
 
     public $filters = [
-        'search' => ''
+        'search' => '',
+        'status' => '',
     ];
 
     public $sortColumnName = 'name';
@@ -49,11 +50,15 @@ class Index extends Component
         return view('livewire.admin.glossary.index', [
             'items' => Glossary::query()
                 ->when($this->filters['search'], function($query, $search) {
-                    return $query
-                        ->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('excerpt', 'like', '%' . $search . '%')
-                        ->orWhere('content', 'like', '%' . $search . '%')
-                        ->orWhere('content', 'like', '%' . $search . '%');
+                    return $query->where(function($query) use ($search) {
+                        return $query->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('excerpt', 'like', '%' . $search . '%')
+                            ->orWhere('content', 'like', '%' . $search . '%')
+                            ->orWhere('content', 'like', '%' . $search . '%');
+                    });
+                })
+                ->when($this->filters['status'], function($query, $status) {
+                    return $query->where('status', $status);
                 })
                 ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)

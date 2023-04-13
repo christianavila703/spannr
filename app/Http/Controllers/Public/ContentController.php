@@ -206,7 +206,7 @@ class ContentController extends Controller
     public function glossaryIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'glossary')->first();
-        $glossaryItems = Glossary::orderBy('name')->get();
+        $glossaryItems = Glossary::published()->orderBy('name')->get();
         $alphabet = range('A', 'Z');
 
         $glossaryArray = array_fill_keys($alphabet, []);
@@ -230,9 +230,18 @@ class ContentController extends Controller
     {
         $glossaryItem = Glossary::where('slug', $slug)->firstOrFail();
 
-        return view('public.content.glossary.show', [
-            'glossaryItem' => $glossaryItem
-        ]);
+        if ($glossaryItem->status === Glossary::STATUS_DRAFT &&
+            (!Auth::check() || !Auth::user()->can('edit articles'))) {
+                abort(404);
+        }
+
+        $viewData = ['glossaryItem' => $glossaryItem];
+
+        if ($glossaryItem->page_title) {
+            $viewData['pageTitle'] = $glossaryItem->page_title;
+        }
+
+        return view('public.content.glossary.show', $viewData);
     }
 
     public function longevityStockIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
