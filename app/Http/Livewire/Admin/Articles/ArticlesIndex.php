@@ -46,7 +46,7 @@ class ArticlesIndex extends Component
     public function getRowsQueryProperty()
     {
         $query = Article::orderByDesc('date')
-                ->with(['author', 'tags'])
+                ->with(['authors', 'tags'])
                 ->when($this->filters['search'], function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
@@ -54,7 +54,7 @@ class ArticlesIndex extends Component
                         ->orWhere('date', 'like', '%' . $search . '%')
                         ->orWhere('content', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
-                        ->orWhereHas('author', function($query) use ($search) {
+                        ->orWhereHas('authors', function($query) use ($search) {
                             $query->where('name', 'like', '%' . $search . '%');
                         });
                 })

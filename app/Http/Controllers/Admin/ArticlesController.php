@@ -15,7 +15,8 @@ class ArticlesController extends Controller
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.articles.create', [
-            'tagUrl' => route('admin.json.tags')
+            'authorsUrl' => route('admin.json.authors'),
+            'tagsUrl' => route('admin.json.tags'),
         ]);
     }
 
@@ -27,7 +28,29 @@ class ArticlesController extends Controller
     public function store(StoreArticleRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
+        $authors = null;
+        $tags = null;
+
+        if (array_key_exists('authors', $validated)) {
+            $authors = $validated['authors'];
+            unset($validated['authors']);
+        }
+
+        if (array_key_exists('tags', $validated)) {
+            $tags = $validated['tags'];
+            unset($validated['tags']);
+        }
+
         $article = Article::create($validated);
+
+        if ($authors) {
+            $article->authors()->attach($authors);
+        }
+
+        if ($tags) {
+            $article->tags()->attach($tags);
+        }
+
         return redirect()->route('admin.articles.index')->with('success', 'Saved ' . $article->name);
     }
 
@@ -61,6 +84,13 @@ class ArticlesController extends Controller
             return redirect()->route('admin.articles.index')->with('error', 'The entry has been temporarily locked by another user.');
         }
 
+        $authorsUrl = route('admin.json.authors');
+        $currentAuthors = $article->authors()->pluck('id')->toArray();
+
+        if (!empty($currentAuthors)) {
+            $authorsUrl .= '?default=' . implode(',', $currentAuthors);
+        }
+
         $currentTags = $article->tags()->pluck('id')->toArray();
         $tagUrl = route('admin.json.tags');
 
@@ -70,17 +100,23 @@ class ArticlesController extends Controller
 
         return view('admin.articles.edit', [
             'article' => $article,
-            'tagUrl' => $tagUrl
+            'authorsUrl' => $authorsUrl,
+            'tagsUrl' => $tagUrl
         ]);
     }
 
     public function update(UpdateArticleRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
-        $validated = $request->validated();
         $article = Article::findOrFail($id);
+        $validated = $request->validated();
 
         if ($article->disableLock(auth()->user()->id) === false) {
             return redirect()->route('admin.articles.index')->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
+        if (array_key_exists('authors', $validated)) {
+            $article->authors()->sync($validated['authors']);
+            unset($validated['authors']);
         }
 
         if (array_key_exists('tags', $validated)) {

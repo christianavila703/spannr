@@ -37,9 +37,7 @@ class UserArticles extends Component
     public function render()
     {
         return view('livewire.users.user-articles', [
-            'articles' => Article::orderByDesc('date')
-                ->where('user_id', $this->user->id)
-                ->paginate($this->perPage)
+            'articles' => $this->user->articles()->orderByDesc('date')->paginate($this->perPage)
         ]);
     }
 }

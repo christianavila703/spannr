@@ -52,7 +52,7 @@
             <th class="sortable-column">Title</th>
             <th>Categories</th>
             <th>Meta Description</th>
-            <th>Author</th>
+            <th>Authors</th>
             <th></th>
         </tr>
         </thead>
@@ -104,9 +104,9 @@
                     @endif
                 </td>
                 <td>
-                    @if ($article->author)
-                        {{ $article->author->name }}
-                    @endif
+                    @foreach($article->authors as $author)
+                        {{ $author->name }}{{ !$loop->last ? ' / ' : '' }}
+                    @endforeach
                 </td>
                 <td class="text-end">
                     @if($article->isLocked && $article->lockedById !== auth()->user()->id)

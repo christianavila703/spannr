@@ -56,11 +56,14 @@ og:image:type
                         <article class="single-post-content pb-6">
                             <div class="post-meta-container">
                                 <div class="author">
-                                    @if($article->author)
-                                        By <a href="{{ $article->author->about_page_url }}">{{ $article->author->byline ?? $article->author->name }}</a>
-                                    @else
+                                    @forelse($article->authors as $author)
+                                        {{ $loop->first ? 'By' : '' }}
+                                         <a href="{{ $author->about_page_url }}">{{ $author->byline ?? $author->name }}</a>
+                                        {{ !$loop->last ? '/' : '' }}
+                                    @empty
                                         By Spannr
-                                    @endif
+                                    @endforelse
+
                                     @can('edit articles')
                                         <span class="ms-3">
                                             <a href="{{ route('admin.articles.edit', $article->id) }}" class="text-tertiary">Edit</a>
@@ -110,23 +113,25 @@ og:image:type
                                 @endif
                             </div>
                             <hr class="dark mt-5">
-                            <div class="article-author-box">
-                                <p class="h4 mb-4">About the Author</p>
-                                <a href="{{ $article->author->about_page_url }}">
+                            <p class="h4 mb-4">About the Author</p>
+                            @foreach($article->authors as $author)
+                            <div class="article-author-box mb-4">
+                                <a href="{{ $author->about_page_url }}">
                                     <div class="d-md-flex align-items-center">
                                         <div class="flex-shrink-0 text-center mb-4 mb-md-0">
-                                            <img src="@if ($article->author->team_photo) {{ $article->author->team_photo }} @else {{Vite::asset('resources/images/team/missing.jpg')}} @endif" alt="{{ $article->author->name }}, {{ $article->author->title }}"
+                                            <img src="@if ($author->team_photo) {{ $author->team_photo }} @else {{Vite::asset('resources/images/team/missing.jpg')}} @endif" alt="{{ $author->name }}, {{ $author->title }}"
                                                  width="120" height="120">
                                         </div>
                                         <div class="bg-gray-light py-4 py-md-0 px-4 align-self-stretch d-flex flex-column justify-content-center">
                                             <h3 class="name-title text-dark">
-                                                <span>{{ $article->author->full_name }}, <em>{{ $article->author->title }}</em></span>
+                                                <span>{{ $author->full_name }} @if($author->title), <em>{{ $author->title }}</em>@endif</span>
                                             </h3>
-                                            <p class="bio mb-0 text-dark">{{ $article->author->short_bio }}</p>
+                                            <p class="bio mb-0 text-dark">{{ $author->short_bio }}</p>
                                         </div>
                                     </div>
                                 </a>
                             </div>
+                            @endforeach
                         </article>
                         <div class="sidebar-container">
                             <div id="sidebar" class="sidebar">

@@ -43,7 +43,8 @@ class StoreArticleRequest extends FormRequest
             'content' => 'required',
             'sources' => 'nullable',
             'sidebar' => 'nullable',
-            'user_id' => 'required'
+            'authors' => 'array|required',
+            'tags' => 'array|nullable',
         ];
     }
 }

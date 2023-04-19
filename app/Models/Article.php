@@ -21,7 +21,6 @@ class Article extends Model implements HasMedia
         InteractsWithMedia,
         Lockable;
 
-    public $incrementing = false;
     protected $guarded = [];
 
     const STATUS_PUBLISHED = 'publish';
@@ -48,9 +47,9 @@ class Article extends Model implements HasMedia
     /**
      * Relationships
      */
-    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function authors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
@@ -148,15 +147,6 @@ class Article extends Model implements HasMedia
         };
     }
 
-    public function getAuthorBylineAttribute(): string
-    {
-        if ($this->author) {
-            return $this->author->byline ?? $this->author->name;
-        } else {
-            return 'Spannr';
-        }
-    }
-
     public function getFeaturedImageUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('featured') ?? NULL;
@@ -198,6 +188,11 @@ class Article extends Model implements HasMedia
     {
         $word_count = str_word_count( strip_tags($this->content) );
         return ceil($word_count / 100);
+    }
+
+    public function getMainAuthorAttribute(): User
+    {
+        return $this->authors()->first();
     }
 
     /**

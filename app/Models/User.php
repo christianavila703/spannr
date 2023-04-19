@@ -104,9 +104,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     /**
      * Relationships
      */
-    public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function articles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsToMany(Article::class);
     }
 
     public function person(): \Illuminate\Database\Eloquent\Relations\HasOne

@@ -23,12 +23,6 @@
                         >{{ $status }}</option>
                     @endforeach
                 </x-forms.select>
-                <div class="mb-3 me-3" style="min-width: 150px">
-                    <select name="user_id" id="user_id" aria-label="Author"
-                            data-url="{{ route('admin.json.authors') }}{{ isset($article->author->id) ? '?default=' . $article->author->id : '' }}">
-                        <option value="" disabled>Author</option>
-                    </select>
-                </div>
                 <x-forms.input type="text" name="slug" label="Slug" class="mb-3 flex-grow-1"
                                value="{{ $article->slug ?? old('slug') }}"/>
             </div>
@@ -51,14 +45,18 @@
                 </div>
             </div>
         </div>
-        @isset($article)
-            <div class="col-12 py-2">
-                <label for="tags" class="visually-hidden">Select Tags</label>
-                <select multiple name="tags[]" id="tags" class="js-choice-tags" data-url="{{ $tagUrl }}">
-                    <option value="">Select Tags</option>
-                </select>
-            </div>
-        @endisset
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <label for="tags" class="visually-hidden">Select Authors</label>
+            <select multiple name="authors[]" id="authors" class="js-choice-authors" data-url="{{ $authorsUrl }}">
+                <option value="" disabled>Select Authors</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="tags" class="visually-hidden">Select Tags</label>
+            <select multiple name="tags[]" id="tags" class="js-choice-tags" data-url="{{ $tagsUrl }}">
+                <option value="">Select Tags</option>
+            </select>
+        </div>
         <div class="col-12 my-3">
             <p class="h4">Content</p>
             <x-tiny-mce.tiny-editor id="content" name="content" value="{{ $article->content ?? old('content') }}"/>
@@ -81,12 +79,14 @@
     <x-tiny-mce.tiny-config/>
 
     <script>
-        const authorChoice = new Choices('#user_id');
-        const authorUrl = document.getElementById('user_id').getAttribute('data-url');
+        const authorChoice = new Choices('#authors', {
+            removeItemButton: true,
+        });
+        const authorsUrl = document.getElementById('authors').getAttribute('data-url');
 
         authorChoice.setChoices(async () => {
             try {
-                const items = await fetch(authorUrl);
+                const items = await fetch(authorsUrl);
                 return items.json();
             } catch (err) {
                 console.error(err);
@@ -96,11 +96,11 @@
         const tagChoice = new Choices('#tags', {
             removeItemButton: true,
         });
-        const tagUrl = document.getElementById('tags').getAttribute('data-url');
+        const tagsUrl = document.getElementById('tags').getAttribute('data-url');
 
         tagChoice.setChoices(async () => {
             try {
-                const items = await fetch(tagUrl);
+                const items = await fetch(tagsUrl);
                 return items.json();
             } catch (err) {
                 console.error(err);
