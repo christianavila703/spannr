@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\StoreUserRequest;
+use App\Models\Person;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -60,5 +60,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function assignPerson(Request $request)
+    {
+        $user = User::findOrFail($request->input('user_id'));
+        $person = Person::findOrFail($request->input('person_id'));
+
+        $person->user_id = $user->id;
+        $person->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'Person "' . $person->name . '" assigned to ' . $user->name);
     }
 }

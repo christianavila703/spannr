@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Users;
 
+use App\Models\Person;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,7 +32,10 @@ class Index extends Component
 
     public function render()
     {
+        $unassignedPeople = Person::doesntHave('user')->orderBy('name')->pluck('name', 'id');
+
         return view('livewire.admin.users.index', [
+            'unassignedPeople' => $unassignedPeople,
             'users' => User::orderByDesc('created_at')->orderBy('name')
                 ->with(['roles', 'media', 'person'])
                 ->when($this->filters['search'], function($query, $search) {

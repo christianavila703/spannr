@@ -77,6 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     /* @can edit users */
     Route::middleware(['can:edit users'])->group(function() {
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+        Route::post('users/assign-person', [\App\Http\Controllers\Admin\UserController::class, 'assignPerson'])->name('users.assign-person');
     });
 
     /* @can edit records */
@@ -97,6 +98,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/json/organizations.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'organizations'])->name('json.organizations');
         Route::get('/json/investors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'investors'])->name('json.investors');
         Route::get('/json/people.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'people'])->name('json.people');
+        Route::get('/json/peopleWithoutUser.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'peopleWithoutUser'])->name('json.peopleWithoutUser');
         Route::get('/json/jobs.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'jobs'])->name('json.jobs');
         Route::get('/json/events.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'events'])->name('json.events');
         Route::get('/json/fundraising-rounds.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'fundraisingRounds'])->name('json.fundraising-rounds');

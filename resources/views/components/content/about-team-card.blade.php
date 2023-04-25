@@ -4,13 +4,29 @@
         <h2 class="h3 mb-2 user-name">
             <span>{{ $person->full_name }}</span>
         </h2>
+    @if ($person->show_user_page) </a> @endif
         <div class="d-flex">
             <p class="title">{{ $person->title ?? 'Title' }}</p>
             @if ($person->person)
-                <div class="ms-2 lead text-primary">
+                <div class="ms-2 lead text-primary d-flex social-icons">
+                    @if ($person->person->facebook)
+                        <a class="me-2" href="{{ $person->person->facebook_url }}" target="_blank" rel="noopener noreferrer" class="text-tertiary">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    @endif
+                    @if ($person->person->twitter)
+                        <a class="me-2" href="{{ $person->person->twitter_url }}" target="_blank" rel="noopener noreferrer" class="text-tertiary">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    @endif
                     @if ($person->person->linkedin)
-                        <a href="{{ $person->person->linkedin_url }}" target="_blank" rel="noopener noreferrer" class="text-tertiary">
+                        <a class="me-2" href="{{ $person->person->linkedin_url }}" target="_blank" rel="noopener noreferrer" class="text-tertiary">
                             <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                    @endif
+                    @if ($person->person->instagram)
+                        <a class="me-2" href="{{ $person->person->instagram_url }}" target="_blank" rel="noopener noreferrer" class="text-tertiary">
+                            <i class="fa-brands fa-instagram"></i>
                         </a>
                     @endif
                 </div>
@@ -23,5 +39,4 @@
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem. Totam rem aperiam. Animi, id est laborum et dolorum fuga. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et recusandae.
             @endif
         </p>
-    @if ($person->show_user_page) </a> @endif
 </div>

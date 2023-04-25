@@ -28,6 +28,10 @@
                      <td>
                          @if ($user->person)
                              <a href="{{ route('admin.people.show', $user->person->slug) }}">{{ $user->person->name }}</a>
+                         @else
+                             <button class="btn btn-tertiary" type="button" data-bs-toggle="modal"
+                                     data-bs-target="#assignPersonForm" data-user-id="{{ $user->id }}">Assign Person
+                             </button>
                          @endif
                      </td>
                      <td>
@@ -61,3 +65,42 @@
         }
     </style>
 </div>
+
+<div class="modal fade" id="assignPersonForm" tabindex="-1" aria-labelledby="assignPersonFormLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('admin.users.assign-person') }}">
+                @csrf
+                <input type="hidden" id="assignUserId" name="user_id" value="" />
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign Person</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="min-height: 400px;">
+                    <label for="assign_person_people_select">Select Person</label>
+                    <select name="person_id" id="assignPersonId" required>
+                        <option value=""></option>
+                        @foreach($unassignedPeople as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Choices('#assignPersonId');
+
+    let assignPersonFormModal = document.getElementById('assignPersonForm');
+    let assignUserIdInput = document.getElementById('assignUserId');
+
+    assignPersonFormModal.addEventListener('shown.bs.modal', function (event) {
+        assignUserIdInput.value = event.relatedTarget.dataset.userId;
+    });
+</script>

@@ -76,13 +76,13 @@ class ContentController extends Controller
     public function about(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $team = User::orderBy('order')
-            ->with('media')
+            ->with(['media', 'person'])
             ->whereHas('roles', function (Builder $query) {
                 $query->where('name', Role::ROLE_SPANNR_TEAM);
             })
             ->get();
 
-        $contributors = User::with('media')
+        $contributors = User::with(['media', 'person'])
             ->whereHas('roles', function (Builder $query) {
                 $query->where('name', Role::ROLE_SPANNR_CONTRIBUTOR);
             })
@@ -98,7 +98,7 @@ class ContentController extends Controller
     {
         $user = User::where('slug', $slug)
             ->whereHas('articles')
-            ->with('articles')
+            ->with(['articles', 'media', 'person'])
             ->firstOrFail();
 
         $graph = new Graph();

@@ -847,6 +847,20 @@ main.page-glossary .single-post-wrapper .container {
         }
 
     }
+
+    .social-icons a {
+        color: $indigo;
+
+        &:hover {
+            color: $maroon;
+        }
+    }
+}
+
+.about-user-page {
+    .social-icons {
+        font-size: x-large;
+    }
 }
 
 .page-about {
