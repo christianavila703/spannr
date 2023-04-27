@@ -153,6 +153,7 @@ class ContentController extends Controller
             }
         }
 
+        $pageTitle = $article->page_title ? $article->page_title : $article->name . ' - Spannr';
         $featuredImage = $article->getFirstMediaUrl('featured');
 
         $graph = new Graph();
@@ -198,6 +199,7 @@ class ContentController extends Controller
 
         return view('public.content.articles.show', [
             'article' => $article,
+            'pageTitle' => $pageTitle,
             'featuredImage' => $featuredImage,
             'graph' => $graph
         ]);

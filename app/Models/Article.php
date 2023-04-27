@@ -190,7 +190,7 @@ class Article extends Model implements HasMedia
         return ceil($word_count / 100);
     }
 
-    public function getMainAuthorAttribute(): User
+    public function getMainAuthorAttribute(): User|null
     {
         return $this->authors()->first();
     }

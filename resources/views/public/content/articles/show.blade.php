@@ -1,7 +1,6 @@
 @extends('layouts.public')
 
 @push('seo')
-{{-- {!! $article->seo !!} --}}
 
 @php
 /*
@@ -12,7 +11,6 @@ og:image:height
 og:image:type
   */
 @endphp
-<title>{{ $article->name }} - Spannr</title>
 <meta name="description" content="{{ $article->meta_description }}" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <link rel="canonical" href="{{ $article->url }}" />

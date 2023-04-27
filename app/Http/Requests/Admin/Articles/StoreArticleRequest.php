@@ -39,6 +39,7 @@ class StoreArticleRequest extends FormRequest
             'status' => 'required',
             'date' => 'required',
             'excerpt' => 'required',
+            'page_title' => 'string|nullable|max:255',
             'meta_description' => 'required|max:250',
             'content' => 'required',
             'sources' => 'nullable',

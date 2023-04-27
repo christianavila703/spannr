@@ -113,6 +113,12 @@
         }
     }
 
+    .wp-caption-text,
+    .image-caption-text {
+        font-size: smaller;
+        overflow-wrap: break-word;
+    }
+
     @media (min-width: $bp-min-desktop) {
         margin: 0;
     }
@@ -123,6 +129,11 @@
         @media (min-width: 1024px) {
             margin-bottom: 3rem;
         }
+    }
+
+    div.twitter-tweet {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -850,7 +861,7 @@ ul.pagination {
 
 /* Blockquotes */
 .single-post blockquote {
-    @include subheadings-font;
+    letter-spacing: -.5px;
     font-size: 1.2rem;
     border-left: .25rem solid var(--color-pink);
     padding-left: 1rem;

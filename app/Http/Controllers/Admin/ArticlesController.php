@@ -12,17 +12,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends Controller
 {
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('admin.articles.index');
+    }
+
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.articles.create', [
             'authorsUrl' => route('admin.json.authors'),
             'tagsUrl' => route('admin.json.tags'),
         ]);
-    }
-
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        return view('admin.articles.index');
     }
 
     public function store(StoreArticleRequest $request): \Illuminate\Http\RedirectResponse

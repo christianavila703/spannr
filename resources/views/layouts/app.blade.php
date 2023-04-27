@@ -51,7 +51,6 @@
                                     <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
                                     <a class="dropdown-item" href="{{ route('admin.form-entries.index') }}">Form Entries</a>
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">Tags</a>
-                                    <a class="dropdown-item" href="{{ route('admin.articles.index') }}">Articles</a>
                                     <a class="dropdown-item" href="{{ route('admin.glossary.index') }}">Glossary</a>
                                     <a class="dropdown-item" href="{{ route('admin.entity-duplicate.index') }}">Duplicate Merge</a>
                                     @can('review records')
@@ -74,7 +73,6 @@
                                     <a href="{{ route('admin.jobs.create') }}" class="dropdown-item">Job</a>
                                     <a href="{{ route('admin.events.create') }}" class="dropdown-item">Event</a>
                                     <a href="{{ route('admin.content.create') }}" class="dropdown-item">Content</a>
-                                    <a href="{{ route('admin.articles.create') }}" class="dropdown-item">Article</a>
                                     <a href="{{ route('admin.glossary.create') }}" class="dropdown-item">Glossary Item</a>
                                 </div>
                             </li>

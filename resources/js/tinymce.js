@@ -87,5 +87,9 @@ tinymce.init({
             icon: 'embed-page',
             onAction: () => editor.windowManager.open(dialogConfig)
         })
-    }
+    },
+    style_formats: [
+        { title: 'Image caption', block: 'p', classes: 'image-caption-text' },
+    ],
+    style_formats_merge: true
 });

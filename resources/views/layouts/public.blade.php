@@ -11,11 +11,7 @@
         @stack('seo')
     @endisset
 
-    @isset($pageTitle)
-        <title>{{ $pageTitle }}</title>
-    @else
-        <title>{{ config('app.name', 'Spannr') }}</title>
-    @endisset
+    <title>{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}</title>
 
     @vite('resources/js/app.js')
     @vite('resources/sass/app.scss')

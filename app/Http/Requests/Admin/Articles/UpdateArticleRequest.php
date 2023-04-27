@@ -39,6 +39,7 @@ class UpdateArticleRequest extends FormRequest
             'status' => 'required',
             'date' => 'required|date',
             'excerpt' => 'string|nullable',
+            'page_title' => 'string|nullable|max:255',
             'meta_description' => 'string|max:250|nullable',
             'content' => 'required',
             'sources' => 'nullable',

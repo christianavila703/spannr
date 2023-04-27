@@ -27,6 +27,10 @@
                                value="{{ $article->slug ?? old('slug') }}"/>
             </div>
         </div>
+        <div class="col-12">
+            <x-forms.input type="text" name="page_title" label="Page Title" class="mb-3"
+                           value="{{ $article->page_title ?? old('page_title') }}"/>
+        </div>
         <div class="col-12 col-md-6 mb-3 mb-md-0">
             <div class="form-floating">
                 <textarea class="form-control" placeholder="Excerpt" name="excerpt" id="excerpt"
