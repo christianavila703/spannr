@@ -1,7 +1,23 @@
 @extends('layouts.public')
 
 @push('seo')
-    {!! $glossaryItem->seo !!}
+<meta name="description" content="{{ $glossaryItem->meta_description }}" />
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="{{ $glossaryItem->url }}" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="glossary" />
+<meta property="og:title" content="{{ $glossaryItem->name }}" />
+<meta property="og:description" content="{{ $glossaryItem->meta_description }}" />
+<meta property="og:url" content="{{ $glossaryItem->url }}" />
+<meta property="og:site_name" content="Spannr" />
+<meta property="og:image" content="https://wp.spannr.com/wp-content/uploads/2022/04/social-share-white.jpg" />
+<meta property="og:image:width" content="1616" />
+<meta property="og:image:height" content="824" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@spannr_" />
+<meta name="twitter:site" content="@spannr_" />
+{!! $graph !!}
 @endpush
 
 @section('content')

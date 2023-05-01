@@ -237,13 +237,36 @@ class ContentController extends Controller
                 abort(404);
         }
 
-        $viewData = ['glossaryItem' => $glossaryItem];
+        $pageTitle = $glossaryItem->page_title ? $glossaryItem->page_title : $glossaryItem->name . ' - Spannr';
+        $graph = new Graph();
 
-        if ($glossaryItem->page_title) {
-            $viewData['pageTitle'] = $glossaryItem->page_title;
-        }
+        $graph->breadcrumblist()->setProperty('@id', '#breadcrumb');
+        $graph->breadcrumbList()->itemListElement([
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 1)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                    ->name('Spannr')
+                    ->url(route('home'))
+                    ->setProperty('@id', route('home'))),
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 2)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                    ->name('Glossary')
+                    ->url(route('public.content.glossary.index'))
+                    ->setProperty('@id', route('public.content.glossary.index'))),
+            \Spatie\SchemaOrg\Schema::listItem()
+                ->setProperty('position', 3)
+                ->item(\Spatie\SchemaOrg\Schema::webPage()
+                    ->name($glossaryItem->name)
+                    ->url($glossaryItem->url)
+                    ->setProperty('@id', $glossaryItem->url))
+        ]);
 
-        return view('public.content.glossary.show', $viewData);
+        return view('public.content.glossary.show', [
+            'glossaryItem' => $glossaryItem,
+            'pageTitle' => $pageTitle,
+            'graph' => $graph,
+        ]);
     }
 
     public function longevityStockIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

@@ -34,7 +34,8 @@
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "te7a-houdini/laravel-trix": "^2.0",
-        "yadahan/laravel-authentication-log": "^1.5"
+        "yadahan/laravel-authentication-log": "^1.5",
+        "ext-dom": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
