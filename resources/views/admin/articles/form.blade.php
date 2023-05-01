@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-12 col-md-6 mb-3 mb-md-0">
-            <label for="tags" class="visually-hidden">Select Authors</label>
+            <label for="authors" class="visually-hidden">Select Authors</label>
             <select multiple name="authors[]" id="authors" class="js-choice-authors" data-url="{{ $authorsUrl }}">
                 <option value="" disabled>Select Authors</option>
             </select>

@@ -21,7 +21,7 @@ class ArticlesController extends Controller
     {
         return view('admin.articles.create', [
             'authorsUrl' => route('admin.json.authors'),
-            'tagsUrl' => route('admin.json.tags'),
+            'tagsUrl' => route('admin.json.articleTags'),
         ]);
     }
 
@@ -92,7 +92,7 @@ class ArticlesController extends Controller
         }
 
         $currentTags = $article->tags()->pluck('id')->toArray();
-        $tagUrl = route('admin.json.tags');
+        $tagUrl = route('admin.json.articleTags');
 
         if (!empty($currentTags)) {
             $tagUrl .= '?default=' . implode(',', $currentTags);

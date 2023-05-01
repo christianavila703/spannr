@@ -17,19 +17,9 @@
                             <a href="{{ route('admin.tags.show', $firstLevelTag->slug) }}" class="d-block">{{ $firstLevelTag->name }}</a>
                             @if($firstLevelTag->children->count() > 0)
                                 <ul>
-                                    @foreach ($firstLevelTag->children as $child)
+                                    @foreach ($firstLevelTag->children as $secondLevelTag)
                                         <li class="py-1">
-                                            <a href="{{ route('admin.tags.show', $child->slug) }}" class="d-block">{{ $child->name }}</a>
-
-                                            @if($child->children->count() > 0)
-                                                <ul>
-                                                    @foreach ($child->children as $grandchild)
-                                                        <li class="py-1">
-                                                            <a href="{{ route('admin.tags.show', $grandchild->slug) }}">{{ $grandchild->name }}</a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
+                                            <a href="{{ route('admin.tags.show', $secondLevelTag->slug) }}" class="d-block">{{ $secondLevelTag->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

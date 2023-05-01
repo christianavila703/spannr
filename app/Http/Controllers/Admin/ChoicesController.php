@@ -21,11 +21,38 @@ class ChoicesController extends Controller
     {
         $default = explode(',', $request->input('default')) ?? [];
         $records = Tag::whereNull('parent_id')
+            ->whereNot('name', Tag::TAG_PARENT_ARTICLE_CATEGORIES)
             ->with('children')
             ->orderBy('name')
             ->get();
 
         return $this->orderTags($records, $default);
+    }
+
+    public function articleTags(Request $request): string
+    {
+        $data = [];
+        $default = explode(',', $request->input('default')) ?? [];
+        $rootTag = Tag::where('name', Tag::TAG_PARENT_ARTICLE_CATEGORIES)->first();
+
+        if ($rootTag) {
+            $tags = Tag::where('parent_id', $rootTag->id)->orderBy('name')->get();
+
+            foreach ($tags as $tag) {
+                $thisTag = [
+                    'label' => $tag->name,
+                    'value' => $tag->id
+                ];
+
+                if (in_array($tag->id, $default)) {
+                    $thisTag['selected'] = true;
+                }
+
+                $data[] = $thisTag;
+            }
+        }
+
+        return json_encode($data);
     }
 
     public function authors(Request $request): string
@@ -116,20 +143,21 @@ class ChoicesController extends Controller
             $thisArray = [
                 'label' => $record->name,
                 'id' => $record->id,
-                'choices' => []
+                'choices' => [
+                    [
+                        'label' => $record->name,
+                        'value' => $record->id,
+                        'selected' => in_array($record->id, $default)
+                    ]
+                ],
             ];
 
             foreach ($record->children as $child) {
-                $thisChild = [
+                $thisArray['choices'][] = [
                     'label' => $child->name,
-                    'value' => $child->id
+                    'value' => $child->id,
+                    'selected' => in_array($child->id, $default),
                 ];
-
-                if (in_array($child->id, $default)) {
-                    $thisChild['selected'] = true;
-                }
-
-                $thisArray['choices'][] = $thisChild;
             }
 
             $recordsList[] = $thisArray;

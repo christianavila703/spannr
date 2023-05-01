@@ -20,7 +20,7 @@ class TagController extends Controller
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $tags = Tag::firstLevel()
-            ->with(['children', 'children.children', 'children.children.children'])
+            ->with(['children'])
             ->orderBy('parent_id')
             ->orderBy('name')
             ->get();
@@ -33,25 +33,10 @@ class TagController extends Controller
         ]);
     }
 
-    public function tagsList(): bool|string
-    {
-        $tags = Tag::orderBy('name')->get();
-
-        $tagsList = [];
-
-        foreach ($tags as $tag) {
-            $tagsList[] = [
-                'label' => $tag->name,
-                'value' => $tag->id
-            ];
-        }
-
-        return json_encode($tagsList);
-    }
-
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $parentTags = Tag::orderBy('name')->canHaveKids()->get();
+
         return view('admin.tags.create', [
             'parentTags' => $parentTags
         ]);
@@ -60,8 +45,7 @@ class TagController extends Controller
     public function store(TagRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
-
-        $validated['depth'] = $this->getDepth($validated);
+        $validated['depth'] = $this->getDepthValue($validated['parent_id']);
 
         $tag = Tag::create($validated);
 
@@ -89,11 +73,11 @@ class TagController extends Controller
 
     public function update(TagRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
-        $validated = $request->validated();
-
         $tag = Tag::findOrFail($id);
+        $validated = $request->validated();
+        $validated['depth'] = $this->getDepthValue($validated['parent_id']);
+
         $tag->update($validated);
-        $validated['depth'] = $this->getDepth($validated);
 
         return redirect()->route('admin.tags.show', $tag->slug)->with('success', 'Successfully updated ' . $tag->name);
     }
@@ -141,17 +125,14 @@ class TagController extends Controller
         ]);
     }
 
-    private function getDepth($tagAttributes): int
+    private function getDepthValue($parentId): int
     {
-        if ($tagAttributes['parent_id']) {
-            $parent = Tag::findOrFail($tagAttributes['parent_id']);
-            if ($parent->depth < 2) {
-                return $parent->depth + 1;
-            } else {
-                return 2;
-            }
-        } else {
-            return 0;
+        if ($parentId) {
+            $parent = Tag::findOrFail($parentId);
+
+            return $parent->depth + 1;
         }
+
+        return 0;
     }
 }

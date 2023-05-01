@@ -14,7 +14,7 @@ class Tag extends Model
         HasBreadcrumbs,
         SearchableEntity;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     private string $searchableRouteName = 'admin.tags.show';
     private string $searchableRouteField = 'slug';
@@ -23,8 +23,11 @@ class Tag extends Model
     private string $modelName = 'tags';
 
     const TAG_PEOPLE = 'People';
-    CONST TAG_JOB_APPLICANT = 'Job Applicant';
+    const TAG_JOB_APPLICANT = 'Job Applicant';
     const TAG_HIRING_MANAGER = 'Hiring Manager';
+    const TAG_PARENT_ARTICLE_CATEGORIES = 'Article Categories';
+
+    const MAX_DEPTH = 1;
 
     /**
      * Relationships
@@ -82,18 +85,8 @@ class Tag extends Model
         $query->whereNull('parent_id');
     }
 
-    public function scopeSecondLevel($query)
-    {
-        $query->where('depth', 1);
-    }
-
-    public function scopeThirdLevel($query)
-    {
-        $query->where('depth', 2);
-    }
-
     public function scopeCanHaveKids($query) {
-        $query->where('depth', '<', 2);
+        $query->where('depth', '<', self::MAX_DEPTH);
     }
 
     /**
