@@ -1040,6 +1040,10 @@ main.page-glossary .single-post-wrapper .container {
         }
     }
 
+    .job-posting-item.featured {
+        background-color: var(--color-blue);
+    }
+
     .job-posting-item:hover {
         background-color: var(--color-lime);
         cursor: pointer;

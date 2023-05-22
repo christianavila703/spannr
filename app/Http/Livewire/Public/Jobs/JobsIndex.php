@@ -73,7 +73,7 @@ class JobsIndex extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Job::orderByDesc('posted_date')->open()
+        $query = Job::orderByDesc('monthly')->orderByDesc('posted_date')->open()
                 ->when($this->search, function($query, $search) {
                     return $query
                         ->where('name', 'like', '%' . $search . '%')

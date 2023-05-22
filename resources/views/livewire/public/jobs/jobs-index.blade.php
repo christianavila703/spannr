@@ -73,7 +73,7 @@
             @include('components.admin.jobs.job-current-filters')
             @forelse($records as $job)
                 <div wire:key="job-{{ $job->slug }}" class="@if(!$loop->last) mb-5 @endif">
-                    <div data-bs-toggle="offcanvas" data-bs-target="#job-description-{{ $job->slug }}" aria-controls="job-description-{{ $job->slug }}" class="job-posting-item text-dark text-decoration-none">
+                    <div data-bs-toggle="offcanvas" data-bs-target="#job-description-{{ $job->slug }}" aria-controls="job-description-{{ $job->slug }}" class="job-posting-item @if($job->monthly) featured @endif text-dark text-decoration-none">
                         <div class="job-posting-item-content">
                             <h2 class="job-title">
                                 <span>{{ $job->name }}</span>
