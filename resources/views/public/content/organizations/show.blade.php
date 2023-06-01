@@ -23,12 +23,12 @@
 @section('content')
     <div class="container">
         <div class="breadcrumbs mt-4">
-            <x-nav.breadcrumbs parentUrl="{{ route('public.content.organizations.index') }}" parentLabel="Companies" currentLabel="{{ $organization->name }}"/>
+            <x-nav.breadcrumbs parentUrl="{{ route('public.content.organizations.index') }}" parentLabel="Longevity Companies" currentLabel="{{ $organization->name }}"/>
         </div>
 
         <div class="organization-details-container mb-5">
             <div class="heading-group border-bottom mb-4">
-                <div class="logo" style="background-image: url({{ $organization->image_url }});"></div>
+                <div class="logo mb-4" style="background-image: url({{ $organization->image_url }});"></div>
                 <div class="text">
                     <span class="d-block text-muted text-uppercase fw-bold mb-2">{{ $organization->type }} Company</span>
                     <h1 class="h2 mb-0">{{ $organization->name }}</h1>
@@ -38,7 +38,26 @@
                         </div>
                     @endif
                 </div>
+                <div class="social-icons">
+                    @if($organization->facebookUrl)
+                        <a href="{!! $organization->facebookUrl !!}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
+                    @endif
+                    @if($organization->twitterUrl)
+                        <a href="{!! $organization->twitterUrl !!}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitter"></i></a>
+                    @endif
+                    @if($organization->linkedinUrl)
+                        <a href="{!! $organization->linkedinUrl !!}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+                    @endif
+                    @if($organization->instagramUrl)
+                        <a href="{!! $organization->instagramUrl !!}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                    @endif
+                </div>
             </div>
+            @if($organization->summary)
+                <div class="mb-4 lead text-secondary">
+                    {{ $organization->summary }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="mb-4">
@@ -82,25 +101,36 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($organization->jobs_count > 0)
+                            <div class="mt-4 mb-5">
+                                <h2 class="title">Recent Jobs at {{ $organization->name }}</h2>
+                                <livewire:public.organizations.organization-jobs organizationId="{{ $organization->id }}" />
+                                <div>
+                                    <a href="{{ route('public.content.jobs.index', ['search' => $organization->name] ) }}" class="btn btn-outline-dark">View Jobs &rarr;</a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($organization->media_items_count > 0)
+                            <div class="mt-4">
+                                <h2 class="title">Latest News</h2>
+                                <livewire:public.organizations.organization-news organizationId="{{ $organization->id }}"/>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <h2 class="title">Stock</h2>
-                    @include('public.content.organizations.stock-data')
-                    @if ($organization->stock->data)
-                    <div>
-                        @include('public.content.organizations.chart', ['slug' => $organization->slug])
-                    </div>
+                    @if($organization->stock)
+                        <div class="mb-5">
+                            <h2 class="title">Stock</h2>
+                            @include('public.content.organizations.stock-data')
+                            @if ($organization->stock->data)
+                                <div>
+                                    @include('public.content.organizations.chart', ['slug' => $organization->slug])
+                                </div>
+                            @endif
+                        </div>
                     @endif
-                </div>
-                <div class="col-12 col-lg-6 mt-5">
-                    @if ($organization->mediaItems->count() > 0)
-                        <h2 class="title">Latest News</h2>
-                        <livewire:public.organization-news organizationId="{{ $organization->id }}"/>
-                    @endif
-                </div>
-                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <div class="my-5 mx-auto" style="max-width: 350px">
+                    <div class="mx-auto" style="max-width: 350px">
                         <div class="outline-newsletter-optin">
                             <x-optins.newsletter showNameFields="true" />
                         </div>

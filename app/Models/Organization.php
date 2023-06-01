@@ -71,6 +71,11 @@ class Organization extends Model implements EntityContract
     /**
      * Relationships
      */
+    public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Event::class, 'relatable', 'event_relationships');
+    }
+
     public function fundraisingRounds(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(FundraisingRound::class)->orderByDesc('date');
@@ -109,6 +114,14 @@ class Organization extends Model implements EntityContract
     public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();
+    }
+
+    /**
+     * Attributes
+     */
+    public function getPublicUrlAttribute(): string
+    {
+        return route('public.content.organizations.show', $this->slug);
     }
 
     /**

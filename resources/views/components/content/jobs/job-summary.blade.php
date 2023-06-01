@@ -43,4 +43,16 @@
             </div>
         </div>
     </div>
+    <div class="d-flex align-items-end">
+        <div class="mt-3 lead me-3">
+            <span class="badge mt-3 bg-secondary">{{ $job->type }}</span>
+        </div>
+        <div>
+            @if($job->remote)
+                <div class="mt-3 lead">
+                    <span class="badge mt-3 text-dark bg-info">Remote</span>
+                </div>
+            @endif
+        </div>
+    </div>
 </div>

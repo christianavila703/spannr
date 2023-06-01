@@ -170,6 +170,19 @@ input[type="submit"] {
     color: var(--color-white);
 }
 
+.btn-outline-dark {
+    border: 1px solid var(--color-black);
+    color: var(--color-black);
+    padding: $btn-padding-y-lg $btn-padding-x-lg;
+    background-color: transparent;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--color-black);
+    border-color: var(--color-black);
+    color: var(--color-white);
+}
+
 /* Fancy Links */
 .link-black-underline-gradient {
     color: var(--color-black);
@@ -195,7 +208,7 @@ input[type="submit"] {
     width: auto;
 }
 
-$min-widths: 80 100 120 150 180 200 250;
+$min-widths: 45 80 100 120 150 180 200 250;
 
 @each $size in $min-widths {
     .min-width-#{$size} {
@@ -550,4 +563,74 @@ ol.table-of-contents {
 body.no-scroll {
     height: 100vh;
     overflow: hidden;
+}
+
+/* Tiny Box for Map Legends */
+.map-legend-box {
+    display: flex;
+    align-items: center;
+
+    .background {
+        width: 1rem;
+        height: 1rem;
+        margin-right: .5rem;
+    }
+
+    .label {
+        font-size: .86rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--color-gray-dark);
+    }
+}
+
+$organizationColors:(
+    "public": var(--color-magenta),
+    "private": var(--color-blue),
+    "educational": var(--color-lime),
+    "non-profit": var(--color-purple),
+    "other": var(--color-orange-light)
+);
+
+@each $name, $color in $organizationColors {
+    .organization-#{$name} {
+        .background {
+            background-color: $color;
+        }
+
+        .text {
+            color: $color;
+        }
+
+        button.active,
+        button:focus,
+        button:hover {
+            background-color: $color;
+            border-color: $color;
+            color: var(--color-white);
+            transition: all .2s ease-in-out;
+        }
+    }
+}
+
+.organization-educational {
+    button.active,
+    button:focus,
+    button:hover {
+        color: var(--color-black);
+    }
+}
+
+.plain-bullet-list {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    li:last-of-type {
+        margin-bottom: 0;
+    }
 }

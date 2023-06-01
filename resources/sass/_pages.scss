@@ -526,37 +526,50 @@ main.page-glossary .single-post-wrapper .container {
 
 /* Companies */
 #longevity-companies {
+
+    .row {
+        align-items: stretch;
+    }
+
     .company-card {
         display: flex;
-        flex-direction: column;
-        align-self: stretch;
         padding: 1rem;
-        align-items: center;
+        align-items: stretch;
 
         a {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-self: stretch;
-            padding: 1rem;
+            padding: 2rem 1rem;
             align-items: center;
+            justify-content: space-between;
             border: 2px solid var(--color-gray-extra-light);
             text-decoration: none;
-            transition: all .3s ease-in-out;
+            transition: all .2s ease-in-out;
         }
 
         a:hover {
-            transform: scale(1.02);
+            border-color: var(--color-lime);
+
+            .logo {
+                opacity: 1;
+            }
         }
 
         .logo {
             display: block;
             width: 100%;
-            max-width: 280px;
-            height: 200px;
+            max-width: 240px;
+            height: 100px;
             background-size: contain;
             background-position: center center;
             background-repeat: no-repeat;
             margin-bottom: 1rem;
+            opacity: .8;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all .2s ease-in-out;
         }
 
         .title {
@@ -583,16 +596,10 @@ main.page-glossary .single-post-wrapper .container {
         height: 140px;
         flex-grow: 0;
         flex-shrink: 0;
-        //border-radius: 100%;
         display: block;
         background-size: contain;
         background-position: center center;
         background-repeat: no-repeat;
-        //border: 1px solid var(--color-gray-light);
-
-        @media (min-width: 768px) {
-            margin-right: 2rem;
-        }
     }
 
     .title {
@@ -601,6 +608,10 @@ main.page-glossary .single-post-wrapper .container {
         margin-bottom: .5rem;
         @include subheadings-font;
         font-size: 1.5rem;
+    }
+
+    .text {
+        text-align: center;
     }
 
     .overview {
@@ -646,18 +657,53 @@ main.page-glossary .single-post-wrapper .container {
             line-height: 1.25;
         }
     }
+
+    .social-icons {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+
+        a {
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+    }
 }
 
-.organization-news-container {
+@media (min-width: 768px) {
+    .organization-details-container {
+        .logo,
+        .text {
+            margin-right: 2rem;
+        }
+
+        .text {
+            text-align: left;
+        }
+
+        .social-icons {
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0;
+
+            a {
+                margin-right: 0;
+                margin-left: 1rem;
+            }
+        }
+    }
+}
+
+.organization-related-items-container {
     a {
         text-decoration: none;
     }
 
-    .organization-news-item {
+    .organization-related-item {
         border-bottom: 1px solid $gray-300;
     }
 
-    .organization-news-item:last-of-type {
+    .organization-related-item:last-of-type {
         border-bottom: 0;
     }
 }
@@ -1108,4 +1154,32 @@ main.page-glossary .single-post-wrapper .container {
     text-indent: -99999px;
     height: 0;
     overflow: hidden;
+}
+
+/* Charts */
+#organizations-by-type {
+  width: 100%;
+  height: 450px;
+}
+
+#organizations-locations-map {
+    width: 100%;
+    height: 600px;
+
+    @media (min-width: 1200px) {
+        height: 750px;
+    }
+}
+
+#organizations-by-founded-date {
+  width: 100%;
+  height: 400px;
+
+    @media (min-width: 1200px) {
+        height: 540px;
+    }
+
+    @media (min-width: 1500px) {
+        height: 450px;
+    }
 }

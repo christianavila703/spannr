@@ -41,10 +41,18 @@ Route::get('/index', [App\Http\Controllers\Public\ContentController::class, 'lon
 Route::get('/index/about', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndexAbout'])->name('public.content.longevity-index.about');
 Route::get('/index/terms-and-disclaimers', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndexTerms'])->name('public.content.longevity-index.terms');
 Route::get('/longevity-stock-chart', [App\Http\Controllers\Public\ContentController::class, 'longevityStockChart'])->name('public.content.longevity-index.chart');
-Route::get('/companies/', [App\Http\Controllers\Public\ContentController::class, 'companiesList'])->name('public.content.organizations.index');
-Route::get('/companies/{slug}', [App\Http\Controllers\Public\ContentController::class, 'organizationShow'])->name('public.content.organizations.show');
-Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\ContentController::class, 'organizationChart'])->name('public.content.organizations.chart');
-Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\ContentController::class, 'organizationChartData'])->name('public.content.organizations.data');
+
+Route::get('/companies/', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'index'])->name('public.content.organizations.index');
+Route::get('/companies/charts/organizations-by-type.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationsByTypePieChartData'])
+    ->name('public.content.organizations.charts.organizations-by-type');
+Route::get('/companies/charts/organizations-locations-map.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationLocationsMapData'])
+    ->name('public.content.organizations.charts.organizations-locations-map');
+Route::get('/companies/charts/organizations-by-founded-date.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationByFoundedDateChart'])
+    ->name('public.content.organizations.charts.organizations-by-founded-date');
+Route::get('/companies/{slug}', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'show'])->name('public.content.organizations.show');
+Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockChart'])->name('public.content.organizations.chart');
+Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockData'])->name('public.content.organizations.data');
+
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
 Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::class, 'index'])->name('public.content.reports.index');
 Route::get('/reports/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
