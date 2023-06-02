@@ -2,7 +2,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Title</th>
                 <th>Slug / Link</th>
                 <th>Updated</th>
@@ -13,16 +12,19 @@
             @forelse ($content as $contentItem)
                 <tr class="align-middle">
                     <td>
-                        <a href="https://wp.spannr.com/wp-admin/post.php?post={{ $contentItem->id }}&action=edit">{{ $contentItem->id }}</a>
+                        {{ $contentItem->name }}
+                        @if ($contentItem->status === \App\Models\Content::STATUS_DRAFT)
+                            <span class="badge bg-warning">Draft</span>
+                        @endif
                     </td>
-                    <td>{{ $contentItem->name }}</td>
                     <td>
                         <a href="{{ $contentItem->link }}">{{ $contentItem->slug }}</a>
-                        <span>
-                            @if (in_array($contentItem->slug, $pageSlugs))
-                                <span class="badge bg-primary">attached</span>
-                            @endif
-                        </span>
+                        @if (in_array($contentItem->slug, $pageSlugs))
+                            <span class="badge bg-primary">Attached</span>
+                        @endif
+                        @if ($contentItem->is_child)
+                            <span class="badge bg-neon-green">Child</span>
+                        @endif
                     </td>
                     <td>{{ $contentItem->updated_at }}</td>
                     <td class="flex-grow-1 text-end">

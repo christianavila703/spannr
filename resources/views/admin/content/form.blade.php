@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="d-flex flex-wrap">
                 <x-forms.select name="status" label="Status" class="mb-3 me-3">
-                    @foreach (\App\Models\Article::STATUSES as $status)
+                    @foreach (\App\Models\Content::STATUSES as $status)
                         <option value="{{ $status }}"
                                 @isset($content)
                                     @if($content->status == $status) selected @endif
@@ -27,7 +27,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Mtea Description" name="meta_description" id="meta_description"
+                <textarea class="form-control" placeholder="Meta Description" name="meta_description" id="meta_description"
                           style="height: 180px">{{ $content->meta_description ?? old('meta_description') }}</textarea>
                 <label for="meta_description">Meta Description</label>
                 <div class="small">
@@ -36,16 +36,28 @@
                 </div>
             </div>
         </div>
-        @isset($content)
-            <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6">
+            <div>
                 <label for="tags" class="visually-hidden">Select Tags</label>
                 <select multiple name="tags[]" id="tags" class="js-choice-tags" data-url="{{ $tagUrl }}">
                     <option value="">Select Tags</option>
                 </select>
             </div>
-        @endisset
+            <div class="mt-4">
+                <label for="parent_id" class="h5">Parent Content</label>
+                <select name="parent_id" id="parent_id" class="js-choice-parent" data-url="{{ $parentsUrl }}">
+                    <option value="">Select Parent</option>
+                </select>
+            </div>
+        </div>
         <div class="col-12 my-3">
             <x-tiny-mce.tiny-editor id="content" name="content" value="{{ $content->content ?? old('content') }}"/>
+        </div>
+        <div class="col-12 my-3">
+            <p class="h4">References</p>
+            <x-forms.input type="text" name="sources_label" label="Sources Label" class="mb-3 flex-grow-1"
+                               value="{{ $content->sources_label ?? old('sources_label') }}"/>
+            <x-tiny-mce.tiny-editor id="sources" name="sources" value="{{ $content->sources ?? old('sources') }}"/>
         </div>
         <div class="col-12 my-3">
             <p class="h4">Sidebar</p>
@@ -73,6 +85,17 @@
             }
         });
 
+        const parentChoice = new Choices('#parent_id');
+        const parentUrl = document.getElementById('parent_id').getAttribute('data-url');
+
+        parentChoice.setChoices(async () => {
+            try {
+                const items = await fetch(parentUrl);
+                return items.json();
+            } catch (err) {
+                console.error(err);
+            }
+        });
     </script>
 
     @vite('resources/js/meta-descriptions.js')

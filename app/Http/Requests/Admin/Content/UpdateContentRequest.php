@@ -28,14 +28,17 @@ class UpdateContentRequest extends FormRequest
             ],
             'slug' => [
                 'required',
-                Rule::unique('content')->ignore($this->name, 'name'),
+                Rule::unique('content')->ignore($this->slug, 'slug'),
                 'max:255'
             ],
             'status' => 'required',
             'meta_description' => 'required',
             'content' => 'required',
             'sidebar' => 'nullable',
-            'tags' => 'nullable|array'
+            'tags' => 'nullable|array',
+            'parent_id' => 'nullable|integer',
+            'sources' => 'nullable',
+            'sources_label' => 'nullable'
         ];
     }
 }

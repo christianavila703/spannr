@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Content;
 use App\Models\Event;
 use App\Models\FundraisingRound;
 use App\Models\Investor;
@@ -111,6 +112,14 @@ class ChoicesController extends Controller
     {
         $default = explode(',', $request->input('default')) ?? [];
         $records = User::orderBy('name')->get();
+        return $this->getJsonFromModel($records, $default);
+    }
+
+    public function contentParents(Request $request): string
+    {
+        $default = explode(',', $request->input('default')) ?? [];
+        $records = Content::orderBy('name')->whereNull('parent_id')->get();
+
         return $this->getJsonFromModel($records, $default);
     }
 

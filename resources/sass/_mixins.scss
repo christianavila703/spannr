@@ -156,3 +156,16 @@
         margin-top: calc($spacer-desktop * 2);
     }
 }
+
+@mixin collapse-arrows {
+    [data-bs-toggle="collapse"]:before {
+        width: 1.5rem;
+        display: inline-block;
+        content: "\f105";
+        font-family: "Font Awesome 6 Sharp";
+    }
+
+    [data-bs-toggle="collapse"][aria-expanded="true"]:before {
+        content: "\f107";
+    }
+}

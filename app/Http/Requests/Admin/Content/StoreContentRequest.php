@@ -40,6 +40,10 @@ class StoreContentRequest extends FormRequest
             'meta_description' => 'required',
             'content' => 'required',
             'sidebar' => 'nullable',
+            'tags' => 'nullable|array',
+            'parent_id' => 'nullable|integer',
+            'sources' => 'nullable',
+            'sources_label' => 'nullable'
         ];
     }
 }

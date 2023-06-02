@@ -24,52 +24,22 @@ class ContentController extends Controller
 
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.content.create');
+        $parentsUrl = route('admin.json.content.parents');
+        $tagUrl = route('admin.json.tags');
+
+        return view('admin.content.create', [
+            'parentsUrl' => $parentsUrl,
+            'tagUrl' => $tagUrl
+        ]);
     }
 
     public function store(StoreContentRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
+        unset($validated['tags']);
         $content = Content::create($validated);
+        $content->tags()->sync($request->input('tags'));
         return redirect()->route('admin.content.index')->with('success', 'Successfully created ' . $content->name . '!');
-    }
-
-    public function storeWordpress(Request $request): \Illuminate\Http\RedirectResponse
-    {
-        $validated = $request->validate([
-            'wordpress' => 'required',
-        ]);
-
-        $username = config('services.wordpress.username');
-        $password = config('services.wordpress.password');
-
-        $rest_api_url = config('services.wordpress.url') . "/wp-json/wp/v2/pages/" . $validated['wordpress'];
-
-        $response = Http::withBasicAuth($username, $password)
-            ->get($rest_api_url);
-
-        $wpPage = $response->json();
-
-        $slug = $wpPage['yoast_head_json']['canonical'];
-        $slug = str_replace('https://spannr.com/', '', $slug);
-        $slug = rtrim($slug, '/');
-        $slug = str_replace('/', '--', $slug);
-
-        $attributes = [
-            'name' => html_entity_decode($wpPage['title']['rendered']),
-            'slug' => $slug,
-            'link' => $wpPage['yoast_head_json']['canonical'],
-            'status' => $this->getStatus($wpPage['status']),
-            'seo' => $wpPage['yoast_head'],
-            'content' => html_entity_decode($wpPage['content']['rendered']),
-        ];
-
-        $content = Content::updateOrCreate(
-            ['id' => $wpPage['id']],
-            $attributes
-        );
-
-        return redirect()->route('admin.content.index')->with('success', 'Successfully added ' . $content->name . '!');
     }
 
     public function show($id)
@@ -88,35 +58,35 @@ class ContentController extends Controller
             $tagUrl .= '?default=' . implode(',', $currentTags);
         }
 
+        $parentsUrl = route('admin.json.content.parents');
+
+        if ($content->parent_id) {
+            $parentsUrl .= '?default=' . $content->parent_id;
+        }
+
         return view('admin.content.edit', [
             'content' => $content,
-            'tagUrl' => $tagUrl
+            'tagUrl' => $tagUrl,
+            'parentsUrl' => $parentsUrl
         ]);
     }
 
-    public function update(UpdateContentRequest $request, $id)
+    public function update(UpdateContentRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validated();
+        unset($validated['tags']);
         $content = Content::findOrFail($id);
-
         $content->update($validated);
+        $content->tags()->sync($request->input('tags'));
+
         return redirect()->route('admin.content.index')->with('success', 'Updated ' . $content->name);
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
         $content = Content::findOrFail($id);
         $status = 'Successfully deleted ' . $content->name . '!';
         $content->delete();
         return redirect()->route('admin.content.index')->with('success', $status);
-    }
-
-    private function getStatus($status): string
-    {
-        return match($status) {
-            'publish' => Content::STATUS_PUBLISHED,
-            'private' => Content::STATUS_PRIVATE,
-            default => Content::STATUS_DRAFT
-        };
     }
 }

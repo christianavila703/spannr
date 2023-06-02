@@ -29,7 +29,7 @@ import 'tinymce/plugins/autosave';
 /* content UI CSS is required */
 import contentCss from '../sass/tinymce.scss';
 
-const dialogConfig = {
+const iframeConfig = {
     title: 'Insert iFrame',
     body: {
         type: 'panel',
@@ -64,10 +64,61 @@ const dialogConfig = {
     }
 };
 
+const collapseConfig = {
+    title: 'Insert Collapsable Content',
+    body: {
+        type: 'panel',
+        items: [
+            {
+                type: 'input',
+                name: 'heading',
+                label: 'Heading'
+            },
+            {
+                type: 'selectbox',
+                name: 'headingType',
+                label: 'Heading Type',
+                items: [
+                    {value: 'h3', text: 'h3'},
+                    {value: 'h4', text: 'h4'},
+                    {value: 'h5', text: 'h5'},
+                    {value: 'h6', text: 'h6'},
+                    {value: 'p', text: 'p'},
+                    {value: 'h1', text: 'h1'},
+                    {value: 'h2', text: 'h2'},
+                ]
+            },
+            {
+                type: 'input',
+                name: 'anchor',
+                label: 'Anchor'
+            }
+        ]
+    },
+    buttons: [
+        {
+            type: 'cancel',
+            name: 'closeButton',
+            text: 'Cancel'
+        },
+        {
+            type: 'submit',
+            name: 'submitButton',
+            text: 'Insert',
+            buttonType: 'primary'
+        }
+    ],
+    onSubmit: (api) => {
+        const data = api.getData();
+        tinymce.activeEditor.execCommand('mceInsertContent', false, `<div class="collapsable-content-group"><${data.headingType} class="h5"><a role="button" href="#${data.anchor}" data-bs-toggle="collapse" aria-expanded="false" aria-controls="${data.anchor}">${data.heading}</a></${data.headingType}><div class="collapse" id="${data.anchor}"><div class="collapsable-content-container">REPLACE WITH COLLAPSABLE CONTENT :)</div></div></div>`);
+        api.close();
+    }
+};
+
 tinymce.init({
     selector: 'textarea.tiny-editor',
     plugins: 'advlist code table lists media image link autoresize charmap visualblocks visualchars wordcount autosave',
-    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount restoredraft insert-iframe',
+    toolbar: 'undo redo | image | insert | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link charmap | visualblocks visualchars wordcount restoredraft insert-iframe insert-collapsable-content',
     browser_spellcheck: true,
     block_unsupported_drop: false,
     automatic_uploads: true,
@@ -85,8 +136,12 @@ tinymce.init({
     setup: (editor) => {
         editor.ui.registry.addButton('insert-iframe', {
             icon: 'embed-page',
-            onAction: () => editor.windowManager.open(dialogConfig)
-        })
+            onAction: () => editor.windowManager.open(iframeConfig)
+        });
+        editor.ui.registry.addButton('insert-collapsable-content', {
+            icon: 'duplicate-row',
+            onAction: () => editor.windowManager.open(collapseConfig)
+        });
     },
     style_formats: [
         { title: 'Image caption', block: 'p', classes: 'image-caption-text' },

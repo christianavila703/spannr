@@ -3,7 +3,7 @@
 @section('content')
 
     <x-entities.create backUrl="{{ route('admin.content.index') }}" backLabel="Content" class="has-long-form">
-        <x-slot:title>Add Content</x-slot:title>
+        <x-slot:title>Edit Content</x-slot:title>
         <div id="long-form-container">
             @include('admin.content.form', [
                 'route' => route('admin.content.update', $content->id),
@@ -29,14 +29,23 @@
             </div>
         </div>
 
-        <div id="upload-image" class="mt-5">
-            <div class="max-width-600">
-                <livewire:admin.has-media.upload-featured-image :model="$content" />
-            </div>
-            <div class="mt-4">
-                <livewire:admin.has-media.upload-post-image :model="$content" />
+        <div id="upload-image" class="my-5 border p-4">
+            <div class="row">
+                <div class="col-12 col-xl-6 mb-4 mb-xl-0 ">
+                    <livewire:admin.has-media.upload-featured-image :model="$content" />
+                </div>
+                <div class="col-12 col-xl-6 ps-xl-5">
+                    <livewire:admin.has-media.upload-post-image :model="$content" />
+                </div>
             </div>
         </div>
+
+        @if ($content->children)
+            <div id="content-children" class="my-5 border p-4">
+                <h2 class="h4">Manage Children</h2>
+                <livewire:admin.content.manage-child-order :content="$content" />
+            </div>
+        @endif
     </x-entities.create>
 
 @endsection

@@ -10,7 +10,3 @@
     </x-entities.create>
 
 @endsection
-
-@push('end')
-
-@endpush

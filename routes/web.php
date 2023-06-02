@@ -60,6 +60,7 @@ Route::get('/jobs', [App\Http\Controllers\Public\Content\JobsController::class, 
 Route::get('/jobs/submit/job', [App\Http\Controllers\Public\Content\JobsController::class, 'submit'])->name('public.content.jobs.submit');
 Route::get('/jobs/apply/{slug?}', [App\Http\Controllers\Public\Content\JobsController::class, 'apply'])->name('public.content.jobs.apply');
 Route::get('/jobs/subscription/confirmed', [App\Http\Controllers\Public\ContentController::class, 'jobPostingSubscriptionConfirmed'])->name('public.content.jobs.subscription.confirmed');
+Route::get('/guide-to-longevity', [App\Http\Controllers\Public\Content\LongevityGuideController::class, 'index'])->name('public.content.longevity-guide.index');
 
 Route::get('/checkout/job-posting-subscription', [App\Http\Controllers\Public\CheckoutController::class, 'jobPostingSubscription']);
 
@@ -115,6 +116,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/json/fundraising-rounds.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'fundraisingRounds'])->name('json.fundraising-rounds');
         Route::get('/json/users.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'users'])->name('json.users');
         Route::get('/json/authors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'authors'])->name('json.authors');
+        Route::get('/json/content/parents.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'contentParents'])->name('json.content.parents');
 
         // Organization Routes & Relationships
         Route::get('/organizations/{slug}/stock-data', [\App\Http\Controllers\Admin\OrganizationController::class, 'stockData'])->name('organizations.stock-data');

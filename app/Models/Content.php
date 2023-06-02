@@ -14,18 +14,15 @@ class Content extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    public $incrementing = false;
     protected $guarded = [];
     protected $table = 'content';
 
     const STATUS_PUBLISHED = 'Published';
-    const STATUS_PRIVATE = 'Private';
     const STATUS_DRAFT = 'Draft';
 
     const STATUSES = [
         self::STATUS_PUBLISHED,
-        self::STATUS_PRIVATE,
-        self::STATUS_DRAFT,
+        self::STATUS_DRAFT
     ];
 
     const PAGES = [
@@ -43,18 +40,14 @@ class Content extends Model implements HasMedia
         'glossary',
         'companies',
         'events--leveraging-longevity-sd',
-        'reports--2022-longevity-funding'
+        'reports--2022-longevity-funding',
+        'guide-to-longevity'
     ];
 
     /**
      * Scopes
      */
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return mixed
-     */
-    public function scopePublished(Builder $query)
+    public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_PUBLISHED);
     }
@@ -65,6 +58,16 @@ class Content extends Model implements HasMedia
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Content::class, 'parent_id');
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Content::class, 'parent_id')->orderBy('order')->orderBy('name');
     }
 
     /**
@@ -115,6 +118,11 @@ class Content extends Model implements HasMedia
         return 'https://wp.spannr.com/wp-content/uploads/2022/04/social-share-white.jpg';
     }
 
+    public function getIsChildAttribute(): bool
+    {
+        return $this->parent_id !== null;
+    }
+
     /**
      * Mutators
      */
@@ -129,15 +137,19 @@ class Content extends Model implements HasMedia
     public function setSlugAttribute($value) {
         $this->attributes['slug'] = $value;
 
-        $link = url('/');
+        if ($this->parent_id) {
+            $this->attributes['link'] = $this->parent->link . "#" . $value;
+        } else {
+            $link = url('/');
 
-        $slugParts = explode('--', $value);
+            $slugParts = explode('--', $value);
 
-        foreach ($slugParts as $part) {
-            $link .= "/" . $part;
+            foreach ($slugParts as $part) {
+                $link .= "/" . $part;
+            }
+
+            $this->attributes['link'] = $link;
         }
-
-        $this->attributes['link'] = $link;
     }
 
     private function replaceUrls(string $value): string
@@ -172,6 +184,7 @@ class Content extends Model implements HasMedia
                 $this
                     ->addMediaConversion('post')
                     ->width(600)
+                    ->keepOriginalImageFormat()
                     ->nonQueued();
         });
     }

@@ -1,5 +1,5 @@
 <div>
-    <h2 class="h4 fs-2 mb-3">Set Featured Image</h2>
+    <h2 class="h4 mb-3">Set Featured Image</h2>
 
     <form method="POST" wire:submit.prevent="submit">
 
