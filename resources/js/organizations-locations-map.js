@@ -1,6 +1,6 @@
-let mapUrl = document.getElementById('organizations-locations-map').getAttribute('data-chart');
-
 am5.ready(function () {
+    let mapUrl = document.getElementById('organizations-locations-map').getAttribute('data-chart');
+
     let root = am5.Root.new("organizations-locations-map");
 
     root.setThemes([
@@ -36,9 +36,6 @@ am5.ready(function () {
 
     polygonSeriesUS.mapPolygons.template.set("fill", am5.color('#d3d3d3'));
 
-
-    // Zoom control
-    // https://www.amcharts.com/docs/v5/charts/map-chart/map-pan-zoom/#Zoom_control
     chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
 
     chart.chartContainer.get("background").events.on("click", function () {

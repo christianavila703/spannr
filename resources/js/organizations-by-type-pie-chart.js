@@ -1,6 +1,5 @@
-let dataUrl = document.getElementById('organizations-by-type').getAttribute('data-chart');
-
 am5.ready(function () {
+    let dataUrl = document.getElementById('organizations-by-type').getAttribute('data-chart');
 
     let root = am5.Root.new("organizations-by-type");
 
