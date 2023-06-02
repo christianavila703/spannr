@@ -2,7 +2,7 @@
     <div class="container-fluid px-2 py-5 d-flex flex-wrap justify-content-center align-items-center">
         <div class="content-container">
             <h2 class="title">The Spannr Longevity Company Report</h2>
-            <p class="lead">Everything you need to know to get started investing in the longevity ecosystem in 2022</p>
+            <p class="lead">Everything you need to know to get started investing in the longevity ecosystem in {{ date('Y') }}</p>
             <!-- Begin Mailchimp Signup Form -->
             <div id="mc_embed_signup">
                 <form action="https://spannr.us14.list-manage.com/subscribe/post?u=d4d9b36ab55b4eb5d67e8a680&amp;id=1dc3f748f8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" novalidate>
