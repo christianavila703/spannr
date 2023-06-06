@@ -3,6 +3,14 @@
         <div class="me-4">
             <input wire:model="filters.search" type="text" class="form-control" placeholder="Search...">
         </div>
+        <div class="me-4">
+            <div class="form-check me-3 d-flex align-items-center">
+                <input wire:model="filters.owned-investor" class="form-check-input mt-0 me-2" type="checkbox" value="true" id="filter-owner-investor">
+                <label class="form-check-label fw-bold" for="filter-owner-investor">
+                    Show Investors
+                </label>
+            </div>
+        </div>
         <div>
             <button wire:click="resetFilters" class="btn btn-sm">Reset Filters</button>
         </div>
@@ -11,9 +19,10 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table small">
         <thead>
         <tr>
+            <th style="width: 2.25rem"></th>
             <th class="sortable-column">Name
                 <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
             </th>
@@ -27,12 +36,21 @@
         </thead>
         <tbody>
         @foreach($people as $person)
-            <tr>
+            <tr wire:key="person-{{ $person->id }}">
+                <td style="width: 2.25rem">
+                    @if ($person->ownedInvestor)
+                        <span class="text-quaternary"><i class="{{ $person->investor_icon }}"></i></span>
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.people.show', $person->slug) }}">{{ $person->name }}</a>
                 </td>
                 <td>{{ $person->byline }}</td>
-                <td>{{ $person->website }}</td>
+                <td>
+                    <a href="{{ $person->website }}" target="_blank" rel="noopener noreferrer">
+                        <span class="truncate-200">{{ $person->website }}</span>
+                    </a>
+                </td>
             </tr>
         @endforeach
         </tbody>

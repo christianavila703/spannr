@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
+use App\Http\Traits\HasOwnedInvestor;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
@@ -25,7 +26,8 @@ class Organization extends Model implements EntityContract
         HasImage,
         HasBreadcrumbs,
         ReviewAndAudit,
-        Lockable;
+        Lockable,
+        HasOwnedInvestor;
 
     protected $guarded = ['id'];
 

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InvestorPersonRequest;
 use App\Http\Requests\InvestorRequest;
 use App\Models\Investor;
+use App\Models\Organization;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class InvestorController extends Controller
@@ -37,6 +39,39 @@ class InvestorController extends Controller
         }
 
         return redirect()->route('admin.investors.index')->with('success', 'Added ' . $investor->name);
+    }
+
+    public function createFromEntity(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $validated = $request->validate([
+            'entity_type' => 'required',
+            'entity_id' => 'required',
+            'type' => 'required'
+        ]);
+
+        if ($validated['entity_type'] === Organization::class) {
+            $entity = Organization::findOrFail($validated['entity_id']);
+        } elseif ($validated['entity_type'] === Person::class) {
+            $entity = Person::findOrFail($validated['entity_id']);
+        } else {
+            $message = 'Unable to create investor from entity because entity was unexpected: ' . $validated['entity_type'];
+            Log::warning($message);
+            return redirect()->back()->with('error', $message);
+        }
+
+        try {
+            $investor = Investor::create([
+                'name' => $entity->name,
+                'ownable_type' => $validated['entity_type'],
+                'ownable_id' => $validated['entity_id'],
+                'type' => $validated['type']
+            ]);
+
+            return redirect()->route('admin.investors.show', $investor->slug);
+        } catch(\Throwable $throwable) {
+            Log::critical('Unable to create Investor from entity' . "\n" . print_r($request->input(), true) . "\n" . $throwable->getMessage());
+            return redirect()->back()->with('error', 'Unable to create Investor from entity because exception. Tell dev team please.');
+        }
     }
 
     public function show($slug)

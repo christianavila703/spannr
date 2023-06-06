@@ -146,6 +146,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/investors/{slug}/people', [\App\Http\Controllers\Admin\InvestorController::class, 'people'])->name('investors.people');
         Route::post('/investor/people', [\App\Http\Controllers\Admin\InvestorController::class, 'savePerson'])->name('investors.save-person');
 
+        Route::post('/investor/create-from-entity', [\App\Http\Controllers\Admin\InvestorController::class, 'createFromEntity'])->name('investors.create-from-entity');
+
         // Location
         Route::get('/locations/{entityType}/{entityId}', [\App\Http\Controllers\Admin\LocationController::class, 'attach'])->name('locations.attach');
         Route::post('/locations/attach', [\App\Http\Controllers\Admin\LocationController::class, 'store'])->name('locations.store');

@@ -69,6 +69,14 @@
     line-height: 2.375rem;
 }
 
+/* Truncate */
+@mixin truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
 /* Text Shadows */
 @mixin text-shadow-sm {
     text-shadow: 1px 1px .125rem rgba(0,0,0,.075);

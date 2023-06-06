@@ -19,7 +19,8 @@ class Index extends Component
         'amount-min' => null,
         'amount-max' => null,
         'selected-types' => [],
-        'hasStock' => 0
+        'hasStock' => 0,
+        'owned-investor' => null,
     ];
 
     public $sortColumnName = 'name';
@@ -73,6 +74,9 @@ class Index extends Component
                 })
                 ->when($this->filters['hasStock'] == 1, function($query) {
                     return $query->whereHas('stock');
+                })
+                ->when($this->filters['owned-investor'], function($query) {
+                    return $query->has('ownedInvestor');
                 })
                 ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)

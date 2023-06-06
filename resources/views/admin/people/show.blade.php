@@ -11,6 +11,14 @@
                 <a href="{{ route('admin.people.edit', $person->id) }}" class="btn btn-info me-3">Edit</a>
             @endif
 
+            @if ($person->ownedInvestor)
+                <a href="{{ route('admin.investors.show', $person->ownedInvestor->slug) }}" class="btn btn-quintary me-3">
+                    <i class="{{ $person->investor_icon }} me-1"></i>Investor
+                </a>
+            @else
+                <x-entities.investors.create-from-entity entityType="{{ \App\Models\Person::class }}" entityId="{{ $person->id }}" />
+            @endif
+
             <div class="dropdown mb-0">
                 <button class="btn btn-tertiary dropdown-toggle" type="button" id="add-relationship" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-plus me-1"></i>Add

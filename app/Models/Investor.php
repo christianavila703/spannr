@@ -42,12 +42,14 @@ class Investor extends Model implements EntityContract
         'Hedge Fund',
         'Incubator',
         'Platform',
-        self::TYPE_PRIVATE_EQUITY,
+        self::TYPE_PRIVATE_EQUITY
     ];
+
+    const ICON_CSS_CLASS = 'fa-duotone fa-hands-holding-dollar';
 
     private string $searchableRouteName = 'admin.investors.show';
     private string $searchableRouteField = 'slug';
-    private string $searchableIcon = 'fa-duotone fa-hands-holding-dollar';
+    private string $searchableIcon = self::ICON_CSS_CLASS;
 
     private string $modelName = 'investors';
     private string $imageUrlStoragePath = 'public/images/investors';
@@ -80,6 +82,12 @@ class Investor extends Model implements EntityContract
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    // Owner - Organization or Person Record
+    public function ownable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    {
+        return $this->morphTo();
+    }
+
     // People Relationships
     public function founders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -94,6 +102,46 @@ class Investor extends Model implements EntityContract
     public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Person::class)->orderBy('name')->withPivot('role')->withTimestamps();
+    }
+
+    /**
+     * Attributes
+     */
+    public function getOwnableNameAttribute(): string
+    {
+        if ($this->ownable_id) {
+            return $this->ownable->name;
+        } else {
+            return '';
+        }
+    }
+
+    public function getOwnableAdminLinkAttribute(): string
+    {
+        if ($this->ownable_id) {
+            return $this->ownable->admin_link;
+        } else {
+            return '';
+        }
+    }
+
+    public function getOwnableIconAttribute(): string
+    {
+        if ($this->ownable_id) {
+            return $this->ownable->investor_icon;
+        } else {
+            return '';
+        }
+    }
+
+    public function getOwnablePrettyTypeAttribute(): ?string
+    {
+        if ($this->ownable_type) {
+            $array = explode('\\', $this->ownable_type);
+            return array_pop($array);
+        } else {
+            return '';
+        }
     }
 
     /**

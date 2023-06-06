@@ -10,6 +10,13 @@
             @else
                 <a href="{{ route('admin.organizations.edit', $organization->id) }}" class="btn btn-info me-3">Edit</a>
             @endif
+            @if ($organization->ownedInvestor)
+                <a href="{{ route('admin.investors.show', $organization->ownedInvestor->slug) }}" class="btn btn-quintary me-3">
+                    <i class="{{ $organization->investor_icon }} me-1"></i>Investor
+                </a>
+            @else
+                <x-entities.investors.create-from-entity entityType="{{ \App\Models\Organization::class }}" entityId="{{ $organization->id }}" />
+            @endif
 
             @if($organization->stock)
                 <a href="{{ route('public.content.organizations.show', $organization->slug) }}" class="btn btn-quaternary me-3">View Public</a>
@@ -37,7 +44,7 @@
             @include('admin.entity-reviews.includes.entity-form', ['entity' => $organization])
         </x-slot:buttons>
         <x-slot:title>{{ $organization->name }}</x-slot:title>
-        @include('admin.organizations.show-data')
+        <x-entities.data.organization-data :organization="$organization" />
     </x-entities.show>
 
     @include('admin.organizations.investors.add')

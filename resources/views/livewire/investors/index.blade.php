@@ -4,24 +4,34 @@
             <input wire:model="filters.search" type="text" class="form-control" placeholder="Search...">
         </div>
         <div class="me-4 d-flex align-items-center">
-            <strong class="d-block me-3">Type</strong>
-            @foreach ($typeOptions as $type)
-                <div class="form-check me-3">
-                    <input wire:model="filters.selected-types" class="form-check-input" type="checkbox" value="{{ $type }}" id="filter-type-{{ $type }}" @if(in_array($type, $filters['selected-types'])) checked @endif>
-                    <label class="form-check-label" for="filter-type-{{ $type }}">
-                        {{ $type }}
-                    </label>
-                </div>
-            @endforeach
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter by Type
+                </button>
+                <ul class="dropdown-menu" wire:ignore.self style="min-width: 200px">
+                    @foreach ($typeOptions as $option)
+                        <li class="px-3">
+                            <div class="form-check d-flex align-items-center">
+                                <input wire:model="filters.selected-types" class="form-check-input me-2 mt-0" type="checkbox" value="{{ $option }}"
+                                       id="filter-type-{{ $option }}">
+                                <label class="d-block @if(in_array($option, $filters['selected-types'])) fw-bold @endif" for="filter-type-{{ $option }}">
+                                    {{ $option }}
+                                </label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
         <div>
             <button wire:click="resetFilters" class="btn btn-sm">Reset Filters</button>
         </div>
     </div>
 
-    <table class="table">
+    <table class="table small">
         <thead>
         <tr>
+            <th style="width: 2.25rem"></th>
             <th class="sortable-column">Name
                 <x-tables.sortable-button columnName="name" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}"/>
             </th>
@@ -38,13 +48,35 @@
         </thead>
         <tbody>
         @foreach($investors as $investor)
-            <tr>
-                <td>
-                    <a href="{{ route('admin.investors.show', $investor->slug) }}">{{ $investor->name }}</a>
+            <tr wire:key="investor-{{ $investor->id }}">
+                <td style="width: 2.25rem">
+                    @if ($investor->ownable_id)
+                        <span class="text-quaternary"><i class="{{ $investor->ownable_icon }}"></i></span>
+                    @endif
                 </td>
-                <td class="text-nowrap">{{ $investor->type }}</td>
-                <td>{!! $investor->websiteLink !!}</td>
-                <td>{{ $investor->summary }}</td>
+                <td>
+                    <a href="{{ route('admin.investors.show', $investor->slug) }}"><span class="truncate-200">{{ $investor->name }}</span></a>
+                </td>
+                <td class="text-nowrap">
+                    <span class="truncate-150">{{ $investor->type }}</span>
+                </td>
+                <td>
+                    <a href="{{ $investor->website }}" target="_blank" rel="noopener noreferrer">
+                        <span class="truncate-200">{{ $investor->website }}</span>
+                    </a>
+                </td>
+                <td>
+                    @if($investor->ownable_id)
+                        <span class="text-warning">
+                            <i class="{{ $investor->ownable_icon }}"></i>
+                        </span>
+                        <a href="{{ $investor->ownable_admin_link }}">{{ $investor->ownable_name }}</a>
+                    @else
+                        <div class="truncate-350">
+                            {{ $investor->summary }}
+                        </div>
+                    @endif
+                </td>
                 <td>
                     <div class="max-width-600">
                         @foreach ($investor->fundraisingRounds as $fundraisingRound)

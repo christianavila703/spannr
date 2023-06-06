@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\Entity\FieldsMapping;
 use App\Http\Traits\HasBreadcrumbs;
 use App\Http\Traits\HasImage;
+use App\Http\Traits\HasOwnedInvestor;
 use App\Http\Traits\HasSocialMedia;
 use App\Http\Traits\SearchableEntity;
 use App\Models\Contracts\EntityContract;
@@ -23,7 +24,8 @@ class Person extends Model implements EntityContract
         SearchableEntity,
         HasImage,
         HasBreadcrumbs,
-        Lockable;
+        Lockable,
+        HasOwnedInvestor;
 
     const ORGANIZATION_ROLE_FOUNDER = 'Founder';
     const ORGANIZATION_ROLE_TEAM = 'Team';
@@ -90,6 +92,11 @@ class Person extends Model implements EntityContract
     public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->withPivot('role')->withTimestamps();
+    }
+
+    public function ownedInvestor(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Investor::class, 'ownable');
     }
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany

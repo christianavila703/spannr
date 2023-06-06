@@ -16,6 +16,7 @@ class Index extends Component
 
     public $filters = [
         'search' => '',
+        'owned-investor' => null
     ];
 
     public $sortColumnName = 'name';
@@ -48,6 +49,9 @@ class Index extends Component
                     return $query
                         ->where('name', 'like', '%' . $search . '%')
                         ->orWhere('byline', 'like', '%' . $search . '%');
+                })
+                ->when($this->filters['owned-investor'], function($query) {
+                    return $query->has('ownedInvestor');
                 })
                 ->orderBy($this->sortColumnName, $this->sortDirection)
                 ->paginate($this->perPage)

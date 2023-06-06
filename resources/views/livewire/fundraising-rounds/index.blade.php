@@ -63,7 +63,7 @@
             <button wire:click="resetFilters" class="btn">Reset Filters</button>
         </div>
     </div>
-    <table class="table">
+    <table class="table small">
         <thead>
         <tr>
             <th class="sortable-column">Date
@@ -89,7 +89,7 @@
                     {{ $fundraisingRound->date }}
                 </td>
                 <td>
-                    <a href="{{ route('admin.fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a>
+                    <a href="{{ route('admin.fundraising-rounds.show', $fundraisingRound->id) }}"><span class="truncate-300">{{ $fundraisingRound->name }}</span></a>
                 </td>
                 <td>
                     {{ $fundraisingRound->round }}
