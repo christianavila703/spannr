@@ -5,10 +5,10 @@
         <div id="home-hero" class="hero">
             <div class="content">
                 <div class="inner">
-                    <h1>We cover the industry of <span>life extension</span></h1>
+                    <h1>Live healthier, <span>longer.</span></h1>
                     <div>
-                        <p class="lead">Spannr is the <strong>easiest</strong> place to stay up to date on the complex world of longevity, age-defying research, and the businesses shaping the future of healthcare.</p>
-                        <p class="lead">Join thousands of longevity leaders today.</p>
+                        <p class="lead">Spannr is the easiest place to access the complex world of longevity. Discover how to increase your healthspan and extend your lifespan.</p>
+                        <p class="lead">Join thousands of Spannr subscribers:</p>
                     </div>
                     <div class="mailchimp-form">
                         <livewire:forms.newsletter-opt-in
