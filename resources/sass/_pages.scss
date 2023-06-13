@@ -955,29 +955,13 @@ main.page-glossary .single-post-wrapper .container {
     }
 
     blockquote {
+        color: var(--color-blue);
+        font-weight: bold;
         font-size: 1.4rem;
         line-height: 1.6;
         padding: 1rem 1.5rem;
         margin: 0 auto;
-    }
-
-    blockquote.first {
-        background: $cyan;
-    }
-
-    blockquote.second {
-        background: var(--color-light-purple);
-        font-size: 1.4rem;
-        color: $white;
-    }
-
-    blockquote.third {
-        background: $yellow;
-
-        strong {
-            @include subheadings-font;
-            display: block;
-        }
+        border: 1px solid black;
     }
 }
 
