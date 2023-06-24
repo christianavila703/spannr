@@ -21,11 +21,6 @@ class OrganizationController extends Controller
 
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $organizations = Organization::where('type', Organization::TYPE_PUBLIC)
-            ->with('tags')
-            ->orderBy('name')
-            ->get();
-
         $totalOrganizations = Organization::count();
 
         $foundedDateCutoff = 2010;
@@ -44,7 +39,6 @@ class OrganizationController extends Controller
         $topTags = Tag::whereHas('organizations')->withCount('organizations')->orderByDesc('organizations_count')->take(10)->get()->pluck('organizations_count', 'name')->toArray();
 
         return view('public.content.organizations.index', [
-           'organizations' => $organizations,
             'seo' => $seo,
             'topTags' => $topTags,
             'totalOrganizations' => $totalOrganizations,

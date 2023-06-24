@@ -1,7 +1,7 @@
 am5.ready(function () {
-    let dataUrl = document.getElementById('organizations-by-type').getAttribute('data-chart');
+    let dataUrl = document.getElementById('entities-by-type-pie-chart').getAttribute('data-chart');
 
-    let root = am5.Root.new("organizations-by-type");
+    let root = am5.Root.new("entities-by-type-pie-chart");
 
     root.setThemes([
         am5themes_Animated.new(root)

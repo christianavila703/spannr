@@ -1,7 +1,7 @@
 <div>
     <div class="d-flex flex-wrap mb-3 mx-2 align-items-center">
         @foreach ($allowedTypes as $allowedType)
-            <div class="organization-{{ strtolower($allowedType) }}">
+            <div class="organization-{{ Str::slug($allowedType) }}">
                 <button wire:click="setType('{{ $allowedType }}')" class="btn h4 me-3 @if($allowedType === $type) active @endif">
                     <span>{{ $allowedType }}</span>
                 </button>

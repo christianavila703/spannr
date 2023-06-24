@@ -30,12 +30,13 @@ class Investor extends Model implements EntityContract
     const TYPE_ANGEL = 'Angel Investor';
     const TYPE_FUND = 'Fund';
     const TYPE_PRIVATE_EQUITY = 'Private Equity';
+    const TYPE_CORPORATE = 'Corporate';
 
     const TYPES = [
         'Academic Fund',
         self::TYPE_ANGEL,
         'Asset Management',
-        'Corporate',
+        self::TYPE_CORPORATE,
         'Family Office',
         'Foundation',
         self::TYPE_FUND,

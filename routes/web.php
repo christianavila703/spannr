@@ -42,16 +42,36 @@ Route::get('/index/about', [App\Http\Controllers\Public\ContentController::class
 Route::get('/index/terms-and-disclaimers', [App\Http\Controllers\Public\ContentController::class, 'longevityStockIndexTerms'])->name('public.content.longevity-index.terms');
 Route::get('/longevity-stock-chart', [App\Http\Controllers\Public\ContentController::class, 'longevityStockChart'])->name('public.content.longevity-index.chart');
 
-Route::get('/companies/', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'index'])->name('public.content.organizations.index');
+// Companies
+Route::get('/companies/', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'index'])
+    ->name('public.content.organizations.index');
 Route::get('/companies/charts/organizations-by-type.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationsByTypePieChartData'])
     ->name('public.content.organizations.charts.organizations-by-type');
 Route::get('/companies/charts/organizations-locations-map.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationLocationsMapData'])
     ->name('public.content.organizations.charts.organizations-locations-map');
 Route::get('/companies/charts/organizations-by-founded-date.json', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'organizationByFoundedDateChart'])
     ->name('public.content.organizations.charts.organizations-by-founded-date');
-Route::get('/companies/{slug}', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'show'])->name('public.content.organizations.show');
-Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockChart'])->name('public.content.organizations.chart');
-Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockData'])->name('public.content.organizations.data');
+Route::get('/companies/{slug}', [App\Http\Controllers\Public\Content\Organizations\OrganizationController::class, 'show'])
+    ->name('public.content.organizations.show');
+Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockChart'])
+    ->name('public.content.organizations.chart');
+Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockData'])
+    ->name('public.content.organizations.data');
+
+// Investors
+Route::get('/investors/', [App\Http\Controllers\Public\Content\Investors\InvestorController::class, 'index'])->name('public.content.investors.index');
+Route::get('/investors/charts/investors-by-type.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'investorsByTypePieChartData'])
+    ->name('public.content.investors.charts.investors-by-type');
+Route::get('/investors/charts/total-amount-raised-last-12-months.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'totalAmountRaisedLast12Months'])
+    ->name('public.content.investors.charts.total-amount-raised-last-12-months');
+Route::get('/investors/charts/amount-raised-per-round.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'amountRaisedPerRoundType'])
+    ->name('public.content.investors.charts.amount-raised-per-round');
+Route::get('/investors/charts/average-raised-per-round.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'averageRaisedPerRoundType'])
+    ->name('public.content.investors.charts.average-raised-per-round');
+Route::get('/investors/charts/ytd-amount-raised-per-category.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'yearToDateAmountRaisedPerCategory'])
+    ->name('public.content.investors.charts.ytd-amount-raised-per-category');
+Route::get('/investors/charts/year-over-year-bar-chart-race', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'yearOverYearBarChartRace'])
+    ->name('public.content.investors.charts.year-over-year-bar-chart-race');
 
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
 Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::class, 'index'])->name('public.content.reports.index');

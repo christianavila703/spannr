@@ -14,6 +14,8 @@ class OrganizationIndex extends Component
     public string $search = '';
     public string $type = '';
 
+    public string $defaultType = Organization::TYPE_PUBLIC;
+
     public array $allowedTypes = [
         Organization::TYPE_PUBLIC,
         Organization::TYPE_PRIVATE,
@@ -23,7 +25,7 @@ class OrganizationIndex extends Component
     ];
 
     public function mount() {
-        $this->type = Organization::TYPE_PUBLIC;
+        $this->type = $this->defaultType;
     }
 
     public function updatingSearch()
@@ -58,14 +60,10 @@ class OrganizationIndex extends Component
         if (in_array($type, $this->allowedTypes)) {
             $this->type = $type;
         } else {
-            $this->type = Organization::TYPE_PUBLIC;
+            $this->type = $this->defaultType;
         }
 
         $this->resetPage();
-    }
-
-    public function setPrivate() {
-        $this->type = Organization::TYPE_PRIVATE;
     }
 
     public function render()

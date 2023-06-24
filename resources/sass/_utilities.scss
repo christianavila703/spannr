@@ -622,16 +622,21 @@ body.no-scroll {
     }
 }
 
-$organizationColors:(
-    "public": var(--color-magenta),
-    "private": var(--color-blue),
-    "educational": var(--color-lime),
-    "non-profit": var(--color-purple),
-    "other": var(--color-orange-light)
+$entityColors:(
+    "organization-public": var(--color-magenta),
+    "organization-private": var(--color-blue),
+    "organization-educational": var(--color-lime),
+    "organization-non-profit": var(--color-purple),
+    "organization-other": var(--color-orange-light),
+    "investor-fund": var(--color-magenta),
+    "investor-angel-investor": var(--color-blue),
+    "investor-private-equity": var(--color-lime),
+    "investor-corporate": var(--color-purple),
+    "investor-other": var(--color-orange-light),
 );
 
-@each $name, $color in $organizationColors {
-    .organization-#{$name} {
+@each $name, $color in $entityColors {
+    .#{$name} {
         .background {
             background-color: $color;
         }
@@ -651,7 +656,8 @@ $organizationColors:(
     }
 }
 
-.organization-educational {
+.organization-educational,
+.investor-private-equity {
     button.active,
     button:focus,
     button:hover {

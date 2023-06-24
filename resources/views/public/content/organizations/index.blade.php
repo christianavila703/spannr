@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-12 col-xl-6 mt-xl-3">
                     <h3 class="text-center h5 mb-0">Longevity Organizations by Type</h3>
-                    <div id="organizations-by-type" data-chart="{{ route('public.content.organizations.charts.organizations-by-type') }}"></div>
+                    <div id="entities-by-type-pie-chart" data-chart="{{ route('public.content.organizations.charts.organizations-by-type') }}"></div>
                 </div>
             </div>
             <div class="longevity-companies-map-container mt-6 mb-5 text-center">
@@ -121,7 +121,7 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-    <script src="{{ Vite::asset('resources/js/organizations-by-type-pie-chart.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/entities-by-type-pie-chart.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/organizations-locations-map.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/organizations-by-founded-date-chart.js') }}"></script>
 
