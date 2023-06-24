@@ -20,6 +20,7 @@
     <ul class="dropdown-menu">
         <li>
             <a class="dropdown-item" href="{{ route('public.content.organizations.index') }}">Companies</a>
+            <a class="dropdown-item" href="{{ route('public.content.investors.index') }}">Investors</a>
             <a class="dropdown-item" href="{{ route('public.content.jobs.index') }}">Jobs</a>
             <a class="dropdown-item" href="{{ route('public.content.glossary.index') }}">Glossary</a>
         </li>
