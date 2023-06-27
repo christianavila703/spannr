@@ -134,7 +134,7 @@
                         <div class="outline-newsletter-optin">
                             <x-optins.newsletter showNameFields="true" />
                         </div>
-                        <div class="mt-5">
+                        <div class="mt-4">
                             <livewire:public.random-glossary-item-widget />
                         </div>
                     </div>

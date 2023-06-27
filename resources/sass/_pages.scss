@@ -91,13 +91,13 @@ main.page-glossary .single-post-wrapper .container {
 }
 
 .glossary-nav {
-    @include margin-top-md;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     flex-direction: column;
+    background: var(--color-gray-extra-light);
 }
 
 .glossary-nav-menu {
@@ -133,44 +133,51 @@ main.page-glossary .single-post-wrapper .container {
             @include subheadings-font;
         }
     }
-}
-
-.glossary-nav-menu .toggle-mobile {
-    display: none;
-}
-
-.glossary-nav-menu.fixed-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: var(--color-white);
-    z-index: 5;
-    max-height: 3.75rem;
-    overflow: hidden;
-    @include box-shadow-sm;
-    justify-content: flex-start;
 
     .toggle-mobile {
-        display: block;
-        width: 1.5rem;
+        display: none;
     }
 
     .toggle-mobile:hover {
         cursor: pointer;
     }
 
-    @media (min-width: $bp-min-desktop) {
-        justify-content: center;
+    @media (max-width: $bp-min-desktop) {
+        justify-content: flex-start;
 
-        .toggle-mobile {
-            display: none;
+        &.glossary-nav-mobile {
+            max-height: 3.75rem;
+            overflow: hidden;
+            @include box-shadow-sm;
+
+            .toggle-mobile {
+                display: block;
+                width: 1.5rem;
+
+                .opened {
+                    display: none;
+                }
+
+                .closed {
+                    display: block;
+                }
+            }
+
+            &.open {
+                max-height: none;
+
+                .toggle-mobile {
+                    .opened {
+                        display: block;
+                    }
+
+                    .closed {
+                        display: none;
+                    }
+                }
+            }
         }
     }
-}
-
-.glossary-nav-menu.fixed-nav.open {
-    max-height: none;
 }
 
 .sidebar-glossary-widget {
@@ -960,6 +967,7 @@ main.page-glossary .single-post-wrapper .container {
         color: var(--color-blue);
         font-weight: bold;
         font-size: 1.4rem;
+        font-weight: 600;
         line-height: 1.6;
         padding: 1rem 1.5rem;
         margin: 0 auto;

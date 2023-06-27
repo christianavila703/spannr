@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div id="about" class="bg-white pt-5 pt-xl-6 pb-5 pb-xl-6">
+        <div id="about" class="bg-white pt-5 pt-xl-6">
             <div class="container">
                 <h1>About Us</h1>
                 <hr class="dark mb-4">
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div id="fuel" class="bg-white pb-5 pb-xl-6">
+        <div id="fuel" class="bg-white pt-5 pt-xl-6 pb-5 pb-xl-6">
             <div class="container">
                 <h3 class="h1">Adding Fuel To The Fire</h3>
                 <hr class="dark mb-4">

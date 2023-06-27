@@ -153,6 +153,16 @@ class ContentController extends Controller
             }
         }
 
+        $prevArticle = Article::published()
+            ->where('date', '<', $article->date)
+            ->orderBy('date', 'desc')
+            ->first();
+
+        $nextArticle = Article::published()
+            ->where('date', '>', $article->date)
+            ->orderBy('date')
+            ->first();
+
         $pageTitle = $article->page_title ? $article->page_title : $article->name . ' - Spannr';
         $featuredImage = $article->getFirstMediaUrl('featured');
 
@@ -199,6 +209,8 @@ class ContentController extends Controller
 
         return view('public.content.articles.show', [
             'article' => $article,
+            'prevArticle' => $prevArticle,
+            'nextArticle' => $nextArticle,
             'pageTitle' => $pageTitle,
             'featuredImage' => $featuredImage,
             'graph' => $graph

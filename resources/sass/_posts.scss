@@ -208,12 +208,6 @@
 
 .sticky-sidebar {
     position: fixed;
-    top: .75rem;
-    z-index: 999;
-}
-
-.sticky-sidebar {
-    top: 40px;
 }
 
 @media (max-width: $bp-min-desktop - 1px) {
@@ -629,6 +623,7 @@ ul.pagination {
 
     .page-item.disabled {
         opacity: 0;
+        display: none;
     }
 
     .page-item.active {
@@ -667,7 +662,13 @@ ul.pagination {
 
     .title {
         color: var(--color-blue);
-         font-family: $headings-font-family;
+        font-family: $headings-font-family;
+        border-bottom: 1px solid var(--color-gray-dark);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+        font-weight: 700;
+        font-size: 1.5rem;
     }
 
     .description {

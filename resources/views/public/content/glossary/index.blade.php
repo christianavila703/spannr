@@ -1,17 +1,23 @@
 @extends('layouts.public')
 
+@section('subheader')
+    <nav class="glossary-nav mx-auto">
+        <ul class="glossary-nav-menu mx-auto">
+            <li class="toggle-mobile">
+                <span class="closed">+</span>
+                <span class="opened">&ndash;</span>
+            </li>
+            @foreach ($alphabet as $letter)
+                <li>
+                    <a href="#{{ $letter }}">{{ $letter }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </nav>
+@endsection
+
 @section('content')
     <main class="page-glossary">
-        <nav class="glossary-nav mx-auto">
-            <ul class="glossary-nav-menu mx-auto">
-                <li class="toggle-mobile"><span>+</span></li>
-                @foreach ($alphabet as $letter)
-                    <li>
-                        <a href="#{{ $letter }}">{{ $letter }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </nav>
         <div class="single-post-wrapper pt-3">
             <div class="single-post-content-container">
                 <div class="glossary-post">
@@ -66,9 +72,4 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     @vite('resources/js/sticky-sidebar.js')
     @vite('resources/js/glossary.js')
-    <style>
-        .sticky-sidebar {
-            top: 80px;
-        }
-    </style>
 @endpush

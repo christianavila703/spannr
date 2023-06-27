@@ -13,7 +13,7 @@
                 <div>
                     <p>Across the globe, scientists are working on ways to extend healthy human lifespans beyond what we know. Significant advances have attracted serious investment and the force of this movement is changing the way we look at life.</p>
                     <h1>Invest in the future of humanity.</h1>
-                    <a href="#signup" class="btn btn-rounded btn-outline my-1 me-1">Apply to invest</a>
+                    <a href="#signup" class="btn btn-rounded btn-outline my-1 me-1 mb-2 mb-md-0">Apply to invest</a>
                     <a href="#signup" class="btn btn-rounded btn-outline my-1">Apply for funding</a>
                 </div>
             </div>

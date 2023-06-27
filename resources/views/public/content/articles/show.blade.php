@@ -130,6 +130,14 @@ og:image:type
                                 </a>
                             </div>
                             @endforeach
+                            <p class="articles-bottom-nav text-center mt-4">
+                                @if($prevArticle)
+                                <a href="{{ route('public.content.articles.show', $prevArticle->slug) }}" class="btn text-nowrap"><i class="fa-regular fa-arrow-left me-1"></i> Previous article</a>
+                                @endif
+                                @if($nextArticle)
+                                <a href="{{ route('public.content.articles.show', $nextArticle->slug) }}" class="btn text-nowrap">Next article <i class="fa-regular fa-arrow-right me-1"></i></a>
+                                @endif
+                            </p>
                         </article>
                         <div class="sidebar-container">
                             <div id="sidebar" class="sidebar">

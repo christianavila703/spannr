@@ -1,4 +1,5 @@
 .public-footer{
+    text-align: center;
     padding: 2rem 0;
     @include gradient-pink-to-yellow;
     color: var(--color-white);
@@ -21,6 +22,8 @@
     .logo {
         width: 120px;
         height: auto;
+        margin-left: auto;
+        margin-right: auto;
         margin-bottom: 1rem;
     }
 
@@ -64,6 +67,7 @@
     .social-icons {
         display: flex;
         font-size: 1.8rem;
+        justify-content: center;
 
         a {
             display: block;
@@ -74,6 +78,7 @@
 
 @media (min-width: $bp-min-tablet) {
     .public-footer {
+        text-align: inherit;
 
         .container {
             flex-direction: row;
@@ -84,6 +89,8 @@
         .logo {
             width: 150px;
             margin-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .footer-nav-container {
@@ -152,6 +159,7 @@
 
         .social-icons {
             padding-top: 0;
+            justify-content: inherit;
         }
     }
 }

@@ -46,12 +46,12 @@
 /* Font Sizes */
 @mixin font-size-sm {
     font-size: 0.875rem; // 14px
-    line-height: 1.5rem;
+    line-height: 1.25rem;
 }
 
 @mixin font-size-md {
     font-size: 1rem; // 16px
-    line-height: $spacer-mobile * 1.5;
+    line-height: $line-height-base;
 }
 
 @mixin font-size-lg {
@@ -154,6 +154,14 @@
 
     @media (min-width: $bp-min-desktop) {
         margin-top: $spacer-desktop;
+    }
+}
+
+@mixin padding-top-md {
+    padding-top: $spacer-mobile;
+
+    @media (min-width: $bp-min-desktop) {
+        padding-top: $spacer-desktop;
     }
 }
 

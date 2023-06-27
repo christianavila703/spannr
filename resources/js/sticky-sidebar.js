@@ -6,10 +6,12 @@ jQuery(document).ready(function($) {
         let stickyStabilizerTop = $('#sticky-stabilizer').offset().top;
         let postContent = $('.post-content');
         let widthOfSidebar = $('#sidebar').width();
+        let headerOuterHeight = $('.header-container ').outerHeight();
 
         if (browserWidth >= 1024 && browserHeight > 700 && postContent.height() > 1200) {
-            if (window_top > stickyStabilizerTop) {
+            if (window_top + headerOuterHeight > stickyStabilizerTop) {
                 $('#sticky-sidebar-contents').addClass('sticky-sidebar');
+                $('#sticky-sidebar-contents').css('top', headerOuterHeight + 20);
                 $('#sticky-sidebar-contents').css('maxWidth', widthOfSidebar);
                 $('#sticky-stabilizer').height($('#sticky-sidebar-contents' + 20).outerHeight());
             } else {
