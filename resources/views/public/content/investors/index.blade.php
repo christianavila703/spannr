@@ -1,5 +1,9 @@
 @extends('layouts.public')
 
+@push('seo')
+<x-content.content-meta :content="$content" />
+@endpush
+
 @section('content')
     <main class="page-organizations-list py-5">
         <div class="container">

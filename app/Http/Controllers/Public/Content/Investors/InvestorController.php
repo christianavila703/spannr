@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Public\Content\Investors;
 
 use App\Http\Controllers\Controller;
-use App\Models\FundraisingRound;
+use App\Models\Content;
 use App\Models\Investor;
 use App\Models\Organization;
-use App\Models\Tag;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
@@ -20,12 +18,9 @@ class InvestorController extends Controller
 
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $topInvestorsByDealNumber = Investor::withCount('fundraisingRounds')->orderByDesc('fundraising_rounds_count')->take(10)->get();
+        $content = Content::where('slug', 'investors')->first();
 
-        $topInvestorsByCapitalData = Investor::withCount(['fundraisingRounds AS total_raised' => function ($query) {
-                    $query->select(DB::raw("SUM(amount_raised) as sum"))->whereNotNull('amount_raised');
-                }
-            ])->get()->sortByDesc('total_raised')->toArray();
+        $topInvestorsByDealNumber = Investor::withCount('fundraisingRounds')->orderByDesc('fundraising_rounds_count')->take(10)->get();
 
         $topCompaniesByTotalRaisedData = Organization::withCount(['fundraisingRounds AS total_raised' => function ($query) {
                     $query->select(DB::raw("SUM(amount_raised) as sum"))->whereNotNull('amount_raised');
@@ -37,6 +32,7 @@ class InvestorController extends Controller
         return view('public.content.investors.index', [
             'topInvestorsByDealNumber' => $topInvestorsByDealNumber,
             'topCompaniesByTotalRaised' => $topCompaniesByTotalRaised,
+            'content' => $content
         ]);
     }
 }

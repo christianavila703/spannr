@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         @forelse ($investors as $investor)
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3 company-card">
+            <div wire:key="investor-{{ $investor->id }}" class="col-12 col-md-6 col-lg-4 col-xl-3 company-card">
                 <div class="inner-card">
                     <div class="text-center">
                         <div class="logo" style="background-image: url({{ $investor->image_url }});"></div>
