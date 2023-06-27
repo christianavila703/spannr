@@ -8,9 +8,14 @@ use App\Models\JobCategory;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Person;
+use App\Models\Role;
 use App\Models\Tag;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Spatie\SlackAlerts\Facades\SlackAlert;
@@ -33,6 +38,7 @@ class SubmitJobPosting extends Component
     public $remote;
     public $type;
     public $organization;
+    public $user;
 
     public $locations = [];
 
@@ -44,6 +50,7 @@ class SubmitJobPosting extends Component
     protected $listeners = ['setOrganization', 'updateDescription', 'updateQualifications', 'updateJobLocation', 'clearLocations'];
 
     public function mount() {
+        $this->user = auth()->check() ? auth()->user() : null;
         $this->category = 'placeholder';
 
         $categoryOther = JobCategory::where('name', JobCategory::CATEGORY_OTHER)->first();
@@ -147,9 +154,8 @@ class SubmitJobPosting extends Component
         try {
             $job = Job::create($attributes);
 
-            $person = $this->createOrUpdatePerson();
-            $tag = Tag::where('name', Tag::TAG_HIRING_MANAGER)->first();
-            $person->tags()->syncWithoutDetaching([$tag->id]);
+            $this->createOrUpdateUserAndPerson();
+            $this->user->jobs()->attach($job);
 
             $locations = $this->createOrUpdateLocations();
             $job->locations()->syncWithoutDetaching($locations);
@@ -179,7 +185,7 @@ class SubmitJobPosting extends Component
 
             //redirect to subscription payment page
             if ($this->monthly) {
-                $stripeSubscriptionUrl = config('services.stripe.job_posting_subscription_url');
+                $stripeSubscriptionUrl = config('services.stripe.job_posting_subscription_url') . '?client_reference_id=' . $job->id;
 
                 $this->redirect($stripeSubscriptionUrl);
             }
@@ -194,6 +200,7 @@ class SubmitJobPosting extends Component
         $categoryOptions = JobCategory::where('name', '!=', JobCategory::CATEGORY_OTHER)->orderBy('name')->get();
 
         return view('livewire.public.jobs.submit-job-posting', [
+            'user' => $this->user,
             'categoryOptions' => $categoryOptions,
             'typeOptions' => Job::TYPES,
             'paymentOptions' => Job::PAYMENT_OPTIONS,
@@ -222,17 +229,47 @@ class SubmitJobPosting extends Component
         return $locationArray;
     }
 
-    private function createOrUpdatePerson() {
-        $person = Person::where('email', $this->email)->first();
+    private function createOrUpdateUserAndPerson() {
+        //get or create user
+        if ($this->user === null) {
+            $this->user = User::where('email', $this->email)->first();
 
-        if ($person) {
-            return $person;
-        } else {
-            return Person::create([
-                'name' => $this->first_name . ' ' . $this->last_name,
-                'email' => $this->email,
-                'phone' => $this->phone
-            ]);
+            if ($this->user === null) {
+                $this->user = User::create([
+                    'name' => $this->first_name,
+                    'last_name' => $this->last_name,
+                    'email' => $this->email,
+                    'password' => Hash::make(Str::random()),
+                ]);
+            }
+
+            Auth::login($this->user);
         }
+
+        if ($this->user->hasRole(Role::ROLE_HIRING_MANAGER) === false) {
+            $this->user->assignRole(Role::ROLE_HIRING_MANAGER);
+        }
+
+        //get or create person
+        $person = $this->user->person;
+
+        if (!$person) {
+            $person = Person::where('email', $this->email)->first();
+
+            if (!$person) {
+                $person = Person::create([
+                    'user_id' => $this->user->id,
+                    'name' => $this->first_name . ' ' . $this->last_name,
+                    'email' => $this->email,
+                    'phone' => $this->phone,
+                ]);
+            } else {
+                $person->user_id = $this->user->id;
+                $person->save();
+            }
+        }
+
+        $tag = Tag::where('name', Tag::TAG_HIRING_MANAGER)->first();
+        $person->tags()->syncWithoutDetaching([$tag->id]);
     }
 }

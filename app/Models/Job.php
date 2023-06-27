@@ -92,6 +92,11 @@ class Job extends Model implements EntityContract
         return $this->hasMany(JobApplication::class);
     }
 
+    public function managers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'job_managers');
+    }
+
     /**
      * Scopes
      */

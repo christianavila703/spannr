@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends \Spatie\Permission\Models\Role
 {
-
     const ROLE_SUPER_ADMIN = 'Super Admin';
     const ROLE_ADMIN = 'Admin';
     const ROLE_AUTHOR = 'Author';
@@ -15,6 +14,7 @@ class Role extends \Spatie\Permission\Models\Role
     const ROLE_SPANNR_CONTRIBUTOR = 'Spannr Contributor';
     const ROLE_RECRUITER = 'Recruiter';
     const ROLE_REVIEWER = 'Reviewer';
+    const ROLE_HIRING_MANAGER = 'Hiring Manager';
 
     public function getColorAttribute(): string
     {

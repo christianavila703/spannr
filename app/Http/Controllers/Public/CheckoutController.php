@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\FormEntry;
+use App\Models\Job;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -76,9 +77,13 @@ class CheckoutController extends Controller
             $stripe = new StripeClient(config('services.stripe.api_key'));
             $checkoutDetails = $stripe->checkout->sessions->retrieve($checkoutId);
 
-            if ($checkoutDetails->payment_status !== 'paid') {
+            if ($checkoutDetails->payment_status !== 'paid' || empty($checkoutDetails->subscription)) {
                 throw new \Exception('There was error with your payment. Please contact admin@spannr.com and we’ll get right on it!');
             }
+
+            $job = Job::findOrFail($checkoutDetails->client_reference_id);
+            $job->subscription_id = $checkoutDetails->subscription;
+            $job->save();
 
             return redirect()->route('public.content.jobs.subscription.confirmed');
         } catch (\Throwable $throwable) {

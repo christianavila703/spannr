@@ -373,8 +373,6 @@ class ContentController extends Controller
 
     public function jobPostingSubscriptionConfirmed(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('public.content.jobs.subscription-confirmed', [
-            'showHeader' => false,
-        ]);
+        return view('public.content.jobs.subscription-confirmed');
     }
 }

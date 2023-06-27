@@ -114,6 +114,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasOne(Person::class);
     }
 
+    public function jobs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Job::class, 'job_managers');
+    }
+
     /**
      * Relationships
      */

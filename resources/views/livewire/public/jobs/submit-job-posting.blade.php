@@ -21,21 +21,26 @@
                                 <p class="h6">Hiring Manager Details <small class="text-muted">(where we'll send applications)</small></p>
                             </div>
                             <div class="col-12 col-md-6 mb-4">
-                                <input type="text" wire:model.lazy="first_name" class="form-control" placeholder="First name" aria-label="First Name">
+                                <input type="text" wire:model.lazy="first_name" class="form-control" placeholder="First name" aria-label="First Name"
+                                       value="{{ $user ? $user->first_name : '' }}">
                                 @error('first_name') <span class="form-error">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-12 col-md-6 mb-4">
-                                <input type="text" wire:model.lazy="last_name" class="form-control" placeholder="Last name" aria-label="Last Name">
+                                <input type="text" wire:model.lazy="last_name" class="form-control" placeholder="Last name" aria-label="Last Name"
+                                       value="{{ $user ? $user->last_name : '' }}">
                                 @error('last_name') <span class="form-error">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-12 col-md-6 mb-4">
-                                <input type="text" wire:model.lazy="email" class="form-control" placeholder="Email" aria-label="Email">
+                                <input type="text" wire:model.lazy="email" class="form-control" placeholder="Email" aria-label="Email"
+                                       value="{{ $user ? $user->email : '' }}">
                                 @error('email') <span class="form-error">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-12 col-md-6 mb-4">
-                                <input type="text" wire:model.lazy="phone" class="form-control" placeholder="Phone" aria-label="Phone">
+                                <input type="text" wire:model.lazy="phone" class="form-control" placeholder="Phone" aria-label="Phone"
+                                       value="{{ $user && $user->person ? $user->person->phone : '' }}">
                                 @error('phone') <span class="form-error">{{ $message }}</span> @enderror
                             </div>
+
                             <div class="col-12 pb-4">
                                 <hr class="dark mt-4">
                             </div>

@@ -235,4 +235,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'store'])->name('users.store-password');
     Route::post('/settings/api', [\App\Http\Controllers\Users\ApiController::class, 'createKey'])->name('users.api.create');
     Route::post('/settings/api/delete', [\App\Http\Controllers\Users\ApiController::class, 'deleteKey'])->name('users.api.delete');
+
+    Route::middleware('can:manage own jobs')->group(function () {
+        Route::get('/user/jobs/', [\App\Http\Controllers\Users\JobsController::class, 'index'])->name('users.jobs.index');
+        Route::post('/user/jobs/{id}/unsubscribe', [\App\Http\Controllers\Users\JobsController::class, 'unsubscribe'])->name('users.jobs.unsubscribe');
+    });
 });
