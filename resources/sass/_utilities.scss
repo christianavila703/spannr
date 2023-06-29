@@ -630,7 +630,6 @@ $entityColors:(
     "organization-other": var(--color-orange-light),
     "investor-fund": var(--color-magenta),
     "investor-angel-investor": var(--color-blue),
-    "investor-private-equity": var(--color-lime),
     "investor-corporate": var(--color-purple),
     "investor-other": var(--color-orange-light),
 );
@@ -656,8 +655,7 @@ $entityColors:(
     }
 }
 
-.organization-educational,
-.investor-private-equity {
+.organization-educational {
     button.active,
     button:focus,
     button:hover {

@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\FundraisingRound;
 use App\Models\Investor;
 use App\Models\Organization;
-use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ChartController extends Controller
@@ -26,7 +24,6 @@ class ChartController extends Controller
         $namedTypes = [
             Investor::TYPE_FUND,
             Investor::TYPE_ANGEL,
-            Investor::TYPE_PRIVATE_EQUITY,
             Investor::TYPE_CORPORATE
         ];
 
@@ -35,8 +32,7 @@ class ChartController extends Controller
             if (in_array($type, $namedTypes)) {
                 $data[] = [
                     'category' => $type,
-                    'value' => $count,
-                    'color' => $this->getTypeColor($type)
+                    'value' => $count
                 ];
             } else {
                 $otherCount =+ $count;
@@ -45,8 +41,7 @@ class ChartController extends Controller
 
         $data[] = [
             'category' => 'Other',
-            'value' => $otherCount,
-            'color' => $this->getTypeColor('Other')
+            'value' => $otherCount
         ];
 
         return response(json_encode($data, JSON_NUMERIC_CHECK));
@@ -196,16 +191,5 @@ class ChartController extends Controller
             'startYear' => $startYear,
             'currentYear' => $currentYear
         ]);
-    }
-
-    private function getTypeColor($type): string
-    {
-        return match($type) {
-            Investor::TYPE_FUND => '#ed008c', // Magenta
-            Investor::TYPE_ANGEL =>'#0ac7fe', // Blue
-            Investor::TYPE_PRIVATE_EQUITY =>'#88f200', // Lime
-            Investor::TYPE_CORPORATE =>'#5625ca', // Purple
-            default => '#fe8c0c' // Orange
-        };
     }
 }

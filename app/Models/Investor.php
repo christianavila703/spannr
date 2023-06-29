@@ -29,7 +29,6 @@ class Investor extends Model implements EntityContract
 
     const TYPE_ANGEL = 'Angel Investor';
     const TYPE_FUND = 'Fund';
-    const TYPE_PRIVATE_EQUITY = 'Private Equity';
     const TYPE_CORPORATE = 'Corporate';
 
     const TYPES = [
@@ -42,8 +41,7 @@ class Investor extends Model implements EntityContract
         self::TYPE_FUND,
         'Hedge Fund',
         'Incubator',
-        'Platform',
-        self::TYPE_PRIVATE_EQUITY
+        'Platform'
     ];
 
     const ICON_CSS_CLASS = 'fa-duotone fa-hands-holding-dollar';

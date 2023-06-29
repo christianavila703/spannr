@@ -20,7 +20,6 @@ class InvestorIndex extends Component
     public array $allowedTypes = [
         Investor::TYPE_FUND,
         Investor::TYPE_ANGEL,
-        Investor::TYPE_PRIVATE_EQUITY,
         Investor::TYPE_CORPORATE,
         'Other'
     ];
