@@ -14,6 +14,7 @@ use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Throwable;
 
 class TagController extends Controller
 {
@@ -54,7 +55,19 @@ class TagController extends Controller
 
     public function show($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $tag = Tag::where('slug', $slug)->firstOrFail();
+        $tag = Tag::where('slug', $slug)
+            ->with([
+                'children',
+                'articles',
+                'content',
+                'events',
+                'investors',
+                'jobs',
+                'organizations',
+                'people'
+            ])
+            ->firstOrFail();
+
         return view('admin.tags.show', [
             'tag' => $tag
         ]);
@@ -82,9 +95,17 @@ class TagController extends Controller
         return redirect()->route('admin.tags.show', $tag->slug)->with('success', 'Successfully updated ' . $tag->name);
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $tag = Tag::findOrFail($id);
+        $tagName = $tag->name;
+
+        try {
+            $tag->delete();
+            return redirect()->route('admin.tags.index')->with('success', 'Successfully deleted ' . $tagName);
+        } catch(Throwable $exception) {
+            return redirect()->route('admin.tags.show', $tag->slug)->with('error', 'Error deleting ' . $tag->name . ': ' . $exception->getMessage());
+        }
     }
 
     public function syncEntities(Request $request): \Illuminate\Http\RedirectResponse

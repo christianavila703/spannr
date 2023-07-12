@@ -14,6 +14,12 @@
 
         <x-entities.show.field-heading title="Jobs" />
         <x-entities.show.relationship-basic :records="$tag->jobs" routeName="admin.jobs.show" />
+
+        <x-entities.show.field-heading title="Articles" />
+        <x-entities.show.relationship-basic :records="$tag->articles" routeName="admin.articles.show" />
+
+        <x-entities.show.field-heading title="Content" />
+        <x-entities.show.relationship-basic :records="$tag->content" routeName="admin.jobs.content" />
     </div>
     <div class="col-12 col-md-6">
         <div>
