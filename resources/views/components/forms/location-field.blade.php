@@ -1,10 +1,11 @@
 <div>
     <div id="autocomplete"></div>
-    <input type="hidden" name="locationName" id="locationName">
-    <input type="hidden" name="locationLatitude" id="locationLatitude">
-    <input type="hidden" name="locationLongitude" id="locationLongitude">
+    <input type="hidden" name="name" id="locationName" value="{{ isset($location) ? $location->name : null }}">
+    <input type="hidden" name="latitude" id="locationLatitude" value="{{ isset($location) ? $location->latitude : null }}">
+    <input type="hidden" name="longitude" id="locationLongitude" value="{{ isset($location) ? $location->longitude : null }}">
 </div>
 
+@push('end')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@opencage/geosearch-bundle/dist/css/autocomplete-theme-classic.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@opencage/geosearch-bundle" type="text/javascript"></script>
 
@@ -44,3 +45,4 @@
         plugins: [opencage.OpenCageGeoSearchPlugin(locationSearchOptions, locationSearchEvents)]
     });
 </script>
+@endpush

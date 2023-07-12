@@ -4,8 +4,10 @@
 ])
 
 <div class="{{ $class }}">
-    @foreach ($records as $item)
+    @forelse ($records as $item)
         <span class="me-1">{{ $item->name }}</span>
         @if(!$loop->last) <span class="me-1">/</span> @endif
-    @endforeach
+    @empty
+        <p class="my-2 text-muted">&ndash;</p>
+    @endforelse
 </div>

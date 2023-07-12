@@ -169,9 +169,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/investor/create-from-entity', [\App\Http\Controllers\Admin\InvestorController::class, 'createFromEntity'])->name('investors.create-from-entity');
 
         // Location
-        Route::get('/locations/{entityType}/{entityId}', [\App\Http\Controllers\Admin\LocationController::class, 'attach'])->name('locations.attach');
-        Route::post('/locations/attach', [\App\Http\Controllers\Admin\LocationController::class, 'store'])->name('locations.store');
-        Route::get('/locations/{id}', [\App\Http\Controllers\Admin\LocationController::class, 'show'])->name('locations.show');
+        Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
+        Route::get('/locations/attach/{entityType}/{entityId}', [\App\Http\Controllers\Admin\LocationController::class, 'attach'])->name('locations.attach');
+        Route::post('/locations/create-from-entity', [\App\Http\Controllers\Admin\LocationController::class, 'createFromEntity'])->name('locations.create-from-entity');
 
         Route::get('/longevity-index', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
         Route::get('/longevity-index/snapshot/hourly', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'getHourlySnapshot'])->name('longevity-index.snapshots.hourly');

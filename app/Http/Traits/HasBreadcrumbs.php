@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\FundraisingRound;
 use App\Models\Investor;
 use App\Models\Job;
+use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Tag;
@@ -67,7 +68,8 @@ trait HasBreadcrumbs {
             Investor::class => 'admin.investors.index',
             Event::class => 'admin.events.index',
             Job::class => 'admin.jobs.index',
-            FundraisingRound::class => 'admin.fundraising-rounds.index'
+            FundraisingRound::class => 'admin.fundraising-rounds.index',
+            Location::class => 'admin.locations.index',
         };
 
         $rootName = match(get_class($this)) {
@@ -76,7 +78,8 @@ trait HasBreadcrumbs {
             Investor::class => 'Investors',
             Event::class => 'Events',
             Job::class => 'Jobs',
-            FundraisingRound::class => 'Fundraising Rounds'
+            FundraisingRound::class => 'Fundraising Rounds',
+            Location::class => 'Locations',
         };
 
         $breadcrumb = '<a href="' . route($rootRoute) . '">' . $rootName . '</a>' . '<i class="fa-light fa-angle-right mx-2"></i>';

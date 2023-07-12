@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Locations\StoreLocationRequest;
+use App\Http\Requests\Admin\Locations\UpdateLocationRequest;
 use App\Models\Event;
 use App\Models\Investor;
 use App\Models\Job;
@@ -14,6 +16,82 @@ use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
+    public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    {
+        return view('admin.locations.index');
+    }
+
+    public function create()
+    {
+        return view('admin.locations.create');
+    }
+
+    public function store(StoreLocationRequest $request)
+    {
+        $location = Location::create($request->validated());
+
+        return redirect()->route('admin.locations.index')->with('success', 'Location "' . $location->name . '" created!');
+    }
+
+    public function show($id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    {
+        $location = Location::with([
+                'organizations',
+                'investors',
+                'people',
+                'jobs',
+                'jobApplications'
+            ])
+            ->findOrFail($id);
+
+        return view('admin.locations.show', ['location' => $location]);
+    }
+
+    public function edit($id)
+    {
+        $location = Location::with([
+                'organizations',
+                'investors',
+                'people',
+                'jobs',
+                'jobApplications'
+            ])
+            ->findOrFail($id);
+
+        if ($location->enableLock(auth()->user()->id) === false) {
+            return redirect()->back()->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
+        return view('admin.locations.edit', ['location' => $location]);
+    }
+
+    public function update(UpdateLocationRequest $request, $id)
+    {
+        $location = Location::findOrFail($id);
+
+        if ($location->disableLock(auth()->user()->id) === false) {
+            return redirect()->back()->with('error', 'The entry has been temporarily locked by another user.');
+        }
+
+        $location->fill($request->validated());
+        $location->save();
+
+        foreach (['organizations', 'investors', 'people', 'jobs'] as $relationName) {
+            $location->{$relationName}()->sync($request->input($relationName));
+        }
+
+        return redirect()->route('admin.locations.index')->with('success', 'Location "' . $location->name . '" updated!');
+    }
+
+    public function destroy($id)
+    {
+        $location = Location::findOrFail($id);
+        $name = $location->name;
+
+        $location->delete();
+
+        return redirect()->route('admin.locations.index')->with('success', 'Location "' . $name . '" deleted!');
+    }
 
     public function attach($entityType, $entityId): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
@@ -26,10 +104,14 @@ class LocationController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function createFromEntity(Request $request)
     {
-        $validated = Validator::make($request->all(), [
-            'locationName' => 'required'
+        Validator::make($request->all(), [
+            'entity_id' => 'required',
+            'entity_type' => 'required',
+            'name' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
         ])->validate();
 
         $entityId = $request->input('entity_id');
@@ -37,42 +119,19 @@ class LocationController extends Controller
         $entityClass = $this->matchEntityType($relationship);
         $entity = $entityClass::findOrFail($entityId);
 
-        $location = Location::where('name', $request->input('locationName'))->first();
+        $location = Location::where('name', $request->input('name'))->first();
 
-        if ($location) {
-            $entity->locations()->syncWithoutDetaching([$location->id]);
-        } else {
-            $newLocation = Location::create([
-                'name' => $request->input('locationName'),
-                'latitude' => $request->input('locationLatitude'),
-                'longitude' => $request->input('locationLongitude')
+        if (!$location) {
+            $location = Location::create([
+                'name' => $request->input('name'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude')
             ]);
-
-            $entity->locations()->syncWithoutDetaching([$newLocation->id]);
         }
 
+        $entity->locations()->syncWithoutDetaching([$location->id]);
+
         return redirect()->route('admin.' . $relationship . '.show', $entity->slug)->with('success', 'Location added!');
-
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 
     private function matchEntityType($entityType) {

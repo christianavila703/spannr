@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasBreadcrumbs;
+use App\Models\Traits\Lockable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Location extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasBreadcrumbs,
+        Lockable;
 
     protected $guarded = ['id'];
 
