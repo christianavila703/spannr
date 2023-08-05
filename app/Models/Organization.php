@@ -141,7 +141,7 @@ class Organization extends Model implements EntityContract
 
     public function getSeoDescriptionAttribute(): string
     {
-        return Str::words($this->description, 25);
+        return $this->description ? Str::words($this->description, 25) : '';
     }
 
     /**

@@ -40,7 +40,17 @@ class OrganizationRequest extends FormRequest
             'instagram' => 'string|nullable',
             'description' => 'string|nullable',
             'extended_description' => 'nullable',
-            'image' => 'image|nullable'
+            'image' => 'image|nullable',
+            'longevity' => 'boolean|nullable',
+            'parent_tag' => 'required_if:longevity,1|nullable',
+            'child_tags' => 'array|nullable',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'parent_tag.required_if' => 'The parent tag field is required.',
         ];
     }
 }

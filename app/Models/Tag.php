@@ -16,6 +16,10 @@ class Tag extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'entity_types' => 'array'
+    ];
+
     private string $searchableRouteName = 'admin.tags.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-tag';
@@ -28,6 +32,16 @@ class Tag extends Model
     const TAG_PARENT_ARTICLE_CATEGORIES = 'Article Categories';
 
     const MAX_DEPTH = 1;
+
+    const ENTITY_TYPES = [
+        'article' => Article::class,
+        'content' => Content::class,
+        'event' => Event::class,
+        'investor' => Investor::class,
+        'job' => Job::class,
+        'organization' => Organization::class,
+        'person' => Person::class,
+    ];
 
     /**
      * Relationships

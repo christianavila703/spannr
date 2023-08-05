@@ -126,6 +126,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('glossary', \App\Http\Controllers\Admin\GlossaryController::class);
 
         Route::get('/json/tags.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'tags'])->name('json.tags');
+        Route::get('/json/childTagsByParentId.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'childTagsByParentId'])->name('json.childTagsByParentId');
         Route::get('/json/articleTags.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'articleTags'])->name('json.articleTags');
         Route::get('/json/organizations.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'organizations'])->name('json.organizations');
         Route::get('/json/investors.json', [\App\Http\Controllers\Admin\ChoicesController::class, 'investors'])->name('json.investors');

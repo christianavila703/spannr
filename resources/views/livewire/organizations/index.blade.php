@@ -56,6 +56,9 @@
             <th class="sortable-column">Type
                 <x-tables.sortable-button columnName="type" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}" />
             </th>
+            <th class="sortable-column">Longevity
+                <x-tables.sortable-button columnName="longevity" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}" />
+            </th>
             <th class="sortable-column">Founded
                 <x-tables.sortable-button columnName="founded_date" sortColumnName="{{ $sortColumnName }}" sortDirection="{{ $sortDirection }}" />
             </th>
@@ -86,6 +89,11 @@
                 <td>
                     <span class="truncate-100">
                         {{ $organization->type }}
+                    </span>
+                </td>
+                <td>
+                    <span class="truncate-100">
+                        {{ is_null($organization->longevity) ? '' : ($organization->longevity ? 'Yes' : 'No') }}
                     </span>
                 </td>
                 <td>

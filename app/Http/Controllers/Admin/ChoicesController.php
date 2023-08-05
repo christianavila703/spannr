@@ -30,6 +30,27 @@ class ChoicesController extends Controller
         return $this->orderTags($records, $default);
     }
 
+    public function childTagsByParentId(Request $request): string
+    {
+        $options = [];
+        $parentId = $request->input('parent_id');
+
+        if ($parentId) {
+            $tags = Tag::where('parent_id', $parentId)
+                ->orderBy('name')
+                ->get();
+
+            foreach ($tags as $tag) {
+                $options[] = [
+                    'label' => $tag->name,
+                    'value' => $tag->id,
+                ];
+            }
+        }
+
+        return json_encode($options);
+    }
+
     public function articleTags(Request $request): string
     {
         $data = [];

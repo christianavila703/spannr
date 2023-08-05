@@ -23,7 +23,15 @@ class OrganizationController extends Controller
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.organizations.create');
+        $parentTags = Tag::firstLevel()
+            ->whereJsonContains('entity_types', Organization::class)
+            ->orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray();
+
+        return view('admin.organizations.create', [
+            'parentTags' => $parentTags,
+        ]);
     }
 
     public function store(OrganizationRequest $request): \Illuminate\Http\RedirectResponse
@@ -35,8 +43,17 @@ class OrganizationController extends Controller
             $organization->storeImage($request->file('image'));
         }
 
-        return redirect()->route('admin.organizations.index')->with('success', 'Added ' . $organization->name);
+        if ($organization->longevity == 1) {
+            $tags = [$validated['parent_tag']];
 
+            if (isset($validated['child_tags'])) {
+                $tags = array_merge($tags, $validated['child_tags']);
+            }
+
+            $organization->tags()->sync($tags);
+        }
+
+        return redirect()->route('admin.organizations.index')->with('success', 'Added ' . $organization->name);
     }
 
     public function show($slug): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -116,15 +133,34 @@ class OrganizationController extends Controller
         $organization = Organization::with([
             'investors',
             'people',
-            'fundraisingRounds'
+            'fundraisingRounds',
+            'tags',
         ])->findOrFail($id);
 
         if ($organization->enableLock(auth()->user()->id) === false) {
             return redirect()->route('admin.organizations.index')->with('error', 'The entry has been temporarily locked by another user.');
         }
 
+        $currentTags = $organization->tags->pluck('id')->toArray();
+        $parentTags = Tag::firstLevel()
+            ->whereJsonContains('entity_types', Organization::class)
+            ->orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray();
+        $childTags = [];
+
+        foreach ($parentTags as $id => $name) {
+            if (in_array($id, $currentTags)) {
+                $childTags = Tag::where('parent_id', $id)->orderBy('name')->pluck('name', 'id')->toArray();
+                break;
+            }
+        }
+
         return view('admin.organizations.edit', [
-            'organization' => $organization
+            'organization' => $organization,
+            'currentTags' => $currentTags,
+            'parentTags' => $parentTags,
+            'childTags' => $childTags,
         ]);
     }
 
@@ -145,6 +181,18 @@ class OrganizationController extends Controller
 
         if ($request->input('remove_stock') && $organization->stock->indexed === 0) {
             $organization->stock()->delete();
+        }
+
+        if ($organization->longevity == 1) {
+            $tags = [$validated['parent_tag']];
+
+            if (isset($validated['child_tags'])) {
+                $tags = array_merge($tags, $validated['child_tags']);
+            }
+
+            $organization->tags()->sync($tags);
+        } else {
+            $organization->tags()->detach();
         }
 
         return redirect()->route('admin.organizations.show', $organization->slug)->with('success', $organization->name . ' updated!');

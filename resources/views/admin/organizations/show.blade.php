@@ -33,7 +33,7 @@
                     <li><a class="dropdown-item" href="{{ route('admin.organizations.people', $organization->slug) }}" >People</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFundraisingRoundForm">Fundraising Round</a></li>
                     <li><a class="dropdown-item" href="{{ route('admin.locations.attach', ['organizations', $organization->id]) }}">Location</a></li>
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>
+{{--                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addTagForm">Tags</a></li>--}}
                     @if($organization->type == \App\Models\Organization::TYPE_PUBLIC)
                         @if($organization->stock)
                             <li><a class="dropdown-item" href="{{ route('admin.organizations.stock.edit', $organization->stock->id) }}">Edit Stock</a></li>
@@ -53,7 +53,6 @@
     @include('admin.organizations.investors.add')
     @include('admin.organizations.people.add')
     @include('admin.organizations.fundraising-rounds.add')
-
-    <x-tags.add :entity="$organization" />
+{{--    <x-tags.add :entity="$organization" />--}}
 
 @endsection

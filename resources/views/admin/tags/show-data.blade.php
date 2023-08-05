@@ -22,6 +22,18 @@
         <x-entities.show.relationship-basic :records="$tag->content" routeName="admin.jobs.content" />
     </div>
     <div class="col-12 col-md-6">
+        @if(!$tag->parent_id)
+        <div>
+            <x-entities.show.field-heading title="Available for entities" />
+            @if ($tag->entity_types)
+                @foreach($tag->entity_types as $entityType)
+                    {{ ucfirst(array_flip(App\Models\Tag::ENTITY_TYPES)[$entityType]) }}@if(!$loop->last),&nbsp;@endif
+                @endforeach
+            @else
+                –
+            @endif
+        </div>
+        @endif
         <div>
             <x-entities.show.field-heading title="Description" />
             {!! $tag->description ?? '&ndash;' !!}

@@ -9,6 +9,48 @@
             <x-forms.input type="text" name="name" label="Name" class="mb-3" value="{{ $organization->name ?? old('name') }}" />
 
             <div class="form-floating mb-3">
+                <select class="form-select" id="longevity" name="longevity" aria-label="Select longevity">
+                    <option selected disabled>Select Longevity</option>
+                    <option value="1" {{ isset($organization) && $organization->longevity === 1 ? 'selected' : null }}>Yes</option>
+                    <option value="0" {{ isset($organization) && $organization->longevity === 0 ? 'selected' : null }}>No</option>
+                </select>
+                <label for="longevity">Longevity related</label>
+            </div>
+
+            <div id="organization_tags_block" @if(!isset($organization) || $organization->longevity !== 1) style="display: none;" @endif>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="parent_tag" name="parent_tag" aria-label="Parent Tag">
+                        <option selected disabled>Select Parent Tag</option>
+                        @foreach($parentTags as $id => $name)
+                            <option value="{{ $id }}"
+                                @if(isset($currentTags) && $currentTags && in_array($id, $organization->tags->pluck('id')->toArray())) selected @endif >
+                                {{ $name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label for="longevity">Parent Tag</label>
+                </div>
+
+                <div id="organization_child_tags_block" class="mb-3" @if(!isset($childTags) || empty($childTags)) style="display: none;" @endif>
+                    <label for="child_tags" class="visually-hidden">Child Tags</label>
+                    <select class="form-select" id="child_tags" name="child_tags[]" aria-label="Child Tags" multiple data-url="{{ route('admin.json.childTagsByParentId') }}">
+                        <option value="" disabled>Child Tags</option>
+                        @if(isset($childTags))
+                            @foreach($childTags as $id => $name)
+                                <option value="{{ $id }}"
+                                        @if(isset($currentTags) && $currentTags && in_array($id, $currentTags)) selected @endif >
+                                    {{ $name }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="form-floating mb-3">
                 <select class="form-select" id="type" name="type" aria-label="Select type">
                     <option selected disabled>Select Type</option>
                     @foreach (\App\Models\Organization::TYPES as $type)
@@ -17,12 +59,17 @@
                                     @if($organization->type == $type) selected @endif
                                 @else
                                     @if(old('type') == $type) selected @endif
-                                @endisset
+                            @endisset
                         >{{ $type }}</option>
                     @endforeach
                 </select>
                 <label for="type">Type of organization</label>
             </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 col-md-6 col-lg-5">
 
             <x-forms.input type="url" name="website" label="Website" class="mb-3" value="{{ $organization->website ?? old('website') }}" />
 
@@ -77,3 +124,56 @@
         </div>
     </div>
 </form>
+
+@push('end')
+    <script>
+        const longevityInput = document.getElementById('longevity');
+        const tagsBlock = document.getElementById('organization_tags_block');
+        const parentTagInput = document.getElementById('parent_tag');
+        const childTagsBlock = document.getElementById('organization_child_tags_block')
+        const childTagsInput = document.getElementById('child_tags');
+
+        let childTagsChoice = new Choices(childTagsInput, {
+            removeItemButton: true,
+        });
+
+        longevityInput.addEventListener(
+            'change',
+            function(event) {
+                if (event.target.value === '1') {
+                    tagsBlock.style.display = 'inherit';
+                    parentTagInput.disabled = false;
+                } else {
+                    tagsBlock.style.display = 'none';
+                    parentTagInput.disabled = true;
+                }
+            }
+        );
+
+        parentTagInput.addEventListener(
+            'change',
+            updateChildTagsInput
+        );
+
+        function updateChildTagsInput()
+        {
+            let parentInputValue = parentTagInput.value;
+
+            if (parentInputValue) {
+                let tagsUrl = childTagsInput.getAttribute('data-url') + '?parent_id=' + parentInputValue;
+
+                childTagsChoice.removeActiveItems();
+                childTagsChoice.setChoices(async () => {
+                    try {
+                        const items = await fetch(tagsUrl);
+                        return items.json();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }, 'value', 'label', true);
+
+                childTagsBlock.style.display = 'inherit';
+            }
+        }
+    </script>
+@endpush

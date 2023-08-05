@@ -32,6 +32,7 @@ class TagRequest extends FormRequest
                 'max:255'
             ],
             'parent_id' => 'nullable|int',
+            'entity_types' => 'nullable|array',
             'description' => 'nullable',
         ];
     }

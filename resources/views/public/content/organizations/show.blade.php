@@ -94,6 +94,10 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="mb-3">
+                                    <span class="label">Longevity related</span>
+                                    <span class="value">{{ $organization->longevity ? 'Yes' : 'No' }}</span>
+                                </div>
+                                <div class="mb-3">
                                     <span class="label">Location</span>
                                     @foreach ($organization->locations as $location)
                                         <span class="value">{{ $location->name }}</span>

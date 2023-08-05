@@ -48,6 +48,10 @@ class TagController extends Controller
         $validated = $request->validated();
         $validated['depth'] = $this->getDepthValue($validated['parent_id']);
 
+        if ($validated['parent_id']) {
+            $validated['entity_types'] = null;
+        }
+
         $tag = Tag::create($validated);
 
         return redirect()->route('admin.tags.index')->with('success', 'Successfully added ' . $tag->name);
@@ -89,6 +93,10 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
         $validated = $request->validated();
         $validated['depth'] = $this->getDepthValue($validated['parent_id']);
+
+        if ($validated['parent_id']) {
+            $validated['entity_types'] = null;
+        }
 
         $tag->update($validated);
 
