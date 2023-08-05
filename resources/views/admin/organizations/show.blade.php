@@ -17,6 +17,9 @@
             @else
                 <x-entities.investors.create-from-entity entityType="{{ \App\Models\Organization::class }}" entityId="{{ $organization->id }}" />
             @endif
+            @if($organization->financialStatements->count())
+                <a href="{{ route('admin.organizations.financial-statements.show', $organization->slug) }}" class="btn btn-quintary me-3">Financial Statements</a>
+            @endif
 
             @if($organization->stock)
                 <a href="{{ route('public.content.organizations.show', $organization->slug) }}" class="btn btn-quaternary me-3">View Public</a>

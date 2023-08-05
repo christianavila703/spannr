@@ -118,6 +118,11 @@ class Organization extends Model implements EntityContract
         return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();
     }
 
+    public function financialStatements()
+    {
+        return $this->hasMany(OrganizationFinancialStatement::class);
+    }
+
     /**
      * Attributes
      */

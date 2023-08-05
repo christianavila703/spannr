@@ -157,6 +157,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             Route::delete('/{id}', [\App\Http\Controllers\Admin\OrganizationStockController::class, 'destroy'])->name('destroy');
         });
 
+        Route::get('/organizations/financial-statements/index', [\App\Http\Controllers\Admin\OrganizationFinancialStatementsController::class, 'index'])
+            ->name('organizations.financial-statements.index');
+        Route::get('/organizations/financial-statements/{slug}', [\App\Http\Controllers\Admin\OrganizationFinancialStatementsController::class, 'show'])
+            ->name('organizations.financial-statements.show');
+
         Route::get('/form-entries/resubmit/mailchimp', [\App\Http\Controllers\Admin\FormEntryController::class, 'resubmitMailchimpApplicableForms'])->name('form-entries.resubmit-mailchimp');
 
         Route::post('/tags/sync', [\App\Http\Controllers\Admin\TagController::class, 'syncEntities'])->name('tags.sync');

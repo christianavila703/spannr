@@ -152,3 +152,25 @@ td.sortable-column {
         }
     }
 }
+
+
+table.organization-financial-statements {
+
+    .btn-show-financials {
+        &:not(.collapsed) .icon-open {
+            display: none;
+        }
+
+        &.collapsed .icon-close {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 0.7rem;
+    }
+
+    @media screen and (max-width: 420px) {
+        display: block;
+    }
+}

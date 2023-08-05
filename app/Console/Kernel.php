@@ -33,6 +33,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('polygon:get-news')
             ->hourlyAt(25);
 
+        $schedule->command('polygon:company-financial-statement')->monthly();
+
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');
