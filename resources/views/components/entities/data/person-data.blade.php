@@ -11,10 +11,10 @@
             {!! $person->websiteLink !!}
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-phone" tooltip="Phone">
-            {!! $person->phone_link !!}
+            {!! auth()->user()->can('view contact info') ? $person->phone_link : '*****' !!}
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-at" tooltip="Email">
-            {!! $person->email_link !!}
+            {!! auth()->user()->can('view contact info') ? $person->email_link : '*****' !!}
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Social Media" />
@@ -35,8 +35,13 @@
         <x-entities.show.field-heading title="Organizations" />
         <x-entities.show.relationship-basic :records="$person->organizations" routeName="admin.organizations.show" />
 
+        <x-entities.show.field-heading title="Investors" />
+        <x-entities.show.relationship-basic :records="$person->investors" routeName="admin.investors.show" />
+
         <x-entities.show.field-heading title="Locations" />
         <x-entities.show.relationship-basic :records="$person->locations" routeName="admin.locations.show" />
+
+
 
         <x-entities.show.field-heading title="Tags" />
         <x-entities.show.relationship-tags :entity="$person"/>
