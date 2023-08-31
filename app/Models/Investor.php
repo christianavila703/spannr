@@ -106,6 +106,7 @@ class Investor extends Model implements EntityContract
     /**
      * Attributes
      */
+    //TODO check ownable attributes usage and remove if unnecessary
     public function getOwnableNameAttribute(): string
     {
         if ($this->ownable_id) {

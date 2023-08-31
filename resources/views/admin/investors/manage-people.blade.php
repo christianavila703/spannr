@@ -34,7 +34,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12 col-md-8 col-lg-6">
-                <livewire:investors.people :investor="$investor" />
+                <livewire:admin.investors.people :investor="$investor" />
             </div>
         </div>
     </div>

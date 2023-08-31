@@ -1,11 +1,11 @@
-<div class="people-index">
+<div class="records-index">
     <button class="btn btn-primary d-md-none text-light" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
         <i class="fa fa-filter"></i>
     </button>
 
     <div class="row">
-        <div wire:ignore class="col-3 col-md-4 col-lg-3 col-xl-2">
+        <div wire:ignore class="records-filters col-3 col-md-4 col-lg-3 col-xl-2">
             <div class="offcanvas-md offcanvas-start" tabindex="-1" id="offcanvasResponsive">
                 <div class="offcanvas-header">
                     <h5 class="title">Filters</h5>
@@ -19,51 +19,15 @@
                         </div>
                         <div class="mb-4">
                             <div class="form-check mb-2 d-flex align-items-center">
-                                <input wire:model="filters.owned-investor" class="form-check-input mt-0 me-2" type="checkbox" value="true" id="filter-owner-investor">
-                                <label class="form-check-label fw-bold" for="filter-owner-investor">
+                                <input wire:model="filters.owned-investor" class="form-check-input mt-0 me-2" type="checkbox" value="true" id="filter-owned-investor">
+                                <label class="form-check-label fw-bold" for="filter-owned-investor">
                                     Show Investors
                                 </label>
                             </div>
                         </div>
 
+                        <p class="mb-2 lead">Records with</p>
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Organizations</label>
-                            <select id="filters-organizations" class="form-select" multiple>
-                                @foreach($organizations as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Investors</label>
-                            <select id="filters-investors" class="form-select" multiple>
-                                @foreach($investors as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Locations</label>
-                            <select id="filters-locations" class="form-select" multiple>
-                                @foreach($locations as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Tags</label>
-                            <select id="filters-tags" class="form-select" multiple>
-                                @foreach($tags as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <p class="mb-2 lead">Records with</p>
                             <div class="form-check mb-2 d-flex align-items-center">
                                 <input wire:model="filters.with" class="form-check-input mt-0 me-2" type="checkbox" value="email" id="filter-with-email">
                                 <label class="form-check-label fw-bold" for="filter-with-email">
@@ -102,8 +66,8 @@
                             </div>
                         </div>
 
+                        <p class="mb-2 lead">Records have related</p>
                         <div class="mb-4">
-                            <p class="mb-2 lead">Records have</p>
                             <div class="form-check mb-2 d-flex align-items-center">
                                 <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="locations" id="filter-has-locations">
                                 <label class="form-check-label fw-bold" for="filter-has-locations">
@@ -123,37 +87,73 @@
                                 </label>
                             </div>
                         </div>
+
+                        <p class="mb-2 lead">Filter by</p>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Organizations</label>
+                            <select id="filters-organizations" class="form-select" multiple>
+                                @foreach($organizations as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Investors</label>
+                            <select id="filters-investors" class="form-select" multiple>
+                                @foreach($investors as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Locations</label>
+                            <select id="filters-locations" class="form-select" multiple>
+                                @foreach($locations as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Tags</label>
+                            <select id="filters-tags" class="form-select" multiple>
+                                @foreach($tags as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div>
-                            <button wire:click="resetFilters" class="btn btn-sm">Reset Filters</button>
+                            <button wire:click="resetFilters" class="btn btn-sm btn-primary">Reset Filters</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="col-12 col-md-8 col-lg-9 col-xl-10">
-            <div class="text-end lead">
-                {{ $people->total() }} results
-            </div>
+
+        <div class="records-list col-12 col-md-8 col-lg-9 col-xl-10">
+            <x-admin.records-listing.sort-total-block :sortOptions="$sortOptions" :total="$records->total()"></x-admin.records-listing.sort-total-block>
             <div class="row">
-                @forelse($people as $person)
-                    <div wire:key="person-{{ $person->id }}" class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
+                @forelse($records as $person)
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
                         <a class="card-body d-flex flex-column" href="{{ route('admin.people.show', $person->slug) }}">
                             <div class="text-center">
                                 <div class="image" style="background-image: url({{ $person->image_url }});"></div>
-                                <h3 class="h5 text-dark mb-3">
+                                <h3 class="h5 text-dark mb-2">
                                     {{ $person->name }}
                                     @if($person->ownedInvestor)
                                         <i class="{{ $person->investor_icon }}"></i>
                                     @endif
                                 </h3>
-                                <p>{{ $person->byline }}</p>
+                                <p class="mb-2">{{ $person->byline }}</p>
                             </div>
                         </a>
                     </div>
                 @empty
                     <div class="col-12">
-                        <div class="p-5 lead text-secondary fw-bold text-center">No people match your query.</div>
+                        <div class="p-5 lead text-secondary fw-bold text-center">No records match your query.</div>
                     </div>
                 @endforelse
 
@@ -167,7 +167,7 @@
                         <label for="perPage" class="d-block fw-bold ms-2 flex-shrink-0">Per Page</label>
                     </div>
 
-                    {{ $people->links() }}
+                    {{ $records->links() }}
                 </div>
             </div>
         </div>

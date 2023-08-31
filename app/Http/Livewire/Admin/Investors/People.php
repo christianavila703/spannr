@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Investors;
+namespace App\Http\Livewire\Admin\Investors;
 
 use App\Models\Investor;
 use Livewire\Component;
@@ -20,7 +20,7 @@ class People extends Component
 
     public function render()
     {
-        return view('livewire.investors.people', [
+        return view('livewire.admin.investors.people', [
             'people' => $this->investor->people
         ]);
     }

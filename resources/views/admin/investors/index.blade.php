@@ -6,7 +6,7 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:investors.index />
+        <livewire:admin.investors.index />
     </div>
 @endsection
 

@@ -10,7 +10,7 @@
             {{ $organization->type }}
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-heart-pulse" tooltip="Longevity related">
-            {{ is_null($organization->longevity) ? '' : ($organization->longevity ? 'Yes' : 'No') }}
+            {{ $organization->longevity ? 'Yes' : 'No' }}
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-calendar-days" tooltip="Founded">
             {{ $organization->founded_date }}

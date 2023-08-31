@@ -13,20 +13,27 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
 
-    public $search;
     public $perPage = 24;
 
     public $filters = [
         'search' => '',
         'owned-investor' => null,
+        'with' => [],
+        'has' => [],
         'organizations' => [],
         'investors' => [],
         'locations' => [],
         'tags' => [],
-        'with' => [],
-        'has' => [],
+    ];
+
+    public $sortOptions = [
+        'name-asc' => 'Name A > Z',
+        'name-desc' => 'Name Z > A',
+        'byline-asc' => 'Byline A > Z',
+        'byline-desc' => 'Byline Z > A',
     ];
 
     public $sortColumnName = 'name';
@@ -41,15 +48,11 @@ class Index extends Component
         $this->reset('filters');
     }
 
-    public function sortBy($columnName)
+    public function sortBy($value)
     {
-        if ($this->sortColumnName === $columnName) {
-            $this->sortDirection = ($this->sortDirection === 'asc' ? 'desc' : 'asc');
-        } else {
-            $this->sortDirection = 'asc';
-        }
-
-        $this->sortColumnName = $columnName;
+        $sortValues = explode('-', $value);
+        $this->sortColumnName = isset($sortValues[0]) ? $sortValues[0] : 'name';
+        $this->sortDirection = isset($sortValues[1])  ? $sortValues[1] : 'asc';
     }
 
     public function render()
@@ -67,6 +70,20 @@ class Index extends Component
             })
             ->when($this->filters['owned-investor'], function($query) {
                 return $query->has('ownedInvestor');
+            })
+            ->when($this->filters['with'], function($query, $values) {
+                foreach ($values as $value) {
+                    $query->whereNotNull($value);
+                }
+
+                return $query;
+            })
+            ->when($this->filters['has'], function($query, $values) {
+                foreach ($values as $value) {
+                    $query->has($value);
+                }
+
+                return $query;
             })
             ->when($this->filters['organizations'], function($query, $ids) {
                 return $query->whereHas('organizations', function ($subquery) use ($ids) {
@@ -88,20 +105,6 @@ class Index extends Component
                     $subquery->whereIn('id', $ids);
                 });
             })
-            ->when($this->filters['with'], function($query, $values) {
-                foreach ($values as $value) {
-                    $query->whereNotNull($value);
-                }
-
-                return $query;
-            })
-            ->when($this->filters['has'], function($query, $values) {
-                foreach ($values as $value) {
-                    $query->has($value);
-                }
-
-                return $query;
-            })
             ->orderBy($this->sortColumnName, $this->sortDirection)
             ->paginate($this->perPage);
 
@@ -110,7 +113,7 @@ class Index extends Component
             'investors' => $investors,
             'locations' => $locations,
             'tags' => $tags,
-            'people' => $records,
+            'records' => $records,
         ]);
     }
 }

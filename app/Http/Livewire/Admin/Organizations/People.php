@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Organizations;
+namespace App\Http\Livewire\Admin\Organizations;
 
 use App\Models\Organization;
 use Livewire\Component;
@@ -20,7 +20,7 @@ class People extends Component
 
     public function render()
     {
-        return view('livewire.organizations.people', [
+        return view('livewire.admin.organizations.people', [
             'people' => $this->organization->people
         ]);
     }

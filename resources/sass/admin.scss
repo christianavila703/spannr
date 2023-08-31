@@ -153,11 +153,16 @@ td.sortable-column {
     }
 }
 
-.people-index {
+.records-index {
+
+    .records-filters {
+        border-right: 1px lightgrey solid;
+    }
 
     .card {
-        padding: 1rem;
         border: none;
+        padding-bottom: 12px;
+        padding-top: 12px;
 
         a {
             width: 100%;
