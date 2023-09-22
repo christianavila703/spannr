@@ -20,24 +20,6 @@
                         </div>
 
                         <div class="mb-4">
-                            <div class="form-check mb-2 d-flex align-items-center">
-                                <input wire:model="filters.owned-investor" class="form-check-input mt-0 me-2" type="checkbox" value="1" id="filter-owned-investor">
-                                <label class="form-check-label fw-bold" for="filter-owned-investor">
-                                    Show Investors
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <div class="form-check mb-2 d-flex align-items-center">
-                                <input wire:model="filters.longevity-related" class="form-check-input mt-0 me-2" type="checkbox" value="1" id="filter-longevity-related">
-                                <label class="form-check-label fw-bold" for="filter-longevity-related">
-                                    Show Longevity Related
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
                             <p class="mb-2 lead">Type</p>
                             @foreach ($typeOptions as $option)
                                 <div class="form-check mb-2 d-flex align-items-center">
@@ -83,12 +65,6 @@
 
                         <p class="mb-2 lead">Records have related</p>
                         <div class="mb-4">
-                            <div class="form-check mb-2">
-                                <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="stock" id="filter-has-stock">
-                                <label class="form-check-label fw-bold" for="filter-has-stock">
-                                    Ticker
-                                </label>
-                            </div>
                             <div class="form-check mb-2 d-flex align-items-center">
                                 <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="locations" id="filter-has-locations">
                                 <label class="form-check-label fw-bold" for="filter-has-locations">
@@ -96,14 +72,14 @@
                                 </label>
                             </div>
                             <div class="form-check mb-2 d-flex align-items-center">
-                                <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="investors" id="filter-has-investors">
-                                <label class="form-check-label fw-bold" for="filter-has-investors">
-                                    Investors
+                                <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="organizations" id="filter-has-organizations">
+                                <label class="form-check-label fw-bold" for="filter-has-organizations">
+                                    Organizations
                                 </label>
                             </div>
                             <div class="form-check mb-2 d-flex align-items-center">
                                 <input wire:model="filters.has" class="form-check-input mt-0 me-2" type="checkbox" value="people" id="filter-has-people">
-                                <label class="form-check-label fw-bold" for="filter-has-people">
+                                <label class="form-check-label fw-bold" for="filter-has-organizations">
                                     People
                                 </label>
                             </div>
@@ -120,9 +96,9 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label fw-bold">Investors</label>
-                                <select id="filters-investors" class="form-select" multiple>
-                                    @foreach($investors as $item)
+                                <label class="form-label fw-bold">Organizations</label>
+                                <select id="filters-organizations" class="form-select" multiple>
+                                    @foreach($organizations as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
@@ -155,23 +131,20 @@
 
         {{--  Records  --}}
         <div class="records-list col-12 col-md-8 col-lg-9 col-xl-10">
-            <x-admin.records-listing.sort-total-block :sortOptions="$sortOptions" :total="$records->total()"></x-admin.records-listing.sort-total-block>
+            <x-entity-index.sort-total-block :sortOptions="$sortOptions" :total="$records->total()"></x-entity-index.sort-total-block>
             <div class="row">
-                @forelse($records as $organization)
+                @forelse($records as $investor)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
-                        <a class="card-body d-flex flex-column" href="{{ route('admin.organizations.show', $organization->slug) }}">
+                        <a class="card-body d-flex flex-column" href="{{ route('admin.investors.show', $investor->slug) }}">
                             <div class="text-center">
-                                <div class="image" style="background-image: url({{ $organization->image_url }});"></div>
+                                <div class="image" style="background-image: url({{ $investor->image_url }});"></div>
                                 <h3 class="h5 text-dark mb-2">
-                                    {{ $organization->name }}
-                                    @if($organization->ownedInvestor)
-                                        <i class="{{ $organization->investor_icon }}"></i>
+                                    {{ $investor->name }}
+                                    @if ($investor->ownable_id)
+                                        <i class="{{ $investor->ownable_icon }}"></i>
                                     @endif
                                 </h3>
-                                <p class="mb-2">{{ $organization->type }}</p>
-                                @if($organization->stock)
-                                    <p class="mb-2"><span class="badge bg-primary">{{ $organization->stock->ticker }}</span></p>
-                                @endif
+                                <p class="mb-2">{{ $investor->type }}</p>
                             </div>
                         </a>
                     </div>
@@ -209,13 +182,13 @@
             @this.set('filters.people', filterPeopleChoices.getValue(true));
         });
 
-        const filterInvestors = document.getElementById('filters-investors');
-        const filterInvestorsChoices= new Choices(filterInvestors, {
+        const filterOrganizations = document.getElementById('filters-organizations');
+        const filterOrganizationsChoices= new Choices(filterOrganizations, {
             removeItemButton: true,
         });
 
-        filterInvestors.addEventListener('change', () => {
-            @this.set('filters.investors', filterInvestorsChoices.getValue(true));
+        filterOrganizations.addEventListener('change', () => {
+            @this.set('filters.organizations', filterOrganizationsChoices.getValue(true));
         });
 
         const filterLocations = document.getElementById('filters-locations');

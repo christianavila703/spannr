@@ -110,6 +110,11 @@ class Job extends Model implements EntityContract
         $query->where('posted_date', '>=', Carbon::now()->subMonths(4)->format('Y-m-d'));
     }
 
+    public function scopeRemote(Builder $query): Builder
+    {
+        return $query->where('remote', true);
+    }
+
     /**
      * Accessors
      */
@@ -121,6 +126,17 @@ class Job extends Model implements EntityContract
     public function getPrettyExpDateAttribute(): string
     {
         return Carbon::parse($this->exp_date)->format('M j, Y');
+    }
+
+    public function getFormattedSalaryAttribute(): string|null
+    {
+        $salary = $this->salary_min ? number_format($this->salary_min, 0) : null;
+
+        if($salary && $this->salary_max) {
+            $salary .= ' - ' . number_format($this->salary_max, 0);
+        }
+
+        return $salary;
     }
 
     public function getOwnerShowLinkAttribute(): string

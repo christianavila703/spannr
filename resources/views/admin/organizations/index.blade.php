@@ -11,7 +11,7 @@
             <a href="{{ route('admin.organizations.financial-statements.index') }}" class="btn btn-primary">Financial Statements</a>
         </div>
 
-        <livewire:admin.organizations.index/>
+        <livewire:entity-index.organizations.index/>
     </div>
 @endsection
 

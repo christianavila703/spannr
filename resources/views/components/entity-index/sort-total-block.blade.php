@@ -3,7 +3,7 @@
         <label for="sort" class="d-block fw-bold me-2 flex-shrink-0">Sort</label>
         <select wire:change="sortBy($event.target.value)" id="sort" class="form-select">
             @foreach($sortOptions as $value => $label)
-                <option value="{{$value}}">{{$label}}</option>
+                <option value="{{$value}}" @if(isset($currentSortOption) && $currentSortOption === $value) selected @endif>{{$label}}</option>
             @endforeach
         </select>
     </div>

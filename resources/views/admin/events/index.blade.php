@@ -6,6 +6,6 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:events.index />
+        <livewire:entity-index.events.index />
     </div>
 @endsection

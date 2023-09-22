@@ -134,7 +134,7 @@
         </div>
 
         <div class="records-list col-12 col-md-8 col-lg-9 col-xl-10">
-            <x-admin.records-listing.sort-total-block :sortOptions="$sortOptions" :total="$records->total()"></x-admin.records-listing.sort-total-block>
+            <x-entity-index.sort-total-block :sortOptions="$sortOptions" :total="$records->total()"></x-entity-index.sort-total-block>
             <div class="row">
                 @forelse($records as $person)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">

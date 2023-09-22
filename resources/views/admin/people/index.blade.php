@@ -6,7 +6,7 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:admin.people.index />
+        <livewire:entity-index.people.index />
     </div>
 @endsection
 

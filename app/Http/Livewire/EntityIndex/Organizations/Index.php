@@ -1,23 +1,16 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Organizations;
+namespace App\Http\Livewire\EntityIndex\Organizations;
 
+use App\Http\Livewire\EntityIndex\BaseIndex;
 use App\Models\Investor;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Tag;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Index extends Component
+class Index extends BaseIndex
 {
-    use WithPagination;
-
-    protected $paginationTheme = 'bootstrap';
-
-    public $perPage = 24;
-
     public $filters = [
         'search' => '',
         'longevity-related' => null,
@@ -32,31 +25,11 @@ class Index extends Component
     ];
 
     public $sortOptions = [
-      'name-asc' => 'Name A > Z',
-      'name-desc' => 'Name Z > A',
-      'type-asc' => 'Type A > Z',
-      'type-desc' => 'Type Z > A',
+      'name:asc' => 'Name A > Z',
+      'name:desc' => 'Name Z > A',
+      'type:asc' => 'Type A > Z',
+      'type:desc' => 'Type Z > A',
     ];
-
-    public $sortColumnName = 'name';
-    public $sortDirection = 'asc';
-
-    public function updatingFilters()
-    {
-        $this->resetPage();
-    }
-
-    public function resetFilters()
-    {
-        $this->reset('filters');
-    }
-
-    public function sortBy($value)
-    {
-        $sortValues = explode('-', $value);
-        $this->sortColumnName = isset($sortValues[0]) ? $sortValues[0] : 'name';
-        $this->sortDirection = isset($sortValues[1])  ? $sortValues[1] : 'asc';
-    }
 
     public function render()
     {
@@ -68,10 +41,11 @@ class Index extends Component
 
         $records = Organization::with(['people', 'investors', 'fundraisingRounds', 'stock'])
             ->when($this->filters['search'], function ($query, $search) {
-                return $query
-                    ->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('summary', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
+                return $query->where(function ($subquery) use ($search) {
+                    $subquery->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('summary', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
             })
             ->when($this->filters['selected-types'], function ($query, $selectedTypes) {
                 return $query->whereIn('type', $selectedTypes);
@@ -119,15 +93,13 @@ class Index extends Component
             ->orderBy($this->sortColumnName, $this->sortDirection)
             ->paginate($this->perPage);
 
-        return view('livewire.admin.organizations.index', [
+        return view('livewire.entity-index.organizations.index', [
             'typeOptions' => $typeOptions,
             'people' => $people,
             'investors' => $investors,
             'locations' => $locations,
             'tags' => $tags,
             'records' => $records,
-
-
         ]);
     }
 }

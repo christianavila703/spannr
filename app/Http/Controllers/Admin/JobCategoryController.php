@@ -11,7 +11,7 @@ class JobCategoryController extends Controller
 {
     public function index()
     {
-        //
+        return view('admin.job-categories.index');
     }
 
     public function create() {
@@ -32,7 +32,7 @@ class JobCategoryController extends Controller
 
         $jobCategory = JobCategory::create($validator->validated());
 
-        return redirect()->route('admin.jobs.index')->with('success', 'Job category ' . $jobCategory->name . ' added!');
+        return redirect()->route('admin.job-categories.index')->with('success', 'Job category ' . $jobCategory->name . ' added!');
     }
 
     public function update($id)

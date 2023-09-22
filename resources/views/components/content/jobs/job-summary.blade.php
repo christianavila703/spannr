@@ -47,12 +47,19 @@
         <div class="mt-3 lead me-3">
             <span class="badge mt-3 bg-secondary">{{ $job->type }}</span>
         </div>
-        <div>
-            @if($job->remote)
-                <div class="mt-3 lead">
-                    <span class="badge mt-3 text-dark bg-info">Remote</span>
-                </div>
-            @endif
-        </div>
+        @if($job->remote)
+            <div class="mt-3 lead me-3">
+                <span class="badge mt-3 text-dark bg-info">Remote</span>
+            </div>
+        @endif
+        @if($job->status == \App\Models\Job::STATUS_PENDING)
+            <div class="mt-3 lead">
+                <span class="badge mt-3 text-dark bg-primary">{{ \App\Models\Job::STATUS_PENDING }}</span>
+            </div>
+        @elseif($job->status == \App\Models\Job::STATUS_ARCHIVED)
+            <div class="mt-3 lead">
+                <span class="badge mt-3 text-dark bg-warning">{{ \App\Models\Job::STATUS_ARCHIVED }}</span>
+            </div>
+        @endif
     </div>
 </div>

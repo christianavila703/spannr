@@ -30,6 +30,11 @@ class Event extends Model implements EntityContract
     const STATUS_CURRENT = 'current';
     const STATUS_PAST = 'past';
 
+    const STATUSES = [
+        Event::STATUS_CURRENT,
+        Event::STATUS_PAST,
+    ];
+
     private string $searchableRouteName = 'admin.events.show';
     private string $searchableRouteField = 'slug';
     private string $searchableIcon = 'fa-duotone fa-calendar';
@@ -97,9 +102,21 @@ class Event extends Model implements EntityContract
         return $query->where('start_date', '>=', Carbon::now());
     }
 
+    public function scopeRemote(Builder $query): Builder
+    {
+        return $query->where('remote', true);
+    }
+
     /**
      * Accessors
      */
+
+    //TODO if event can has only single type record - change relation ot morphTo
+    public function getTypeAttribute(): string|null
+    {
+        return $this->has('eventTypes') ? $this->eventTypes->first()->name : null;
+    }
+
     public function getWebsiteLinkAttribute(): string
     {
         return '<a href="' . $this->website . '" target="_blank" rel="noopener noreferrer">' . $this->website . '</a>';

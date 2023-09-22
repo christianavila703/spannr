@@ -104,6 +104,11 @@ class Person extends Model implements EntityContract
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Event::class, 'relatable', 'event_relationships');
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -179,6 +179,7 @@ td.sortable-column {
 
         a:hover {
             border-color: var(--color-lime);
+            color: inherit;
 
             .image {
                 opacity: 1;
@@ -202,6 +203,25 @@ td.sortable-column {
 
         .title {
             margin-bottom: 0;
+        }
+
+        .event-past-label,
+        .job-status-label {
+            position: absolute;
+            padding: 0.5rem;
+            top: 0;
+            left: 0;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        .event-past-label,
+        .job-status-label.archived {
+            background-color: $warning;
+        }
+
+        .job-status-label.pending {
+            background-color: $info;
         }
     }
 }

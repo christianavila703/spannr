@@ -81,6 +81,11 @@ class Investor extends Model implements EntityContract
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function events(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Event::class, 'relatable', 'event_relationships');
+    }
+
     // Owner - Organization or Person Record
     public function ownable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {

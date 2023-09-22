@@ -6,7 +6,7 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:fundraising-rounds.index />
+        <livewire:entity-index.fundraising-rounds.index />
     </div>
 @endsection
 
