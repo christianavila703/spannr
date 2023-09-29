@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Organization\UpdateTagsRequest;
 use App\Http\Requests\OrganizationRequest;
 use App\Models\Investor;
 use App\Models\Organization;
@@ -65,6 +66,21 @@ class OrganizationController extends Controller
         $investors = Investor::orderBy('name')->get();
         $people = Person::orderBy('name')->get();
 
+        $currentTags = $organization->tags->pluck('id')->toArray();
+        $parentTags = Tag::firstLevel()
+            ->whereJsonContains('entity_types', Organization::class)
+            ->orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray();
+        $childTags = [];
+
+        foreach ($parentTags as $id => $name) {
+            if (in_array($id, $currentTags)) {
+                $childTags = Tag::where('parent_id', $id)->orderBy('name')->pluck('name', 'id')->toArray();
+                break;
+            }
+        }
+
         $hasStockChart = ($organization->stock('stock')->count() > 0);
         $latestSnapshot = $organization->stock->latestSnapshot ?? null;
 
@@ -72,6 +88,9 @@ class OrganizationController extends Controller
             'organization' => $organization,
             'investors' => $investors,
             'people' => $people,
+            'currentTags' => $currentTags,
+            'parentTags' => $parentTags,
+            'childTags' => $childTags,
             'hasStockChart' => $hasStockChart,
             'latestSnapshot' => $latestSnapshot
         ]);
@@ -249,6 +268,29 @@ class OrganizationController extends Controller
             ->log('People added to ' . $organization->name);
 
         return redirect()->route('admin.organizations.show', $organization->slug)->with('success', 'People added!');
+    }
+
+    public function updateTags(UpdateTagsRequest $request, $id)
+    {
+        $organization = Organization::findOrFail($id);
+        $validated = $request->validated();
+
+        $organization->longevity = $validated['longevity'];
+        $organization->save();
+
+        if ($organization->longevity == 1) {
+            $tags = [$validated['parent_tag']];
+
+            if (isset($validated['child_tags'])) {
+                $tags = array_merge($tags, $validated['child_tags']);
+            }
+
+            $organization->tags()->sync($tags);
+        } else {
+            $organization->tags()->detach();
+        }
+
+        return redirect()->route('admin.organizations.show', $organization->slug)->with('success', 'Tags updated successfully!');
     }
 
     public function people($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

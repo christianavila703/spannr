@@ -43,7 +43,8 @@ export default defineConfig({
                 'resources/js/investors-total-amount-raised-last-12-months.js',
                 'resources/js/investors-total-amount-raised-per-round.js',
                 'resources/js/investors-average-amount-raised-per-round.js',
-                'resources/js/investors-ytd-amount-raised-per-category.js'
+                'resources/js/investors-ytd-amount-raised-per-category.js',
+                'resources/js/organization-form-tags.js'
             ],
             refresh: true,
         }),

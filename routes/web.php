@@ -145,6 +145,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/organization/investors/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addInvestors'])->name('organizations.add-investors');
 
         Route::post('/organization/people/add', [\App\Http\Controllers\Admin\OrganizationController::class, 'addPeople'])->name('organizations.add-people'); // old person
+        Route::post('/organization/{id}/tags/update', [\App\Http\Controllers\Admin\OrganizationController::class, 'updateTags'])->name('organizations.tags.update');
 
         Route::get('/organizations/{slug}/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'people'])->name('organizations.people');
         Route::post('/organization/people', [\App\Http\Controllers\Admin\OrganizationController::class, 'savePerson'])->name('organizations.save-person');
