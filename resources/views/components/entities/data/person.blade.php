@@ -33,18 +33,20 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$person->organizations" routeName="admin.organizations.show" />
+        <x-entities.show.relationship-basic :records="$person->organizations" routeName="{{$showRouteRootPrefix}}.organizations.show" />
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$person->investors" routeName="admin.investors.show" />
+        <x-entities.show.relationship-basic :records="$person->investors" routeName="{{$showRouteRootPrefix}}.investors.show" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$person->locations" routeName="admin.locations.show" />
-
-
+        <x-entities.show.relationship-basic :records="$person->locations" routeName="{{$showRouteRootPrefix}}.locations.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-tags :entity="$person"/>
+        @if($showRouteRootPrefix == 'admin')
+            <x-entities.show.relationship-tags :entity="$person"/>
+        @else
+            <x-entities.show.relationship-list :records="$person->tags" />
+        @endif
 
         <x-entities.show.field-heading title="Bio" />
         <div>

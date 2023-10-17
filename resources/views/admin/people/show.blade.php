@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $person->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$person->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @if($person->isLocked && $person->lockedById !== auth()->user()->id)
                 <x-entities.locked-label :record="$person" />
@@ -30,7 +32,7 @@
             </div>
         </x-slot:buttons>
         <x-slot:title>{{ $person->name }}</x-slot:title>
-        <x-entities.data.person-data :person="$person" />
+        <x-entities.data.person :person="$person"  showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
     </x-entities.show>
 
     <x-tags.add :entity="$person" />

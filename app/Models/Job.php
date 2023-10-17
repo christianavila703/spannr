@@ -139,15 +139,15 @@ class Job extends Model implements EntityContract
         return $salary;
     }
 
-    public function getOwnerShowLinkAttribute(): string
+    public function getOwnerShowLink($showRouteRootPrefix = 'admin'): string
     {
         $ownerRoute = match($this->owner_type) {
-            Organization::class => 'admin.organizations.show',
-            Investor::class => 'admin.investors.show'
+            Organization::class => 'organizations.show',
+            Investor::class => 'investors.show'
         };
 
         try {
-            return route($ownerRoute, $this->owner->slug);
+            return route($showRouteRootPrefix . '.' . $ownerRoute, $this->owner->slug);
         } catch(Throwable $throwable) {
             Log::critical('URL Problem with Job' . $throwable->getMessage());
             return '';

@@ -29,22 +29,27 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$investor->organizations" routeName="admin.organizations.show" />
+        <x-entities.show.relationship-basic :records="$investor->organizations" routeName="{{$showRouteRootPrefix}}.organizations.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-basic :records="$investor->people" routeName="admin.people.show" />
+        <x-entities.show.relationship-basic :records="$investor->people" routeName="{{$showRouteRootPrefix}}.people.show" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
-        <x-entities.show.relationship-fundraising-round :records="$investor->fundraisingRounds" />
+        <x-entities.show.relationship-fundraising-round :records="$investor->fundraisingRounds" routeName="{{$showRouteRootPrefix}}.fundraising-rounds.show" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$investor->locations" routeName="admin.locations.show" />
+        <x-entities.show.relationship-basic :records="$investor->locations" routeName="{{$showRouteRootPrefix}}.locations.show" />
 
         <x-entities.show.field-heading title="Jobs" />
-        <x-entities.show.relationship-basic :records="$investor->jobs" routeName="admin.jobs.show" />
+        <x-entities.show.relationship-basic :records="$investor->jobs" routeName="{{$showRouteRootPrefix}}.jobs.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-tags :entity="$investor"/>
+
+        @if($showRouteRootPrefix == 'admin')
+            <x-entities.show.relationship-tags :entity="$investor"/>
+        @else
+            <x-entities.show.relationship-list :records="$investor->tags" />
+        @endif
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">

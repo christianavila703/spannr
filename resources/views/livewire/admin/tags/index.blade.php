@@ -19,7 +19,9 @@
                     <li class="list-group-item d-flex align-items-center">
                         <a href="{{ route('admin.tags.show', $tag->slug) }}" class="d-block me-4">{{ $tag->name }}</a>
 
-                        <div class="d-flex align-items-center small text-muted">{!! $tag->breadcrumb !!}</div>
+                        <div class="d-flex align-items-center small text-muted">
+                            <x-nav.entity-breadcrumbs :breadcrumbs="$tag->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+                        </div>
                     </li>
                 @endforeach
             </ul>

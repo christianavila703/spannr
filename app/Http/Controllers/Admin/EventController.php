@@ -16,7 +16,9 @@ class EventController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.events.index');
+        return view('admin.events.index', [
+            'showRouteRootPrefix' => 'admin',
+        ]);
     }
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
@@ -46,16 +48,11 @@ class EventController extends Controller
 
     public function show($slug)
     {
-        $event = Event::where('slug', $slug)
-            ->with([
-                'organizations',
-                'investors',
-                'people',
-                'eventTypes'
-            ])->firstOrFail();
+        $event = Event::where('slug', $slug)->firstOrFail();
 
         return view('admin.events.show', [
             'event' => $event,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

@@ -9,7 +9,7 @@
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-money-check-dollar-pen" tooltip="Amount Raised">
             @if ($fundraisingRound->amount_raised == '')
-            &ndash;
+                &ndash;
             @else
                 ${{ number_format($fundraisingRound->amount_raised, 0) }}
             @endif
@@ -29,11 +29,11 @@
             @endif
         </x-entities.show.field-group>
         <x-entities.show.field-group icon="fa-duotone fa-building" tooltip="Organization">
-            <a href="{{ route('admin.organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
+            <a href="{{ route($showRouteRootPrefix . '.organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$fundraisingRound->investors" routeName="admin.investors.show" />
+        <x-entities.show.relationship-basic :records="$fundraisingRound->investors" routeName="{{$showRouteRootPrefix}}.investors.show" />
 
         <x-entities.show.field-heading title="Description" />
         <div>

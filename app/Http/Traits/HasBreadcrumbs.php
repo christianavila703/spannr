@@ -12,67 +12,124 @@ use App\Models\Person;
 use App\Models\Tag;
 
 trait HasBreadcrumbs {
-    public function getBreadcrumbAttribute(): string
+
+    public function generateBreadcrumbs($rootRouteName = 'admin'): array
     {
-        if ($this instanceof Tag) {
-            return $this->getBreadcrumbsForTags();
-        } elseif($this instanceof FundraisingRound) {
-            return $this->getBreadcrumbsForFundraisingRounds();
-        } elseif($this instanceof Job) {
-            return $this->getBreadcrumbsForJobs();
-        } else {
-            return $this->getBreadcrumbsForTypicalEntities();
+        if (!in_array($rootRouteName, ['admin', 'panel'])) {
+            return [];
         }
+
+        if ($this instanceof Tag) {
+            $breadcrumbsArray = $this->getBreadcrumbsForTags();
+        } elseif($this instanceof FundraisingRound) {
+            $breadcrumbsArray = $this->getBreadcrumbsForFundraisingRounds();
+        } elseif($this instanceof Job) {
+            $breadcrumbsArray = $this->getBreadcrumbsForJobs();
+        } else {
+            $breadcrumbsArray = $this->getBreadcrumbsForTypicalEntities();
+        }
+
+        $breadcrumbs = [];
+        //dashboard part only for panel type
+        if ($rootRouteName == 'panel') {
+            $breadcrumbs[] = [
+                'routeName' => 'panel.index',
+                'routeParameter' => null,
+                'label' => 'Spannr+',
+            ];
+        }
+
+        foreach ($breadcrumbsArray as $item) {
+            $breadcrumbs[] = [
+                'routeName' => $rootRouteName . '.' . $item['routeName'],
+                'routeParameter' => $item['routeParameter'],
+                'label' => $item['label'],
+            ];
+        }
+
+        //current entity without route
+        $breadcrumbs[] = ['label' => $this->name];
+
+        return $breadcrumbs;
     }
 
-    private function getBreadcrumbsForTags(): string
+    private function getBreadcrumbsForTags(): array
     {
-        $breadcrumb = '<a href="' . route('admin.tags.index') . '">' . 'Tags</a>' . '<i class="fa-light fa-angle-right mx-2"></i>';
+        $breadcrumbs[] = [
+            'routeName' => 'tags.index',
+            'routeParameter' => null,
+            'label' => 'Tags',
+        ];
 
         if ($this->parent) {
             if ($this->parent->parent) {
-                $breadcrumb .= '<a href="' . route('admin.tags.show', $this->parent->parent->slug) . '">' . $this->parent->parent->name . '</a><i class="fa-light fa-angle-right mx-2"></i>';
+                $breadcrumbs[] = [
+                    'routeName' => 'tags.show',
+                    'routeParameter' => $this->parent->parent->slug,
+                    'label' => $this->parent->parent->name,
+                ];
             }
-            $breadcrumb .= '<a href="' . route('admin.tags.show', $this->parent->slug) . '">' . $this->parent->name . '</a><i class="fa-light fa-angle-right mx-2"></i>';
+
+            $breadcrumbs[] = [
+                'routeName' => 'tags.show',
+                'routeParameter' => $this->parent->slug,
+                'label' => $this->parent->name,
+            ];
         }
 
-        $breadcrumb .= $this->name;
-
-        return $breadcrumb;
+        return $breadcrumbs;
     }
 
-    private function getBreadcrumbsForFundraisingRounds() {
-        $breadcrumb = '<a href="' . route('admin.fundraising-rounds.index') . '">' . 'Fundraising Rounds</a>' . '<i class="fa-light fa-angle-right mx-2"></i>';
-        $breadcrumb .= '<a href="' . route('admin.organizations.show', $this->organization->slug) . '">' . $this->organization->name . '</a><i class="fa-light fa-angle-right mx-2"></i>';
-        $breadcrumb .= $this->name;
-        return $breadcrumb;
+    private function getBreadcrumbsForFundraisingRounds(): array {
+        $breadcrumbs[] = [
+            'routeName' => 'fundraising-rounds.index',
+            'routeParameter' => null,
+            'label' => 'Fundraising Rounds',
+        ];
+
+        $breadcrumbs[] = [
+            'routeName' => 'organizations.show',
+            'routeParameter' => $this->organization->slug,
+            'label' => $this->organization->name,
+        ];
+
+        return $breadcrumbs;
     }
 
-    private function getBreadcrumbsForJobs() {
+    private function getBreadcrumbsForJobs(): array {
         $ownerRoute = match(get_class($this->owner)) {
-            Organization::class => 'admin.organizations.show',
-            Investor::class => 'admin.investors.show',
+            Organization::class => 'organizations.show',
+            Investor::class => 'investors.show',
         };
 
-        $breadcrumb = '<a href="' . route('admin.jobs.index') . '">' . 'Jobs</a>' . '<i class="fa-light fa-angle-right mx-2"></i>';
-        $breadcrumb .= '<a href="' . route($ownerRoute, $this->owner->slug) . '">' . $this->owner->name . '</a><i class="fa-light fa-angle-right mx-2"></i>';
-        $breadcrumb .= $this->name;
-        return $breadcrumb;
+        $breadcrumbs[] = [
+            'routeName' => 'jobs.index',
+            'routeParameter' => null,
+            'label' => 'Jobs',
+        ];
+
+        $breadcrumbs[] = [
+            'routeName' => $ownerRoute,
+            'routeParameter' => $this->owner->slug,
+            'label' => $this->owner->name,
+        ];
+
+        return $breadcrumbs;
     }
 
-    private function getBreadcrumbsForTypicalEntities() {
+    private function getBreadcrumbsForTypicalEntities(): array {
 
-        $rootRoute = match(get_class($this)) {
-            Organization::class => 'admin.organizations.index',
-            Person::class => 'admin.people.index',
-            Investor::class => 'admin.investors.index',
-            Event::class => 'admin.events.index',
-            Job::class => 'admin.jobs.index',
-            FundraisingRound::class => 'admin.fundraising-rounds.index',
-            Location::class => 'admin.locations.index',
+        $route = match(get_class($this)) {
+            Organization::class => 'organizations.index',
+            Person::class => 'people.index',
+            Investor::class => 'investors.index',
+            Event::class => 'events.index',
+            Job::class => 'jobs.index',
+            FundraisingRound::class => 'fundraising-rounds.index',
+            Location::class => 'locations.index',
         };
 
-        $rootName = match(get_class($this)) {
+        $label = match(get_class($this)) {
             Organization::class => 'Organizations',
             Person::class => 'People',
             Investor::class => 'Investors',
@@ -82,10 +139,12 @@ trait HasBreadcrumbs {
             Location::class => 'Locations',
         };
 
-        $breadcrumb = '<a href="' . route($rootRoute) . '">' . $rootName . '</a>' . '<i class="fa-light fa-angle-right mx-2"></i>';
+        $breadcrumbs[] = [
+            'routeName' => $route,
+            'routeParameter' => null,
+            'label' => $label,
+        ];
 
-        $breadcrumb .= $this->name;
-
-        return $breadcrumb;
+        return $breadcrumbs;
     }
 }

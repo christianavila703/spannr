@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $fundraisingRound->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$fundraisingRound->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @include('admin.entity-reviews.includes.entity-form', ['entity' => $fundraisingRound])
 
@@ -19,7 +21,7 @@
             @endif
         </x-slot:buttons>
         <x-slot:title>{{ $fundraisingRound->name }}</x-slot:title>
-        @include('admin.fundraising-rounds.show-data')
+        <x-entities.data.fundraising-round :fundraisingRound="$fundraisingRound" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
     </x-entities.show>
 
 @endsection

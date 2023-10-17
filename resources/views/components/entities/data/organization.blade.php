@@ -35,22 +35,26 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$organization->investors" routeName="admin.investors.show" />
+        <x-entities.show.relationship-basic :records="$organization->investors" routeName="{{$showRouteRootPrefix}}.investors.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-with-pivot :records="$organization->people" routeName="admin.people.show" pivotName="role" />
+        <x-entities.show.relationship-with-pivot :records="$organization->people" routeName="{{$showRouteRootPrefix}}.people.show" pivotName="role" />
 
         <x-entities.show.field-heading title="Fundraising Rounds" />
-        <x-entities.show.relationship-fundraising-round :records="$organization->fundraisingRounds" />
+        <x-entities.show.relationship-fundraising-round :records="$organization->fundraisingRounds" routeName="{{$showRouteRootPrefix}}.fundraising-rounds.show" />
 
         <x-entities.show.field-heading title="Locations" />
-        <x-entities.show.relationship-basic :records="$organization->locations" routeName="admin.locations.show" />
-
-        <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-basic :records="$organization->tags" routeName="admin.tags.show" />
+        <x-entities.show.relationship-basic :records="$organization->locations" routeName="{{$showRouteRootPrefix}}.locations.show" />
 
         <x-entities.show.field-heading title="Jobs" />
-        <x-entities.show.relationship-basic :records="$organization->jobs" routeName="admin.jobs.show" />
+        <x-entities.show.relationship-basic :records="$organization->jobs" routeName="{{$showRouteRootPrefix}}.jobs.show" />
+
+        <x-entities.show.field-heading title="Tags" />
+        @if($showRouteRootPrefix == 'admin')
+            <x-entities.show.relationship-basic :records="$organization->tags" routeName="admin.tags.show" />
+        @else
+            <x-entities.show.relationship-list :records="$organization->tags" />
+        @endif
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">
@@ -62,9 +66,9 @@
                 {!! nl2br(e($organization->description)) !!}
             </div>
             <div>
-                @if($hasStockChart)
+                @if($organization->stock)
                     <div class="mt-5">
-                        @if($latestSnapshot)
+                        @if($latestSnapshot = $organization->stock->latestSnapshot)
                             <div class="stock-details lead">
                                 <span class="ticker me-2 fw-bold">
                                     {{ $organization->stock->ticker }}
@@ -90,6 +94,7 @@
                                 </span>
                             </div>
                         @endif
+
                         @include('admin.organizations.stock-chart', ['slug' => $organization->slug])
                         <div class="text-muted small my-2 text-center">Updated every 15 minutes between 7:45a - 4:30p Eastern</div>
                     </div>

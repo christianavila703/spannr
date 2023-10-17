@@ -18,7 +18,9 @@ class LocationController extends Controller
 {
     public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        return view('admin.locations.index');
+        return view('admin.locations.index', [
+            'showRouteRootPrefix' => 'admin'
+        ]);
     }
 
     public function create()
@@ -30,24 +32,24 @@ class LocationController extends Controller
     {
         $location = Location::create($request->validated());
 
+        foreach (['organizations', 'investors', 'people', 'jobs'] as $relationName) {
+            $location->{$relationName}()->sync($request->input($relationName));
+        }
+
         return redirect()->route('admin.locations.index')->with('success', 'Location "' . $location->name . '" created!');
     }
 
-    public function show($id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function show($slug): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        $location = Location::with([
-                'organizations',
-                'investors',
-                'people',
-                'jobs',
-                'jobApplications'
-            ])
-            ->findOrFail($id);
+        $location = Location::where('slug', $slug)->firstOrFail();
 
-        return view('admin.locations.show', ['location' => $location]);
+        return view('admin.locations.show', [
+            'location' => $location,
+            'showRouteRootPrefix' => 'admin'
+        ]);
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
         $location = Location::with([
                 'organizations',
@@ -56,7 +58,8 @@ class LocationController extends Controller
                 'jobs',
                 'jobApplications'
             ])
-            ->findOrFail($id);
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         if ($location->enableLock(auth()->user()->id) === false) {
             return redirect()->back()->with('error', 'The entry has been temporarily locked by another user.');
@@ -65,9 +68,9 @@ class LocationController extends Controller
         return view('admin.locations.edit', ['location' => $location]);
     }
 
-    public function update(UpdateLocationRequest $request, $id)
+    public function update(UpdateLocationRequest $request, $slug)
     {
-        $location = Location::findOrFail($id);
+        $location = Location::where('slug', $slug)->firstOrFail();
 
         if ($location->disableLock(auth()->user()->id) === false) {
             return redirect()->back()->with('error', 'The entry has been temporarily locked by another user.');

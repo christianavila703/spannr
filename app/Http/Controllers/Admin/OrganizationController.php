@@ -19,7 +19,9 @@ class OrganizationController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.organizations.index');
+        return view('admin.organizations.index', [
+            'showRouteRootPrefix' => 'admin'
+        ]);
     }
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
@@ -92,7 +94,8 @@ class OrganizationController extends Controller
             'parentTags' => $parentTags,
             'childTags' => $childTags,
             'hasStockChart' => $hasStockChart,
-            'latestSnapshot' => $latestSnapshot
+            'latestSnapshot' => $latestSnapshot,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

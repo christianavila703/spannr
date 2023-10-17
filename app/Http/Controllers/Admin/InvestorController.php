@@ -16,11 +16,8 @@ class InvestorController extends Controller
 {
     public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        $investors = Investor::with(['fundraisingRounds'])
-            ->get();
-
         return view('admin.investors.index', [
-            'investors' => $investors
+            'showRouteRootPrefix' => 'admin'
         ]);
     }
 
@@ -79,7 +76,8 @@ class InvestorController extends Controller
         $investor = Investor::where('slug', $slug)->firstOrFail();
 
         return view('admin.investors.show', [
-            'investor' => $investor
+            'investor' => $investor,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

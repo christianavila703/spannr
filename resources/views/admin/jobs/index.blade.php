@@ -10,6 +10,6 @@
             <a href="{{ route('admin.job-categories.index') }}" class="btn btn-info">Job Categories</a>
         </div>
 
-        <livewire:entity-index.jobs.index />
+        <livewire:entity-index.jobs.index  :showRouteRootPrefix="$showRouteRootPrefix" />
     </div>
 @endsection

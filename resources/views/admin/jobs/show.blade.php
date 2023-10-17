@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $job->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$job->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @if($job->isLocked && $job->lockedById !== auth()->user()->id)
                 <x-entities.locked-label :record="$job" />
@@ -23,12 +25,12 @@
         <div>
             <x-slot:title>{{ $job->name }}</x-slot:title>
             <x-entities.show.field-summary>
-                <a href="{{ $job->owner_show_link }}">
+                <a href="{{ $job->getOwnerShowLink($showRouteRootPrefix) }}">
                     {{ $job->owner->name }}
                 </a>
             </x-entities.show.field-summary>
         </div>
-        <x-entities.data.job-data :job="$job" />
+        <x-entities.data.job :job="$job" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
     </x-entities.show>
 
     <x-tags.add :entity="$job" />

@@ -48,6 +48,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('form-entry:resubmit-mailchimp')->dailyAt('17:00');
 
         $schedule->command('record-locks:clear')->everyMinute();
+
+        $schedule->command('subscription:check')->dailyAt('03:00');
     }
 
     /**

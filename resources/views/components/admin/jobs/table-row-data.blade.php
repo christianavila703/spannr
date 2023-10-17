@@ -51,7 +51,7 @@
     </td>
     <td>
         @can('edit records')
-            <a href="{{ $job->owner_show_link }}">{{ $job->owner->name }}</a>
+            <a href="{{ $job->getOwnerShowLink() }}">{{ $job->owner->name }}</a>
         @else
             {{ $job->owner->name }}
         @endif

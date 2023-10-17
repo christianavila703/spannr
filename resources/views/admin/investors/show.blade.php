@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $investor->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$investor->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @if($investor->isLocked && $investor->lockedById !== auth()->user()->id)
                 <x-entities.locked-label :record="$investor" />
@@ -46,20 +48,20 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade p-2 show active" id="investor-tab-pane" role="tabpanel" aria-labelledby="investor-tab" tabindex="0">
-                    @include('admin.investors.show-data')
+                    <x-entities.data.investor :investor="$investor" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
                 </div>
                 <div class="tab-pane fade p-2" id="entity-tab-pane" role="tabpanel" aria-labelledby="entity-tab" tabindex="0">
                     @if($investor->ownable_type === \App\Models\Organization::class)
-                        <x-entities.data.organization-data :organization="$investor->ownable" />
+                        <x-entities.data.organization :organization="$investor->ownable" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
                     @endif
 
                     @if($investor->ownable_type === \App\Models\Person::class)
-                        <x-entities.data.person-data :person="$investor->ownable" />
+                        <x-entities.data.person :person="$investor->ownable" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
                     @endif
                 </div>
             </div>
         @else
-            @include('admin.investors.show-data')
+            <x-entities.data.investor :investor="$investor" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
         @endif
 
     </x-entities.show>

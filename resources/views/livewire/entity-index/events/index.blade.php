@@ -155,7 +155,7 @@
                 @forelse($records as $event)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
                         <a class="card-body d-flex flex-column position-relative"
-                           href="{{ route('admin.events.show', $event->slug) }}">
+                           href="{{ route($showRouteRootPrefix . '.events.show', $event->slug) }}">
                             <div class="text-center">
                                 <div class="image" style="background-image: url({{ $event->image_url }});"></div>
                                 <h3 class="h5 text-dark mb-2">{{ $event->name }}</h3>

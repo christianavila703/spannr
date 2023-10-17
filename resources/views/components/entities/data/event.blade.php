@@ -11,22 +11,26 @@
         </x-entities.show.field-group>
 
         <x-entities.show.field-heading title="Organizations" />
-        <x-entities.show.relationship-basic :records="$event->organizations" routeName="admin.organizations.show" />
+        <x-entities.show.relationship-basic :records="$event->organizations" routeName="{{$showRouteRootPrefix}}.organizations.show" />
 
         <x-entities.show.field-heading title="Investors" />
-        <x-entities.show.relationship-basic :records="$event->investors" routeName="admin.investors.show" />
+        <x-entities.show.relationship-basic :records="$event->investors" routeName="{{$showRouteRootPrefix}}.investors.show" />
 
         <x-entities.show.field-heading title="People" />
-        <x-entities.show.relationship-basic :records="$event->people" routeName="admin.people.show" />
+        <x-entities.show.relationship-basic :records="$event->people" routeName="{{$showRouteRootPrefix}}.people.show" />
 
         <x-entities.show.field-heading title="Locations" />
         @if($event->remote)
             <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
         @endif
-        <x-entities.show.relationship-basic :records="$event->locations" routeName="admin.locations.show" />
+        <x-entities.show.relationship-basic :records="$event->locations" routeName="{{$showRouteRootPrefix}}.locations.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-tags :entity="$event"/>
+        @if($showRouteRootPrefix == 'admin')
+            <x-entities.show.relationship-tags :entity="$event"/>
+        @else
+            <x-entities.show.relationship-list :records="$event->tags" />
+        @endif
     </div>
     <div class="col-12 col-md-6">
         <div class="mb-2">

@@ -97,11 +97,11 @@
                     @forelse($records as $location)
                         <tr>
                             <td class="pe-4">
-                                <a href="{{ route('admin.locations.show', $location->id) }}">{{ $location->name }}</a>
+                                <a href="{{ route($showRouteRootPrefix . '.locations.show', $location->slug) }}">{{ $location->name }}</a>
                             </td>
                             <td>
                                 <div class="max-width-400 d-none d-lg-inline">
-                                    <x-tables.entity-relations-shortlist :records="$location->organizations" routeName="admin.organizations.show"></x-tables.entity-relations-shortlist>
+                                    <x-tables.entity-relations-shortlist :records="$location->organizations" routeName="{{ $showRouteRootPrefix }}.organizations.show"></x-tables.entity-relations-shortlist>
                                 </div>
                                 <div class="d-lg-none">
                                     {{ $location->organizations_count }}
@@ -109,7 +109,7 @@
                             </td>
                             <td>
                                 <div class="max-width-400 d-none d-lg-inline">
-                                    <x-tables.entity-relations-shortlist :records="$location->investors" routeName="admin.investors.show"></x-tables.entity-relations-shortlist>
+                                    <x-tables.entity-relations-shortlist :records="$location->investors" routeName="{{ $showRouteRootPrefix }}.investors.show"></x-tables.entity-relations-shortlist>
                                 </div>
                                 <div class="d-lg-none">
                                     {{ $location->investors_count }}
@@ -117,7 +117,7 @@
                             </td>
                             <td>
                                 <div class="max-width-400 d-none d-lg-inline">
-                                    <x-tables.entity-relations-shortlist :records="$location->people" routeName="admin.people.show"></x-tables.entity-relations-shortlist>
+                                    <x-tables.entity-relations-shortlist :records="$location->people" routeName="{{ $showRouteRootPrefix }}.people.show"></x-tables.entity-relations-shortlist>
                                 </div>
                                 <div class="d-lg-none">
                                     {{ $location->people_count }}
@@ -125,7 +125,7 @@
                             </td>
                             <td>
                                 <div class="max-width-400 d-none d-lg-inline">
-                                    <x-tables.entity-relations-shortlist :records="$location->jobs" routeName="admin.jobs.show"></x-tables.entity-relations-shortlist>
+                                    <x-tables.entity-relations-shortlist :records="$location->jobs" routeName="{{ $showRouteRootPrefix }}.jobs.show"></x-tables.entity-relations-shortlist>
                                 </div>
                                 <div class="d-lg-none">
                                     {{ $location->jobs_count }}

@@ -135,7 +135,7 @@
             <div class="row">
                 @forelse($records as $investor)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
-                        <a class="card-body d-flex flex-column" href="{{ route('admin.investors.show', $investor->slug) }}">
+                        <a class="card-body d-flex flex-column" href="{{ route($showRouteRootPrefix . '.investors.show', $investor->slug) }}">
                             <div class="text-center">
                                 <div class="image" style="background-image: url({{ $investor->image_url }});"></div>
                                 <h3 class="h5 text-dark mb-2">

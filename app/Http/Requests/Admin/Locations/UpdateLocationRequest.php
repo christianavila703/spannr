@@ -27,7 +27,7 @@ class UpdateLocationRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('locations')->ignore($this->location),
+                Rule::unique('locations')->ignore($this->location, 'slug'),
                 'max:255'
             ],
             'longitude' => 'required',

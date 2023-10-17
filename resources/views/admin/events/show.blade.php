@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $event->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$event->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @if($event->isLocked && $event->lockedById !== auth()->user()->id)
                 <x-entities.locked-label :record="$event" />
@@ -22,7 +24,8 @@
             </div>
         </x-slot:buttons>
         <x-slot:title>{{ $event->name }}</x-slot:title>
-        @include('admin.events.show-data')
+
+        <x-entities.data.event :event="$event" showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
     </x-entities.show>
 
     <x-tags.add :entity="$event" />

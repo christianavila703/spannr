@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <x-entities.create backUrl="{{ route('admin.locations.show', $location->id) }}" backLabel="{{ $location->name }}">
+    <x-entities.create backUrl="{{ route('admin.locations.show', $location->slug) }}" backLabel="{{ $location->name }}">
         <x-slot:title>Edit Location</x-slot:title>
 
         <div class="row">
             <div class="col-12 col-md-8 col-lg-6">
                 <p class="lead mb-3"><strong>Current:</strong> {{ $location->name }}</p>
-                <form method="post" action="{{ route('admin.locations.update', $location->id) }}">
+                <form method="post" action="{{ route('admin.locations.update', $location->slug) }}">
                     @csrf
                     @method('put')
                     <x-forms.location-field :location="$location"/>

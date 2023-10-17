@@ -83,6 +83,7 @@ Route::get('/jobs/subscription/confirmed', [App\Http\Controllers\Public\ContentC
 Route::get('/guide-to-longevity', [App\Http\Controllers\Public\Content\LongevityGuideController::class, 'index'])->name('public.content.longevity-guide.index');
 
 Route::get('/checkout/job-posting-subscription', [App\Http\Controllers\Public\CheckoutController::class, 'jobPostingSubscription']);
+Route::get('/checkout/subscription/spannr-plus', [App\Http\Controllers\Public\CheckoutController::class, 'spannrPlusSubscription']);
 
 Route::get('/fo-verify.html', [App\Http\Controllers\Public\AffiliateVerificationController::class, 'flexOffers'])->name('public.affiliate-verification.flex-offers');
 
@@ -107,8 +108,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* @can edit users */
     Route::middleware(['can:edit users'])->group(function() {
-        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+        Route::get('users/subscriptions', [\App\Http\Controllers\Admin\UserController::class, 'subscriptions'])->name('users.subscriptions');
         Route::post('users/assign-person', [\App\Http\Controllers\Admin\UserController::class, 'assignPerson'])->name('users.assign-person');
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     });
 
     /* @can edit records */
@@ -233,6 +235,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     });
 });
 
+Route::get('/plus', [\App\Http\Controllers\Panel\IndexController::class, 'index'])->name('panel.index');
+
 /**
  * LOGGED-IN USER ROUTES
  */
@@ -246,5 +250,43 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:manage own jobs')->group(function () {
         Route::get('/user/jobs/', [\App\Http\Controllers\Users\JobsController::class, 'index'])->name('users.jobs.index');
         Route::post('/user/jobs/{id}/unsubscribe', [\App\Http\Controllers\Users\JobsController::class, 'unsubscribe'])->name('users.jobs.unsubscribe');
+    });
+
+    Route::prefix('/plus')->name('panel.')->middleware('subscription')->group(function () {
+        Route::prefix('/subscriptions')->name('subscriptions.')->group(function () {
+            Route::post('/cancel', [\App\Http\Controllers\Panel\SubscriptionController::class, 'cancel'])
+                ->name('cancel');
+            Route::post('/resume', [\App\Http\Controllers\Panel\SubscriptionController::class, 'resume'])
+                ->name('resume');
+        });
+
+        Route::get('/companies', [\App\Http\Controllers\Panel\OrganizationController::class, 'index'])
+            ->name('organizations.index');
+        Route::get('/companies/{slug}', [\App\Http\Controllers\Panel\OrganizationController::class, 'show'])
+            ->name('organizations.show');
+        Route::get('/investors', [\App\Http\Controllers\Panel\InvestorController::class, 'index'])
+            ->name('investors.index');
+        Route::get('/investors/{slug}', [\App\Http\Controllers\Panel\InvestorController::class, 'show'])
+            ->name('investors.show');
+        Route::get('/people', [\App\Http\Controllers\Panel\PersonController::class, 'index'])
+            ->name('people.index');
+        Route::get('/people/{slug}', [\App\Http\Controllers\Panel\PersonController::class, 'show'])
+            ->name('people.show');
+        Route::get('/jobs', [\App\Http\Controllers\Panel\JobController::class, 'index'])
+            ->name('jobs.index');
+        Route::get('/jobs/{slug}', [\App\Http\Controllers\Panel\JobController::class, 'show'])
+            ->name('jobs.show');
+        Route::get('/events', [\App\Http\Controllers\Panel\EventController::class, 'index'])
+            ->name('events.index');
+        Route::get('/events/{slug}', [\App\Http\Controllers\Panel\EventController::class, 'show'])
+            ->name('events.show');
+        Route::get('/fundraising-rounds', [\App\Http\Controllers\Panel\FundraisingRoundController::class, 'index'])
+            ->name('fundraising-rounds.index');
+        Route::get('/fundraising-rounds/{slug}', [\App\Http\Controllers\Panel\FundraisingRoundController::class, 'show'])
+            ->name('fundraising-rounds.show');
+        Route::get('/locations', [\App\Http\Controllers\Panel\LocationController::class, 'index'])
+            ->name('locations.index');
+        Route::get('/locations/{slug}', [\App\Http\Controllers\Panel\LocationController::class, 'show'])
+            ->name('locations.show');
     });
 });

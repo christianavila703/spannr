@@ -2,7 +2,9 @@
 
 @section('content')
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $organization->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$organization->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons></x-slot:buttons>
         <x-slot:title>Financial Statements of {{ $organization->name }}</x-slot:title>
 

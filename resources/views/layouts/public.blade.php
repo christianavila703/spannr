@@ -28,13 +28,17 @@
     <script defer data-domain="spannr.com" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
-    @includeUnless($showHeader === false, 'public.includes.header')
+    @if(!isset($showHeader) || $showHeader !== false)
+        @include('public.includes.header')
+    @endif
 
     <div class="public-main">
         @yield('content')
     </div>
 
-    @includeUnless($showFooter === false, 'public.includes.footer')
+    @if(!isset($showFooter) || $showFooter !== false)
+        @include('public.includes.footer')
+    @endif
 
     @livewireScripts
     @stack('end')

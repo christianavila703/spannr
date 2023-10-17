@@ -117,6 +117,7 @@
                                     <a href="/admin/backup" class="dropdown-item">Backups</a>
                                     <a href="/log-viewer" class="dropdown-item">Logs</a>
                                     <a href="{{ route('admin.users.index') }}" class="dropdown-item">Users</a>
+                                    <a href="{{ route('admin.users.subscriptions') }}" class="dropdown-item">Subscriptions</a>
                                 </div>
                             </li>
                         @endcan

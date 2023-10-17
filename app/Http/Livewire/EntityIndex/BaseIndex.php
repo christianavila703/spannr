@@ -11,6 +11,8 @@ class BaseIndex extends Component
 
     const SORT_OPTION_DELIMETER = ':';
 
+    public $showRouteRootPrefix;
+
     protected $paginationTheme = 'bootstrap';
 
     public $perPage = 24;

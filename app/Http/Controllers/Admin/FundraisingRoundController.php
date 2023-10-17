@@ -14,11 +14,8 @@ class FundraisingRoundController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $fundraisingRounds = FundraisingRound::with(['organization', 'investors'])
-            ->get();
-
         return view('admin.fundraising-rounds.index', [
-            'fundraisingRounds' => $fundraisingRounds
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 
@@ -57,10 +54,11 @@ class FundraisingRoundController extends Controller
 
     public function show($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $fundraisingRound = FundraisingRound::with(['organization', 'investors'])->findOrFail($id);
+        $fundraisingRound = FundraisingRound::findOrFail($id);
 
         return view('admin.fundraising-rounds.show', [
-            'fundraisingRound' => $fundraisingRound
+            'fundraisingRound' => $fundraisingRound,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

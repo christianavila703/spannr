@@ -12,7 +12,9 @@ class PersonController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.people.index');
+        return view('admin.people.index', [
+            'showRouteRootPrefix' => 'admin'
+        ]);
     }
 
     public function create(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -37,7 +39,8 @@ class PersonController extends Controller
         $person = Person::where('slug', $slug)->firstOrFail();
 
         return view('admin.people.show', [
-            'person' => $person
+            'person' => $person,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

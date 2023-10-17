@@ -72,4 +72,9 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'Person "' . $person->name . '" assigned to ' . $user->name);
     }
+
+    public function subscriptions(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('admin.users.subscriptions');
+    }
 }

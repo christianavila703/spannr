@@ -105,7 +105,7 @@
                                     {{ $fundraisingRound->date }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a>
+                                    <a href="{{ route($showRouteRootPrefix . '.fundraising-rounds.show', $fundraisingRound->id) }}">{{ $fundraisingRound->name }}</a>
                                 </td>
                                 <td>
                                     {{ $fundraisingRound->round }}
@@ -114,10 +114,10 @@
                                     ${{ number_format($fundraisingRound->amount_raised, 0) }}
                                 </td>
                                 <td class="d-none d-lg-table-cell">
-                                    <a href="{{ route('admin.organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
+                                    <a href="{{ route($showRouteRootPrefix . '.organizations.show', $fundraisingRound->organization->slug) }}">{{ $fundraisingRound->organization->name }}</a>
                                 </td>
                                 <td class="d-none d-lg-table-cell">
-                                    <x-tables.entity-relations-shortlist :records="$fundraisingRound->investors" routeName="admin.investors.show"></x-tables.entity-relations-shortlist>
+                                    <x-tables.entity-relations-shortlist :records="$fundraisingRound->investors" routeName="{{$showRouteRootPrefix}}.investors.show"></x-tables.entity-relations-shortlist>
                                 </td>
                             </tr>
                         @empty

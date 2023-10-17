@@ -138,7 +138,7 @@
             <div class="row">
                 @forelse($records as $person)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
-                        <a class="card-body d-flex flex-column" href="{{ route('admin.people.show', $person->slug) }}">
+                        <a class="card-body d-flex flex-column" href="{{ route($showRouteRootPrefix . '.people.show', $person->slug) }}">
                             <div class="text-center">
                                 <div class="image" style="background-image: url({{ $person->image_url }});"></div>
                                 <h3 class="h5 text-dark mb-2">

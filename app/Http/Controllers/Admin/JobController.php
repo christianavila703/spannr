@@ -14,7 +14,9 @@ class JobController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.jobs.index');
+        return view('admin.jobs.index', [
+            'showRouteRootPrefix' => 'admin'
+        ]);
     }
 
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
@@ -52,7 +54,8 @@ class JobController extends Controller
         $job = Job::where('slug', $slug)->firstOrFail();
 
         return view('admin.jobs.show', [
-            'job' => $job
+            'job' => $job,
+            'showRouteRootPrefix' => 'admin',
         ]);
     }
 

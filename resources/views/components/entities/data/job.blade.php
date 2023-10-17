@@ -1,10 +1,20 @@
+{{--TODO OUTDATED OLD VIEW--}}
+
 <div class="row d-flex">
     <div class="col-12 col-lg-7 order-2 order-lg-1">
         <div class="mb-2">
             <x-entities.show.field-heading title="Job Description" />
             <div>
-                {!! $job->description !!}
+                @if ($job->description)
+                    <div>{!! $job->description !!}</div>
+                @else
+                    <div>{!! $job->trixRender('description') !!}</div>
+                @endif
             </div>
+            @if ($job->qualifications)
+                <h2 class="h5 border-bottom border-dark">Minimum Qualifications</h2>
+                <div>{!! $job->qualifications !!}</div>
+            @endif
         </div>
     </div>
     <div class="col-12 col-lg-5 order-1 order-lg-2 ps-lg-4">
@@ -38,10 +48,14 @@
         @if($job->remote)
             <p class="my-2 text-quaternary fw-bold">Remote / Virtual</p>
         @endif
-        <x-entities.show.relationship-basic :records="$job->locations" routeName="admin.locations.show" />
+        <x-entities.show.relationship-basic :records="$job->locations" routeName="{{$showRouteRootPrefix}}.locations.show" />
 
         <x-entities.show.field-heading title="Tags" />
-        <x-entities.show.relationship-tags :entity="$job"/>
+        @if($showRouteRootPrefix == 'admin')
+            <x-entities.show.relationship-tags :entity="$job"/>
+        @else
+            <x-entities.show.relationship-list :records="$job->tags" />
+        @endif
 
         <x-entities.show.field-heading title="Application URL" />
         <x-entities.show.field-group icon="fa-duotone fa-link" tooltip="Application URL">

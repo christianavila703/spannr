@@ -159,12 +159,12 @@
 
                                 <div class="offcanvas-body">
                                     <div class="pb-5 px-lg-3">
-                                        @can('edit records')
+                                        @if($showRouteRootPrefix == 'admin')
                                             <div class="my-4">
                                                 <a href="{{ route('admin.jobs.edit', $job->id) }}"
                                                    class="btn btn-primary">Edit</a>
                                             </div>
-                                        @endcan
+                                        @endif
                                         <p class="lead mb-0">{{ $job->owner->name }}</p>
                                         <div class="mt-4">
                                             <x-content.jobs.job-summary :job="$job" />

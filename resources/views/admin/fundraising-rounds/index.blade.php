@@ -6,7 +6,7 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:entity-index.fundraising-rounds.index />
+        <livewire:entity-index.fundraising-rounds.index :showRouteRootPrefix="$showRouteRootPrefix" />
     </div>
 @endsection
 

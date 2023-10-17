@@ -159,7 +159,7 @@
             <div class="row">
                 @forelse($records as $organization)
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 card">
-                        <a class="card-body d-flex flex-column" href="{{ route('admin.organizations.show', $organization->slug) }}">
+                        <a class="card-body d-flex flex-column" href="{{ route($showRouteRootPrefix . '.organizations.show', $organization->slug) }}">
                             <div class="text-center">
                                 <div class="image" style="background-image: url({{ $organization->image_url }});"></div>
                                 <h3 class="h5 text-dark mb-2">

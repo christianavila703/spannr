@@ -3,7 +3,9 @@
 @section('content')
 
     <x-entities.show>
-        <x-slot:breadcrumbs>{!! $organization->breadcrumb !!}</x-slot:breadcrumbs>
+        <x-slot:breadcrumbs>
+            <x-nav.entity-breadcrumbs :breadcrumbs="$organization->generateBreadcrumbs()"></x-nav.entity-breadcrumbs>
+        </x-slot:breadcrumbs>
         <x-slot:buttons>
             @if($organization->isLocked && $organization->lockedById !== auth()->user()->id)
                 <x-entities.locked-label :record="$organization" />
@@ -47,7 +49,7 @@
             @include('admin.entity-reviews.includes.entity-form', ['entity' => $organization])
         </x-slot:buttons>
         <x-slot:title>{{ $organization->name }}</x-slot:title>
-        <x-entities.data.organization-data :organization="$organization" />
+        <x-entities.data.organization :organization="$organization"  showRouteRootPrefix="{{$showRouteRootPrefix}}"/>
     </x-entities.show>
 
     @include('admin.organizations.investors.add')

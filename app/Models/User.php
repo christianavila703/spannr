@@ -127,6 +127,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasMany(MagicLinkToken::class);
     }
 
+    public function subscription(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserSubscription::class);
+    }
+
     /**
      * Functions
      */
@@ -142,5 +147,18 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         $this->addMediaCollection('teamPhoto')->singleFile();
         $this->addMediaCollection('profilePhoto')->singleFile();
+    }
+
+    public function isSubscriptionActive()
+    {
+        if ($this->subscription()->exists()) {
+            if ($this->subscription->status === UserSubscription::STATUS_ACTIVE ||
+                ($this->subscription->status === UserSubscription::STATUS_CANCELLED
+                    && $this->subscription->end_date >= Carbon::today())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

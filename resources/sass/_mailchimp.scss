@@ -102,6 +102,7 @@ div#mce-responses {
 /* White / Transparent Horizontal Form with Email Only */
 .email-signup-horizontal-white,
 .email-signup-horizontal-purple-hover {
+    position: relative;
 
     .form-group-container {
         display: flex;
@@ -116,6 +117,10 @@ div#mce-responses {
 
         .submit-field {
             flex-shrink: 1;
+        }
+
+        .first-name-field {
+            border-right: .25rem solid var(--color-blue);
         }
     }
 
