@@ -11,7 +11,7 @@
                 <li>Keep track of 1000+ funding rounds that include information on round type, funding amount, investors, and more.</li>
                 <li>Trust all data points by reviewing third-party citations that document investments.</li>
                 <li>Stay up to date with industry funding trends.</li>
-                <li>Get insights into which companies ???</li>
+                <li>Get insights into 1,000+ longevity companies in the private and public markets.</li>
             </ul>
         </div>
     </div>
@@ -49,6 +49,7 @@
             <ul class="spannr-plus-list mb-5">
                 <li>Find companies that are hiring for your individual skill sets.</li>
                 <li>Discover events that will keep you engaged and growing within longevity.</li>
+                <li>Find thousands of people working in and around the longevity industry.</li>
             </ul>
         </div>
     </div>

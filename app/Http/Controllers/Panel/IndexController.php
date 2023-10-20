@@ -15,16 +15,13 @@ class IndexController extends Controller
         }
 
         $subscription = auth()->user()->subscription()->first();
-        $subscriptionUrl = null;
 
         if ($user->isSubscriptionActive() === false) {
-            $subscriptionUrl = config('services.stripe.spannr_plus_subscription_url') .
-                '?client_reference_id=' . $user->id;
+            return view('panel.signup');
         }
 
         return view('panel.index', [
-            'subscription' => $subscription,
-            'subscriptionUrl' => $subscriptionUrl,
+            'subscription' => $subscription
         ]);
     }
 }

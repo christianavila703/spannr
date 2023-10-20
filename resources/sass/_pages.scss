@@ -1336,8 +1336,8 @@ ul.spannr-plus-list {
 
 .spannr-plus-signup-success-label {
     position: absolute;
-    bottom: 0;
     width: 100%;
+    bottom: 0;
 
     a {
         color: var(--color-white);
@@ -1345,5 +1345,12 @@ ul.spannr-plus-list {
 
     a:hover {
         color: var(--color-purple);
+    }
+}
+
+@media (max-width: 420px) {
+    .spannr-plus-signup-success-label {
+        top: 6.25rem;
+        bottom: auto
     }
 }

@@ -13,10 +13,23 @@ class Signup extends Component
 {
     public $email;
 
+    public $user;
+
     public bool $success = false;
     public bool $error = false;
 
     public ?string $subscriptionUrl = null;
+
+    public function mount() {
+        if (Auth::user()) {
+            $this->user = Auth::user();
+
+            if ($this->user->isSubscriptionActive() === false) {
+                $this->subscriptionUrl = config('services.stripe.spannr_plus_subscription_url') .
+                    '?client_reference_id=' . $this->user->id;
+            }
+        }
+    }
 
     public function rules() {
         return [

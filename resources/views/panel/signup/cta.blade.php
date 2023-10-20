@@ -6,7 +6,7 @@
                     @include('public.includes._spannr-plus-logo')
                 </div>
                 <h3 class="h1">Explore the World <span class="d-lg-block">of Longevity</span></h3>
-                <p>Discover some fake words that go here and some content and things for interesting stuff and cookies and milkshakes like kitty cats and bananas.</p>
+                <p>Join Spannr+ today to gain access to the companies, investors, and people who are changing the world of human healthspan, lifespan, and longevity.</p>
                 <div class="form-container">
                     <livewire:public.plus.signup />
                 </div>

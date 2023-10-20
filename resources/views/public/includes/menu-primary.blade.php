@@ -37,30 +37,49 @@
         </li>
     </ul>
 </li>
-@if(auth()->check() && auth()->user()->isSubscriptionActive())
-    <li class="nav-item dropdown {{ ($currentNavItem === 'panel') ? 'current' : '' }}">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Spannr+
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item" href="{{ route('panel.index') }}">Dashboard</a>
-                <a class="dropdown-item" href="{{ route('panel.organizations.index') }}">Organizations</a>
-                <a class="dropdown-item" href="{{ route('panel.investors.index') }}">Investors</a>
-                <a class="dropdown-item" href="{{ route('panel.people.index') }}">People</a>
-                <a class="dropdown-item" href="{{ route('panel.jobs.index') }}">Jobs</a>
-                <a class="dropdown-item" href="{{ route('panel.events.index') }}">Events</a>
-                <a class="dropdown-item" href="{{ route('panel.fundraising-rounds.index') }}">Fundraising Rounds</a>
-                <a class="dropdown-item" href="{{ route('panel.locations.index') }}">Locations</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
-        </ul>
-    </li>
+@if(auth()->check())
+    @if(auth()->user()->isSubscriptionActive())
+        <li class="nav-item dropdown {{ ($currentNavItem === 'panel') ? 'current' : '' }}">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Spannr+
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ route('panel.index') }}">Dashboard</a>
+                    <a class="dropdown-item" href="{{ route('panel.organizations.index') }}">Organizations</a>
+                    <a class="dropdown-item" href="{{ route('panel.investors.index') }}">Investors</a>
+                    <a class="dropdown-item" href="{{ route('panel.people.index') }}">People</a>
+                    <a class="dropdown-item" href="{{ route('panel.jobs.index') }}">Jobs</a>
+                    <a class="dropdown-item" href="{{ route('panel.events.index') }}">Events</a>
+                    <a class="dropdown-item" href="{{ route('panel.fundraising-rounds.index') }}">Fundraising Rounds</a>
+                    <a class="dropdown-item" href="{{ route('panel.locations.index') }}">Locations</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </li>
+    @else
+        <li class="nav-item dropdown {{ ($currentNavItem === 'panel') ? 'current' : '' }}">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Spannr+
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ route('panel.index') }}">Subscribe</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </li>
+    @endif
 @else
     <li class="nav-item {{ ($currentNavItem === 'panel') ? 'current' : '' }}">
         <a class="nav-link" href="{{ route('panel.index') }}" role="button">Spannr+</a>
