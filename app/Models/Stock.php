@@ -38,8 +38,7 @@ class Stock extends Model
     {
         return $this->hasOne(StockSnapshot::class)->whereHas('marketSnapshot', function (Builder $query) {
                 $query->hourly();
-            })->latest();
-
+            })->latest()->limit(1);
     }
 
     /**
