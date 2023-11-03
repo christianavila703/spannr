@@ -2,11 +2,11 @@
 
 namespace App\Jobs\Polygon;
 
+use App\Jobs\Polygon\GetTickerDetails;
 use App\Models\MarketSnapshot;
 use App\Models\Stock;
 use App\Models\StockSnapshot;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,7 +18,6 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Spatie\SlackAlerts\Facades\SlackAlert;
 use Throwable;
-use App\Jobs\Polygon\GetTickerDetails;
 
 class GetMarketSnapshot implements ShouldQueue
 {
@@ -70,27 +69,39 @@ class GetMarketSnapshot implements ShouldQueue
             $tickers = $results->results;
             $successfulTickerCount = count($tickers);
 
+            Log::info(print_r($tickers, true));
+
             foreach ($tickers as $ticker) {
 
                 $stock = Stock::where('ticker', $ticker->ticker)->first();
                 $successfulTickerList[$stock->id] = $stock->ticker;
 
-                $attributes = [
-                    'current_price' => $ticker->price,
-                    'volume' => $ticker->session->volume,
-                    'yesterday_close' => $ticker->session->previous_close,
-                    'today_high' => $ticker->session->high,
-                    'today_low' => $ticker->session->low,
-                    'previous_day_change_price' => $ticker->session->change,
-                    'previous_day_change_percent' => $ticker->session->change_percent,
-                    'stock_id' => $stock->id,
-                    'market_snapshot_id' => $marketSnapshot->id
-                ];
+                try {
+                    $attributes = [
+                        'current_price' => $ticker->price,
+                        'volume' => $ticker->session->volume,
+                        'yesterday_close' => $ticker->session->previous_close,
+                        'today_high' => $ticker->session->high,
+                        'today_low' => $ticker->session->low,
+                        'previous_day_change_price' => $ticker->session->change,
+                        'previous_day_change_percent' => $ticker->session->change_percent,
+                        'stock_id' => $stock->id,
+                        'market_snapshot_id' => $marketSnapshot->id
+                    ];
 
-                $stockSnapshot = StockSnapshot::create($attributes);
+                    $stockSnapshot = StockSnapshot::create($attributes);
 
-                // Get Market Cap and Outstanding Shares
-                array_push($batchArray, new GetTickerDetails($stockSnapshot));
+                    // Get Market Cap and Outstanding Shares
+                    array_push($batchArray, new GetTickerDetails($stockSnapshot));
+                } catch(Throwable $exception) {
+                    Log::warning('Exception during GetMarketSnapshot for ' . $ticker->ticker . ' ' . $exception->getMessage() . print_r($ticker, true));
+                    SlackAlert::to('index')->message('*Exception during GetMarketSnapshot for ' . $ticker->ticker . '*' . "\n" . '`' . $exception->getMessage() . '`' . "\n" . "```" . print_r($ticker, true) . "```");
+
+                    $stockSnapshot = StockSnapshot::orderByDesc('created_at')->where('stock_id', $stock->id)->where('current_price', '>', 0)->first();
+                    $newSnapshot = $stockSnapshot->replicate();
+                    $newSnapshot->market_snapshot_id = $marketSnapshot->id;
+                    $newSnapshot->save();
+                }
 
             }
 
