@@ -34,6 +34,11 @@ class Location extends Model
         return $this->morphedByMany(Job::class, 'locatable', 'location_relationships')->withTimestamps();
     }
 
+//    public function listings(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+//    {
+//        return $this->morphedByMany(Listing::class, 'locatable', 'location_relationships')->withPivot(['street', 'zip_code', 'latitude', 'longitude'])->withTimestamps();
+//    }
+
     public function organizations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Organization::class, 'locatable', 'location_relationships')->withTimestamps();

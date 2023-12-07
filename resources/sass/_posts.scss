@@ -646,7 +646,8 @@ ul.pagination {
 }
 
 /* Outline Newsletter Opt-in */
-.outline-newsletter-optin {
+.outline-newsletter-optin,
+.marketplace-listing-connect-box {
     border: 1px solid var(--color-black);
 
     .icon-group {
@@ -681,6 +682,12 @@ ul.pagination {
 
     .btn {
         width: 100%;
+    }
+}
+
+.marketplace-listing-connect-box {
+    .description {
+        max-width: 100%;
     }
 }
 

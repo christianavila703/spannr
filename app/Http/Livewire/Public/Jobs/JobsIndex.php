@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Public\Jobs;
 
-use App\Http\Livewire\DataTable\WithCachedRows;
-use App\Http\Livewire\DataTable\WithPerPagePagination;
-use App\Http\Livewire\DataTable\WithSorting;
+use App\Http\Livewire\Traits\WithCachedRows;
+use App\Http\Livewire\Traits\WithPerPagePagination;
+use App\Http\Livewire\Traits\WithSorting;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\Location;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class JobsIndex extends Component
@@ -30,11 +30,17 @@ class JobsIndex extends Component
 
     public $jobTypes;
     public $categoryOptions;
+    public $locationOptions;
 
-    public function mount()
+    public function mount(Request $request)
     {
         $this->jobTypes = Job::select('type')->distinct()->pluck('type')->toArray();
         $this->categoryOptions = JobCategory::has('jobs')->pluck('name', 'id')->toArray();
+        $this->locationOptions = $this->customLocations();
+
+        if ($request->input('category')) {
+            $this->filters['category'] = [$request->input('category')];
+        }
     }
 
     public function updatingSearch()
@@ -106,7 +112,34 @@ class JobsIndex extends Component
         return view('livewire.public.jobs.jobs-index', [
             'records' => $this->rows,
             'typeOptions' => $this->jobTypes,
+            'locationOptions' => $this->locationOptions,
             'categoryOptions' => $this->categoryOptions,
         ]);
+    }
+
+    private function customLocations(): array
+    {
+        $allLocations = Location::has('jobs')->get();
+
+        $locationsArray = [];
+        $usaArray = [];
+
+        foreach ($allLocations as $location) {
+            $parts = explode(',', $location->name);
+            $reversed = array_reverse($parts);
+            $country = trim($reversed[0]);
+
+            if ($country === 'USA') {
+                if (array_key_exists(1, $parts)) {
+                    $usaArray[] = $parts[1];
+                }
+            }
+
+            $locationsArray[] = $country;
+        }
+
+        $newArray = array_merge($locationsArray, $usaArray);
+
+        return array_unique($newArray);
     }
 }

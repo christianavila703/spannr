@@ -1,7 +1,7 @@
 .public-footer{
     text-align: center;
-    padding: 2rem 0;
-    @include gradient-pink-to-yellow;
+    padding: 2rem 0 1rem 0;
+    background-color: var(--color-black);
     color: var(--color-white);
 
     .container {
@@ -15,7 +15,7 @@
 
     a:hover {
         text-decoration: none;
-        color: var(--color-black);
+        color: var(--color-magenta);
         transition: all .2s ease-in-out;
     }
 
@@ -48,7 +48,7 @@
 
             .nav-link:hover,
             .nav-link:focus {
-                color: var(--color-black);
+                color: var(--color-magenta);
             }
         }
 
@@ -128,6 +128,7 @@
 
 @media (min-width: $bp-min-desktop) {
     .public-footer {
+        padding-top: 1rem;
 
         .container {
             flex-wrap: nowrap;

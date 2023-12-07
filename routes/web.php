@@ -87,6 +87,16 @@ Route::get('/checkout/subscription/spannr-plus', [App\Http\Controllers\Public\Ch
 
 Route::get('/fo-verify.html', [App\Http\Controllers\Public\AffiliateVerificationController::class, 'flexOffers'])->name('public.affiliate-verification.flex-offers');
 
+// Directory Marketplace
+Route::get('/marketplace', [App\Http\Controllers\Public\Marketplace\MarketplaceListingsController::class, 'index'])->name('public.marketplace.index');
+Route::get('/marketplace/join', [App\Http\Controllers\Public\Marketplace\MarketplaceListingsController::class, 'create'])->name('public.marketplace.join');
+
+Route::get('/marketplace/cold-plunge', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'coldPlunge'])->name('public.marketplace.cold-plunge');
+Route::get('/marketplace/red-light-therapy', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'redLightTherapy'])->name('public.marketplace.red-light-therapy');
+Route::get('/marketplace/sauna', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'sauna'])->name('public.marketplace.sauna');
+
+Route::get('/marketplace/{type}/{slug}', [App\Http\Controllers\Public\Marketplace\MarketplaceListingsController::class, 'show'])->name('public.marketplace.show');
+
 //Route::get('/events', [App\Http\Controllers\Public\ContentController::class, 'eventsIndex'])->name('public.content.events.index');
 //Route::get('/events/leveraging-longevity-sd', [App\Http\Controllers\Public\ContentController::class, 'leveragingLongevitySanDiego'])->name('public.content.events.leveraging-longevity-sd');
 //Route::get('/events/confirmed', [App\Http\Controllers\Public\ContentController::class, 'eventsConfirmed'])->name('public.content.events.confirmed');
@@ -170,6 +180,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
         Route::post('/tags/sync', [\App\Http\Controllers\Admin\TagController::class, 'syncEntities'])->name('tags.sync');
         Route::post('/tags/detach', [\App\Http\Controllers\Admin\TagController::class, 'detachFromEntity'])->name('tags.detach');
+        Route::get('/tag-sets', [\App\Http\Controllers\Admin\TagSetController::class, 'index'])->name('tag-sets.index');
+        Route::get('/tag-sets/{id}', [\App\Http\Controllers\Admin\TagSetController::class, 'show'])->name('tag-sets.show');
 
         // Investor Relationships
         Route::get('/investors/{slug}/people', [\App\Http\Controllers\Admin\InvestorController::class, 'people'])->name('investors.people');
@@ -207,6 +219,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             Route::get('/getEntityListJson', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'getEntityListJson'])->name('get-entity-list-json');
             Route::get('/getEntityForm', [\App\Http\Controllers\Admin\EntityDuplicateController::class, 'getEntityForm'])->name('get-entity-form');
         });
+
+        // Marketplace
+        Route::get('/marketplace', [\App\Http\Controllers\Admin\MarketplaceController::class, 'index'])->name('marketplace.index');
     });
 
     /* @can admin control */
@@ -218,6 +233,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::middleware(['can:recruiting'])->group(function() {
         Route::get('/recruiting', [\App\Http\Controllers\Admin\RecruitingController::class, 'index'])->name('recruiting.index');
         Route::get('/recruiting/applications', [\App\Http\Controllers\Admin\RecruitingController::class, 'applications'])->name('recruiting.applications');
+    });
+
+    /* @can import */
+    Route::middleware(['can:import records'])->prefix('/import')->name('import.')->group(function() {
+        Route::get('/listings', [\App\Http\Controllers\Admin\Imports\ImportListingsController::class, 'index'])->name('listings.index');
+        Route::get('/listings/create', [\App\Http\Controllers\Admin\Imports\ImportListingsController::class, 'create'])->name('listings.create');
+        Route::post('/listings/create', [\App\Http\Controllers\Admin\Imports\ImportListingsController::class, 'process'])->name('listings.process');
+        Route::get('/listings/{id}', [\App\Http\Controllers\Admin\Imports\ImportListingsController::class, 'show'])->name('listings.show');
     });
 
     Route::middleware(['can:review records'])

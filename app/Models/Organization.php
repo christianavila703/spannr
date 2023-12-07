@@ -93,6 +93,11 @@ class Organization extends Model implements EntityContract
         return $this->morphMany(Job::class, 'owner');
     }
 
+    public function listings(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Listing::class, 'relatable');
+    }
+
     public function locations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Location::class, 'locatable' , 'location_relationships')->withTimestamps();
@@ -103,6 +108,11 @@ class Organization extends Model implements EntityContract
         return $this->belongsToMany(MediaItem::class)->withTimestamps();
     }
 
+    public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();
+    }
+
     public function stock(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Stock::class);
@@ -111,11 +121,6 @@ class Organization extends Model implements EntityContract
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
-    }
-
-    public function people(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Person::class)->withPivot('role')->withTimestamps();
     }
 
     public function financialStatements()

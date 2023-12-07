@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/sass/tinymce.scss',
                 'resources/sass/matter-logos.scss',
                 'resources/sass/geosearch-autocomplete.scss',
+                'resources/sass/tinymce-public.scss',
                 'resources/js/app.js',
                 'resources/js/longevity-stock-chart.js',
                 'resources/js/longevity-stock-chart-home.js',
@@ -44,6 +45,9 @@ export default defineConfig({
                 'resources/js/investors-total-amount-raised-per-round.js',
                 'resources/js/investors-average-amount-raised-per-round.js',
                 'resources/js/investors-ytd-amount-raised-per-category.js',
+                'resources/js/marketplace-listing-location.js',
+                'resources/js/tinymce-listing.js',
+                'resources/js/marketplace-listing-map.js',
                 'resources/js/organization-form-tags.js'
             ],
             refresh: true,

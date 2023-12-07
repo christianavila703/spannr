@@ -55,4 +55,8 @@ return [
         'spannr_plus_subscription_url' => env('STRIPE_SPANNR_PLUS_SUBSCRIPTION_LINK'),
     ],
 
+    'geoapify' => [
+        'key' => env('GEOAPIFY_API_KEY')
+    ],
+
 ];

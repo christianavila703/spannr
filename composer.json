@@ -22,6 +22,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1",
         "mailchimp/marketing": "^3.0",
         "pavel-mironchik/laravel-backup-panel": "^2.2",
         "predis/predis": "^2.0",

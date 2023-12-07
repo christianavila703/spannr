@@ -42,7 +42,11 @@ class Content extends Model implements HasMedia
         'events--leveraging-longevity-sd',
         'reports--2022-longevity-funding',
         'guide-to-longevity',
-        'investors'
+        'investors',
+        'marketplace',
+        'marketplace--cold-plunge',
+        'marketplace--red-light-therapy',
+        'marketplace--sauna'
     ];
 
     /**

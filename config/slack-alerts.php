@@ -10,7 +10,8 @@ return [
         'investing' => '', // #investing
         'jobs' => '', // #jobs
         'website' => '', // #website
-        'test' => '' // #test-notifications
+        'test' => '', // #test-notifications
+        'marketplace' => '' // #marketplace
     ],
 
     /*

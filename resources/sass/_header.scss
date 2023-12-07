@@ -17,10 +17,10 @@
 }
 
 .header.public-header {
-    padding: 1rem 0;
+    padding: 0;
 
     .logo {
-        height: 36px;
+        height: 30px;
     }
 
     nav .container {
@@ -94,6 +94,86 @@
 
     .navbar-collapse {
         margin-top: 1.5rem;
+    }
+}
+
+#offcanvas-primary-menu {
+    .offcanvas-header,
+    .offcanvas-body {
+        background-color: $gray-100;
+    }
+}
+
+#primary-nav.public {
+    .h6 {
+        margin-bottom: 0;
+    }
+
+    .border-bottom {
+        border-color: $gray-200;
+    }
+
+    .nav-heading-item {
+        font-size: $h5-font-size;
+    }
+
+    .nav-heading-item.current {
+        color: var(--color-purple);
+    }
+
+    .nav-heading-item:hover {
+        color: var(--color-maroon);
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+            margin: 0;
+            padding: .5rem .75rem .25rem 1.5rem;
+
+            a {
+                text-decoration: none;
+                color: var(--color-black);
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+
+            a:hover {
+                color: var(--color-magenta);
+            }
+        }
+    }
+
+    p,
+    .mailchimp-form {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .mailchimp-form {
+        p {
+            padding: 0;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    #primary-nav.public {
+        .nav-heading-item {
+            font-size: $h4-font-size;
+        }
+
+        ul li {
+            font-size: 1.125rem;
+        }
+
+        small {
+            font-size: .95rem;
+        }
     }
 }
 
@@ -204,4 +284,44 @@
 .hamburger--elastic.is-active .hamburger-inner::after {
     transform: translate3d(0, -20px, 0) rotate(-270deg);
     transition-delay: 0.075s;
+}
+
+#header-subscribe-modal-label {
+    font-family: $headings-font-family;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+}
+
+#header-subscribe-modal .modal-body {
+    padding: 2rem;
+}
+
+#header-subscribe-modal .text-content {
+    @include subheadings-font;
+    line-height: 1;
+    font-size: 1.3rem;
+}
+
+.header-subscribe-form {
+
+    .btn {
+        background-color: var(--color-blue);
+        color: var(--color-white);
+    }
+
+    .btn:hover {
+        background-color: var(--color-purple);
+        border-color: var(--color-purple);
+    }
+
+    .form-control:focus {
+        border-color: var(--color-purple);
+        box-shadow: 0 0 0 .25rem rgba($indigo, .25);
+    }
 }

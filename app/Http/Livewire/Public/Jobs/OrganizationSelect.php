@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Public\Jobs;
 
-use App\Http\Livewire\DataTable\WithCachedRows;
+use App\Http\Livewire\Traits\WithCachedRows;
 use App\Models\Organization;
 use Livewire\Component;
 use Livewire\WithPagination;

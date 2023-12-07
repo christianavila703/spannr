@@ -109,9 +109,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->belongsToMany(Article::class);
     }
 
-    public function person(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function listings(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasOne(Person::class);
+        return $this->belongsToMany(Listing::class)->withPivot('role')->withTimestamps();
+    }
+
+    public function marketplaceLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MarketplaceLog::class);
     }
 
     public function jobs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -119,9 +124,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->belongsToMany(Job::class, 'job_managers');
     }
 
-    /**
-     * Relationships
-     */
+    public function person(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Person::class);
+    }
+
     public function magicLinkTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(MagicLinkToken::class);

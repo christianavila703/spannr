@@ -185,3 +185,15 @@
         content: "\f107";
     }
 }
+@mixin collapse-arrows-end {
+    [data-bs-toggle="collapse"]:after {
+        width: 1.5rem;
+        display: inline-block;
+        content: "\f105";
+        font-family: "Font Awesome 6 Sharp";
+    }
+
+    [data-bs-toggle="collapse"][aria-expanded="true"]:after {
+        content: "\f107";
+    }
+}

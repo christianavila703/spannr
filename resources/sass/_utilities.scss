@@ -214,6 +214,19 @@ input[type="submit"] {
     color: var(--color-white);
 }
 
+.btn-outline-purple {
+    border: 1px solid var(--color-purple);
+    color: var(--color-purple);
+    padding: $btn-padding-y-lg $btn-padding-x-lg;
+    background-color: transparent;
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--color-purple);
+    border-color: var(--color-purple);
+    color: var(--color-white);
+}
+
 /* Fancy Links */
 .link-black-underline-gradient {
     color: var(--color-black);
@@ -234,12 +247,16 @@ input[type="submit"] {
     }
 }
 
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
 /* Width */
 .width-auto {
     width: auto;
 }
 
-$min-widths: 45 80 100 120 150 180 200 250;
+$min-widths: 45 80 100 120 150 180 200 250 400;
 
 @each $size in $min-widths {
     .min-width-#{$size} {
@@ -247,7 +264,7 @@ $min-widths: 45 80 100 120 150 180 200 250;
     }
 }
 
-$max-widths: 80 200 300 320 400 420 450 500 540 600 700 800 840 1100;
+$max-widths: 80 200 300 320 400 420 450 500 540 600 700 780 800 840 1100 1200;
 
 @each $size in $max-widths {
     .max-width-#{$size} {
@@ -279,6 +296,43 @@ $max-widths: 80 200 300 320 400 420 450 500 540 600 700 800 840 1100;
     .text:after {
         content: "More";
     }
+}
+
+.has-collapse-arrows {
+    @include collapse-arrows;
+
+    .btn[data-bs-toggle="collapse"] {
+        padding-left: 0;
+    }
+
+    .btn[data-bs-toggle="collapse"]:focus {
+        border-color: transparent;
+    }
+}
+
+.has-collapse-arrows-end {
+    @include collapse-arrows-end;
+
+    .btn[data-bs-toggle="collapse"] {
+        padding-right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn[data-bs-toggle="collapse"]:focus {
+        border-color: transparent;
+    }
+}
+
+.color-changing-border  {
+    border: 2px solid var(--color-magenta);
+    padding: .5rem;
+}
+
+.color-changing-border.muted-border  {
+    border-color: var(--color-gray-light);
+    padding: .5rem;
 }
 
 /* Forced Word Wrapping */
@@ -333,10 +387,6 @@ span.required {
     color: var(--color-aqua);
 }
 
-.form-check-input {
-    margin-top: .4em;
-}
-
 .form-check.lead {
     .form-check-input {
         margin-top: .35rem;
@@ -352,6 +402,15 @@ span.required {
 .form-errors-danger {
     .form-error {
         color: var(--color-orange-dark);
+    }
+}
+
+.checkbox-choice-button {
+    font-family: $font-family-sans-serif;
+    font-weight: $font-weight-base;
+
+    i {
+        margin-right: .75rem;
     }
 }
 
@@ -540,6 +599,16 @@ hr.dark {
     background-position: center center;
 }
 
+.image-entity-logo-200 {
+    width: 100%;
+    max-width: 200px;
+    height: 150px;
+    display: block;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 /* Table of Contents */
 ol.table-of-contents {
     margin-left: 0;
@@ -670,6 +739,72 @@ $entityColors:(
     li {
         padding: 0;
         margin-bottom: 1rem;
+    }
+
+    li:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+ul.list-with-checkmarks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        margin-bottom: 1rem;
+        display: flex;
+
+        i {
+            margin-right: .75rem;
+            font-size: 1.4rem;
+            margin-top: .25rem;
+            color: var(--bs-primary);
+        }
+
+        strong {
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        span {
+            display: block;
+            color: var(--bs-secondary);
+        }
+
+        a {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.15rem;
+            text-decoration: none;
+        }
+    }
+
+    li:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+ul.list-plain-with-links {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+        padding: 0;
+        margin-bottom: .5rem;
+        margin-left: .75rem;
+        font-family: $font-family-subheadings;
+        font-size: 1.15rem;
+
+        a {
+            text-decoration: none;
+            color: var(--color-black);
+        }
+
+        a:hover {
+            color: var(--color-maroon);
+        }
     }
 
     li:last-of-type {

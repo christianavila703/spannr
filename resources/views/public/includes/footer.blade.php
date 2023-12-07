@@ -7,6 +7,9 @@
             <div class="nav-container">
                 <ul class="navbar-nav footer-nav-menu">
                     <li class="nav-item">
+                        <a href="{{ route('public.content.about') }}" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('public.content.terms') }}" class="nav-link">Terms of Use</a>
                     </li>
                     <li class="nav-item">

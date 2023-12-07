@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Recruiting;
 
-use App\Http\Livewire\DataTable\WithCachedRows;
-use App\Http\Livewire\DataTable\WithPerPagePagination;
-use App\Http\Livewire\DataTable\WithSorting;
+use App\Http\Livewire\Traits\WithCachedRows;
+use App\Http\Livewire\Traits\WithPerPagePagination;
+use App\Http\Livewire\Traits\WithSorting;
 use App\Models\Job;
 use App\Models\JobCategory;
 use Livewire\Component;

@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Admin\HasMedia;
 
-use App\Http\Livewire\DataTable\WithBulkActions;
-use App\Http\Livewire\DataTable\WithCachedRows;
-use App\Http\Livewire\DataTable\WithPerPagePagination;
-use App\Http\Livewire\DataTable\WithSorting;
+use App\Http\Livewire\Traits\WithBulkActions;
+use App\Http\Livewire\Traits\WithCachedRows;
+use App\Http\Livewire\Traits\WithPerPagePagination;
+use App\Http\Livewire\Traits\WithSorting;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;

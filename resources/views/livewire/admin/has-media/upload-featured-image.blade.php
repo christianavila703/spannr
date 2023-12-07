@@ -1,5 +1,8 @@
 <div>
-    <h2 class="h4 mb-3">Set Featured Image</h2>
+    <h2 class="{{ $headingClass }}">Set Featured Image</h2>
+    @if($imageRequirements)
+        <p class="text-muted mb-2">{{ $imageRequirements }}</p>
+    @endif
 
     <form method="POST" wire:submit.prevent="submit">
 

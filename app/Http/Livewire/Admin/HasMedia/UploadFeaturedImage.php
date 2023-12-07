@@ -18,6 +18,10 @@ class UploadFeaturedImage extends Component
 
     public $message = '';
 
+    public $headingClass = 'h4 mb-3';
+
+    public $imageRequirements;
+
     public function submit()
     {
         $this->validate([

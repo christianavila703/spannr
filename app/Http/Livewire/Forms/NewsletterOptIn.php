@@ -42,8 +42,6 @@ class NewsletterOptIn extends Component
         ]);
 
         $this->showSuccess = true;
-
-        return redirect()->route('public.content.email-confirmed');
     }
 
     public function mount()

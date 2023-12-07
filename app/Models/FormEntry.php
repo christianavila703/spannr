@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Jobs\FormNotifications\FundingApplicant;
 use App\Jobs\FormNotifications\InvestorOptIn;
 use App\Jobs\FormNotifications\JobPostingSubmitted;
+use App\Jobs\FormNotifications\ListingEmail;
+use App\Jobs\FormNotifications\MarketplaceGenericRequest;
 use App\Jobs\FormNotifications\NewsletterOptIn;
 use App\Jobs\FormNotifications\ReportOptIn;
 use App\Jobs\FormNotifications\WebsiteContact;
@@ -19,16 +21,27 @@ class FormEntry extends Model
 
     protected $guarded = ['id'];
 
+    // TODO: This should be a cast but I think it will break things so fix it later
+//    protected $casts = [
+//        'fields' => 'array'
+//    ];
+
     const FORM_INVESTOR_OPTIN = 'Investor Opt-in';
     const FORM_FUNDING_APPLICANT = 'Funding Applicant';
     const FORM_CONTACT = 'Contact';
+
     const FORM_NEWSLETTER_SIDEBAR = 'Newsletter Sidebar';
     const FORM_NEWSLETTER_STICKY = 'Newsletter Sticky';
     const FORM_NEWSLETTER_HOMEPAGE_HERO = 'Newsletter Homepage Hero';
+    const FORM_NEWSLETTER_HEADER = 'Newsletter Header';
     const FORM_NEWSLETTER_FOOTER = 'Newsletter Footer';
     const FORM_NEWSLETTER_ABOUT = 'Newsletter About';
+
     const FORM_REPORT_LONGEVITY_2022 = 'Longevity Report 2022';
     const FORM_JOB_POSTING = 'Job Posting';
+
+    const FORM_MARKETPLACE_LISTING_EMAIL = 'Marketplace Listing Email';
+    const FORM_MARKETPLACE_GENERIC_REQUEST = 'Marketplace Generic Request';
 
     const STATUS_MAILCHIMP_SUCCESS = 'Successful';
     const STATUS_MAILCHIMP_FAILED = 'Failed';
@@ -68,7 +81,11 @@ class FormEntry extends Model
                     break;
 
                 case self::FORM_NEWSLETTER_SIDEBAR:
+                case self::FORM_NEWSLETTER_STICKY:
                 case self::FORM_NEWSLETTER_HOMEPAGE_HERO:
+                case self::FORM_NEWSLETTER_HEADER:
+                case self::FORM_NEWSLETTER_FOOTER:
+                case self::FORM_NEWSLETTER_ABOUT:
                     NewsletterOptIn::dispatch($formEntry);
                     break;
 
@@ -81,8 +98,24 @@ class FormEntry extends Model
                 case self::FORM_JOB_POSTING:
                     JobPostingSubmitted::dispatch($formEntry);
                     break;
+
+                case self::FORM_MARKETPLACE_LISTING_EMAIL:
+                    ListingEmail::dispatch($formEntry);
+                    break;
+
+                case self::FORM_MARKETPLACE_GENERIC_REQUEST:
+                    MarketplaceGenericRequest::dispatch($formEntry);
+                    break;
             }
         });
+    }
+
+    /**
+     * Relationships
+     */
+    public function entity(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    {
+        return $this->morphTo();
     }
 
     /**

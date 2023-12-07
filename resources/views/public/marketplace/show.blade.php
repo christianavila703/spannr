@@ -1,0 +1,42 @@
+@extends('layouts.public')
+
+@section('content')
+    @include('public.marketplace._nav')
+    <div class="container my-5">
+        <x-nav.breadcrumbs parentUrl="{{ route('public.marketplace.index') }}" parentLabel="Longevity Marketplace" currentLabel="{{ $listing->name }}"/>
+        <hr class="dark mb-5">
+        @if($canEditListing)
+            <div class="mb-4">
+                <a href="#edit" class="btn btn-lg btn-quaternary text-white">
+                    <i class="fa-sharp fa-solid fa-pen-to-square"></i> Edit Listing
+                </a>
+            </div>
+            @if($listing->type === \App\Models\Listing::TYPE_CLINIC OR \App\Models\Listing::TYPE_DOCTOR)
+                <livewire:public.marketplace.show-listing.medical-provider :listing="$listing" />
+                <div id="edit" class="mt-5 border-top border-2 border-dark pt-4">
+                    <livewire:public.marketplace.listing-forms.medical-provider :listing="$listing" :canEditUsers="$canEditUsers"/>
+                </div>
+            @endif
+        @else
+            @if($listing->type === \App\Models\Listing::TYPE_CLINIC OR \App\Models\Listing::TYPE_DOCTOR)
+                @include("public.marketplace.listing-data.medical-provider")
+            @endif
+        @endif
+    </div>
+@endsection
+
+
+@push('end')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
+    @vite('resources/js/marketplace-listing-map.js')
+    <style>
+        #listing-map {
+            height: 300px;
+        }
+    </style>
+
+    @if($canEditListing)
+        @vite('resources/js/tinymce-listing.js')
+    @endif
+@endpush

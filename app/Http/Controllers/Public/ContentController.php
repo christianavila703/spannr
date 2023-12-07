@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Glossary;
+use App\Models\Job;
+use App\Models\JobCategory;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\MarketSnapshot;
@@ -28,15 +30,11 @@ class ContentController extends Controller
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'home')->first();
-        $articles = Article::topInsights()->orderByDesc('date')->with('media')->take(3)->get();
-        $organizations = Organization::whereHas('stock', function(Builder $query) {
-            $query->indexed()->active();
-        })->orderByDesc('updated_at')->take(12)->get();
+        $articles = Article::with(['tags'])->topInsights()->orderByDesc('date')->with('media')->take(7)->get();
 
-        return view('public.content.home-redesign', [
+        return view('public.content.home.index', [
             'seo' => $seo,
             'articles' => $articles,
-            'organizations' => $organizations
         ]);
     }
 

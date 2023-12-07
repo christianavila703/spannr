@@ -51,9 +51,11 @@
                                     <a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a>
                                     <a class="dropdown-item" href="{{ route('admin.form-entries.index') }}">Form Entries</a>
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">Tags</a>
+                                    <a class="dropdown-item" href="{{ route('admin.tag-sets.index') }}">Tag Sets</a>
                                     <a class="dropdown-item" href="{{ route('admin.glossary.index') }}">Glossary</a>
                                     <a class="dropdown-item" href="{{ route('admin.locations.index') }}">Locations</a>
                                     <a class="dropdown-item" href="{{ route('admin.entity-duplicate.index') }}">Duplicate Merge</a>
+                                    <a class="dropdown-item" href="{{ route('admin.marketplace.index') }}">Marketplace Listings</a>
                                     @can('review records')
                                         <a class="dropdown-item" href="{{ route('admin.entity-reviews.index') }}">Review / Audit</a>
                                     @endcan
@@ -76,6 +78,18 @@
                                     <a href="{{ route('admin.content.create') }}" class="dropdown-item">Content</a>
                                     <a href="{{ route('admin.glossary.create') }}" class="dropdown-item">Glossary Item</a>
                                     <a href="{{ route('admin.locations.create') }}" class="dropdown-item">Location</a>
+                                </div>
+                            </li>
+                        @endcan
+
+                        @can('import records')
+                            <li class="nav-item dropdown">
+                                <a id="navbar-dropdown-add-new" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Imports
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-add-new">
+                                    <a href="{{ route('admin.import.listings.index') }}" class="dropdown-item">Listings</a>
                                 </div>
                             </li>
                         @endcan

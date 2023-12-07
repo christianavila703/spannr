@@ -30,6 +30,9 @@ class Tag extends Model
     const TAG_JOB_APPLICANT = 'Job Applicant';
     const TAG_HIRING_MANAGER = 'Hiring Manager';
     const TAG_PARENT_ARTICLE_CATEGORIES = 'Article Categories';
+    const TAG_TREATMENTS = 'Treatments';
+    const TAG_LANGUAGES = 'Languages';
+    const TAG_AGE_GROUPS = 'Age Groups';
 
     const MAX_DEPTH = 1;
 
@@ -81,6 +84,11 @@ class Tag extends Model
         return $this->morphedByMany(Job::class, 'taggable')->withTimestamps();
     }
 
+    public function listings(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Listing::class, 'taggable')->withTimestamps();
+    }
+
     public function organizations(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Organization::class, 'taggable')->withTimestamps();
@@ -89,6 +97,11 @@ class Tag extends Model
     public function people(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Person::class, 'taggable')->withTimestamps();
+    }
+
+    public function tagSets(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(TagSet::class)->withTimestamps();
     }
 
     /**
