@@ -15,14 +15,18 @@ let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 /* Primary Nav */
 let hamburger = document.querySelector(".hamburger");
-hamburger.addEventListener("click", function () {
-    hamburger.classList.toggle("is-active");
-});
+if(hamburger) {
+    hamburger.addEventListener("click", function () {
+        hamburger.classList.toggle("is-active");
+    });
+}
 
 const myOffcanvas = document.getElementById('offcanvas-primary-menu')
-myOffcanvas.addEventListener('hidden.bs.offcanvas', event => {
-    hamburger.classList.remove("is-active");
-})
+if (myOffcanvas) {
+    myOffcanvas.addEventListener('hidden.bs.offcanvas', event => {
+        hamburger.classList.remove("is-active");
+    });
+}
 
 /* Confirm */
 let confirmationButtons = document.querySelectorAll('.confirm-button');

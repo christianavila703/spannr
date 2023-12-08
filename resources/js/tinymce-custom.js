@@ -2,18 +2,16 @@
 import tinymce from 'tinymce';
 
 /* Default icons are required. After that, import custom icons if applicable */
-import 'tinymce/icons/default';
+import 'tinymce/icons/default/icons.min.js';
 
 /* Required TinyMCE components */
-import 'tinymce/themes/silver';
-import 'tinymce/models/dom';
+import 'tinymce/themes/silver/theme.min.js';
+import 'tinymce/models/dom/model.min.js';
 
 /* Import a skin (can be a custom skin instead of the default) */
-import 'tinymce/skins/ui/oxide/skin.css';
+import 'tinymce/skins/ui/oxide/skin.js';
 
 /* Import plugins */
-import 'tinymce/plugins/advlist';
-import 'tinymce/plugins/code';
 import 'tinymce/plugins/media';
 import 'tinymce/plugins/lists';
 import 'tinymce/plugins/table';
@@ -26,8 +24,7 @@ import 'tinymce/plugins/visualchars';
 import 'tinymce/plugins/wordcount';
 import 'tinymce/plugins/autosave';
 
-/* content UI CSS is required */
-import contentCss from '../sass/tinymce.scss';
+import contentCss from "../sass/tinymce.scss";
 
 const iframeConfig = {
     title: 'Insert iFrame',
@@ -115,6 +112,7 @@ const collapseConfig = {
     }
 };
 
+/* Initialize TinyMCE */
 tinymce.init({
     selector: 'textarea.tiny-editor',
     plugins: 'advlist code table lists media image link autoresize charmap visualblocks visualchars wordcount autosave',
@@ -148,3 +146,4 @@ tinymce.init({
     ],
     style_formats_merge: true
 });
+

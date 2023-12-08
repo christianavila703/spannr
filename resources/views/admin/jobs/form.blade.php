@@ -269,7 +269,7 @@
             ownerIdElement.value = value;
         }
     </script>
-    @vite('resources/js/tinymce.js')
+    @vite('resources/js/tinymce-custom.js')
     <style>
         .tiny-editor .tox-tinymce {
             min-height: 325px;
