@@ -27,12 +27,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'last_name',
         'email',
         'password',
-        'byline'
+        'byline',
+        'stripe_customer_id'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'stripe_customer_id'
     ];
 
     protected $casts = [
@@ -109,9 +111,24 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->belongsToMany(Article::class);
     }
 
+    public function jobs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Job::class, 'job_managers');
+    }
+
+    public function jobSubscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobSubscription::class);
+    }
+
     public function listings(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Listing::class)->withPivot('role')->withTimestamps();
+    }
+
+    public function magicLinkTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MagicLinkToken::class);
     }
 
     public function marketplaceLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -119,19 +136,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasMany(MarketplaceLog::class);
     }
 
-    public function jobs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Job::class, 'job_managers');
-    }
-
     public function person(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Person::class);
     }
 
-    public function magicLinkTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function setupIntents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(MagicLinkToken::class);
+        return $this->hasMany(SetupIntent::class);
     }
 
     public function subscription(): \Illuminate\Database\Eloquent\Relations\HasOne

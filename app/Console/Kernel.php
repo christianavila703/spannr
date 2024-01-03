@@ -49,7 +49,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('record-locks:clear')->everyMinute();
 
+        // Subscriptions
         $schedule->command('subscription:check')->dailyAt('03:00');
+        $schedule->command('subscriptions:check-jobs')->dailyAt('3:05');
     }
 
     /**

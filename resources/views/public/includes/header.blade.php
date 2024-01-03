@@ -14,10 +14,17 @@
                     @endif
                     <div class="ms-auto d-flex align-items-center">
                         <div class="d-none d-md-block me-3">
-                            <button class="btn text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">
-                                <i class="fa-sharp fa-light fa-envelope me-1"></i>
-                                <span>Subscribe</span>
-                            </button>
+                            @auth
+                                <a href="{{ route('users.dashboard') }}" class="btn text-uppercase text-white py-1">
+                                    <i class="fa-sharp fa-light fa-home me-1"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            @else
+                                <button class="btn text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">
+                                    <i class="fa-sharp fa-light fa-envelope me-1"></i>
+                                    <span>Subscribe</span>
+                                </button>
+                            @endif
                         </div>
                         <button class="hamburger hamburger--elastic" type="button" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvas-primary-menu" aria-controls="offcanvas-primary-menu">

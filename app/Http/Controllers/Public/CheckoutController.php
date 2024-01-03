@@ -91,7 +91,7 @@ class CheckoutController extends Controller
         } catch (\Throwable $throwable) {
             $errorMessage = $throwable->getMessage();
 
-            Log::critical('Error during checkout for Job posting subscription', $errorMessage);
+            Log::critical('Error during checkout for Job posting subscription ' . $errorMessage);
             $message = '<@Sydney> *Error during checkout for Job Posting subscription*' . "\n" .
                 ">Checkout ID: " . $checkoutId;
 

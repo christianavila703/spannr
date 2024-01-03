@@ -50,8 +50,16 @@ class SubmitJobPosting extends Component
     protected $listeners = ['setOrganization', 'updateDescription', 'updateQualifications', 'updateJobLocation', 'clearLocations'];
 
     public function mount() {
-        $this->user = auth()->check() ? auth()->user() : null;
         $this->category = 'placeholder';
+
+        if (Auth::user()) {
+            $this->user = Auth::user();
+            $this->first_name = $this->user->name;
+            $this->last_name = $this->user->last_name;
+            $this->email = $this->user->email;
+        } else {
+            $this->user = null;
+        }
 
         $categoryOther = JobCategory::where('name', JobCategory::CATEGORY_OTHER)->first();
         $this->categoryOtherId = $categoryOther->id;

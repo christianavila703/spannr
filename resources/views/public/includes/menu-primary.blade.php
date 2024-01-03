@@ -63,7 +63,7 @@
                 </div>
             </div>
         @else
-            <div class="py-3">
+            <div class="py-3 border-bottom">
                 <a href="{{ route('panel.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'panel') ? 'current' : '' }}">Spannr+</a>
                 <p class="m-0">Your gateway to the world of longevity</p>
             </div>
@@ -75,25 +75,45 @@
         </div>
     @endif
 
-    <div class="py-3 border-bottom">
-        <a href="{{ route('public.content.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'jobs') ? 'current' : '' }}">Longevity Jobs</a>
-        <p class="m-0">Find a job in longevity / Find candidates to hire</p>
-    </div>
-
-    <div class="py-4 border-bottom">
-        <p class="h6">Get the Spannr Newsletter</p>
-        <p class="my-2">Weekly insights into the future of longevity</p>
-        <div class="mailchimp-form">
-            <livewire:forms.newsletter-opt-in
-                form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
-                successClass="text-start text-quintary fw-bold"
-            />
+    @can('manage own jobs')
+        <div class="py-3 border-bottom">
+            <a href="{{ route('public.content.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'jobs') ? 'current' : '' }}">Longevity Jobs</a>
+            <ul class="other-nav-items">
+                <li class="nav-item">
+                    <a href="{{ route('users.jobs.index') }}">My Job Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('public.content.jobs.submit') }}">List New Job</a>
+                </li>
+            </ul>
         </div>
-    </div>
+    @else
+        <div class="py-3 border-bottom">
+            <a href="{{ route('public.content.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'jobs') ? 'current' : '' }}">Longevity Jobs</a>
+            <p class="m-0">Find a job in longevity / Find candidates to hire</p>
+        </div>
+    @endcan
+
+    @guest
+        <div class="py-4 border-bottom">
+            <p class="h6">Get the Spannr Newsletter</p>
+            <p class="my-2">Weekly insights into the future of longevity</p>
+            <div class="mailchimp-form">
+                <livewire:forms.newsletter-opt-in
+                    form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
+                    successClass="text-start text-quintary fw-bold"
+                />
+            </div>
+        </div>
+    @endguest
+
     <div class="py-3">
         <ul class="other-nav-items">
             <x-nav.admin-link />
             @auth
+                <li class="nav-item">
+                    <a href="{{ route('users.dashboard') }}">Dashboard</a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 </li>

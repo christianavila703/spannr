@@ -811,3 +811,11 @@ ul.list-plain-with-links {
         margin-bottom: 0;
     }
 }
+
+.table-no-bottom-border {
+    tr:last-of-type {
+        th, td {
+            border-bottom: 0;
+        }
+    }
+}

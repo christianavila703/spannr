@@ -46,7 +46,8 @@ export default defineConfig({
                 'resources/js/marketplace-listing-location.js',
                 'resources/js/tinymce-listing.js',
                 'resources/js/marketplace-listing-map.js',
-                'resources/js/organization-form-tags.js'
+                'resources/js/organization-form-tags.js',
+                'resources/js/stripe-setup-intent.js'
             ],
             refresh: true,
         }),

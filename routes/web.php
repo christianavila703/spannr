@@ -265,6 +265,7 @@ Route::get('/plus', [\App\Http\Controllers\Panel\IndexController::class, 'index'
  */
 Route::middleware('auth')->group(function () {
     // User Settings
+    Route::get('/dashboard', [\App\Http\Controllers\Users\DashboardController::class, 'index'])->name('users.dashboard');
     Route::get('/settings', [\App\Http\Controllers\Users\SettingsController::class, 'index'])->name('users.settings');
     Route::post('/settings', [\App\Http\Controllers\Users\PasswordController::class, 'store'])->name('users.store-password');
     Route::post('/settings/api', [\App\Http\Controllers\Users\ApiController::class, 'createKey'])->name('users.api.create');
@@ -273,6 +274,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:manage own jobs')->group(function () {
         Route::get('/user/jobs/', [\App\Http\Controllers\Users\JobsController::class, 'index'])->name('users.jobs.index');
         Route::post('/user/jobs/{id}/unsubscribe', [\App\Http\Controllers\Users\JobsController::class, 'unsubscribe'])->name('users.jobs.unsubscribe');
+        Route::get('/user/jobs/{id}/update-card', [\App\Http\Controllers\Users\JobsController::class, 'updateCard'])->name('users.jobs.update-card');
+        Route::post('/user/jobs/{subscription_id}/{stripe_customer_id}/setup-intent', [\App\Http\Controllers\Users\JobsController::class, 'updateCardSetupIntent'])->name('users.jobs.setup-intent');
+        Route::get('/user/jobs/{id}/confirmation', [\App\Http\Controllers\Users\JobsController::class, 'updateCardConfirmation'])->name('users.jobs.update-card-confirmation');
     });
 
     Route::prefix('/plus')->name('panel.')->middleware('subscription')->group(function () {
@@ -313,3 +317,5 @@ Route::middleware('auth')->group(function () {
             ->name('locations.show');
     });
 });
+
+Route::stripeWebhooks('/stripe/webhooks');

@@ -53,6 +53,7 @@ return [
         'api_key' => env('STRIPE_API_KEY'),
         'job_posting_subscription_url' => env('STRIPE_JOBS_MONTHLY_SUBSCRIPTION_LINK'),
         'spannr_plus_subscription_url' => env('STRIPE_SPANNR_PLUS_SUBSCRIPTION_LINK'),
+        'stripe_url' => env('STRIPE_URL')
     ],
 
     'geoapify' => [
