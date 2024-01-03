@@ -1,6 +1,7 @@
 let csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-const stripe = Stripe("pk_test_51L9xy3CfFcBEAfEnxfQ0wvZ2fF3qq7vQc2mFDYTe5ZMZQTllUetrYdT4JB4KK7j3pD06k71P1Hi8EeyrxDNgfuud00Ea30NDxn");
 let stripeCheckoutData = document.getElementById('stripe-checkout-data');
+let stripeKey = stripeCheckoutData.getAttribute('data-stripe-key');
+const stripe = Stripe(stripeKey);
 let setupIntentUrl = stripeCheckoutData.getAttribute('data-checkout-url');
 let returnUrl = stripeCheckoutData.getAttribute('data-return-url');
 

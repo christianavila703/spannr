@@ -18,7 +18,8 @@
         <div class="max-width-600 mx-auto my-5">
             <div id="stripe-checkout-data" class="my-5"
                  data-checkout-url="{{ route('users.jobs.setup-intent', [$job->subscription_id, $user->stripe_customer_id]) }}"
-                 data-return-url="{{ route('users.jobs.update-card-confirmation', $job->id) }}">
+                 data-return-url="{{ route('users.jobs.update-card-confirmation', $job->id) }}"
+                data-stripe-key="{{ config('services.stripe.public_key') }}">
                 <form id="payment-form">
                     @csrf
                     <div id="loading-message">
