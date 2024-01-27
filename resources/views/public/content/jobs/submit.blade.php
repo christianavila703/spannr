@@ -1,5 +1,9 @@
 @extends('layouts.public')
 
+@push('seo')
+    <meta name="robots" content="noindex">
+@endpush
+
 @section('content')
     <div class="page-jobs">
         <div class="single-post-wrapper">
