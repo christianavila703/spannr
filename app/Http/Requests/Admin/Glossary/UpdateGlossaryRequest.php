@@ -40,6 +40,7 @@ class UpdateGlossaryRequest extends FormRequest
             'excerpt' => 'required',
             'content' => 'nullable',
             'page_title' => 'nullable',
+            'meta_description' => 'required'
         ];
     }
 }
