@@ -328,7 +328,9 @@ class MarketplaceIndex extends Component
             'presetOptions' => [
                 'cold plunge',
                 'red light therapy',
-                'sauna'
+                'sauna',
+                'cryotherapy',
+                'iv therapy'
             ]
         ]);
     }

@@ -1,5 +1,5 @@
 <div class="marketplace-listings-container">
-    <div class="d-flex flex-column flex-md-row flex-wrap align-items-center mt-5">
+    <div class="d-flex flex-column flex-md-row flex-wrap mt-5">
         <div class="marketplace-location-search-container d-flex justify-content-center align-items-center me-md-4 mb-3 flex-grow-1 max-width-300">
             <input wire:model.lazy="search" type="text" class="form-control me-2" placeholder="Search by keyword" aria-label="Search listings" id="marketplace-search-box">
             <span>
@@ -43,6 +43,6 @@
         </div>
     </div>
     <div class="mt-3">
-        <button wire:click="submit" class="btn btn-lg btn-quintary">Search Marketplace</button>
+        <button wire:click="submit" class="btn btn-lg btn-primary">Search Marketplace</button>
     </div>
 </div>

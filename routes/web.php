@@ -94,6 +94,8 @@ Route::get('/marketplace/join', [App\Http\Controllers\Public\Marketplace\Marketp
 Route::get('/marketplace/cold-plunge', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'coldPlunge'])->name('public.marketplace.cold-plunge');
 Route::get('/marketplace/red-light-therapy', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'redLightTherapy'])->name('public.marketplace.red-light-therapy');
 Route::get('/marketplace/sauna', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'sauna'])->name('public.marketplace.sauna');
+Route::get('/marketplace/cryotherapy', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'cryotherapy'])->name('public.marketplace.cryotherapy');
+Route::get('/marketplace/iv-therapy', [App\Http\Controllers\Public\Marketplace\MarketplaceContentController::class, 'ivTherapy'])->name('public.marketplace.iv-therapy');
 
 Route::get('/marketplace/{type}/{slug}', [App\Http\Controllers\Public\Marketplace\MarketplaceListingsController::class, 'show'])->name('public.marketplace.show');
 

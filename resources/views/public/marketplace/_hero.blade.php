@@ -1,13 +1,16 @@
 <div class="marketplace-hero">
     <div class="container">
         <div class="text">
-            <p class="subtitle">The</p>
-            <h1 class="title">Longevity <span class="d-block">Marketplace</span></h1>
-            <p class="subtitle">by</p>
-            <img src="{{ Vite::asset('resources/images/spannr-logo-white.svg') }}" alt="Spannr" class="logo">
+            <h1 class="title">
+                <span>Your</span>
+                <span>Gateway</span>
+                <span>to a Greater</span>
+                <span>Healthspan</span>
+                <span>and Lifespan</span>
+            </h1>
         </div>
         <div class="image">
-            <img src="{{ Vite::asset('resources/images/marketplace-hero.svg') }}" alt="Spannr Longevity Marketplace">
+            <img src="{{ Vite::asset('resources/images/marketplace-hero-dna.svg') }}" alt="Spannr Longevity Marketplace">
         </div>
     </div>
 </div>

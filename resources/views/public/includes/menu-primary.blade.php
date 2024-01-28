@@ -22,7 +22,7 @@
             <ul>
                 <li><a href="{{ route('public.content.longevity-guide.index') }}">Longevity 101</a></li>
                 <li><a href="{{ route('public.content.reports.longevity-report-2022') }}">Longevity Funding Report</a></li>
-                <li><a href="{{ route('public.content.articles.index') }}">All Articles</a></li>
+                <li><a href="{{ route('public.content.articles.index') }}">All Longevity Articles</a></li>
             </ul>
         </div>
     </div>

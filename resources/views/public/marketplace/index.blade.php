@@ -4,9 +4,16 @@
 
 @section('content')
     @include('public.marketplace._hero')
-    @include('public.marketplace._nav')
-    <div class="container text-start my-5">
-        <p class="marketplace-intro-text max-width-780 mx-auto">Find longevity services and treatments to increase your healthspan and extend your lifespan.</p>
+    <div class="bg-steel-blue marketplace-content-nav">
+        <div class="container text-center">
+            @include('public.marketplace._nav')
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="text-start">
+            <h2 class="marketplace-intro-text max-width-780 mx-auto text-body">Find longevity services and treatments to increase your healthspan and extend your lifespan.</h2>
+        </div>
         <livewire:public.marketplace.marketplace-index />
     </div>
 

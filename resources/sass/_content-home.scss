@@ -1,12 +1,29 @@
-.magenta-newsletter-container {
-    padding: 3rem 0;
-    @include gradient-maroon-to-pink;
+.workout-guy-newsletter-container {
+    padding: 3rem 0 2rem 0;
+    background: $blue;
     color: $white;
+
+    .workout-guy {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .text-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media (min-width: 992px) {
-    .magenta-newsletter-container {
-        padding: 4.5rem 0;
+    .workout-guy-newsletter-container {
+        padding: 2.5rem 0;
+
+        .h1 {
+            font-size: $h1-font-size * 1.4;
+        }
     }
 }
 

@@ -34,6 +34,12 @@ class Article extends Model implements HasMedia
     // 'Protected' Tags -- used in layouts
     const TAG_INVESTING = 'Investing';
     const TAG_TOP_INSIGHTS = 'Top Insights';
+    const TAG_REVIEWS = 'Reviews';
+
+    const INTERNAL_TAG = [
+        self::TAG_TOP_INSIGHTS,
+        self::TAG_REVIEWS
+    ];
 
     protected $dates = ['date'];
 
@@ -71,6 +77,13 @@ class Article extends Model implements HasMedia
     {
         return $query->whereHas('tags', function(Builder $query) {
             $query->where('name', self::TAG_TOP_INSIGHTS);
+        });
+    }
+
+    public function scopeReviews($query)
+    {
+        return $query->whereHas('tags', function(Builder $query) {
+            $query->where('name', self::TAG_REVIEWS);
         });
     }
 

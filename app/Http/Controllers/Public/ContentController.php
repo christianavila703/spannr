@@ -6,12 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Glossary;
-use App\Models\Job;
-use App\Models\JobCategory;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\MarketSnapshot;
-use App\Models\Organization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +27,16 @@ class ContentController extends Controller
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'home')->first();
-        $articles = Article::with(['tags'])->topInsights()->orderByDesc('date')->with('media')->take(7)->get();
+
+        $topInsights = Article::with(['tags'])->reviews()->orderByDesc('date')->with('media')->take(4)->get();
+        $excluded = $topInsights->pluck('id')->toArray();
+
+        $recentArticles = Article::with(['tags'])->whereNotIn('id', $excluded)->orderByDesc('date')->with('media')->take(7)->get();
 
         return view('public.content.home.index', [
             'seo' => $seo,
-            'articles' => $articles,
+            'articles' => $recentArticles,
+            'topInsights' => $topInsights
         ]);
     }
 
@@ -121,18 +123,9 @@ class ContentController extends Controller
     public function articlesIndex(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $seo = Content::where('slug', 'articles')->first();
-        $report = Content::where('slug', 'reports--2022-longevity-funding')->first();
-
-        if ($report) {
-            $reportImage = $report->getFirstMediaUrl('featured');
-        } else {
-            $reportImage = NULL;
-        }
 
         return view('public.content.articles.index', [
-            'seo' => $seo,
-            'report' => $report,
-            'reportImage' => $reportImage
+            'seo' => $seo
         ]);
     }
 

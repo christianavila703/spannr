@@ -395,6 +395,12 @@
     }
 }
 
+.article-cards-container.bg-body-tertiary {
+    article a {
+        background-color: #fff;
+    }
+}
+
 .article-cards-container.six-columns {
     padding: 0 2rem;
 

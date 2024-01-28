@@ -57,6 +57,32 @@ class MarketplaceContentController extends Controller
         ]);
     }
 
+    public function cryotherapy(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $content = Content::where('slug', 'marketplace--cryotherapy')->first();
+        $featuredImage = $content->getFirstMediaUrl('featured');
+        $graph = $this->getGraphDetails($content);
+
+        return view('public.marketplace.content.cryotherapy.index', [
+            'content' => $content,
+            'graph' => $graph,
+            'featuredImage' => $featuredImage
+        ]);
+    }
+
+    public function ivTherapy(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $content = Content::where('slug', 'marketplace--iv-therapy')->first();
+        $featuredImage = $content->getFirstMediaUrl('featured');
+        $graph = $this->getGraphDetails($content);
+
+        return view('public.marketplace.content.iv-therapy.index', [
+            'content' => $content,
+            'graph' => $graph,
+            'featuredImage' => $featuredImage
+        ]);
+    }
+
     private function getGraphDetails(Content $content): Graph
     {
         $graph = new Graph();

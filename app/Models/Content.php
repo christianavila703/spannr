@@ -46,7 +46,9 @@ class Content extends Model implements HasMedia
         'marketplace',
         'marketplace--cold-plunge',
         'marketplace--red-light-therapy',
-        'marketplace--sauna'
+        'marketplace--sauna',
+        'marketplace--cryotherapy',
+        'marketplace--iv-therapy'
     ];
 
     /**

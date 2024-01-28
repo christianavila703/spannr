@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    @include('public.marketplace._nav')
+    @include('public.marketplace.content._content-hero')
     <div class="container my-5">
         <x-nav.breadcrumbs parentUrl="{{ route('public.marketplace.index') }}" parentLabel="Longevity Marketplace" currentLabel="{{ $listing->name }}"/>
         <hr class="dark mb-5">
