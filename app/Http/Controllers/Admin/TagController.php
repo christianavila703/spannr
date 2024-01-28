@@ -5,13 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TagDetachRequest;
 use App\Http\Requests\TagRequest;
-use App\Models\Article;
-use App\Models\Content;
-use App\Models\Event;
-use App\Models\Investor;
-use App\Models\Job;
-use App\Models\Organization;
-use App\Models\Person;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Throwable;
@@ -21,7 +14,10 @@ class TagController extends Controller
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $tags = Tag::firstLevel()
-            ->with(['children'])
+            ->with([
+                'children'  => function ($query) {
+                    $query->orderBy('name');
+                }])
             ->orderBy('parent_id')
             ->orderBy('name')
             ->get();
@@ -61,12 +57,16 @@ class TagController extends Controller
     {
         $tag = Tag::where('slug', $slug)
             ->with([
-                'children',
+                'parent',
+                'children'  => function ($query) {
+                    $query->orderBy('name');
+                },
                 'articles',
                 'content',
                 'events',
                 'investors',
                 'jobs',
+                'listings',
                 'organizations',
                 'people'
             ])

@@ -16,7 +16,7 @@ class Index extends Component
     public $perPage = 10;
 
     public $filters = [
-        'search' => '',
+        'search' => ''
     ];
 
     public function updatingFilters()
@@ -31,9 +31,10 @@ class Index extends Component
     public function render()
     {
         return view('livewire.admin.tags.index', [
-            'tags' => Tag::where('name', 'like', '%' . $this->filters['search'] . '%')
-                ->orWhere('description', 'like', '%' . $this->filters['search'] . '%')
-                ->paginate($this->perPage)
+            'tags' => Tag::query()->when($this->filters['search'], function($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            })->paginate($this->perPage)
         ]);
     }
 }

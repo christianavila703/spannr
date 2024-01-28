@@ -11,16 +11,16 @@
                 <livewire:admin.tags.index />
             </div>
             <div class="col-12 col-md-6">
-                <ul>
+                <ul class="list-group list-group-flush">
                     @foreach ($tags as $firstLevelTag)
-                        <li class="py-1">
-                            <a href="{{ route('admin.tags.show', $firstLevelTag->slug) }}" class="d-block">{{ $firstLevelTag->name }}</a>
+                        <li class="list-group-item pb-4 mb-4 px-0 border-0">
+                            <div class="mb-1">
+                                <a href="{{ route('admin.tags.show', $firstLevelTag->slug) }}" class="h5 d-block">{{ $firstLevelTag->name }}</a>
+                            </div>
                             @if($firstLevelTag->children->count() > 0)
-                                <ul>
+                                <ul class="list-group">
                                     @foreach ($firstLevelTag->children as $secondLevelTag)
-                                        <li class="py-1">
-                                            <a href="{{ route('admin.tags.show', $secondLevelTag->slug) }}" class="d-block">{{ $secondLevelTag->name }}</a>
-                                        </li>
+                                        <a href="{{ route('admin.tags.show', $secondLevelTag->slug) }}" class="list-group-item list-group-item-action">{{ $secondLevelTag->name }}</a>
                                     @endforeach
                                 </ul>
                             @endif

@@ -20,6 +20,9 @@
 
         <x-entities.show.field-heading title="Content" />
         <x-entities.show.relationship-basic :records="$tag->content" routeName="admin.jobs.content" />
+
+        <x-entities.show.field-heading title="Listings" />
+        <x-entities.show.relationship-listings :records="$tag->listings" />
     </div>
     <div class="col-12 col-md-6">
         @if(!$tag->parent_id)
