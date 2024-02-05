@@ -1,3 +1,13 @@
+import 'leaflet/dist/leaflet.css';
+import L from "leaflet";
+
+import markerIcon from "/node_modules/leaflet/dist/images/marker-icon-2x.png";
+L.Marker.prototype.setIcon(L.icon({
+    iconUrl: markerIcon,
+    iconSize: [25, 41],
+    popupAnchor: [0, -25],
+}));
+
 window.addEventListener('load-listing-map', event => {
     try {
         loadMap();
@@ -21,7 +31,7 @@ function loadMap() {
         let listingMap = L.map('listing-map').setView([latitude, longitude], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+            maxZoom: 15,
             attribution: '© OpenStreetMap'
         }).addTo(listingMap);
 

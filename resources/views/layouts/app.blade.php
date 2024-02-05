@@ -8,8 +8,6 @@
 
     @stack('head')
     @vite('resources/js/app.js')
-    @vite('resources/sass/app.scss')
-    <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     @livewireStyles
     @vite('resources/sass/choices.scss')
     @vite('resources/sass/admin.scss')
