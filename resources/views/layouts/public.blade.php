@@ -13,6 +13,7 @@
 
     <title>{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}</title>
 
+    <link rel="preload" href="{{ Vite::asset('resources/fonts/LubalinGraphStd-Demi.woff2') }}" crossorigin="anonymous" as="font" type="font/woff2">
     @vite('resources/js/app.js')
     @livewireStyles
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF"></script>
@@ -24,6 +25,7 @@
         gtag('config', 'G-TW8JCMEBZF');
     </script>
     <script defer data-domain="spannr.com" src="https://plausible.io/js/plausible.js"></script>
+    <link rel="stylesheet" href="{{ Vite::asset('resources/sass/fontawesome.scss') }}" media="none" onload="if(media!=='all')media='all'">
 </head>
 <body>
     @if(!isset($showHeader) || $showHeader !== false)

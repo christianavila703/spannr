@@ -227,6 +227,10 @@ input[type="submit"] {
     color: var(--color-white);
 }
 
+.pink-on-focus:focus {
+    outline: 2px solid $pink;
+}
+
 /* Fancy Links */
 .link-black-underline-gradient {
     color: var(--color-black);
@@ -412,6 +416,10 @@ span.required {
     i {
         margin-right: .75rem;
     }
+}
+
+.checkbox-choice-button:focus {
+    outline: 1px solid $pink;
 }
 
 /* Lists on Pages / Posts */

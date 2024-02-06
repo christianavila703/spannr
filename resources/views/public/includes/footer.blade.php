@@ -1,7 +1,9 @@
 <footer class="public-footer">
     <div class="container">
         <div class="logo">
-            <a href="/"><img src="{{ Vite::asset('resources/images/spannr-logo-white.svg') }}" alt="Spannr" class="logo"></a>
+            <a href="/" title="Spannr">
+                @include('public.includes._spannr-logo')
+            </a>
         </div>
         <nav class="footer-nav-container">
             <div class="nav-container">

@@ -1,16 +1,6 @@
 @extends('layouts.public')
 
 @push('seo')
-
-@php
-/*
- SPANNR GENERATED
-// TODO: We may use the WP-generated SEO above for launch, depending
-og:image:width
-og:image:height
-og:image:type
-  */
-@endphp
 <meta name="description" content="{{ $article->meta_description }}" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <link rel="canonical" href="{{ $article->url }}" />
@@ -46,7 +36,13 @@ og:image:type
                 <div class="single-post pb-4">
                     <h1 class="post-title mb-4">{{ $article->name }}</h1>
                     @if($featuredImage)
-                        <img src="{{ $featuredImage }}" alt="{{ $article->name }}" class="mb-3 w-100" width="1616" height="824">
+                        <div class="mb-3">
+                            <picture class="featured-image-picture">
+                                <source media="(min-width: 768px) and (max-width: 1023px)" srcset="{{ $article->medium_featured_image_url ?? $featuredImage }}" />
+                                <source media="(min-width: 1024px)" srcset="{{ $featuredImage }}"/>
+                                <img src="{{ $article->small_featured_image_url ?? $featuredImage }}" alt="{{ $article->name }}" />
+                            </picture>
+                        </div>
                     @elseif($article->image)
                         <img src="{{ $article->image_full_url }}" alt="{{ $article->name }}" class="mb-3 w-100" width="1616" height="824">
                     @endif

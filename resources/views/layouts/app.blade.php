@@ -11,6 +11,7 @@
     @livewireStyles
     @vite('resources/sass/choices.scss')
     @vite('resources/sass/admin.scss')
+    <link rel="stylesheet" href="{{ Vite::asset('resources/sass/fontawesome.scss') }}" media="none" onload="if(media!=='all')media='all'">
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>

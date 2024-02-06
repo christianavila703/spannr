@@ -117,6 +117,10 @@
         font-size: $h5-font-size;
     }
 
+    .nav-heading-item:focus {
+        outline: 2px solid $pink;
+    }
+
     .nav-heading-item.current {
         color: var(--color-purple);
     }
@@ -323,5 +327,11 @@
     .form-control:focus {
         border-color: var(--color-purple);
         box-shadow: 0 0 0 .25rem rgba($indigo, .25);
+    }
+}
+
+.navbar-brand.pink {
+    .letter {
+        fill: $pink;
     }
 }

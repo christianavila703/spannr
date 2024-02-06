@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'Font Awesome 6 Sharp';
+    src: url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-thin-100.woff2') format('woff2'),
+    url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-thin-100.ttf') format('ttf');
+    font-weight: 100;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Sharp';
+    src: url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-light-300.woff2') format('woff2'),
+    url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-light-300.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Sharp';
+    src: url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-regular-400.woff2') format('woff2'),
+    url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-regular-400.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Sharp';
+    src: url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-solid-900.woff2') format('woff2'),
+    url('../fonts/fontawesome-pro-6.5.1-web/webfonts/fa-sharp-solid-900.ttf') format('ttf');
+    font-weight: 900;
+    font-style: normal;
+    font-display: block;
+}
+
+@import '../fonts/fontawesome-pro-6.5.1-web/css/all.css';

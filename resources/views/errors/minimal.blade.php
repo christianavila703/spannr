@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('content') - {{ config('app.name', 'Spannr') }}</title>
     @vite('resources/js/app.js')
-    @vite('resources/sass/app.scss')
     <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF"></script>
     <script>

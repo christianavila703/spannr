@@ -68,6 +68,7 @@
                             form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_ABOUT }}"
                             formClass="email-signup-horizontal-purple-hover"
                             successClass="lead text-white fw-bold"
+                            uniquePrefix="about-spannr"
                         />
                     </div>
                 </div>

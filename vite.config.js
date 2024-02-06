@@ -13,7 +13,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/admin.scss',
-                'resources/sass/app.scss',
+                'resources/sass/fontawesome.scss',
                 'resources/sass/choices.scss',
                 'resources/sass/matter-logos.scss',
                 'resources/sass/geosearch-autocomplete.scss',

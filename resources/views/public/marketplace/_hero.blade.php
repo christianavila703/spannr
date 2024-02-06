@@ -10,7 +10,7 @@
             </h1>
         </div>
         <div class="image">
-            <img src="{{ Vite::asset('resources/images/marketplace-hero-dna.svg') }}" alt="Spannr Longevity Marketplace">
+            @include('public.marketplace._hero-image')
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Forms;
 
 use App\Models\FormEntry;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class NewsletterOptIn extends Component
@@ -13,11 +14,20 @@ class NewsletterOptIn extends Component
     public $url;
     public $ip;
     public $showNameFields = false;
+    public $uniquePrefix;
 
     public $showSuccess = false;
     public $form = FormEntry::FORM_NEWSLETTER_SIDEBAR;
     public $formClass = '';
     public $successClass = 'lead text-tertiary fw-bold';
+
+    public function mount()
+    {
+        $this->url = url()->current();
+        $this->ip = request()->ip();
+
+        $this->uniquePrefix = ($this->uniquePrefix ?? Str::random(5)) . '-';
+    }
 
     protected array $rules = [
         'first_name' => 'nullable|string',
@@ -32,6 +42,9 @@ class NewsletterOptIn extends Component
 
         $validated = $this->validate();
 
+        $validated['ip'] = $this->ip;
+        $validated['url'] = $this->url;
+
         FormEntry::create([
             'form' => $this->form,
             'first_name' => $validated['first_name'],
@@ -42,12 +55,6 @@ class NewsletterOptIn extends Component
         ]);
 
         $this->showSuccess = true;
-    }
-
-    public function mount()
-    {
-        $this->url = url()->current();
-        $this->ip = request()->ip();
     }
 
     public function render()

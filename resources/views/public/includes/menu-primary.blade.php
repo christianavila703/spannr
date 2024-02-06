@@ -102,6 +102,7 @@
                 <livewire:forms.newsletter-opt-in
                     form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
                     successClass="text-start text-quintary fw-bold"
+                    uniquePrefix="menu-primary"
                 />
             </div>
         </div>

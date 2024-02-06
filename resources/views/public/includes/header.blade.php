@@ -4,12 +4,12 @@
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="container">
                     @if((Route::currentRouteName() === 'public.content.ventures'))
-                        <a class="navbar-brand" href="/">
+                        <a class="navbar-brand" href="/" title="Spannr">
                             <img src="{{ Vite::asset('resources/images/spannr-ventures-logo-white.png') }}" alt="Spannr Ventures">
                         </a>
                     @else
-                        <a class="navbar-brand" href="/">
-                            <img src="{{ Vite::asset('resources/images/spannr-logo-white.svg') }}" alt="Spannr" class="logo">
+                        <a class="navbar-brand" href="/" title="Spannr">
+                            @include('public.includes._spannr-logo')
                         </a>
                     @endif
                     <div class="ms-auto d-flex align-items-center">
@@ -20,14 +20,14 @@
                                     <span>Dashboard</span>
                                 </a>
                             @else
-                                <button class="btn text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">
+                                <button class="btn pink-on-focus text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">
                                     <i class="fa-sharp fa-light fa-envelope me-1"></i>
                                     <span>Subscribe</span>
                                 </button>
                             @endif
                         </div>
                         <button class="hamburger hamburger--elastic" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvas-primary-menu" aria-controls="offcanvas-primary-menu">
+                                data-bs-target="#offcanvas-primary-menu" aria-controls="offcanvas-primary-menu" aria-label="Navigation Menu">
                             <span class="hamburger-box">
                                 <span class="hamburger-inner"></span>
                             </span>
@@ -43,8 +43,8 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-primary-menu" aria-labelledby="offcanvas-primary-menu-label">
     <div class="offcanvas-header">
         <div class="offcanvas-title pt-3" id="offcanvas-primary-menu-label">
-            <a class="navbar-brand" href="/">
-                <img src="{{ Vite::asset('resources/images/logo-color.png') }}" alt="Spannr">
+            <a class="navbar-brand pink" href="/">
+                @include('public.includes._spannr-logo')
             </a>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -67,6 +67,7 @@
                     form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HEADER }}"
                     formClass="header-subscribe-form"
                     successClass="text-start text-quintary h6 fw-bold"
+                    uniquePrefix="header"
                 />
             </div>
         </div>

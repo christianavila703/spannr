@@ -7,8 +7,7 @@
     <title>{{ config('app.name', 'spannr') }}</title>
 
     @vite('resources/js/app.js')
-    @vite('resources/sass/app.scss')
-    <script src="https://kit.fontawesome.com/e87179c270.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ Vite::asset('resources/sass/fontawesome.scss') }}" media="none" onload="if(media!=='all')media='all'">
     @livewireStyles
     @stack('head')
 </head>

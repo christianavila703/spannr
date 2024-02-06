@@ -32,6 +32,13 @@
     }
 }
 
+.featured-image-picture {
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
 .single-post.archive {
     border-bottom: 1px solid var(--color-gray-light);
     padding-top: 2rem;

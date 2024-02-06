@@ -174,6 +174,15 @@ class Article extends Model implements HasMedia
         }
     }
 
+    public function getSmallFeaturedImageUrlAttribute(): ?string
+    {
+        if ($this->getFirstMedia('featured')) {
+            return $this->getFirstMedia('featured')->getUrl('small');
+        } else {
+            return NULL;
+        }
+    }
+
     public function getShareableImageUrlAttribute(): string
     {
         if ($this->getFirstMediaUrl('featured')) {

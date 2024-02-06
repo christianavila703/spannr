@@ -26,9 +26,9 @@
                             <div class="featured-image">
                                 @if($article->medium_featured_image_url)
                                     <img src="{{ $article->medium_featured_image_url }}" alt="{{ $article->name }}"
-                                         class="mb-3 w-100" width="488" height="275">
+                                         class="mb-3 w-100" width="488" height="275" loading="lazy">
                                 @elseif($article->image)
-                                    <img src="{{ $article->image_url }}" alt="{{ $article->name }}">
+                                    <img src="{{ $article->image_url }}" alt="{{ $article->name }}" loading="lazy">
                                 @endif
                             </div>
                             <div class="text">
@@ -71,9 +71,9 @@
                                 <div class="featured-image">
                                     @if($article->medium_featured_image_url)
                                         <img src="{{ $article->medium_featured_image_url }}" alt="{{ $article->name }}"
-                                             class="mb-3 w-100" width="488" height="275">
+                                             class="mb-3 w-100" width="488" height="275" loading="lazy">
                                     @elseif($article->image)
-                                        <img src="{{ $article->image_url }}" alt="{{ $article->name }}">
+                                        <img src="{{ $article->image_url }}" alt="{{ $article->name }}" loading="lazy">
                                     @endif
                                 </div>
                                 <div class="text">
@@ -116,11 +116,12 @@
                             form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
                             formClass="email-signup-horizontal-purple-hover"
                             successClass="lead text-tertiary fw-bold"
+                            uniquePrefix="home-footer"
                         />
                     </div>
                 </div>
                 <div class="workout-guy">
-                    <img src="{{ Vite::asset('resources/images/workout-guy-phone-hourglass.svg') }}" alt="Live healthier and longer with Spannr">
+                    <img src="{{ Vite::asset('resources/images/workout-guy-phone-hourglass.svg') }}" alt="Live healthier and longer with Spannr" width="600" height="625" loading="lazy">
                 </div>
             </div>
         </div>
