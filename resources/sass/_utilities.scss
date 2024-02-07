@@ -412,6 +412,8 @@ span.required {
 .checkbox-choice-button {
     font-family: $font-family-sans-serif;
     font-weight: $font-weight-base;
+    width: 100%;
+    text-align: left;
 
     i {
         margin-right: .75rem;

@@ -82,7 +82,9 @@ class ContentController extends Controller
             })
             ->get();
 
-        $contributors = User::with(['media', 'person'])
+        $contributors = User::orderBy('order')
+            ->orderBy('created_at')
+            ->with(['media', 'person'])
             ->whereHas('roles', function (Builder $query) {
                 $query->where('name', Role::ROLE_SPANNR_CONTRIBUTOR);
             })

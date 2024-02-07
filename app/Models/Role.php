@@ -16,15 +16,26 @@ class Role extends \Spatie\Permission\Models\Role
     const ROLE_REVIEWER = 'Reviewer';
     const ROLE_HIRING_MANAGER = 'Hiring Manager';
 
+    const COLORS = [
+        self::ROLE_SUPER_ADMIN => 'bg-dark',
+        self::ROLE_ADMIN => 'bg-tertiary',
+        self::ROLE_AUTHOR => 'bg-success',
+        self::ROLE_SPANNR_TEAM => 'bg-quaternary',
+        self::ROLE_SPANNR_CONTRIBUTOR => 'bg-primary',
+        self::ROLE_RECRUITER => 'bg-info text-dark',
+        self::ROLE_REVIEWER => 'bg-warning text-dark'
+    ];
+
     public function getColorAttribute(): string
     {
         return match($this->name) {
-            self::ROLE_SUPER_ADMIN => 'bg-quaternary',
+            self::ROLE_SUPER_ADMIN => 'bg-dark',
             self::ROLE_ADMIN => 'bg-tertiary',
             self::ROLE_AUTHOR => 'bg-success',
-            self::ROLE_SPANNR_TEAM => 'bg-dark',
-            self::ROLE_SPANNR_CONTRIBUTOR => 'bg-danger',
+            self::ROLE_SPANNR_TEAM => 'bg-quaternary',
+            self::ROLE_SPANNR_CONTRIBUTOR => 'bg-primary',
             self::ROLE_RECRUITER => 'bg-info text-dark',
+            self::ROLE_REVIEWER => 'bg-warning text-dark',
             default => 'bg-secondary'
         };
     }

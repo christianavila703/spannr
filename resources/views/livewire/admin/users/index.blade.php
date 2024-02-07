@@ -1,24 +1,57 @@
 <div>
-     <table class="table">
-         <thead>
+    <div class="mt-3 d-flex">
+        <div class="mb-4 me-4 d-flex align-items-center">
+            <input wire:model.lazy="filters.search" type="text" class="form-control" placeholder="Search...">
+            @if($filters['search']) <button wire:click="clearSearch" class="btn btn-sm text-danger ms-1"><i class="fa-sharp fa-solid fa-xmark"></i></button> @endif
+        </div>
+
+        <div class="me-md-4 mb-3">
+            <div class="btn-group">
+                <button type="button" class="btn btn-md @if($filters['role']) btn-tertiary @else btn-outline-tertiary @endif dropdown-toggle rounded-0" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter by Role
+                </button>
+                <ul class="dropdown-menu" style="min-width: 220px">
+                    @foreach ($roleOptions as $optionId => $option)
+                        <li class="px-3">
+                            <div class="form-check form-check-small form-check-inline">
+                                <input wire:model="filters.role" class="form-check-input" type="checkbox" value="{{ $option }}"
+                                       id="filter-role-{{ $optionId }}" @if(in_array($option, $filters['role'])) checked @endif>
+                                <label class="form-check-label @if(in_array($option, $filters['role'])) fw-bold @endif" for="filter-role-{{ $optionId }}">
+                                    {{ $option }}
+                                </label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <div class="ms-auto">
+            <button wire:click="resetFilters" class="btn btn-sm btn-dark">Clear Filters</button>
+        </div>
+
+    </div>
+    <div class="mb-3">
+        <div class="fs-5">{{ $users->count() }} users</div>
+    </div>
+    <table class="table align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Byline</th>
                 <th>Role</th>
                 <th>Created</th>
+                <th>Last Login</th>
                 <th>Person</th>
-                <th></th>
             </tr>
          </thead>
          <tbody>
-             @foreach ($users as $user)
-                 <tr class="no-bottom-border">
+             @forelse ($users as $user)
+                 <tr wire:key="user-{{ $user->id }}">
                      <td>
-                         <span class="lead fw-bold">{{ $user->full_name }}</span>
+                        <a href="{{ route('admin.users.show', $user->id) }}">{{ $user->full_name }}</a>
                      </td>
                      <td>{{ $user->email }}</td>
-                     <td>{{ $user->byline }}</td>
                      <td>
                          @foreach ($user->roles as $role)
                              <span class="badge {{ $role->color }}">{{ $role->name }}</span>
@@ -26,44 +59,31 @@
                      </td>
                      <td>{{ $user->created_date }}</td>
                      <td>
+                         <span class="small">{{ $user->lastLoginAt() }}</span>
+                     </td>
+                     <td>
                          @if ($user->person)
-                             <a href="{{ route('admin.people.show', $user->person->slug) }}">{{ $user->person->name }}</a>
+                             <a href="{{ route('admin.people.show', $user->person->slug) }}" class="btn btn-outline-success btn-sm">{{ $user->person->name }}</a>
                          @else
-                             <button class="btn btn-tertiary" type="button" data-bs-toggle="modal"
+                             <button class="btn btn-tertiary btn-sm" type="button" data-bs-toggle="modal"
                                      data-bs-target="#assignPersonForm" data-user-id="{{ $user->id }}">Assign Person
                              </button>
                          @endif
                      </td>
-                     <td>
-                         <button class="btn btn-secondary" type="button"
-                                 data-bs-toggle="collapse" data-bs-target="#collapse{{ $user->id }}" aria-expanded="false" aria-controls="collapse{{ $user->id }}">
-                             Update Profile
-                        </button>
+                 </tr>
+             @empty
+                 <tr wire:key="empty-no-records">
+                     <td colspan="99">
+                         <div class="fs-5">No users match your query</div>
                      </td>
                  </tr>
-                 <tr>
-                     <td colspan="7">
-                         <div class="collapse pb-4" id="collapse{{ $user->id }}">
-                             <div>
-                                 <livewire:users.user-profile :user="$user" />
-                             </div>
-                        </div>
-                     </td>
-                 </tr>
-             @endforeach
+             @endforelse
          </tbody>
      </table>
 
     <div class="my-4">
         {{ $users->links() }}
     </div>
-
-    <style>
-        .no-bottom-border td {
-            border-bottom: 0;
-            padding-top: 1.25rem;
-        }
-    </style>
 </div>
 
 <div class="modal fade" id="assignPersonForm" tabindex="-1" aria-labelledby="assignPersonFormLabel" aria-hidden="true">

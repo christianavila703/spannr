@@ -11,8 +11,23 @@
 
         @include('admin.includes.status-messages')
 
-        <livewire:admin.users.index />
+        <div class="mb-5">
+            <livewire:admin.users.index />
+        </div>
 
-        <livewire:admin.users.roles-list />
+        <hr class="border-primary">
+
+        <div class="my-5">
+            <h2 class="h4">Roles &amp; Permissions</h2>
+            <livewire:admin.users.roles-list />
+        </div>
+
+        @can('admin control')
+            <div class="my-5">
+                <h2 class="h4">About Page Order</h2>
+                <livewire:admin.users.about-page-order />
+            </div>
+        @endcan
+
     </div>
 @endsection

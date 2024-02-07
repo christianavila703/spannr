@@ -10,7 +10,7 @@ class RolesList extends Component
     public function render()
     {
         return view('livewire.admin.users.roles-list', [
-            'roles' => Role::with(['permissions'])->get()
+            'roles' => Role::with(['permissions'])->withCount(['users'])->get()
         ]);
     }
 }
