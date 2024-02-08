@@ -9,9 +9,6 @@ use App\Http\Livewire\Traits\WithSorting;
 use App\Models\FormEntry;
 use App\Models\Listing;
 use App\Models\MarketplaceLog;
-use App\Models\Tag;
-use App\Models\TagSet;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -264,15 +261,35 @@ class MarketplaceIndex extends Component
         $this->dispatchBrowserEvent('hide-marketplace-search-presets');
     }
 
+    public function searchMarketplace() {
+
+    }
+
     public function getRowsQueryProperty()
     {
-        $query = Listing::public()->with([
-                'addresses',
-                'ageGroups',
-                'languages',
-                'primaryAddress',
-                'treatments'
-            ])
+        $query = Listing::public()
+            ->when($this->location['latitude'], function($query) {
+                $query->with([
+                    'addresses' => function($query) {
+                        $query->distance($this->location['latitude'], $this->location['longitude'], $this->locationDistance);
+                    },
+                    'ageGroups',
+                    'languages',
+                    'primaryAddress',
+                    'treatments'
+                ])->whereHas('addresses', function ($query) {
+                    $query->distance($this->location['latitude'], $this->location['longitude'], $this->locationDistance);
+                });
+            }, function($query) {
+                $query->with([
+                    'addresses',
+                    'ageGroups',
+                    'languages',
+                    'primaryAddress',
+                    'treatments'
+                ]);
+            })
+            ->withCount('addresses')
             ->when($this->search, function ($query, $search) {
                 return $query
                     ->where('name', 'like', '%' . $search . '%')
@@ -296,7 +313,9 @@ class MarketplaceIndex extends Component
                 });
             })
             ->when($this->location['latitude'], function($query) {
-                $query->distance($this->location['latitude'], $this->location['longitude'], $this->locationDistance);
+                $query->whereHas('addresses', function ($query) {
+                    $query->distance($this->location['latitude'], $this->location['longitude'], $this->locationDistance);
+                });
             })
             ->when($this->filters['age'], function($query, $valueArray) {
                 return $query->whereHas('ageGroups', function($query) use ($valueArray) {

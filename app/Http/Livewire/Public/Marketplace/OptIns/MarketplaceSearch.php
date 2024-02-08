@@ -29,6 +29,8 @@ class MarketplaceSearch extends Component
 
     public array $locationResults = [];
 
+    public bool $spinning = false;
+
     public function mount(Request $request) {
         $this->ip = $request->getClientIp();
 
@@ -74,6 +76,8 @@ class MarketplaceSearch extends Component
 
     public function submit() {
 
+        $this->spinning = true;
+
         $data = [
             'search' => $this->search,
             'locationSearch' => $this->locationSearch,
@@ -91,6 +95,29 @@ class MarketplaceSearch extends Component
             $urlAttributes['lat'] = $this->location['latitude'];
             $urlAttributes['lon'] = $this->location['longitude'];
             $urlAttributes['dist'] = $this->locationDistance;
+        } else {
+
+            if ($this->locationSearch) {
+
+                $url = "https://api.geoapify.com/v1/geocode/autocomplete?text={$this->locationSearch}&apiKey=" . config('services.geoapify.key');
+
+                try {
+                    $request = Http::get($url);
+                    $response = json_decode($request->body(), true);
+
+                    if (array_key_exists('features', $response)) {
+                        $location = $response['features'][0];
+                        $urlAttributes['lat'] = $location['properties']['lat'];
+                        $urlAttributes['lon'] = $location['properties']['lon'];
+                        $urlAttributes['dist'] = $this->locationDistance;
+                    }
+
+                } catch(Throwable $exception) {
+                    $message = 'Problem during Marketplace location geocoding during submit' . $exception->getMessage();
+                    SlackAlert::to('test')->message($message);
+                    Log::warning($message);
+                }
+            }
         }
 
         MarketplaceLog::create([
@@ -102,10 +129,10 @@ class MarketplaceSearch extends Component
         ]);
 
         if ($urlAttributes) {
-            return redirect()->route('public.marketplace.index', $urlAttributes);
+            $this->dispatchBrowserEvent('go-to-url', ['url' => route('public.marketplace.index', $urlAttributes)]);
+        } else {
+            $this->dispatchBrowserEvent('go-to-url', ['url' => route('public.marketplace.index')]);
         }
-
-        return redirect()->route('public.marketplace.index');
 
     }
 

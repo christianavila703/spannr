@@ -16,8 +16,8 @@
             </div>
         </div>
 
-        <div class="d-flex align-items-center me-md-4 mb-3 marketplace-location-search-container flex-grow-1">
-            <input wire:model.lazy="locationSearch" type="text" class="form-control me-2 flex-grow-1" placeholder="Search location" aria-label="Search location">
+        <div class="d-flex flex-wrap flex-md-nowrap align-items-center me-md-4 mb-3 marketplace-location-search-container flex-grow-1">
+            <input wire:model.lazy="locationSearch" type="text" class="form-control me-2 flex-grow-1 mb-3 mb-md-0" placeholder="Search location" aria-label="Search location">
             <div class="input-group me-2" style="max-width: 125px">
                 <input wire:model.lazy="locationDistance" type="text" class="form-control" placeholder="100" aria-label="Distance in miles">
                 <span class="input-group-text">miles</span>
@@ -43,6 +43,19 @@
         </div>
     </div>
     <div class="mt-3">
-        <button wire:click="submit" class="btn btn-lg btn-primary">Search Marketplace</button>
+        @if($spinning)
+            <div class="d-md-flex align-items-center">
+                <div class="me-3 mb-3 mb-md-0">
+                    <button type="button" class="btn btn-lg btn-primary" disabled>
+                        <i class="fa-sharp fa-regular fa-circle-notch fa-spin me-1"></i>
+                        <span>Searching</span>
+                    </button>
+                </div>
+            </div>
+        @else
+            <div>
+                <button wire:click="submit" type="button" class="btn btn-lg btn-primary">Search Marketplace</button>
+            </div>
+        @endif
     </div>
 </div>

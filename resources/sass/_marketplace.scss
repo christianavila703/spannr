@@ -20,7 +20,7 @@
 
         .title {
             font-family: $headings-font-family;
-            font-size: $h1-font-size * 1.25;
+            font-size: $h1-font-size;
 
             span {
                 display: block;
@@ -121,23 +121,42 @@
         width: 100%;
         height: 100%;
         text-decoration: none;
+        text-align: center;
     }
 
     .icon-group {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem .5rem;
+        width: 33%;
+        text-align: center;
 
         .text {
             font-family: $font-family-subheadings;
             color: $white;
-            white-space: nowrap;
         }
 
         .icon {
             padding-bottom: .5rem;
 
             svg {
-                height: 60px;
+                height: 40px;
                 width: auto;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .marketplace-icons {
+        .icon-group {
+            padding: 1.5rem 1rem;
+            width: 20%;
+
+            .icon {
+                svg {
+                    height: 60px;
+                }
             }
         }
     }
@@ -161,6 +180,7 @@
     .marketplace-icons {
         .icon-group {
             padding: 2rem 2.5rem;
+            width: auto;
         }
     }
 }
@@ -173,17 +193,17 @@
     }
 }
 
-.marketplace-content-nav {
-    .marketplace-icons {
-        .icon-group {
-            .icon {
-                svg {
-                    height: 60px !important;
-                }
-            }
-        }
-    }
-}
+//.marketplace-content-nav {
+//    .marketplace-icons {
+//        .icon-group {
+//            .icon {
+//                svg {
+//                    height: 60px !important;
+//                }
+//            }
+//        }
+//    }
+//}
 
 .marketplace-intro-text {
     font-family: $font-family-subheadings;

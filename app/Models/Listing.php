@@ -264,6 +264,7 @@ class Listing extends Model implements HasMedia
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('medium')
+                    ->keepOriginalImageFormat()
                     ->width(680)
                     ->height(540)
                     ->crop(Manipulations::CROP_CENTER, 680, 510)

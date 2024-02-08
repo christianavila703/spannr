@@ -1,7 +1,14 @@
 <div class="row">
     <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-1">
         <h1>{{ $listing->name }}</h1>
-        <div class="d-flex align-items-center text-muted mt-3">
+        <div class="d-lg-none">
+            @if($listing->medium_featured_image_url)
+                <div class="mb-4">
+                    <img src="{{ $listing->medium_featured_image_url }}" alt="{{ $listing->name }}" loading="lazy">
+                </div>
+            @endif
+        </div>
+        <div class="d-md-flex align-items-center text-muted mt-3">
             <div class="mb-3 me-4">
                 @include('public.marketplace.badges.type-icon')
             </div>
@@ -108,9 +115,9 @@
         @endif
     </div>
     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1 mb-5 order-2">
-        @if($listing->medium_featured_image_url)
-            <div class="mb-4">
-                <img src="{{ $listing->medium_featured_image_url }}" alt="{{ $listing->name }}">
+        @if($listing->featured_image_url)
+            <div class="mb-4 d-none d-lg-block">
+                <img src="{{ $listing->featured_image_url }}" alt="{{ $listing->name }}" loading="lazy">
             </div>
         @endif
         <div class="marketplace-listing-connect-box ms-lg-auto">

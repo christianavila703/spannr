@@ -42,6 +42,9 @@
             @endif
         </div>
     </div>
+    <div class="mt-2 mb-3 max-width-780 mx-auto">
+        <button wire:click="searchMarketplace" type="button" class="btn btn-lg btn-primary">Search Marketplace</button>
+    </div>
     <div class="d-flex flex-wrap" style="min-height: 55px">
         @if($search)
             <div class="me-3 mb-3">
@@ -79,27 +82,54 @@
                         <div class="image-entity-logo-200 mx-auto mb-3"
                              style="background-image: url({{ $listing->medium_featured_image_url ?? Vite::asset('resources/images/placeholder-marketplace.png') }});"></div>
                         <h3 class="h4 mb-3">{{ $listing->name }}</h3>
-                        <div class="lead text-muted">
+                        <div class="lead text-muted mb-2">
                             <i class="{{ $listing->type_icon }} me-2"></i><span>{{ $listing->type }}</span>
                         </div>
                         <div class="d-flex flex-column small text-muted w-100 flex-grow-1 justify-content-end">
                             <div>
-                                @if($listing->primaryAddress)
-                                    <div class="small my-3">
-                                        <div style="min-height: 40px">{{ $listing->primaryAddress->name }}</div>
-                                        @if($location['latitude'] AND $location['longitude'])
-                                            <div class="text-tertiary">{{ $listing->distance }} miles</div>
+                                @if($location['latitude'] AND $location['longitude'])
+                                    <div class="mt-2">
+                                        @foreach($listing->addresses as $address)
+                                            <div class="small mb-3">
+                                                <div style="min-height: 40px">{!! $address->full_address !!}</div>
+                                                @if($location['latitude'] AND $location['longitude'])
+                                                    <div class="text-tertiary mt-1">{{ $address->getDistance($location['latitude'], $location['longitude']) }} miles</div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div>
+                                        @if($listing->primaryAddress)
+                                            <div class="small mb-3">
+                                                <div style="min-height: 40px">{!! $listing->primaryAddress->full_address !!}</div>
+                                                <div>
+                                                    @if($location['latitude'] AND $location['longitude'])
+                                                        <div class="text-tertiary">{{ $listing->distance }} miles</div>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                 @endif
                             </div>
-                            <div class="d-flex justify-content-between small text-muted" style="min-height: 20px">
-                                <div>
-                                    @include('public.marketplace.badges.insurance')
-                                </div>
-                                <div>
-                                    @include('public.marketplace.badges.virtual')
-                                </div>
+                            <div class="row small text-muted" style="min-height: 20px">
+                                @if($listing->addresses_count > 1)
+                                    <div class="col-12 col-md-6">
+                                        <i class="fa-sharp fa-solid fa-building-magnifying-glass fa-fw text-primary me-1"></i>
+                                        <span>Multiple Locations</span>
+                                    </div>
+                                @endif
+                                @if($listing->insurance)
+                                    <div class="col-12 col-md-6">
+                                        @include('public.marketplace.badges.insurance')
+                                    </div>
+                                @endif
+                                @if($listing->virtual)
+                                    <div class="col-12 col-md-6">
+                                        @include('public.marketplace.badges.virtual')
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </a>

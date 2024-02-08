@@ -52,6 +52,18 @@ class Address extends Model
     /**
      * Accessors
      */
+    public function getFullAddressAttribute() {
+        $address = $this->street;
+
+        if ($this->street2) {
+            $address .= ' ' . $this->street2;
+        }
+
+        $address .= "\n" . $this->city . ', ' . $this->state_code . ' ' . $this->postal_code;
+
+        return nl2br($address);
+    }
+
     public function getGoogleMapsUrlAttribute(): string
     {
         return "https://www.google.com/maps/search/{$this->addressable->name}+{$this->name}/@{$this->latitude},{$this->longitude},15z";
@@ -64,6 +76,19 @@ class Address extends Model
     {
         $raw = DB::raw('ROUND ( ( 3959 * acos( cos( radians(' . $from_latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $from_longitude . ') ) + sin( radians(' . $from_latitude . ') ) * sin( radians( latitude ) ) ) ) ) AS distance');
         return $query->select('*')->addSelect($raw)->orderBy('distance', 'ASC')->having('distance', '<=', $distance);
+    }
+
+    public function getDistance($lat2, $lon2): int|string
+    {
+        if (($this->latitude == $lat2) && ($this->longitude == $lon2)) {
+            return 0;
+        } else {
+            $theta = $this->longitude - $lon2;
+            $dist = sin(deg2rad($this->latitude)) * sin(deg2rad($lat2)) + cos(deg2rad($this->latitude)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            return number_format($dist * 60 * 1.1515, 2);
+        }
     }
 
     public function getDistanceFrom($lat1, $lon1, $lat2, $lon2): int|string
