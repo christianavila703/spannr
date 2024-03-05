@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'spannr'),
+        'name' => 'spannr',
 
         'source' => [
 
@@ -18,7 +18,7 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    base_path(),
+                    storage_path('app'),
                 ],
 
                 /*
@@ -27,14 +27,16 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-                    base_path('vendor'),
-                    base_path('node_modules'),
+                    storage_path('app/backup-temp'),
+                    storage_path('app/livewire-tmp'),
+                    storage_path('app/Spannr'),
+                    storage_path('app/spannr'),
                 ],
 
                 /*
                  * Determines if symlinks should be followed.
                  */
-                'follow_links' => false,
+                'follow_links' => true,
 
                 /*
                  * Determines if it should avoid unreadable folders.
