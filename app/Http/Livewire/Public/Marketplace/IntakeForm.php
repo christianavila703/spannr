@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire\Public\Marketplace;
 
-use App\Http\Livewire\Public\Marketplace\ListingForms\Clinic;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class IntakeForm extends Component
@@ -41,6 +39,7 @@ class IntakeForm extends Component
             $this->reset('user');
         }
     }
+
     public function rules() {
         return [
             'name' => 'required|string|unique:listings',

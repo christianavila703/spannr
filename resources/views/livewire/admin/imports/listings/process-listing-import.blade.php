@@ -39,7 +39,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6 ps-xl-5">
             <p class="h3 text-tertiary">Listing Data</p>
             @if($importResult->entity)
                 <div>
@@ -73,12 +73,17 @@
                         @endforeach
                     </table>
                     <div class="mt-5">
-                        <p class="h5 text-tertiary">Locations</p>
-                        @foreach($importResult->entity->addresses as $address)
-                            <div>
-                                <livewire:public.marketplace.manage-listing.edit-address :address="$address" />
-                            </div>
-                        @endforeach
+                        <p class="h5 text-tertiary">Listing Locations</p>
+                        <div>
+                            <livewire:public.marketplace.manage-listing.addresses :listing="$importResult->entity" />
+                        </div>
+                        <div>
+                            @foreach($importResult->entity->addresses as $address)
+                                <div wire:key="address-{{ $address->id }}" class="mt-4">
+                                    <livewire:public.marketplace.manage-listing.edit-address :address="$address" />
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                     <div class="mt-5">
                         <p class="h5 text-tertiary">Tags</p>
@@ -88,7 +93,12 @@
                     </div>
                 </div>
             @else
-                <div class="text-danger fs-5">No entity</div>
+                <div>
+                    <div class="text-danger fs-5 mb-3">No entity - create one below</div>
+                    <div class="border p-4">
+                        <livewire:admin.marketplace.quick-add-listing :importResult="$importResult" />
+                    </div>
+                </div>
             @endif
         </div>
     </div>
