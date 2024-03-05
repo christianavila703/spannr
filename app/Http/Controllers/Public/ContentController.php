@@ -293,20 +293,14 @@ class ContentController extends Controller
         ]);
     }
 
-    public function longevityStockIndexAbout(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function longevityStockIndexAbout(): \Illuminate\Http\RedirectResponse
     {
-        $seo = Content::where('slug', 'index--about')->first();
-        return view('public.content.wordpress', [
-            'seo' => $seo
-        ]);
+        return redirect()->route('public.content.longevity-index');
     }
 
-    public function longevityStockIndexTerms(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function longevityStockIndexTerms(): \Illuminate\Http\RedirectResponse
     {
-        $seo = Content::where('slug', 'index--terms-and-disclaimers')->first();
-        return view('public.content.wordpress', [
-            'seo' => $seo
-        ]);
+        return redirect()->route('public.content.longevity-index');
     }
 
     public function longevityStockChart(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory

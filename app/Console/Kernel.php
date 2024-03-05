@@ -15,26 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Market Snapshots
-        $schedule->command('snapshot:EOD')
-            ->weekdays()
-            ->dailyAt('1:00');
-
-        $schedule->command('snapshot:hourly')
-            ->weekdays()
-            ->everyFifteenMinutes()
-            ->between('8:45', '15:30');
-
-        $schedule->command('stocks:get-aggregates')
-            ->weekdays()
-            ->everyFifteenMinutes()
-            ->between('8:45', '15:30');
-
-        $schedule->command('polygon:get-news')
-            ->hourlyAt(25);
-
-        $schedule->command('polygon:company-financial-statement')->monthly();
-
         // Backups
         $schedule->command('backup:clean')->daily()->at('02:00');
         $schedule->command('backup:run')->daily()->at('01:30');

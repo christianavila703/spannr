@@ -197,8 +197,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/locations/create-from-entity', [\App\Http\Controllers\Admin\LocationController::class, 'createFromEntity'])->name('locations.create-from-entity');
 
         Route::get('/longevity-index', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'index'])->name('longevity-index');
-        Route::get('/longevity-index/snapshot/hourly', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'getHourlySnapshot'])->name('longevity-index.snapshots.hourly');
-        Route::get('/longevity-index/snapshot/eod', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'getEndOfDaySnapshot'])->name('longevity-index.snapshots.eod');
         Route::get('/longevity-index/all', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'all'])->name('longevity-index.all');
         Route::get('/longevity-index/chart', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chart'])->name('longevity-index.chart');
         Route::get('/longevity-index/chart.json', [\App\Http\Controllers\Admin\Index\LongevityIndexController::class, 'chartData'])->name('longevity-index.chart-data');
