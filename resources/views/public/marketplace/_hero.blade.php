@@ -4,9 +4,7 @@
             <h1 class="title">
                 <span>Your</span>
                 <span>Gateway</span>
-                <span>to a Greater</span>
-                <span>Healthspan</span>
-                <span>and Lifespan</span>
+                <span>to Longevity</span>
             </h1>
         </div>
         <div class="image">
