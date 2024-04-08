@@ -32,7 +32,7 @@
                                 <div class="d-none d-md-block me-3">
                                     <a href="{{ route('users.dashboard') }}" class="btn text-uppercase text-white py-1">
                                         <i class="fa-sharp fa-light fa-home me-1"></i>
-                                        <span>Dashboard</span>
+                                        <span>{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
                                     </a>
                                 </div>
                                 <button class="hamburger hamburger--elastic" type="button" data-bs-toggle="offcanvas"

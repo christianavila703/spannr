@@ -4,7 +4,9 @@
         <span class="icon"></span><span>Manage Users</span>
     </button>
     <div class="collapse show" id="collapse-user">
-        <p class="mb-2">Spannr users who can manage this listing</p>
-        <livewire:public.marketplace.manage-listing.users :listing="$listing" />
+        <div class="p-2">
+            <p class="mb-2 fw-bold">Spannr users who can manage this listing</p>
+            <livewire:public.marketplace.manage-listing.users :listing="$listing" />
+        </div>
     </div>
 </div>

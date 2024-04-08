@@ -17,7 +17,7 @@
                             @auth
                                 <a href="{{ route('users.dashboard') }}" class="btn text-uppercase text-white py-1">
                                     <i class="fa-sharp fa-light fa-home me-1"></i>
-                                    <span>Dashboard</span>
+                                    <span>{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
                                 </a>
                             @else
                                 <button class="btn pink-on-focus text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">

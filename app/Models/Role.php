@@ -15,6 +15,7 @@ class Role extends \Spatie\Permission\Models\Role
     const ROLE_RECRUITER = 'Recruiter';
     const ROLE_REVIEWER = 'Reviewer';
     const ROLE_HIRING_MANAGER = 'Hiring Manager';
+    const ROLE_MARKETPLACE_MANAGER = 'Marketplace Manager';
 
     const COLORS = [
         self::ROLE_SUPER_ADMIN => 'bg-dark',

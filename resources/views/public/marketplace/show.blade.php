@@ -18,9 +18,16 @@
                 </div>
             @endif
         @else
-            @if($listing->type === \App\Models\Listing::TYPE_CLINIC OR \App\Models\Listing::TYPE_DOCTOR)
-                @include("public.marketplace.listing-data.medical-provider")
-            @endif
+            <div>
+                @if($listing->type === \App\Models\Listing::TYPE_CLINIC OR \App\Models\Listing::TYPE_DOCTOR)
+                    @include("public.marketplace.listing-data.medical-provider")
+                @endif
+
+                @if($listing->users_count === 0)
+                    <livewire:public.marketplace.claim-listing :listing="$listing" />
+                @endif
+            </div>
+
         @endif
     </div>
 @endsection

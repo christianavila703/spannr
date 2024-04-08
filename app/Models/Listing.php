@@ -245,6 +245,11 @@ class Listing extends Model implements HasMedia
         return strtolower(route('public.marketplace.show', [$this->type, $this->slug]));
     }
 
+    public function getUsersCountAttribute(): int
+    {
+        return $this->users->count() ?? 0;
+    }
+
     /**
      * Functions
      */
