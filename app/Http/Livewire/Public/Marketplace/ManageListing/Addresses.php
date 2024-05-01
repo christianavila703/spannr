@@ -126,7 +126,9 @@ class Addresses extends Component
 
             $this->dispatchBrowserEvent('toast-notification',  ['text' => 'Address saved!', 'background' => 'bg-success']);
         } catch (Throwable $exception) {
-            SlackAlert::to('test')->message('<@sydney> *Exception during saveLocation on Marketplace*' . "\n" . $exception->getMessage());
+            $message = '<@sydney> *Exception during saveLocation on Marketplace*' . "\n" . $exception->getMessage();
+            Log::warning($message);
+            SlackAlert::to('test')->message($message);
             $this->dispatchBrowserEvent('toast-notification',  ['text' => 'Sorry there was a problem. If it continues, email help@spannr.com', 'background' => 'bg-danger']);
         }
     }

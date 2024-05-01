@@ -41,6 +41,8 @@ class Address extends Model
     public function setCountryAttribute($value) {
         if ($value === 'United States') {
             $this->attributes['country'] = 'USA';
+        } else {
+            $this->attributes['country'] = $value;
         }
     }
 
@@ -59,7 +61,11 @@ class Address extends Model
             $address .= ' ' . $this->street2;
         }
 
-        $address .= "\n" . $this->city . ', ' . $this->state_code . ' ' . $this->postal_code;
+        if ($this->country_code === 'us') {
+            $address .= "\n" . $this->city . ', ' . $this->state_code . ' ' . $this->postal_code;
+        } else {
+            $address .= "\n" . $this->city . ', ' . $this->country . ' ' . $this->postal_code;
+        }
 
         return nl2br($address);
     }
