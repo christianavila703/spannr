@@ -1,0 +1,56 @@
+name: Deploy to Spannr
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: v20.x
+
+      - name: Set deployment variables
+        id: set-vars
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "DEPLOY_PATH=${{ secrets.STAGING_PATH }}" >> $GITHUB_OUTPUT
+            echo "PM2_PROCESS=spannr_staging" >> $GITHUB_OUTPUT
+            echo "BRANCH=staging" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "DEPLOY_PATH=${{ secrets.PATH }}" >> $GITHUB_OUTPUT
+            echo "PM2_PROCESS=spannr_production" >> $GITHUB_OUTPUT
+            echo "BRANCH=main" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          DEPLOY_PATH: ${{ steps.set-vars.outputs.DEPLOY_PATH }}
+          PM2_PROCESS: ${{ steps.set-vars.outputs.PM2_PROCESS }}
+          BRANCH: ${{ steps.set-vars.outputs.BRANCH }}
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          envs: DEPLOY_PATH,PM2_PROCESS,BRANCH
+          script: |
+            set -e
+            cd $DEPLOY_PATH
+            git fetch origin
+            git checkout $BRANCH
+            git reset --hard origin/$BRANCH
+            npm install
+            npm run build
+            
+            echo "Deployment completed successfully for $BRANCH branch"
