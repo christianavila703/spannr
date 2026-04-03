@@ -1,29 +1,11 @@
 @extends('layouts.public')
 
-@push('seo')
-<meta name="description" content="{{ $article->meta_description }}" />
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<link rel="canonical" href="{{ $article->url }}" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="{{ $article->name }}" />
-<meta property="og:description" content="{{ $article->meta_description }}" />
-<meta property="og:url" content="{{ $article->url }}" />
-<meta property="og:site_name" content="Spannr" />
-<meta property="article:published_time" content="{{ $article->meta_published_time }}" />
-<meta property="og:image" content="{{ $article->shareable_image_url }}" />
-<meta property="og:image:width" content="1616" />
-<meta property="og:image:height" content="824" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta name="author" content="{{ $article->author_byline }}" />
-<meta name="twitter:card" content="summary_large_image" />
+@push('seo-extra')
 <meta name="twitter:creator" content="@spannr_" />
-<meta name="twitter:site" content="@spannr_" />
 <meta name="twitter:label1" content="Written by" />
 <meta name="twitter:data1" content="{{ $article->author_byline }}" />
 <meta name="twitter:label2" content="Est. reading time" />
 <meta name="twitter:data2" content="{{ $article->reading_time_minutes }} minutes" />
-{!! $graph !!}
 @endpush
 
 @section('content')

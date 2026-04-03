@@ -114,6 +114,13 @@
                     @else
                     <a href="{{ route('admin.articles.edit', $article->id) }}" class="btn btn-sm btn-primary me-2 mb-1">edit</a>
 
+                    <form method="POST" action="{{ route('admin.articles.destroy', $article->id) }}" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger me-2 mb-1" onclick="return confirm('Delete this article?')">
+                        delete
+                        </button>
+                    </form>
 
                     <button type="button" class="btn btn-sm btn-tertiary" data-bs-toggle="modal" data-bs-target="#seo-modal-{{ $article->id }}">
                         yoast
@@ -128,7 +135,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body text-start">
-                                    <pre class="wrap-words">{{ $article->seo }}</pre>
+                                    <pre class="wrap-words">{{ $article->legacy_seo }}</pre>
                                 </div>
                             </div>
                         </div>

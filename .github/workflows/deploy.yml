@@ -52,5 +52,7 @@ jobs:
             git reset --hard origin/$BRANCH
             npm install
             npm run build
+            composer install
+            php artisan migrate --force
             
             echo "Deployment completed successfully for $BRANCH branch"

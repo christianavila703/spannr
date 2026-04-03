@@ -26,6 +26,7 @@
         "mailchimp/marketing": "^3.0",
         "pavel-mironchik/laravel-backup-panel": "^2.2",
         "predis/predis": "^2.0",
+        "ralphjsmit/laravel-seo": "^1.6",
         "sentry/sentry-laravel": "^3.4",
         "spatie/laravel-activitylog": "^4.5",
         "spatie/laravel-backup": "^8.1",

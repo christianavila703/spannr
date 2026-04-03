@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('head')
-    @isset($seo)
+    {{-- Laravel SEO: articles use seo($seoModel); CMS pages use $seo->seo; other routes may @push('seo') for legacy meta. Calling seo() here for all branches would duplicate tags on legacy views. --}}
+    @if(isset($seo))
         {!! $seo->seo !!}
+    @elseif(isset($seoModel))
+        {!! seo()->for($seoModel) !!}
+        @stack('seo-extra')
     @else
         @stack('seo')
-    @endisset
+    @endif
 
-    <title>{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}</title>
+    @if(! isset($seoModel) && ! isset($seo))
+        <title>{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}</title>
+    @endif
 
     <link rel="preload" href="{{ Vite::asset('resources/fonts/LubalinGraphStd-Demi.woff2') }}" crossorigin="anonymous" as="font" type="font/woff2">
     @vite('resources/js/app.js')

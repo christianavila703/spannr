@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends Controller
 {
+
+    public function destroy(\App\Models\Article $article)
+    {
+        $article->delete();
+
+        return redirect()
+        ->route('admin.articles.index')
+        ->with('status', 'Article deleted successfully.');
+    }
+
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.articles.index');
@@ -30,6 +40,11 @@ class ArticlesController extends Controller
         $validated = $request->validated();
         $authors = null;
         $tags = null;
+
+        $seoTitle = $validated['seo_title'] ?? null;
+        unset($validated['seo_title']);
+
+        $validated['faq'] = Article::normalizeFaqPayload($validated['faq'] ?? null);
 
         if (array_key_exists('authors', $validated)) {
             $authors = $validated['authors'];
@@ -50,6 +65,8 @@ class ArticlesController extends Controller
         if ($tags) {
             $article->tags()->attach($tags);
         }
+
+        $this->syncArticleSeo($article, $seoTitle, $validated['meta_description'] ?? null);
 
         return redirect()->route('admin.articles.index')->with('success', 'Saved ' . $article->name);
     }
@@ -78,7 +95,7 @@ class ArticlesController extends Controller
 
     public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        $article = Article::with('tags')->findOrFail($id);
+        $article = Article::with(['tags', 'seo'])->findOrFail($id);
 
         if ($article->enableLock(auth()->user()->id) === false) {
             return redirect()->route('admin.articles.index')->with('error', 'The entry has been temporarily locked by another user.');
@@ -124,12 +141,23 @@ class ArticlesController extends Controller
             unset($validated['tags']);
         }
 
+        $seoTitle = $validated['seo_title'] ?? null;
+        unset($validated['seo_title']);
+
+        $validated['faq'] = Article::normalizeFaqPayload($request->input('faq'));
+
         $article->update($validated);
+
+        $this->syncArticleSeo($article, $seoTitle, $validated['meta_description'] ?? null);
 
         return redirect()->route('public.content.articles.show', $article->slug);
     }
 
-    public function destroy($id) {
-
+    private function syncArticleSeo(Article $article, ?string $seoTitle, ?string $metaDescription): void
+    {
+        $article->seo()->update([
+            'title' => ($seoTitle !== null && $seoTitle !== '') ? $seoTitle : null,
+            'description' => ($metaDescription !== null && $metaDescription !== '') ? $metaDescription : null,
+        ]);
     }
 }

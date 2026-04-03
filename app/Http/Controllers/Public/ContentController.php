@@ -133,7 +133,9 @@ class ContentController extends Controller
 
     public function articleShow($slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $article = Article::where('slug', $slug)->firstOrFail();
+        $article = Article::with(['authors', 'tags', 'seo'])
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         if ($article->status === Article::STATUS_DRAFT) {
             if (!Auth::check()) {
@@ -156,57 +158,14 @@ class ContentController extends Controller
             ->orderBy('date')
             ->first();
 
-        $pageTitle = $article->page_title ? $article->page_title : $article->name . ' - Spannr';
         $featuredImage = $article->getFirstMediaUrl('featured');
-
-        $graph = new Graph();
-
-        $graph->breadcrumblist()->setProperty('@id', '#breadcrumb');
-        $graph->breadcrumbList()->itemListElement([
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 1)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                ->name('Spannr')
-                ->url(route('home'))
-                ->setProperty('@id', route('home'))),
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 2)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                ->name('Insights')
-                ->url(route('public.content.articles.index'))
-                ->setProperty('@id', route('public.content.articles.index'))),
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 3)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                ->name($article->name)
-                ->url($article->url)
-                ->setProperty('@id', $article->url))
-        ]);
-
-        $graph->article()
-            ->headline($article->name)
-            ->image($article->shareable_image_url)
-            ->mainEntityOfPage($article->url)
-            ->description($article->meta_description)
-            ->author(Schema::person()
-                ->name($article->author_byline)
-                ->url($article->main_author->about_page_url)
-                ->jobTitle($article->main_author->title)
-            )
-            ->datePublished($article->meta_published_time)
-            ->dateModified($article->updated_at)
-            ->publisher(Schema::organization()
-                ->url(route('home'))
-                ->name('Spannr')
-            );
 
         return view('public.content.articles.show', [
             'article' => $article,
+            'seoModel' => $article,
             'prevArticle' => $prevArticle,
             'nextArticle' => $nextArticle,
-            'pageTitle' => $pageTitle,
             'featuredImage' => $featuredImage,
-            'graph' => $graph
         ]);
     }
 
