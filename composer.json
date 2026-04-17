@@ -27,6 +27,7 @@
         "pavel-mironchik/laravel-backup-panel": "^2.2",
         "predis/predis": "^2.0",
         "ralphjsmit/laravel-seo": "^1.6",
+        "resend/resend-laravel": "^0.10.0",
         "sentry/sentry-laravel": "^3.4",
         "spatie/laravel-activitylog": "^4.5",
         "spatie/laravel-backup": "^8.1",
