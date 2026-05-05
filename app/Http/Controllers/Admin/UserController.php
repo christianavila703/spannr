@@ -7,7 +7,9 @@ use App\Http\Requests\Admin\Users\StoreUserRequest;
 use App\Models\Person;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -76,9 +78,34 @@ class UserController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        if ($id === Auth::id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $user = User::findOrFail($id);
+
+        if (! User::spamCleanupCandidates()->whereKey($user->getKey())->exists()) {
+            return redirect()->back()->with('error', 'This user cannot be deleted (has roles, verified email, or associated data).');
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'User deleted.');
+    }
+
+    public function bulkDeleteSpam(): RedirectResponse
+    {
+        $deleted = 0;
+
+        User::spamCleanupCandidates()
+            ->where('users.id', '!=', Auth::id())
+            ->chunkById(200, function ($users) use (&$deleted) {
+                $deleted += User::whereIn('id', $users->pluck('id'))->delete();
+            });
+
+        return redirect()->route('admin.users.index')->with('success', "Deleted {$deleted} spam users.");
     }
 
     public function assignPerson(Request $request)

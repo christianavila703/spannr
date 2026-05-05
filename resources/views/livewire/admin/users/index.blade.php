@@ -43,6 +43,7 @@
                 <th>Created</th>
                 <th>Last Login</th>
                 <th>Person</th>
+                <th></th>
             </tr>
          </thead>
          <tbody>
@@ -70,10 +71,18 @@
                              </button>
                          @endif
                      </td>
+                     <td class="text-nowrap">
+                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline"
+                               onsubmit="return confirm('Delete this user? This cannot be undone.');">
+                             @csrf
+                             @method('DELETE')
+                             <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                         </form>
+                     </td>
                  </tr>
              @empty
                  <tr wire:key="empty-no-records">
-                     <td colspan="99">
+                     <td colspan="7">
                          <div class="fs-5">No users match your query</div>
                      </td>
                  </tr>

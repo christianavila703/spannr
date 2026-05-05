@@ -2,10 +2,20 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex flex-wrap justify-content-between">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
             <h1 class="text-primary me-5">Users</h1>
-            <div>
+            <div class="d-flex flex-wrap align-items-center gap-2">
                 <a href="{{ route('admin.users.create') }}" class="btn btn-quaternary">Create User</a>
+                @can('admin control')
+                    <form action="{{ route('admin.users.bulk-delete-spam') }}"
+                          method="POST"
+                          class="d-inline"
+                          onsubmit="return confirm('Delete all users that match the spam filter (no roles, unverified, no associated data)? This cannot be undone.');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete spam users</button>
+                    </form>
+                @endcan
             </div>
         </div>
 

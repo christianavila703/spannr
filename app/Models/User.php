@@ -157,6 +157,28 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     /**
+     * Newsletter / signup junk with no roles, unverified, and no domain data (safe to bulk-remove).
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<static>  $query
+     * @return \Illuminate\Database\Eloquent\Builder<static>
+     */
+    public function scopeSpamCleanupCandidates($query)
+    {
+        return $query->whereDoesntHave('roles')
+            ->whereNull('email_verified_at')
+            ->whereDoesntHave('articles')
+            ->whereDoesntHave('formEntries')
+            ->whereDoesntHave('jobs')
+            ->whereDoesntHave('jobSubscriptions')
+            ->whereDoesntHave('listings')
+            ->whereDoesntHave('magicLinkTokens')
+            ->whereDoesntHave('marketplaceLogs')
+            ->whereDoesntHave('person')
+            ->whereDoesntHave('setupIntents')
+            ->whereDoesntHave('subscription');
+    }
+
+    /**
      * Functions
      */
     public function registerMediaConversions(Media $media = null): void

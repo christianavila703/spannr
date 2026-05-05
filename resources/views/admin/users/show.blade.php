@@ -4,8 +4,14 @@
     <div class="container">
         <div class="d-flex flex-wrap justify-content-between">
             <h1 class="text-primary me-5">{{ $user->full_name }}</h1>
-            <div>
+            <div class="d-flex flex-wrap gap-2">
                 <a href="{{ route('admin.users.index') }}" class="btn btn-quaternary">Back to Users</a>
+                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline"
+                      onsubmit="return confirm('Delete this user? This cannot be undone.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-outline-danger">Delete user</button>
+                </form>
             </div>
         </div>
 

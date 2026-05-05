@@ -122,6 +122,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::middleware(['can:edit users'])->group(function() {
         Route::get('users/subscriptions', [\App\Http\Controllers\Admin\UserController::class, 'subscriptions'])->name('users.subscriptions');
         Route::post('users/assign-person', [\App\Http\Controllers\Admin\UserController::class, 'assignPerson'])->name('users.assign-person');
+        Route::delete('users/bulk-delete-spam', [\App\Http\Controllers\Admin\UserController::class, 'bulkDeleteSpam'])
+            ->name('users.bulk-delete-spam')
+            ->middleware('can:admin control');
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     });
 
