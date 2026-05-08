@@ -12,6 +12,7 @@ import 'tinymce/models/dom/model.min.js';
 import 'tinymce/skins/ui/oxide/skin.js';
 
 /* Import plugins */
+import 'tinymce/plugins/advlist';
 import 'tinymce/plugins/media';
 import 'tinymce/plugins/lists';
 import 'tinymce/plugins/table';
