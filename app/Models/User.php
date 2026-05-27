@@ -73,11 +73,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function getTeamPhotoAttribute(): ?string
     {
-        if ($this->getFirstMedia('teamPhoto')) {
-            return $this->getFirstMedia('teamPhoto')->getUrl('preview');
-        } else {
-            return NULL;
+        $media = $this->getFirstMedia('teamPhoto') ?? $this->getFirstMedia('profilePhoto');
+
+        if (!$media) {
+            return null;
         }
+
+        return $media->hasGeneratedConversion('preview')
+            ? $media->getUrl('preview')
+            : $media->getUrl();
     }
 
     public function getShowUserPageAttribute(): bool

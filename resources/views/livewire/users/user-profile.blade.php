@@ -51,7 +51,7 @@
                 <div class="mb-4 d-lg-flex align-items-center">
                     <div wire:poll.visible class="image-bg-container-100 border flex-shrink-0" style="background-image: url('{{ $currentTeamPhoto }}');"></div>
                     <div class="ps-lg-3">
-                        <label for="profilePhoto">Team Photo</label>
+                        <label for="teamPhoto">Team Photo <small class="text-muted">shown on articles &amp; about pages</small></label>
                         <input type="file" id="teamPhoto" wire:model.debounce.500ms="teamPhoto" class="form-control max-width-500 me-3">
                         @error('teamPhoto') <div class="text-danger fw-bold">{{ $message }}</div> @enderror
                     </div>
