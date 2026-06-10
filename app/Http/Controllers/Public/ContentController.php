@@ -333,4 +333,17 @@ class ContentController extends Controller
     {
         return view('public.content.jobs.subscription-confirmed');
     }
+
+    public function page(string $slug): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $canPreview = Auth::check() && Auth::user()->can('edit records');
+
+        $content = Content::where('slug', $slug)
+            ->when(! $canPreview, fn ($query) => $query->published())
+            ->firstOrFail();
+
+        return view('public.content.page', [
+            'seo' => $content,
+        ]);
+    }
 }

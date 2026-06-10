@@ -12,7 +12,7 @@
         </div>
 
         <div id="image-controls">
-            <a id="view-post" href="{{ $content->link }}" class="btn btn-sm btn-quaternary">View Content</a>
+            <a id="view-post" href="{{ $content->parent_id ? $content->link : route('public.content.page', $content->slug) }}" class="btn btn-sm btn-quaternary">View Content</a>
             <div>
                 <livewire:admin.has-media.featured-image :model="$content" />
                 <a href="#upload-image" class="small">Set new featured image</a>

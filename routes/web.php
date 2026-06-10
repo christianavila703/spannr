@@ -322,3 +322,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::stripeWebhooks('/stripe/webhooks');
+
+Route::get('/{slug}', [App\Http\Controllers\Public\ContentController::class, 'page'])
+    ->name('public.content.page');
