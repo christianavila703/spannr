@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
+@section('title', $organization->name . ' - Spannr')
 @push('seo')
-    <title>{{ $organization->name }} - Spannr</title>
     <meta name="description" content="{{ $organization->seo_description }}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="{{ route('public.content.organizations.show', $organization->slug) }}" />

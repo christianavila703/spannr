@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,6 +18,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Listing extends Model implements HasMedia
 {
     use HasFactory,
+        HasSEO,
         InteractsWithMedia;
 
     protected $guarded = ['id'];
@@ -191,6 +194,144 @@ class Listing extends Model implements HasMedia
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
+
+    /**
+     * SEO
+     */
+    public function getDynamicSEOData(): SEOData
+    {
+        $this->loadMissing('seo');
+
+        $title = $this->cleanSeoText($this->seo?->title) ?: $this->seo_title;
+        $description = $this->cleanSeoText($this->seo?->description) ?: $this->seo_description;
+
+        $robots = strcasecmp((string) $this->status, self::STATUS_PENDING) === 0
+            ? 'noindex, nofollow'
+            : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+
+        return new SEOData(
+            title: $title,
+            description: $description,
+            image: $this->featured_image_url ?: null,
+            url: $this->show_url,
+            enableTitleSuffix: false,
+            modified_time: $this->updated_at,
+            site_name: 'Spannr',
+            locale: 'en_US',
+            robots: $robots,
+        );
+    }
+
+    public function getSeoTitleAttribute(): string
+    {
+        $type = Str::title($this->cleanSeoText($this->type));
+
+        $label = match ($type) {
+            self::TYPE_CLINIC => 'Longevity Clinic',
+            self::TYPE_DOCTOR => 'Longevity Doctor',
+            self::TYPE_RETREAT => 'Longevity Retreat',
+            default => trim('Longevity ' . $type),
+        };
+
+        $location = $this->seoLocation();
+        $title = $this->cleanSeoText($this->name) . ' - ' . $label . ($location ? ' in ' . $location : '');
+        $titleWithSuffix = $title . ' | Spannr';
+
+        return mb_strlen($titleWithSuffix) > 60 ? $title : $titleWithSuffix;
+    }
+
+    public function getSeoDescriptionAttribute(): string
+    {
+        $name = $this->cleanSeoText($this->name);
+        $location = $this->seoLocation();
+        $services = $this->seoServices();
+
+        if ($location && $services) {
+            $description = match (Str::title($this->cleanSeoText($this->type))) {
+                self::TYPE_CLINIC => "{$name} in {$location} offers {$services}. See doctors, pricing model and how to book.",
+                self::TYPE_DOCTOR => "{$name} is a longevity doctor in {$location} focused on {$services}. Read the profile and book a consult.",
+                default => "{$name} in {$location} offers {$services}. See the profile, details and how to book.",
+            };
+        } else {
+            $description = $this->cleanSeoText($this->summary)
+                ?: $this->cleanSeoText($this->description)
+                ?: "{$name} on the Spannr longevity marketplace. See the profile, details and how to book.";
+        }
+
+        return $this->limitSeoText($description, 155);
+    }
+
+    /**
+     * "City, ST" for US addresses, "City, Country" otherwise. Null when either part is missing.
+     */
+    protected function seoLocation(): ?string
+    {
+        $address = $this->primaryAddress;
+
+        if (! $address) {
+            return null;
+        }
+
+        $city = $this->cleanSeoText($address->city);
+        $isUs = in_array(strtolower(trim((string) $address->country_code)), ['us', 'usa', 'united states'], true);
+        $region = $this->cleanSeoText($isUs ? $address->state_code : $address->country);
+
+        return ($city && $region) ? "{$city}, {$region}" : null;
+    }
+
+    /**
+     * Up to three treatment names as a sentence fragment: "A, B and C".
+     */
+    protected function seoServices(): ?string
+    {
+        $names = $this->treatments
+            ->pluck('name')
+            ->map(fn ($name) => $this->cleanSeoText($name))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->take(3)
+            ->values();
+
+        if ($names->isEmpty()) {
+            return null;
+        }
+
+        if ($names->count() === 1) {
+            return $names->first();
+        }
+
+        return $names->slice(0, -1)->implode(', ') . ' and ' . $names->last();
+    }
+
+    /**
+     * Plain text for titles and descriptions: no tags or entities, no em or en dashes
+     * (including ones that come from stored data), single spaces.
+     */
+    protected function cleanSeoText(?string $text): string
+    {
+        $text = html_entity_decode(strip_tags((string) $text), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = preg_replace('/\s+[\x{2012}-\x{2015}]\s+/u', ' - ', $text);
+        $text = preg_replace('/[\x{2012}-\x{2015}]/u', '-', $text);
+
+        return trim(preg_replace('/\s+/u', ' ', $text));
+    }
+
+    protected function limitSeoText(string $text, int $limit): string
+    {
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+
+        $cut = mb_substr($text, 0, $limit - 3);
+        $lastSpace = mb_strrpos($cut, ' ');
+
+        if ($lastSpace !== false) {
+            $cut = mb_substr($cut, 0, $lastSpace);
+        }
+
+        return rtrim($cut, " ,;:-.") . '...';
     }
 
     /**

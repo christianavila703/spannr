@@ -16,7 +16,7 @@
     @endif
 
     @if(! isset($seoModel) && ! isset($seo))
-        <title>{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}</title>
+        <title>@hasSection('title')@yield('title')@else{{ isset($pageTitle) ? $pageTitle : config('app.name', 'Spannr') }}@endif</title>
     @endif
 
     <link rel="preload" href="{{ Vite::asset('resources/fonts/LubalinGraphStd-Demi.woff2') }}" crossorigin="anonymous" as="font" type="font/woff2">

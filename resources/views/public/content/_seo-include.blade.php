@@ -1,5 +1,5 @@
+@section('title', (string) $content->name)
 @push('seo')
-<title>{{ $content->name }}</title>
 <meta name="description" content="{{ $content->meta_description }}" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <link rel="canonical" href="{{ $content->url }}" />

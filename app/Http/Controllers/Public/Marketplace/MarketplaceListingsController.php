@@ -81,6 +81,7 @@ class MarketplaceListingsController extends Controller
 
         return view('public.marketplace.show', [
             'listing' => $listing,
+            'seoModel' => $listing,
             'canEditListing' => $canEditListing,
             'canEditUsers' => $canEditUsers
         ]);
