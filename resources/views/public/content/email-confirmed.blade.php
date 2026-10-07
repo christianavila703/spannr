@@ -1,5 +1,16 @@
 @extends('layouts.public')
 
+@if($seo)
+    @php
+        // Keep /confirmed crawlable (GA4 conversion page) but out of the index.
+        // Drop the stored robots tag so only one robots directive is printed.
+        $seo->seo = preg_replace('/<meta\s+name="robots"[^>]*>\s*/i', '', (string) $seo->seo);
+    @endphp
+    @push('head')
+        <meta name="robots" content="noindex, follow" />
+    @endpush
+@endif
+
 @section('content')
     <div class="page-container">
         <div class="container">

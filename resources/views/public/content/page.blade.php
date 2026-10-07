@@ -1,5 +1,17 @@
 @extends('layouts.public')
 
+@if($seo)
+    @push('head')
+        @if(blank($seo->seo))
+            <title>{{ $seo->name }} - Spannr</title>
+            <meta name="description" content="{{ $seo->meta_description }}" />
+        @endif
+        @if($seo->tags->contains('name', 'noindex'))
+            <meta name="robots" content="noindex, follow" />
+        @endif
+    @endpush
+@endif
+
 @section('content')
     <div class="page-container">
         <div class="container">
