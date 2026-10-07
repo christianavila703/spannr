@@ -27,6 +27,11 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('form-entry:resubmit-mailchimp')->dailyAt('17:00');
 
+        // beehiiv: the queue is sync and there is no worker, so nothing else retries a newsletter signup
+        // whose beehiiv call failed or was skipped. Only touches rows already marked failed or
+        // skipped_no_credentials, never old Mailchimp-era rows. The lock expires after 2 hours.
+        $schedule->command('beehiiv:backfill --send --retry-recorded')->hourly()->withoutOverlapping(120);
+
         $schedule->command('record-locks:clear')->everyMinute();
 
         // Subscriptions

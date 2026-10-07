@@ -7,13 +7,15 @@ use App\Jobs\FormNotifications\InvestorOptIn;
 use App\Jobs\FormNotifications\JobPostingSubmitted;
 use App\Jobs\FormNotifications\ListingEmail;
 use App\Jobs\FormNotifications\MarketplaceGenericRequest;
-use App\Jobs\FormNotifications\NewsletterOptIn;
 use App\Jobs\FormNotifications\ReportOptIn;
+use App\Jobs\FormNotifications\SubscribeToBeehiiv;
 use App\Jobs\FormNotifications\WebsiteContact;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class FormEntry extends Model
 {
@@ -56,12 +58,21 @@ class FormEntry extends Model
         self::INVESTOR_ACCREDITED_UNSURE,
     ];
 
+    // Newsletter signups now go to beehiiv (see SubscribeToBeehiiv), so the newsletter forms are
+    // deliberately NOT listed here: the scheduled daily Mailchimp resubmit must not pick them up.
     const MAILCHIMP_APPLICABLE_FORMS = [
         self::FORM_INVESTOR_OPTIN => InvestorOptIn::class,
         self::FORM_FUNDING_APPLICANT => FundingApplicant::class,
-        self::FORM_NEWSLETTER_SIDEBAR => NewsletterOptIn::class,
-        self::FORM_NEWSLETTER_HOMEPAGE_HERO => NewsletterOptIn::class,
         self::FORM_REPORT_LONGEVITY_2022 => ReportOptIn::class,
+    ];
+
+    const NEWSLETTER_FORMS = [
+        self::FORM_NEWSLETTER_SIDEBAR,
+        self::FORM_NEWSLETTER_STICKY,
+        self::FORM_NEWSLETTER_HOMEPAGE_HERO,
+        self::FORM_NEWSLETTER_HEADER,
+        self::FORM_NEWSLETTER_FOOTER,
+        self::FORM_NEWSLETTER_ABOUT,
     ];
 
     protected static function booted()
@@ -86,7 +97,14 @@ class FormEntry extends Model
                 case self::FORM_NEWSLETTER_HEADER:
                 case self::FORM_NEWSLETTER_FOOTER:
                 case self::FORM_NEWSLETTER_ABOUT:
-                    NewsletterOptIn::dispatch($formEntry);
+                    // Production and staging run QUEUE_CONNECTION=sync (no worker, no Horizon), so a normal
+                    // dispatch would make the visitor wait for beehiiv. Run it after the response has been
+                    // sent instead, and never let a problem here reach the visitor.
+                    try {
+                        SubscribeToBeehiiv::dispatchAfterResponse($formEntry);
+                    } catch (Throwable $exception) {
+                        Log::warning('FormEntry ' . $formEntry->id . ': beehiiv dispatch failed (' . class_basename($exception) . ')');
+                    }
                     break;
 
                 case self::FORM_REPORT_LONGEVITY_2022:
@@ -162,6 +180,22 @@ class FormEntry extends Model
     public function getEmailLinkAttribute(): string
     {
         return '<a href="mailto:' . $this->email . '">' . $this->email . '</a>';
+    }
+
+    /**
+     * The fields column as an array. It is not cast today, so it arrives as a JSON string
+     * (every job json_decodes it). This also copes with a JSON string inside a JSON string,
+     * and with an array if a cast is ever switched on.
+     */
+    public function fieldsArray(): array
+    {
+        $fields = $this->fields;
+
+        for ($pass = 0; $pass < 2 && is_string($fields); $pass++) {
+            $fields = json_decode($fields, true);
+        }
+
+        return is_array($fields) ? $fields : [];
     }
 
     public function getFormattedMessageFieldAttribute() {

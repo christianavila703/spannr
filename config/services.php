@@ -49,6 +49,11 @@ return [
         'server' => env('MAILCHIMP_SERVER', 'us14')
     ],
 
+    'beehiiv' => [
+        'key' => env('BEEHIIV_API_KEY'),
+        'publication_id' => env('BEEHIIV_PUBLICATION_ID'),
+    ],
+
     'stripe' => [
         'api_key' => env('STRIPE_API_KEY'),
         'public_key' => env('STRIPE_PUBLISHABLE_KEY'),

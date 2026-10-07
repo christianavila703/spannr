@@ -4,7 +4,7 @@
         <div>
             @if ($showSuccess === true)
                 <div>
-                    <p class="{{ $successClass }}">Thanks for subscribing!</p>
+                    <p class="{{ $successClass }}">Hey, nice. One more tap and you're in. Check your email for the confirm link, that's where the good stuff starts. Not there in a minute? Peek in spam or promotions.</p>
                 </div>
             @else
                 <div class="form-group-container">
