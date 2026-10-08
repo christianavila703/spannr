@@ -254,12 +254,14 @@ class ContentController extends Controller
 
     public function longevityStockIndexAbout(): \Illuminate\Http\RedirectResponse
     {
-        return redirect()->route('public.content.longevity-index');
+        // Permanent: the Longevity Index about page was folded into /index when the index was sunset.
+        return redirect()->route('public.content.longevity-index', [], 301);
     }
 
     public function longevityStockIndexTerms(): \Illuminate\Http\RedirectResponse
     {
-        return redirect()->route('public.content.longevity-index');
+        // Permanent: same as above.
+        return redirect()->route('public.content.longevity-index', [], 301);
     }
 
     public function longevityStockChart(): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory

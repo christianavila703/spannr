@@ -34,6 +34,12 @@ Route::get('/about', [App\Http\Controllers\Public\ContentController::class, 'abo
 Route::get('/about/{slug}', [App\Http\Controllers\Public\ContentController::class, 'aboutUser'])->name('public.content.about.user');
 Route::get('/confirmed', [App\Http\Controllers\Public\ContentController::class, 'emailConfirmed'])->name('public.content.email-confirmed');
 Route::get('/articles', [App\Http\Controllers\Public\ContentController::class, 'articlesIndex'])->name('public.content.articles.index');
+// SEO redirects (DEV-2): 301, one hop to the final page. The query string does not affect matching, so
+// ?utm_source=x redirects too (and is dropped). Keep these above /articles/{slug} and the /{slug} catch-all.
+// If you add one, also add its old path to the "not listed" lists in SitemapController.
+Route::redirect('/articles/longevity-supplements-what-they-are-benefits-and-more', '/articles/best-longevity-supplements', 301);
+Route::redirect('/articles/beat-inflammation-anti-aging-100', '/articles/chronic-inflammation-and-longevity', 301);
+Route::redirect('/longevity-doctors', '/articles/longevity-doctors', 301);
 Route::get('/articles/{slug}', [App\Http\Controllers\Public\ContentController::class, 'articleShow'])->name('public.content.articles.show');
 Route::get('/glossary', [App\Http\Controllers\Public\ContentController::class, 'glossaryIndex'])->name('public.content.glossary.index');
 Route::get('/glossary/{slug}', [App\Http\Controllers\Public\ContentController::class, 'glossaryShow'])->name('public.content.glossary.show');
