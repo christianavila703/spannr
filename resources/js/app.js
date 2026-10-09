@@ -1,6 +1,7 @@
 import './bootstrap';
 import * as bootstrap from 'bootstrap';
 import '../sass/app.scss';
+import { placePostOptIn } from './post-optin-placement.mjs';
 
 /* Images */
 import.meta.glob([
@@ -39,21 +40,8 @@ confirmationButtons.forEach(button => {
     });
 });
 
-/* Post Newsletter Optins */
-if (document.getElementById('post-newsletter')) {
-    let postOptIn = document.getElementById('post-newsletter');
-    let paragraphs = document.querySelectorAll('.single-post-content p');
-    let paragraphCount = paragraphs.length;
-
-    if (paragraphCount > 30) {
-        let paragraph = paragraphs[18];
-        paragraph.after(postOptIn);
-    } else {
-        let paraCount = parseInt(paragraphCount / 2);
-        let paragraph = paragraphs[paraCount];
-        paragraph.after(postOptIn);
-    }
-}
+/* Post Newsletter Optins: after a top-level body paragraph, never inside tables, lists or the like */
+placePostOptIn(document.getElementById('post-newsletter'), document.querySelector('.single-post-content .post-content'));
 
 /* Event Listeners for URLs */
 window.addEventListener('go-to-url', event => {

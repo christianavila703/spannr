@@ -22,7 +22,7 @@
                             @else
                                 <button class="btn pink-on-focus text-uppercase text-white py-1" data-bs-toggle="modal" data-bs-target="#header-subscribe-modal">
                                     <i class="fa-sharp fa-light fa-envelope me-1"></i>
-                                    <span>Subscribe</span>
+                                    <span>Join the Insiders</span>
                                 </button>
                             @endif
                         </div>
@@ -57,17 +57,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-quaternary border-0">
-                <div class="modal-title text-white" id="header-subscribe-modal-label">Sign Up For Our Newsletter</div>
+                <div class="modal-title text-white" id="header-subscribe-modal-label">The longevity insider email, every Thursday</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p class="text-content mb-1">Weekly insights into the future of longevity</p>
-                <p class="mb-3">Don't worry, we won't share your info.</p>
+                <p class="small text-muted mb-3">What's working. What's hype. What we're trying ourselves.</p>
                 <livewire:forms.newsletter-opt-in
                     form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HEADER }}"
                     formClass="header-subscribe-form"
                     successClass="text-start text-quintary h6 fw-bold"
                     uniquePrefix="header"
+                    emailPlaceholder="Your best email"
+                    buttonText="Count me in"
+                    note="We won't share your info. Unsubscribe anytime."
                 />
             </div>
         </div>

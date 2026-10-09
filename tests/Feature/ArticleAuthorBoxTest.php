@@ -205,6 +205,40 @@ class ArticleAuthorBoxTest extends TestCase
         $this->assertStringNotContainsString('<a ', $box);
     }
 
+    /** The visible text of the author line: tags removed, runs of whitespace collapsed. */
+    private function authorLineText(Article $article): string
+    {
+        $html = view('public.content.articles._author-box', ['article' => $article->load('authors')])->render();
+        preg_match('#<div class="article-byline-author">(.*?)</div>#s', $html, $match);
+
+        return trim(preg_replace('/\s+/', ' ', strip_tags($match[1] ?? '')));
+    }
+
+    public function test_the_author_line_has_no_space_before_the_comma(): void
+    {
+        $article = $this->makeArticle([], ['name' => 'Brent Wallace', 'slug' => 'brent-wallace', 'title' => 'Longevity Clinic Growth Operator']);
+
+        $this->assertSame('By Brent Wallace, Longevity Clinic Growth Operator', $this->authorLineText($article));
+
+        $html = view('public.content.articles._author-box', ['article' => $article->load('authors')])->render();
+        $this->assertStringContainsString('>Brent Wallace</a>, Longevity Clinic Growth Operator', $html);
+        $this->assertDoesNotMatchRegularExpression('/\s,/', strip_tags($html), 'no whitespace directly before a comma');
+    }
+
+    public function test_the_author_line_has_no_space_before_the_comma_when_the_name_is_not_linked(): void
+    {
+        $article = $this->makeArticle([], ['name' => 'Brent Wallace', 'slug' => null, 'title' => 'Longevity Clinic Growth Operator']);
+
+        $this->assertSame('By Brent Wallace, Longevity Clinic Growth Operator', $this->authorLineText($article));
+    }
+
+    public function test_the_author_line_has_no_comma_when_there_is_no_title(): void
+    {
+        $article = $this->makeArticle([], ['name' => 'Brent Wallace', 'slug' => 'brent-wallace', 'title' => null]);
+
+        $this->assertSame('By Brent Wallace', $this->authorLineText($article));
+    }
+
     public function test_reviewer_line_and_date_appear_only_when_set(): void
     {
         $this->makeArticle([

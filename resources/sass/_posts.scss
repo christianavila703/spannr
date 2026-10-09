@@ -144,6 +144,100 @@
     }
 }
 
+// Article pages have no sidebar. Title, byline box, hero image and the article all sit in one centered column
+// (.article-column, only used by the article show page) so lines stay readable and everything lines up.
+// 800px is a maximum: below that the column is the full container width with the normal side padding.
+.single-post .article-column {
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .featured-image-picture img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+// The body uses the whole column, tables inside it fill that width, and images are centered.
+// Scoped to .article-full-width so glossary, report and other long-form pages keep their 600px column.
+.single-post .single-post-content.article-full-width {
+    max-width: 100%;
+
+    .post-content {
+        table {
+            width: 100% !important; // beats width attributes the editor writes on <table>
+            margin: 1.5rem 0;
+            border-collapse: collapse;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--color-gray-medium);
+            text-align: left;
+            vertical-align: top;
+            overflow-wrap: break-word;
+        }
+
+        th,
+        thead td {
+            font-weight: 700;
+            background-color: var(--color-gray-light);
+        }
+
+        // Images: always centered on their own line. !important beats what the editor writes inline
+        // (float: left / right, align="left", margin or text-align on the image or its figure).
+        img {
+            display: block;
+            float: none !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        figure,
+        .wp-caption,
+        .alignleft,
+        .alignright,
+        .aligncenter,
+        .alignnone,
+        .align-left,
+        .align-right,
+        .align-center {
+            float: none !important;
+            display: block;
+            max-width: 100% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            text-align: center !important;
+        }
+
+        figcaption,
+        .wp-caption-text,
+        .image-caption-text {
+            text-align: center !important;
+        }
+
+        // Phones: a table wider than the screen scrolls sideways instead of pushing the page wider.
+        @media (max-width: $bp-min-tablet - 1px) {
+            table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    }
+}
+
 .single-post-content.full-width {
     max-width: 760px;
 

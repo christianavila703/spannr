@@ -17,6 +17,9 @@
                     <li class="nav-item">
                         <a href="{{ route('public.content.privacy') }}" class="nav-link">Privacy Policy</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('public.content.articles.show', 'longevity-doctors') }}" class="nav-link">Longevity Doctors by City</a>
+                    </li>
                     <x-nav.contact-link />
                 </ul>
             </div>

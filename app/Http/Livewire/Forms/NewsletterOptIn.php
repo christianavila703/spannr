@@ -21,6 +21,11 @@ class NewsletterOptIn extends Component
     public $formClass = '';
     public $successClass = 'lead text-tertiary fw-bold';
 
+    // Optional wording. The defaults are the long-standing text, so a place that passes nothing is unchanged.
+    public $buttonText = 'Sign Up';
+    public $emailPlaceholder = 'Email';
+    public $note = ''; // small line between the email field and the button; nothing is printed when empty
+
     public function mount()
     {
         $this->url = url()->current();

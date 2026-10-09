@@ -16,6 +16,7 @@
                 <hr class="dark mb-5">
 
                 <div class="single-post pb-4">
+                  <div class="article-column">
                     <h1 class="post-title mb-4">{{ $article->name }}</h1>
                     @include('public.content.articles._author-box')
                     @if($featuredImage)
@@ -30,7 +31,7 @@
                         <img src="{{ $article->image_full_url }}" alt="{{ $article->name }}" class="mb-3 w-100" width="1616" height="824">
                     @endif
                     <div class="single-post-content-sidebar-container">
-                        <article class="single-post-content pb-6">
+                        <article class="single-post-content article-full-width pb-6">
                             <div class="post-meta-container">
                                 <div class="author">
                                     @forelse($article->authors as $author)
@@ -89,6 +90,13 @@
                                     </div>
                                 @endif
                             </div>
+                            @if($article->sidebar)
+                                {{-- The CMS "Sidebar" field. It used to sit in the right column; the column is gone, so it follows the body. --}}
+                                <div class="article-extra mt-5">{!! $article->sidebar !!}</div>
+                            @endif
+                            @if($article->slug === \App\Support\CityGuideIndex::NATIONAL_SLUG)
+                                @include('public.content.articles._city-index')
+                            @endif
                             <hr class="dark mt-5">
                             <p class="h4 mb-4">About the Author</p>
                             @foreach($article->authors as $author)
@@ -118,23 +126,8 @@
                                 @endif
                             </p>
                         </article>
-                        <div class="sidebar-container">
-                            <div id="sidebar" class="sidebar">
-                                <div id="sticky-stabilizer" style="height: 20px;"></div>
-                                <div id="sticky-sidebar-contents">
-                                    @if($article->sidebar)
-                                        <div>{!! $article->sidebar !!}</div>
-                                    @endif
-                                    <div class="outline-newsletter-optin">
-                                        <x-optins.newsletter showNameFields="true" />
-                                    </div>
-                                    <div class="mt-4">
-                                        <livewire:public.random-glossary-item-widget />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                  </div>
                 </div>
                 <div class="after-single-post"></div>
             </div>
@@ -144,13 +137,3 @@
         <x-optins.newsletter />
     </div>
 @endsection
-
-@push('end')
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    @vite('resources/js/sticky-sidebar.js')
-    <style>
-        .sticky-sidebar {
-            top: 20px;
-        }
-    </style>
-@endpush

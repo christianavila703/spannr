@@ -21,11 +21,13 @@
                         </div>
                     @endif
                     <div class="email-field mb-3">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" id="{{ $uniquePrefix }}email" placeholder="Email" aria-label="Email">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" id="{{ $uniquePrefix }}email" placeholder="{{ $emailPlaceholder }}" aria-label="Email">
                         @error('email') <span class="form-error text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    </div>@if(filled($note))
+                    <p class="form-note small text-muted mb-3">{{ $note }}</p>@endif
+
                     <div class="submit-field">
-                        <button type="submit" class="btn btn-outline-primary">Sign Up</button>
+                        <button type="submit" class="btn btn-outline-primary">{{ $buttonText }}</button>
                     </div>
                 </div>
             @endif
