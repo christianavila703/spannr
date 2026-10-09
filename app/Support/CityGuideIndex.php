@@ -21,7 +21,7 @@ class CityGuideIndex
 
     private const PREFIX = self::NATIONAL_SLUG . '-';
 
-    private const STATES = [
+    public const STATES = [
         'al' => 'Alabama', 'ak' => 'Alaska', 'az' => 'Arizona', 'ar' => 'Arkansas', 'ca' => 'California',
         'co' => 'Colorado', 'ct' => 'Connecticut', 'de' => 'Delaware', 'dc' => 'District of Columbia',
         'fl' => 'Florida', 'ga' => 'Georgia', 'hi' => 'Hawaii', 'id' => 'Idaho', 'il' => 'Illinois',

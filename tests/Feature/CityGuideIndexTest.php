@@ -119,6 +119,26 @@ class CityGuideIndexTest extends TestCase
             $table->timestamps();
         });
 
+        // City guide pages (DEV-8) look up the listings in their city, so those tables must exist. They stay empty here.
+        Schema::create('listings', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->nullable();
+            $table->string('type');
+            $table->string('status')->default('Pending');
+            $table->timestamps();
+        });
+        Schema::create('addresses', function (Blueprint $table) {
+            $table->id();
+            $table->string('city');
+            $table->string('state');
+            $table->string('state_code');
+            $table->string('country_code');
+            $table->morphs('addressable');
+            $table->boolean('primary')->default(0);
+            $table->timestamps();
+        });
+
         // The layout asks Vite for the built assets, which do not exist in a test run.
         $this->withoutVite();
     }

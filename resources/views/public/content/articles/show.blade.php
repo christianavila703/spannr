@@ -97,6 +97,9 @@
                             @if($article->slug === \App\Support\CityGuideIndex::NATIONAL_SLUG)
                                 @include('public.content.articles._city-index')
                             @endif
+                            @if(str_starts_with($article->slug, \App\Support\CityGuideIndex::NATIONAL_SLUG . '-'))
+                                @include('public.content.articles._city-listings')
+                            @endif
                             <hr class="dark mt-5">
                             <p class="h4 mb-4">About the Author</p>
                             @foreach($article->authors as $author)

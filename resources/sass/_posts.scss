@@ -162,6 +162,18 @@
     }
 }
 
+// City guide articles: the listings in that city, two columns on wide screens, one on phones.
+.single-post .city-listings-columns {
+    @media (min-width: $bp-min-tablet) {
+        column-count: 2;
+        column-gap: 2rem;
+
+        li {
+            break-inside: avoid;
+        }
+    }
+}
+
 // The body uses the whole column, tables inside it fill that width, and images are centered.
 // Scoped to .article-full-width so glossary, report and other long-form pages keep their 600px column.
 .single-post .single-post-content.article-full-width {
