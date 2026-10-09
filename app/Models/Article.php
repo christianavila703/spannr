@@ -53,6 +53,7 @@ class Article extends Model implements HasMedia
 
     protected $casts = [
         'faq' => 'array',
+        'reviewed_at' => 'date',
     ];
 
     private string $searchableRouteName = 'public.content.articles'; // TODO: update all these!!

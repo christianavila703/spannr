@@ -17,6 +17,7 @@
 
                 <div class="single-post pb-4">
                     <h1 class="post-title mb-4">{{ $article->name }}</h1>
+                    @include('public.content.articles._author-box')
                     @if($featuredImage)
                         <div class="mb-3">
                             <picture class="featured-image-picture">

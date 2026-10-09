@@ -96,6 +96,24 @@
                 <option value="">Select Tags</option>
             </select>
         </div>
+        <div class="col-12 mt-4">
+            <p class="h5 mb-1">Review (optional)</p>
+            <p class="small text-muted">Leave all three empty unless a named person has actually reviewed this article. Anything entered here is shown publicly under the headline.</p>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-3">
+                    <x-forms.input type="text" name="reviewer_name" label="Reviewed by (name)"
+                                   value="{{ old('reviewer_name', isset($article) ? $article->reviewer_name : '') }}"/>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <x-forms.input type="text" name="reviewer_title" label="Reviewer title"
+                                   value="{{ old('reviewer_title', isset($article) ? $article->reviewer_title : '') }}"/>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <x-forms.input type="date" name="reviewed_at" label="Last reviewed"
+                                   value="{{ old('reviewed_at', isset($article) ? optional($article->reviewed_at)->format('Y-m-d') : '') }}"/>
+                </div>
+            </div>
+        </div>
         <div class="col-12 my-3">
             <p class="h4">Content</p>
             <x-tiny-mce.tiny-editor id="content" name="content" value="{{ $article->content ?? old('content') }}"/>

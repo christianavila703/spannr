@@ -49,6 +49,9 @@ class StoreArticleRequest extends FormRequest
             'sources' => 'nullable',
             'sidebar' => 'nullable',
             'authors' => 'array|required',
+            'reviewer_name' => 'nullable|string|max:255',
+            'reviewer_title' => 'nullable|string|max:255',
+            'reviewed_at' => 'nullable|date',
             'tags' => 'array|nullable',
         ];
     }
