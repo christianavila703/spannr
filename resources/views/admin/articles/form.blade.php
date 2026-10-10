@@ -113,6 +113,12 @@
                                    value="{{ old('reviewed_at', isset($article) ? optional($article->reviewed_at)->format('Y-m-d') : '') }}"/>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-3">
+                    <x-forms.input type="date" name="content_updated_at" label="Last updated (set only when the content really changed)"
+                                   value="{{ old('content_updated_at', isset($article) ? optional($article->content_updated_at)->format('Y-m-d') : '') }}"/>
+                </div>
+            </div>
         </div>
         <div class="col-12 my-3">
             <p class="h4">Content</p>

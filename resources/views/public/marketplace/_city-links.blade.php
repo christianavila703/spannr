@@ -27,7 +27,7 @@
             @if($cityLinksGuide)
                 <li class="mb-1"><a href="{{ route('public.content.articles.show', $cityLinksGuide->slug) }}">Longevity doctors in {{ $cityLinksLocation['city'] }}</a></li>
             @endif
-            <li><a href="{{ route('public.content.articles.show', \App\Support\CityGuideIndex::NATIONAL_SLUG) }}">All longevity doctors by city</a></li>
+            <li><a href="{{ route('public.content.articles.show', \App\Support\CityGuideIndex::NATIONAL_SLUG) }}#longevity-doctors-by-city">All longevity doctors by city</a></li>
         </ul>
     </section>
 @endif

@@ -1,5 +1,9 @@
 @extends('layouts.public')
 
+@push('head')
+{!! \App\Support\StructuredData::forHomepage($seo ?? null) !!}
+@endpush
+
 @section('content')
     @include('public.marketplace._hero')
 

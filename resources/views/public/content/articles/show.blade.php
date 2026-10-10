@@ -1,6 +1,7 @@
 @extends('layouts.public')
 
 @push('seo-extra')
+{!! \App\Support\StructuredData::forArticle($article) !!}
 <meta name="twitter:creator" content="@spannr_" />
 <meta name="twitter:label1" content="Written by" />
 <meta name="twitter:data1" content="{{ $article->author_byline }}" />

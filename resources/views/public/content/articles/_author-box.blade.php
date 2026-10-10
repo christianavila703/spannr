@@ -1,6 +1,7 @@
 {{--
     DEV-7: quiet author / reviewer lines under the headline.
     The author name is author_byline, the same value the Article JSON-LD uses.
+    DEV-5: "Updated:" shows content_updated_at (the hand-set date, also the JSON-LD dateModified), never updated_at.
     Reviewer lines appear only when an editor filled in those fields, so the page never implies a review that did not happen.
 --}}
 @php
@@ -10,12 +11,15 @@
     $boxReviewerName = trim((string) $article->reviewer_name);
     $boxReviewerTitle = trim((string) $article->reviewer_title);
 @endphp
-@if($boxAuthor || $boxReviewerName !== '' || $article->reviewed_at)
+@if($boxAuthor || $boxReviewerName !== '' || $article->reviewed_at || $article->content_updated_at)
     <div class="article-byline-box small text-muted mb-3">
         @if($boxAuthor)
             <div class="article-byline-author">
                 By @if($boxAuthorUrl)<a href="{{ $boxAuthorUrl }}" class="text-reset fw-bold">{{ $article->author_byline }}</a>@else<span class="fw-bold">{{ $article->author_byline }}</span>@endif{{ $boxAuthorTitle !== '' ? ', ' . $boxAuthorTitle : '' }}
             </div>
+        @endif
+        @if($article->content_updated_at)
+            <div class="article-byline-updated">Updated: {{ $article->content_updated_at->format('F j, Y') }}</div>
         @endif
         @if($boxReviewerName !== '')
             <div class="article-byline-reviewer">

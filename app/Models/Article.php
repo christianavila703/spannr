@@ -13,9 +13,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Illuminate\Support\Collection;
-use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
-use RalphJSmit\Laravel\SEO\Schema\BreadcrumbListSchema;
 use RalphJSmit\Laravel\SEO\Schema\FaqPageSchema;
 use RalphJSmit\Laravel\SEO\SchemaCollection;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
@@ -54,6 +51,7 @@ class Article extends Model implements HasMedia
     protected $casts = [
         'faq' => 'array',
         'reviewed_at' => 'date',
+        'content_updated_at' => 'date',
     ];
 
     private string $searchableRouteName = 'public.content.articles'; // TODO: update all these!!
@@ -243,6 +241,34 @@ class Article extends Model implements HasMedia
         return 'Spannr';
     }
 
+    /**
+     * Description for the meta tags and the Article JSON-LD: the SEO record, then the meta description, then the excerpt.
+     */
+    public function structuredDataDescription(): ?string
+    {
+        $this->loadMissing('seo');
+
+        $description = $this->seo?->description ?: $this->meta_description;
+        if (! $description && $this->excerpt) {
+            $description = Str::limit(strip_tags($this->excerpt), 160);
+        }
+
+        return $description ?: null;
+    }
+
+    /**
+     * The article's own image for the Article JSON-LD, or null. Unlike shareable_image_url this has no site-wide
+     * placeholder fallback: a generic share image is not an image of the article.
+     */
+    public function structuredDataImage(): ?string
+    {
+        $this->loadMissing('seo');
+
+        return $this->seo?->image
+            ?: ($this->getFirstMediaUrl('featured') ?: null)
+            ?: ($this->image ? $this->shareable_image_url : null);
+    }
+
     public function getDynamicSEOData(): SEOData
     {
         $this->loadMissing('seo');
@@ -252,54 +278,13 @@ class Article extends Model implements HasMedia
             ?: ($this->page_title ?: ($this->name . ' - Spannr'));
         $openGraphTitle = $seoTitle ?: $this->name;
 
-        $description = $this->seo?->description ?: $this->meta_description;
-        if (! $description && $this->excerpt) {
-            $description = Str::limit(strip_tags($this->excerpt), 160);
-        }
+        $description = $this->structuredDataDescription();
 
         $image = $this->seo?->image ?: $this->shareable_image_url;
 
-        $schema = SchemaCollection::initialize()
-            ->addBreadcrumbs(function (BreadcrumbListSchema $breadcrumbs, SEOData $SEOData): BreadcrumbListSchema {
-                return $breadcrumbs
-                    ->prependBreadcrumbs([
-                        'Spannr' => route('home'),
-                        'Insights' => route('public.content.articles.index'),
-                    ])
-                    ->markup(function (Collection $markup): Collection {
-                        $items = collect($markup->get('itemListElement'));
-                        $last = $items->pop();
-                        if (is_array($last)) {
-                            $last['name'] = $this->name;
-                        }
-
-                        return $markup->put('itemListElement', $items->push($last)->values());
-                    });
-            })
-            ->addArticle(function (ArticleSchema $article, SEOData $SEOData): ArticleSchema {
-                return $article->markup(function (Collection $markup): Collection {
-                    $markup = $markup->put('publisher', [
-                        '@type' => 'Organization',
-                        'name' => 'Spannr',
-                        'url' => route('home'),
-                    ])->put('headline', $this->name);
-
-                    $main = $this->relationLoaded('authors')
-                        ? $this->authors->first()
-                        : $this->authors()->first();
-
-                    if ($main) {
-                        $markup = $markup->put('author', [
-                            '@type' => 'Person',
-                            'name' => $this->author_byline,
-                            'url' => $main->about_page_url,
-                            'jobTitle' => $main->title,
-                        ]);
-                    }
-
-                    return $markup;
-                });
-            });
+        // The Article and BreadcrumbList JSON-LD are printed by App\Support\StructuredData (see articles/show.blade.php),
+        // not by the package, so there is exactly one of each. Only the FAQPage block still comes from the package.
+        $schema = SchemaCollection::initialize();
 
         if ($this->status === self::STATUS_PUBLISHED && $this->faq) {
             $faqPairs = collect($this->faq)->filter(function ($row) {

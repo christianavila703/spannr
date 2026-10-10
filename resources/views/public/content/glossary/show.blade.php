@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@spannr_" />
 <meta name="twitter:site" content="@spannr_" />
-{!! $graph !!}
+{!! \App\Support\StructuredData::forGlossary($glossaryItem) !!}
 @endpush
 
 @section('content')

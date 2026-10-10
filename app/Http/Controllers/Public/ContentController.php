@@ -202,34 +202,10 @@ class ContentController extends Controller
         }
 
         $pageTitle = $glossaryItem->page_title ? $glossaryItem->page_title : $glossaryItem->name . ' - Spannr';
-        $graph = new Graph();
-
-        $graph->breadcrumblist()->setProperty('@id', '#breadcrumb');
-        $graph->breadcrumbList()->itemListElement([
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 1)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                    ->name('Spannr')
-                    ->url(route('home'))
-                    ->setProperty('@id', route('home'))),
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 2)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                    ->name('Glossary')
-                    ->url(route('public.content.glossary.index'))
-                    ->setProperty('@id', route('public.content.glossary.index'))),
-            \Spatie\SchemaOrg\Schema::listItem()
-                ->setProperty('position', 3)
-                ->item(\Spatie\SchemaOrg\Schema::webPage()
-                    ->name($glossaryItem->name)
-                    ->url($glossaryItem->url)
-                    ->setProperty('@id', $glossaryItem->url))
-        ]);
 
         return view('public.content.glossary.show', [
             'glossaryItem' => $glossaryItem,
             'pageTitle' => $pageTitle,
-            'graph' => $graph,
         ]);
     }
 

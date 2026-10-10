@@ -1,5 +1,9 @@
 @extends('layouts.public')
 
+@push('seo-extra')
+{!! \App\Support\StructuredData::forListing($listing) !!}
+@endpush
+
 @section('content')
     @include('public.marketplace.content._content-hero')
     <div class="container my-5">

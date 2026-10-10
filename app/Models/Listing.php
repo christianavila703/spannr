@@ -95,6 +95,16 @@ class Listing extends Model implements HasMedia
         });
     }
 
+    /**
+     * Tags from the "Clinic Focus" tag set. Used as medicalSpecialty in the JSON-LD (DEV-5).
+     */
+    public function clinicFocus(): \Illuminate\Database\Eloquent\Relations\MorphToMany|Builder
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->whereHas('tagSets', function (Builder $query) {
+            $query->where('name', TagSet::TAG_SET_CLINIC_FOCUS);
+        })->withTimestamps();
+    }
+
     public function connectedListings(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Listing::class, 'listable', 'listing_relationships')->withPivot('label')->withTimestamps();

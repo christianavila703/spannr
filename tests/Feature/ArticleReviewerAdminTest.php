@@ -41,6 +41,7 @@ class ArticleReviewerAdminTest extends TestCase
             $table->timestamps();
         });
         (require base_path('database/migrations/2026_10_08_120000_add_reviewer_fields_to_articles_table.php'))->up();
+        (require base_path('database/migrations/2026_10_09_100000_add_content_updated_at_to_articles_table.php'))->up();
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -282,5 +283,61 @@ class ArticleReviewerAdminTest extends TestCase
         ]))->assertSessionHasErrors(['reviewer_name', 'reviewer_title', 'reviewed_at']);
 
         $this->assertNull(DB::table('articles')->find($article->id)->reviewer_name);
+    }
+
+    /* ------------------------------------------------------------------ DEV-5: the hand-set "Last updated" date */
+
+    public function test_the_form_has_the_last_updated_input_in_the_review_section_with_its_label(): void
+    {
+        $html = $this->renderForm($this->makeArticle());
+
+        $this->assertStringContainsString('Last updated (set only when the content really changed)', $html);
+        $this->assertMatchesRegularExpression('/<input[^>]*type="date"[^>]*name="content_updated_at"[^>]*value=""/', $html);
+        $this->assertGreaterThan(strpos($html, 'Review (optional)'), strpos($html, 'name="content_updated_at"'), 'inside the Review (optional) section');
+        $this->assertLessThan(strpos($html, 'id="content"'), strpos($html, 'name="content_updated_at"'), 'before the article body editor');
+        $this->assertMatchesRegularExpression('/name="reviewed_at"/', $html, 'the reviewer inputs are still there');
+        $this->assertStringContainsString('Leave all three empty unless a named person has actually reviewed this article.', $html, 'the reviewer wording is unchanged');
+    }
+
+    public function test_the_edit_form_shows_the_saved_last_updated_date(): void
+    {
+        $html = $this->renderForm($this->makeArticle(['content_updated_at' => '2026-03-05']));
+
+        $this->assertMatchesRegularExpression('/type="date"[^>]*name="content_updated_at"[^>]*value="2026-03-05"/', $html);
+    }
+
+    public function test_updating_saves_the_last_updated_date_and_empty_clears_it(): void
+    {
+        $article = $this->makeArticle();
+
+        $this->put('/admin/articles/' . $article->id, $this->formPayload(['content_updated_at' => '2026-03-05']))->assertSessionHasNoErrors();
+        $this->assertSame('2026-03-05', substr(DB::table('articles')->find($article->id)->content_updated_at, 0, 10));
+
+        $this->put('/admin/articles/' . $article->id, $this->formPayload())->assertSessionHasNoErrors();
+        $this->assertSame('2026-03-05', substr(DB::table('articles')->find($article->id)->content_updated_at, 0, 10), 'left alone when the field is not in the request');
+
+        $this->put('/admin/articles/' . $article->id, $this->formPayload(['content_updated_at' => '']))->assertSessionHasNoErrors();
+        $this->assertNull(DB::table('articles')->find($article->id)->content_updated_at);
+    }
+
+    public function test_creating_an_article_saves_the_last_updated_date_and_defaults_to_null(): void
+    {
+        $this->post('/admin/articles', $this->formPayload(['name' => 'One', 'slug' => 'one', 'content_updated_at' => '2026-03-05']))->assertSessionHasNoErrors();
+        $this->post('/admin/articles', $this->formPayload(['name' => 'Two', 'slug' => 'two']))->assertSessionHasNoErrors();
+
+        $this->assertSame('2026-03-05', substr(DB::table('articles')->where('slug', 'one')->first()->content_updated_at, 0, 10));
+        $this->assertNull(DB::table('articles')->where('slug', 'two')->first()->content_updated_at);
+    }
+
+    public function test_a_bad_last_updated_date_is_rejected(): void
+    {
+        $article = $this->makeArticle();
+
+        $this->put('/admin/articles/' . $article->id, $this->formPayload(['content_updated_at' => 'not a date']))
+            ->assertSessionHasErrors(['content_updated_at']);
+        $this->post('/admin/articles', $this->formPayload(['name' => 'Three', 'slug' => 'three', 'content_updated_at' => 'not a date']))
+            ->assertSessionHasErrors(['content_updated_at']);
+
+        $this->assertNull(DB::table('articles')->find($article->id)->content_updated_at);
     }
 }

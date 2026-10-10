@@ -52,6 +52,18 @@ class ArticleWidthAndCopyTest extends TestCase
             $table->mediumText('bio')->nullable();
             $table->timestamps();
         });
+        // DEV-5: the Article JSON-LD reads the author's social links from their Person record.
+        Schema::create('people', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('website')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('instagram')->nullable();
+            $table->timestamps();
+        });
         Schema::create('article_user', function (Blueprint $table) {
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('user_id');

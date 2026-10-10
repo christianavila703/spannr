@@ -52,6 +52,7 @@ class StoreArticleRequest extends FormRequest
             'reviewer_name' => 'nullable|string|max:255',
             'reviewer_title' => 'nullable|string|max:255',
             'reviewed_at' => 'nullable|date',
+            'content_updated_at' => 'nullable|date',
             'tags' => 'array|nullable',
         ];
     }

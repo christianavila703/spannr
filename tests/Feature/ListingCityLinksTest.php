@@ -103,6 +103,12 @@ class ListingCityLinksTest extends TestCase
         Schema::create('people', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('website')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('instagram')->nullable();
             $table->timestamps();
         });
         Schema::create('organizations', function (Blueprint $table) {
@@ -485,7 +491,8 @@ class ListingCityLinksTest extends TestCase
         foreach ([$alone, $noAddress, $abroad] as $listing) {
             $html = $this->get('/marketplace/clinic/' . $listing->slug)->assertOk()->getContent();
 
-            $this->assertStringContainsString('<a href="' . url('/articles/longevity-doctors') . '">All longevity doctors by city</a>', $html, $listing->name);
+            // DEV-5: the link goes to the city index section of the national hub.
+            $this->assertStringContainsString('<a href="' . url('/articles/longevity-doctors') . '#longevity-doctors-by-city">All longevity doctors by city</a>', $html, $listing->name);
             $this->assertStringNotContainsString('More longevity clinics in', $html, $listing->name . ': the list is hidden when empty');
         }
     }
@@ -524,7 +531,9 @@ class ListingCityLinksTest extends TestCase
         $without = $count('/marketplace/coach/' . $coach->slug);
         $with = $count('/marketplace/doctor/' . $doctor->slug);
 
-        $this->assertLessThanOrEqual($without + 2, $with, "profile page {$with} queries, coach page {$without}");
+        // The block adds at most two queries. A doctor page also prints its JSON-LD (DEV-5), which reads the clinic focus
+        // tags and the linked clinics (two more queries); a coach page prints none.
+        $this->assertLessThanOrEqual($without + 2 + 2, $with, "profile page {$with} queries, coach page {$without}");
     }
 
     /* ------------------------------------------------------------------ the city guide article */
@@ -834,7 +843,9 @@ class ListingCityLinksTest extends TestCase
         $without = $count('/marketplace/coach/' . $coach->slug);
         $with = $count('/marketplace/doctor/' . $doctor->slug);
 
-        $this->assertLessThanOrEqual($without + 2, $with, "profile page {$with} queries, coach page {$without}");
+        // The block adds at most two queries. A doctor page also prints its JSON-LD (DEV-5), which reads the clinic focus
+        // tags and the linked clinics (two more queries); a coach page prints none.
+        $this->assertLessThanOrEqual($without + 2 + 2, $with, "profile page {$with} queries, coach page {$without}");
         $this->assertStringContainsString('/articles/longevity-doctors-miami"', $this->get('/marketplace/doctor/' . $doctor->slug)->getContent(), 'the stateless guide won');
     }
 
