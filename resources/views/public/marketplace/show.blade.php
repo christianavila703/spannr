@@ -34,6 +34,8 @@
 
         @endif
 
+        @include('public.marketplace._badge')
+
         @include('public.marketplace._city-links')
     </div>
 @endsection
