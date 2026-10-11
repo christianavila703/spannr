@@ -627,6 +627,25 @@ class StructuredDataTest extends TestCase
         $this->assertStringNotContainsString('<script>alert(2)</script>', $html);
     }
 
+    public function test_a_data_uri_image_in_the_body_never_reaches_the_head_or_the_json_ld(): void
+    {
+        // DEV-3: pasted images used to be stored inside the article HTML. Only the body prints them; meta tags and
+        // JSON-LD read the SEO record, the meta description and the excerpt, never the body.
+        $uri = 'data:image/png;base64,' . base64_encode(str_repeat('x', 3000));
+        $this->makeArticle(['content' => '<p>Start</p><p><img alt="Chart" src="' . $uri . '"></p>', 'excerpt' => null, 'meta_description' => null]);
+
+        $html = $this->articlePage();
+        $head = substr($html, 0, strpos($html, '</head>'));
+
+        $this->assertStringContainsString($uri, $html, 'the body itself still prints it until the images are extracted');
+        $this->assertStringNotContainsString('data:image', $head);
+        foreach ($this->blocks($html) as $block) {
+            $this->assertStringNotContainsString('data:image', json_encode($block));
+        }
+        $this->assertArrayNotHasKey('description', $this->one($html, 'Article'));
+        $this->assertArrayNotHasKey('image', $this->one($html, 'Article'));
+    }
+
     public function test_an_article_page_has_no_rating_or_review_markup(): void
     {
         $this->makeArticle(['reviewer_name' => 'Sam Patel', 'reviewer_title' => 'RD', 'reviewed_at' => '2026-03-05']);
