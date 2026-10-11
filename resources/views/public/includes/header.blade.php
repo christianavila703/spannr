@@ -63,6 +63,7 @@
             <div class="modal-body">
                 <p class="small text-muted mb-3">What's working. What's hype. What we're trying ourselves.</p>
                 <livewire:forms.newsletter-opt-in
+                    position="header_modal"
                     form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HEADER }}"
                     formClass="header-subscribe-form"
                     successClass="text-start text-quintary h6 fw-bold"

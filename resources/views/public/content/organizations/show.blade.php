@@ -136,7 +136,7 @@
                     @endif
                     <div class="mx-auto" style="max-width: 350px">
                         <div class="outline-newsletter-optin">
-                            <x-optins.newsletter showNameFields="true" />
+                            <x-optins.newsletter showNameFields="true" position="other" />
                         </div>
                         <div class="mt-4">
                             <livewire:public.random-glossary-item-widget />

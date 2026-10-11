@@ -1,4 +1,4 @@
-@props(['showNameFields' => ''])
+@props(['showNameFields' => '', 'position' => 'unknown'])
 
 <div class="sidebar-optin">
     <div class="icon-group">
@@ -15,6 +15,6 @@
             <p class="h4 title">Sign Up For Our  Newsletter</p>
             <p class="description">Weekly insights into the future of longevity</p>
         </div>
-        <livewire:forms.newsletter-opt-in showNameFields="{{ $showNameFields }}" />
+        <livewire:forms.newsletter-opt-in showNameFields="{{ $showNameFields }}" position="{{ $position }}" />
     </div>
 </div>

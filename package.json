@@ -3,6 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "test": "npm run test:js",
         "test:js": "node --test tests/js/*.test.mjs"
     },
     "devDependencies": {

@@ -52,7 +52,7 @@
                                 <div id="sticky-stabilizer" style="height: 20px;"></div>
                                 <div id="sticky-sidebar-contents">
                                     <div class="outline-newsletter-optin">
-                                        <x-optins.newsletter showNameFields="true" />
+                                        <x-optins.newsletter showNameFields="true" position="glossary" />
                                     </div>
                                     <div class="mt-4">
                                         <livewire:public.random-glossary-item-widget />

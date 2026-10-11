@@ -117,6 +117,7 @@
                     <p class="fs-5 mb-">Discover how to increase your healthspan and extend your lifespan.</p>
                     <div class="mailchimp-form flex-shrink-0 mt-lg-5">
                         <livewire:forms.newsletter-opt-in
+                            position="homepage"
                             form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
                             formClass="email-signup-horizontal-purple-hover"
                             successClass="lead text-tertiary fw-bold"

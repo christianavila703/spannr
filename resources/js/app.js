@@ -2,6 +2,7 @@ import './bootstrap';
 import * as bootstrap from 'bootstrap';
 import '../sass/app.scss';
 import { placePostOptIn } from './post-optin-placement.mjs';
+import { registerNewsletterSignupTracking } from './newsletter-signup-tracking.mjs';
 
 /* Images */
 import.meta.glob([
@@ -42,6 +43,9 @@ confirmationButtons.forEach(button => {
 
 /* Post Newsletter Optins: after a top-level body paragraph, never inside tables, lists or the like */
 placePostOptIn(document.getElementById('post-newsletter'), document.querySelector('.single-post-content .post-content'));
+
+/* Newsletter signups: send the GA4 newsletter_signup event when a signup form is submitted (registered once) */
+registerNewsletterSignupTracking(window);
 
 /* Event Listeners for URLs */
 window.addEventListener('go-to-url', event => {

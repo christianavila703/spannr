@@ -74,7 +74,7 @@
                 </div>
                 <div class="mt-5 max-width-400">
                     <div class="outline-newsletter-optin">
-                        <x-optins.newsletter showNameFields="true" />
+                        <x-optins.newsletter showNameFields="true" position="other" />
                     </div>
                 </div>
             </div>

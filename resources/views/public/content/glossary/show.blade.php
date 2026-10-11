@@ -46,7 +46,7 @@
                                         <livewire:public.random-glossary-item-widget :excludedIds="[$glossaryItem->id]"/>
                                     </div>
                                     <div class="outline-newsletter-optin my-4">
-                                        <x-optins.newsletter showNameFields="true" />
+                                        <x-optins.newsletter showNameFields="true" position="glossary" />
                                     </div>
                                 </div>
                             </div>

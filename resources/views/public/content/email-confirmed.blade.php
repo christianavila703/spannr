@@ -32,6 +32,12 @@
     @section('title', 'Subscription confirmed - Spannr')
 @endunless
 
+@if(! empty($signupContext))
+    @push('end')
+        {!! \App\Support\NewsletterSignupContext::script($signupContext) !!}
+    @endpush
+@endif
+
 @section('content')
     <div class="page-container">
         <div class="container">

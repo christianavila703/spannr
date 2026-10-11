@@ -65,6 +65,7 @@
                     </p>
                     <div class="form-container pt-3 px-4">
                         <livewire:forms.newsletter-opt-in
+                            position="about"
                             form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_ABOUT }}"
                             formClass="email-signup-horizontal-purple-hover"
                             successClass="lead text-white fw-bold"

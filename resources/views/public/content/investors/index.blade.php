@@ -78,7 +78,7 @@
                 <div class="col-12 order-md-3 col-xl-4 align-items-center mt-4 order-xl-2 mt-xl-0">
                     <div class="h-100 d-flex align-items-center justify-content-center">
                         <div class="outline-newsletter-optin max-width-300">
-                            <x-optins.newsletter showNameFields="true" />
+                            <x-optins.newsletter showNameFields="true" position="investors" />
                         </div>
                     </div>
                 </div>

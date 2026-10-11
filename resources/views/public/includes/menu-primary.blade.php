@@ -100,6 +100,7 @@
             <p class="my-2">Weekly insights into the future of longevity</p>
             <div class="mailchimp-form">
                 <livewire:forms.newsletter-opt-in
+                    position="menu"
                     form="{{ \App\Models\FormEntry::FORM_NEWSLETTER_HOMEPAGE_HERO }}"
                     successClass="text-start text-quintary fw-bold"
                     uniquePrefix="menu-primary"

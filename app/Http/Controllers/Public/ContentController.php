@@ -118,7 +118,9 @@ class ContentController extends Controller
     {
         $seo = Content::where('slug', 'confirmed')->first();
         return view('public.content.email-confirmed', [
-            'seo' => $seo
+            'seo' => $seo,
+            // DEV-6: where the signup happened (null on a direct visit or a reload, so nothing is counted twice).
+            'signupContext' => \App\Support\NewsletterSignupContext::pull()
         ]);
     }
 

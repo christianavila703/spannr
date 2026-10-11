@@ -138,6 +138,13 @@
         </div>
     </div>
     <div id="post-newsletter" class="outline-newsletter-optin horizontal mb-4">
-        <x-optins.newsletter />
+        @php
+            // City guides (longevity-doctors-{city}, and the national hub) are labelled by page type; every other article
+            // is labelled by where the box sits (it is moved up into the body, see post-optin-placement.mjs).
+            $newsletterPosition = ($article->slug === \App\Support\CityGuideIndex::NATIONAL_SLUG || \App\Support\CityGuideIndex::parse($article->slug)[0] !== null)
+                ? 'city_guide'
+                : 'mid_article';
+        @endphp
+        <x-optins.newsletter position="{{ $newsletterPosition }}" />
     </div>
 @endsection
