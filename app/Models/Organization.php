@@ -19,6 +19,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Organization extends Model implements EntityContract
 {
+    use \App\Models\Traits\ExtractsEmbeddedImages;
+
     use HasFactory,
         HasSocialMedia,
         LogsActivity,

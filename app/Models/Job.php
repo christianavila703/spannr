@@ -20,6 +20,8 @@ use Throwable;
 
 class Job extends Model implements EntityContract
 {
+    use \App\Models\Traits\ExtractsEmbeddedImages;
+
     use HasFactory,
         LogsActivity,
         SearchableEntity,

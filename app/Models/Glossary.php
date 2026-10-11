@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 class Glossary extends Model
 {
+    use \App\Models\Traits\ExtractsEmbeddedImages;
+
     use HasFactory,
         Lockable;
 

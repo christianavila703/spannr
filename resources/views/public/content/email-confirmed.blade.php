@@ -1,15 +1,36 @@
 @extends('layouts.public')
 
-@if($seo)
-    @php
-        // Keep /confirmed crawlable (GA4 conversion page) but out of the index.
-        // Drop the stored robots tag so only one robots directive is printed.
-        $seo->seo = preg_replace('/<meta\s+name="robots"[^>]*>\s*/i', '', (string) $seo->seo);
-    @endphp
-    @push('head')
-        <meta name="robots" content="noindex, follow" />
-    @endpush
-@endif
+@php
+    // /confirmed stays crawlable (GA4 counts a view of it as a conversion) but out of the index. Whatever the stored CMS
+    // head HTML holds, the page prints exactly one robots tag (noindex, follow), no canonical, one title and one description.
+    $confirmedHead = $seo ? (string) $seo->seo : '';
+    $confirmedHead = preg_replace([
+        '/<meta\s+name="robots"[^>]*>\s*/i',
+        '/<link\s+rel="canonical"[^>]*>\s*/i',
+        '/<title>\s*<\/title>\s*/i',
+        '/<meta\s+name="description"\s+content="\s*"[^>]*>\s*/i',
+    ], '', $confirmedHead);
+    $confirmedHasTitle = (bool) preg_match('/<title>/i', $confirmedHead);
+    $confirmedHasDescription = (bool) preg_match('/<meta\s+name="description"/i', $confirmedHead);
+
+    if ($seo) {
+        $seo->seo = $confirmedHead;
+    }
+@endphp
+
+@push('head')
+    <meta name="robots" content="noindex, follow" />
+    @unless($confirmedHasDescription)
+        <meta name="description" content="Your email is confirmed and you are on the Spannr list. The Weekly Brief arrives every Thursday." />
+    @endunless
+    @if($seo && ! $confirmedHasTitle)
+        <title>Subscription confirmed - Spannr</title>
+    @endif
+@endpush
+
+@unless($seo)
+    @section('title', 'Subscription confirmed - Spannr')
+@endunless
 
 @section('content')
     <div class="page-container">

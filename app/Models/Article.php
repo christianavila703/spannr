@@ -20,6 +20,8 @@ use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class Article extends Model implements HasMedia
 {
+    use \App\Models\Traits\ExtractsEmbeddedImages;
+
     use HasFactory,
         HasImage,
         HasSEO,
@@ -96,6 +98,17 @@ class Article extends Model implements HasMedia
         return $query->whereHas('tags', function(Builder $query) {
             $query->where('name', self::TAG_REVIEWS);
         });
+    }
+
+    /**
+     * Newest first by the date the content last really changed (the hand-set content_updated_at), or the published date
+     * when that is empty. Never updated_at, which changes on any save. Equal dates fall back to the highest id, so the
+     * order is stable from one page of results to the next.
+     */
+    public function scopeNewestFirst(Builder $query)
+    {
+        return $query->orderByRaw('COALESCE(articles.content_updated_at, articles.date) DESC')
+            ->orderByDesc('articles.id');
     }
 
     /**

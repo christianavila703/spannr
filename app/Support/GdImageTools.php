@@ -33,7 +33,7 @@ final class GdImageTools
             return null;
         }
 
-        if (self::isAnimated($bytes, $info[2])) {
+        if (self::isAnimated($bytes, $info[2]) || ! self::hasMemoryFor($info[0], $info[1])) {
             return null;
         }
 
@@ -51,6 +51,30 @@ final class GdImageTools
         imagesavealpha($image, true);
 
         return ['image' => $image, 'width' => imagesx($image), 'height' => imagesy($image), 'type' => $info[2]];
+    }
+
+    /**
+     * Decoding a picture takes about four bytes a pixel, and shrinking it needs a second, smaller copy. A web request has a
+     * much lower memory limit than the commands, and running out of memory is a fatal error that cannot be caught, so an
+     * image that would not fit is skipped (and left as it was) instead.
+     */
+    private static function hasMemoryFor(int $width, int $height): bool
+    {
+        $limit = trim((string) ini_get('memory_limit'));
+
+        if ($limit === '-1' || $limit === '') {
+            return true;
+        }
+
+        $bytes = (int) $limit;
+        $bytes *= match (strtolower(substr($limit, -1))) {
+            'g' => 1073741824,
+            'm' => 1048576,
+            'k' => 1024,
+            default => 1,
+        };
+
+        return $width * $height * 8 + 4194304 < $bytes - memory_get_usage();
     }
 
     /** GD would flatten an animation to one frame, so animated GIF and WebP files are left alone. */

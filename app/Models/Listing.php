@@ -17,6 +17,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Listing extends Model implements HasMedia
 {
+    use \App\Models\Traits\ExtractsEmbeddedImages;
+
     use HasFactory,
         HasSEO,
         InteractsWithMedia;

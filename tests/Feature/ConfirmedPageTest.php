@@ -179,4 +179,81 @@ class ConfirmedPageTest extends TestCase
     {
         $this->get('/confirmed')->assertOk()->assertSee("You're in. Nice.", false);
     }
+
+    /* ------------------------------------------------------------------ DEV-15: the head of /confirmed */
+
+    private function storeSeo(string $seo): void
+    {
+        DB::table('content')->insert(['name' => 'Confirmed', 'slug' => 'confirmed', 'status' => 'Published', 'seo' => $seo]);
+    }
+
+    /** Asserts the head has exactly one title, one description and one robots tag (noindex), and no canonical. */
+    private function assertCleanHead(string $html): void
+    {
+        $head = substr($html, 0, strpos($html, '</head>'));
+
+        $this->assertSame(1, substr_count($head, '<title>'), 'one title');
+        $this->assertSame(1, preg_match_all('/<meta name="description"/', $head), 'one description');
+        $this->assertSame(1, preg_match_all('/<meta name="robots"/', $head), 'one robots tag');
+        $this->assertStringContainsString('<meta name="robots" content="noindex, follow" />', $head);
+        $this->assertStringNotContainsString('index, follow, max', $head, 'nothing index-able');
+        $this->assertStringNotContainsString('canonical', $head, 'no canonical, least of all to another page');
+        $this->assertStringContainsString("gtag('config', 'G-TW8JCMEBZF')", $head, 'GA4 is still in the head');
+    }
+
+    public function test_the_head_is_clean_when_the_cms_record_holds_everything_including_a_canonical_elsewhere(): void
+    {
+        $this->storeSeo('<title>Thank you for subscribing - Spannr</title>'
+            . '<meta name="description" content="Stored description." />'
+            . '<meta name="robots" content="index, follow, max-snippet:-1" />'
+            . '<link rel="canonical" href="https://spannr.com/" />');
+
+        $html = $this->get('/confirmed')->assertOk()->getContent();
+
+        $this->assertCleanHead($html);
+        $this->assertStringContainsString('<title>Thank you for subscribing - Spannr</title>', $html, 'the stored title is kept when there is one');
+        $this->assertStringContainsString('content="Stored description."', $html);
+    }
+
+    public function test_a_title_and_description_are_added_when_the_cms_record_has_none(): void
+    {
+        $this->storeSeo('<meta property="og:locale" content="en_US" />');
+
+        $html = $this->get('/confirmed')->assertOk()->getContent();
+
+        $this->assertCleanHead($html);
+        $this->assertStringContainsString('<title>Subscription confirmed - Spannr</title>', $html);
+        $this->assertMatchesRegularExpression('/<meta name="description" content="[^"]{50,160}" \/>/', $html, 'a real sentence, not too long');
+        $this->assertStringContainsString('og:locale', $html, 'the rest of the stored head is kept');
+    }
+
+    public function test_empty_stored_title_and_description_tags_do_not_count(): void
+    {
+        $this->storeSeo('<title></title><meta name="description" content="" />');
+
+        $html = $this->get('/confirmed')->assertOk()->getContent();
+
+        $this->assertCleanHead($html);
+        $this->assertStringContainsString('<title>Subscription confirmed - Spannr</title>', $html);
+    }
+
+    public function test_the_head_is_clean_even_when_the_cms_record_is_missing(): void
+    {
+        $html = $this->get('/confirmed')->assertOk()->getContent();
+
+        $this->assertCleanHead($html);
+        $this->assertStringContainsString('<title>Subscription confirmed - Spannr</title>', $html);
+    }
+
+    public function test_the_page_text_and_the_analytics_scripts_are_unchanged(): void
+    {
+        $this->confirmedRecord();
+
+        $html = $this->get('/confirmed')->getContent();
+
+        $this->assertStringContainsString("You're in. Nice.", $html);
+        $this->assertStringContainsString('https://www.googletagmanager.com/gtag/js?id=G-TW8JCMEBZF', $html);
+        $this->assertStringContainsString('data-domain="spannr.com"', $html);
+        $this->assertSame(1, substr_count($html, "gtag('config'"), 'the tracking config appears once');
+    }
 }
