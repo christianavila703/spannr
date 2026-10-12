@@ -64,28 +64,19 @@ Route::get('/companies/{slug}/stock-chart', [App\Http\Controllers\Public\Content
 Route::get('/companies/{slug}/stock-data', [App\Http\Controllers\Public\Content\Organizations\ChartController::class, 'stockData'])
     ->name('public.content.organizations.data');
 
-// Investors
-Route::get('/investors/', [App\Http\Controllers\Public\Content\Investors\InvestorController::class, 'index'])->name('public.content.investors.index');
-Route::get('/investors/charts/investors-by-type.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'investorsByTypePieChartData'])
-    ->name('public.content.investors.charts.investors-by-type');
-Route::get('/investors/charts/total-amount-raised-last-12-months.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'totalAmountRaisedLast12Months'])
-    ->name('public.content.investors.charts.total-amount-raised-last-12-months');
-Route::get('/investors/charts/amount-raised-per-round.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'amountRaisedPerRoundType'])
-    ->name('public.content.investors.charts.amount-raised-per-round');
-Route::get('/investors/charts/average-raised-per-round.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'averageRaisedPerRoundType'])
-    ->name('public.content.investors.charts.average-raised-per-round');
-Route::get('/investors/charts/ytd-amount-raised-per-category.json', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'yearToDateAmountRaisedPerCategory'])
-    ->name('public.content.investors.charts.ytd-amount-raised-per-category');
-Route::get('/investors/charts/year-over-year-bar-chart-race', [App\Http\Controllers\Public\Content\Investors\ChartController::class, 'yearOverYearBarChartRace'])
-    ->name('public.content.investors.charts.year-over-year-bar-chart-race');
+// Investors → homepage (301). Named routes kept so existing route() calls still resolve.
+Route::redirect('/investors', '/', 301)->name('public.content.investors.index');
+Route::redirect('/investors/{any}', '/', 301)->where('any', '.*');
 
 Route::get('/ventures/logos', [App\Http\Controllers\Public\ContentController::class, 'ventureLogos'])->name('public.content.ventures.logos');
 Route::get('/reports', [App\Http\Controllers\Public\Content\ReportController::class, 'index'])->name('public.content.reports.index');
 Route::get('/reports/2022-longevity-funding', [App\Http\Controllers\Public\Content\ReportController::class, 'longevityReport2022'])->name('public.content.reports.longevity-report-2022');
-Route::get('/jobs', [App\Http\Controllers\Public\Content\JobsController::class, 'index'])->name('public.content.jobs.index');
-Route::get('/jobs/submit/job', [App\Http\Controllers\Public\Content\JobsController::class, 'submit'])->name('public.content.jobs.submit');
-Route::get('/jobs/apply/{slug?}', [App\Http\Controllers\Public\Content\JobsController::class, 'apply'])->name('public.content.jobs.apply');
-Route::get('/jobs/subscription/confirmed', [App\Http\Controllers\Public\ContentController::class, 'jobPostingSubscriptionConfirmed'])->name('public.content.jobs.subscription.confirmed');
+// Jobs → homepage (301). Named routes kept so existing route() calls still resolve.
+Route::redirect('/jobs', '/', 301)->name('public.content.jobs.index');
+Route::redirect('/jobs/submit/job', '/', 301)->name('public.content.jobs.submit');
+Route::redirect('/jobs/apply/{slug?}', '/', 301)->name('public.content.jobs.apply');
+Route::redirect('/jobs/subscription/confirmed', '/', 301)->name('public.content.jobs.subscription.confirmed');
+Route::redirect('/jobs/{any}', '/', 301)->where('any', '.*');
 Route::get('/guide-to-longevity', [App\Http\Controllers\Public\Content\LongevityGuideController::class, 'index'])->name('public.content.longevity-guide.index');
 
 Route::get('/checkout/job-posting-subscription', [App\Http\Controllers\Public\CheckoutController::class, 'jobPostingSubscription']);
