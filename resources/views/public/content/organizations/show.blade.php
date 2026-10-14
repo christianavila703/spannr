@@ -105,15 +105,9 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($organization->jobs_count > 0)
-                            <div class="mt-4 mb-5">
-                                <h2 class="title">Recent Jobs at {{ $organization->name }}</h2>
-                                <livewire:public.organizations.organization-jobs organizationId="{{ $organization->id }}" />
-                                <div>
-                                    <a href="{{ route('public.content.jobs.index', ['search' => $organization->name] ) }}" class="btn btn-outline-dark">View Jobs &rarr;</a>
-                                </div>
-                            </div>
-                        @endif
+                        {{-- DEV-16: the "Recent Jobs at {name}" block is hidden because the public jobs pages are retired (they 301 to the homepage).
+                             To restore it, put back: @if ($organization->jobs_count > 0) a heading and <livewire:public.organizations.organization-jobs organizationId="{{ $organization->id }}" /> @endif
+                             (the OrganizationController still loads jobs_count for it, and the Livewire component and job-summary component are untouched). --}}
                         @if ($organization->media_items_count > 0)
                             <div class="mt-4">
                                 <h2 class="title">Latest News</h2>

@@ -78,9 +78,6 @@
                     <a href="{{ route('public.content.ventures') }}" class="btn btn-dark py-4">
                         <span>Become an Investor</span>
                     </a>
-                    <a href="{{ route('public.content.jobs.index') }}" class="btn btn-dark py-4">
-                        <span>See Who's Hiring</span>
-                    </a>
                 </div>
             </div>
         </div>

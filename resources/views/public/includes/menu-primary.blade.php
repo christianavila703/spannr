@@ -34,9 +34,7 @@
         <div class="collapse {{ ($currentNavItem === 'data') ? 'show' : '' }}" id="nav-item-data">
             <ul>
                 <li><a href="{{ route('public.content.organizations.index') }}">Companies</a></li>
-                <li><a href="{{ route('public.content.investors.index') }}">Investors</a></li>
                 <li><a href="{{ route('public.content.glossary.index') }}">Glossary</a></li>
-                <li><a href="{{ route('public.content.longevity-index') }}">Stock Index</a></li>
                 <li><a href="{{ route('public.content.ventures') }}">Ventures</a></li>
             </ul>
         </div>
@@ -75,22 +73,10 @@
         </div>
     @endif
 
+    {{-- The public jobs pages are retired (they 301 to the homepage). People who already manage job listings keep the link to their own page. --}}
     @can('manage own jobs')
         <div class="py-3 border-bottom">
-            <a href="{{ route('public.content.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'jobs') ? 'current' : '' }}">Longevity Jobs</a>
-            <ul class="other-nav-items">
-                <li class="nav-item">
-                    <a href="{{ route('users.jobs.index') }}">My Job Listings</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('public.content.jobs.submit') }}">List New Job</a>
-                </li>
-            </ul>
-        </div>
-    @else
-        <div class="py-3 border-bottom">
-            <a href="{{ route('public.content.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6 {{ ($currentNavItem === 'jobs') ? 'current' : '' }}">Longevity Jobs</a>
-            <p class="m-0">Find a job in longevity / Find candidates to hire</p>
+            <a href="{{ route('users.jobs.index') }}" class="nav-heading-item btn w-100 text-start h6">My Job Listings</a>
         </div>
     @endcan
 
