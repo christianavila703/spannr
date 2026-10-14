@@ -88,7 +88,7 @@ class ProcessSetupIntent implements ShouldQueue
             }
 
         } catch (Throwable $exception) {
-            SlackAlert::to('test')->message('<@sydney> Exception during ProcessSetupIntent for Job Subscription Webhook ' . $this->webhookCall->id . "\n" . $exception->getMessage());
+            SlackAlert::to('test')->message('Exception during ProcessSetupIntent for Job Subscription Webhook ' . $this->webhookCall->id . "\n" . $exception->getMessage());
         }
     }
 }

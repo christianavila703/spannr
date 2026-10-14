@@ -92,7 +92,7 @@ class CheckoutController extends Controller
             $errorMessage = $throwable->getMessage();
 
             Log::critical('Error during checkout for Job posting subscription ' . $errorMessage);
-            $message = '<@Sydney> *Error during checkout for Job Posting subscription*' . "\n" .
+            $message = '*Error during checkout for Job Posting subscription*' . "\n" .
                 ">Checkout ID: " . $checkoutId;
 
             SlackAlert::to('jobs')->message($message);
@@ -141,7 +141,7 @@ class CheckoutController extends Controller
             return redirect()->route('panel.index')->with('success', 'Thank you for Spannr+ subscription!');
         } catch (\Throwable $throwable) {
             $errorMessage = $throwable->getMessage();
-            $message = '<@Sydney> *Error during checkout for Spannr+ subscription* \n >Checkout ID: ' . $checkoutId;
+            $message = '*Error during checkout for Spannr+ subscription* \n >Checkout ID: ' . $checkoutId;
 
             SlackAlert::to(UserSubscription::SLACK_NOTIFICATION_CHANNEL)->message($message);
             Log::critical($errorMessage);

@@ -54,7 +54,7 @@ class UpdateExpiredSubscription implements ShouldQueue
         } catch (\Throwable $throwable) {
             $errorTitle = 'UpdateExpiredSubscription job error.';
             $errorMessage = $throwable->getMessage();
-            $slackMessage = '<@Sydney> *' . $errorTitle . '*' . "\n" .
+            $slackMessage = '*' . $errorTitle . '*' . "\n" .
                 ">Subscription Stripe ID: " . $subscription->stripe_subscription_id . "\n" .
                 ">Message: " . $errorMessage;
 

@@ -38,7 +38,7 @@ class JobsController extends Controller
 
         } catch (\Throwable $throwable) {
             Log::critical('Error during cancellation Job Posting subscription. Job ID: ' . $job->id, [$throwable->getMessage()]);
-            $message = '<@Sydney> *Error during cancellation Job Posting subscription*' . "\n" .
+            $message = '*Error during cancellation Job Posting subscription*' . "\n" .
                 ">Job ID: " . $job->id . "\n" .
                 ">Subscription ID: " . $job->subscription_id;
 
@@ -94,7 +94,7 @@ class JobsController extends Controller
             ]);
 
         } catch(InvalidRequestException $exception) {
-            SlackAlert::to('test')->message("<@sydney> Exception during Update Monthly Job Card for Job " . $job->id . ' ' . $exception->getMessage());
+            SlackAlert::to('test')->message("Exception during Update Monthly Job Card for Job " . $job->id . ' ' . $exception->getMessage());
         }
 
         return response()->json([

@@ -66,7 +66,7 @@ class GetEndofDayStockSnapshot implements ShouldQueue
         } catch (\Throwable $throwable) {
             $message = 'Failure during EndOfDaySnapshot OpenClose ' . $this->stock->ticker . "\n" . $throwable->getMessage();
             Log::critical($message);
-            SlackAlert::to('index')->message("<@sydney> " . $message);
+            SlackAlert::to('index')->message($message);
         }
 
         // GET Market Cap for each Stock
@@ -84,7 +84,7 @@ class GetEndofDayStockSnapshot implements ShouldQueue
         } catch (\Throwable $throwable) {
             $message = 'Failure during EndOfDaySnapshot Tickers ' . $this->stock->ticker . "\n" . $throwable->getMessage() . "\n" . '```' . print_r($response, true) . '```';
             Log::critical($message);
-            SlackAlert::to('index')->message("<@sydney> " . $message);
+            SlackAlert::to('index')->message($message);
         }
     }
 }

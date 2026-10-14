@@ -110,7 +110,7 @@ class Apply extends Component
             $this->reset('error');
 
         } catch(\Throwable $exception) {
-            SlackAlert::message('<@sydney> Error during job application for ' . $this->email . ' ' . $exception->getMessage());
+            SlackAlert::message('Error during job application for ' . $this->email . ' ' . $exception->getMessage());
             $this->error = "We're having trouble with your submission. Please double check the fields below and if there's still an issue, please contact sydney@spannr.com";
         }
 

@@ -83,7 +83,7 @@ class ClaimListing extends Component
                 $this->success = true;
 
             } catch (Throwable $exception) {
-                SlackAlert::to('marketplace')->message('<@sydney> Exception during Claim Listing with successful domain match for #' . $this->listing->id . ' ' .
+                SlackAlert::to('marketplace')->message('Exception during Claim Listing with successful domain match for #' . $this->listing->id . ' ' .
                     $this->listing->name  . "\n" . $exception->getMessage() . "\n" . $this->email);
 
                 $this->error = true;
@@ -104,7 +104,7 @@ class ClaimListing extends Component
 
                 $user->assignRole(Role::ROLE_MARKETPLACE_MANAGER);
 
-                SlackAlert::to('marketplace')->message('<@sydney> Manual Marketplace Listing Claim Verification' .  "\n" .
+                SlackAlert::to('marketplace')->message('Manual Marketplace Listing Claim Verification' .  "\n" .
                     ' #' . $this->listing->id . ' ' . $this->listing->name  . "\n" .
                     'Name: ' . $this->first_name . ' ' . $this->last_name . "\n" .
                     'User ID: ' . $user->id . "\n" .
@@ -115,7 +115,7 @@ class ClaimListing extends Component
                 $this->manualClaimSuccess = true;
 
             } catch(Throwable $exception) {
-                SlackAlert::to('marketplace')->message('<@sydney> Exception during Claim Listing for manual verification #' . $this->listing->id . ' ' .
+                SlackAlert::to('marketplace')->message('Exception during Claim Listing for manual verification #' . $this->listing->id . ' ' .
                     $this->listing->name  . "\n" . $exception->getMessage() . "\n" . $this->email);
 
                 $this->error = true;

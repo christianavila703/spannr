@@ -71,7 +71,7 @@ class Languages extends Component
                 'depth' => 1
             ]);
 
-            SlackAlert::to('test')->message('<@sydney> *New Language Tag*' . "\n" .
+            SlackAlert::to('test')->message('*New Language Tag*' . "\n" .
                 'Listing Type: ' . $this->listing->type . "\n" .
                 'Language Tag: ' . $this->newItem . "\n" .
                 $this->listing->show_url);
@@ -82,7 +82,7 @@ class Languages extends Component
         } catch (Throwable $exception) {
             $this->dispatchBrowserEvent('toast-notification',  ['text' => 'There was a problem adding this language. If the problem continues, please email help@spannr.com', 'background' => 'bg-danger']);
 
-            SlackAlert::to('test')->message('<@sydney> *Problem Adding Language*' . "\n" .
+            SlackAlert::to('test')->message('*Problem Adding Language*' . "\n" .
                 'Listing Type: ' . $this->listing->type . "\n" .
                 'Language Tag: ' . $this->newItem . "\n" .
                 '```' . $exception->getMessage() . '```' . "\n" .

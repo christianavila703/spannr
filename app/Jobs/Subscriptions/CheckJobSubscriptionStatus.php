@@ -46,7 +46,7 @@ class CheckJobSubscriptionStatus implements ShouldQueue
         $this->jobSubscription->save();
 
         if ($subscriptionDetails['status'] !== 'active') {
-            SlackAlert::to('test')->message('<@sydney> Job Subscription is no longer active ' . $this->jobSubscription->id);
+            SlackAlert::to('test')->message('Job Subscription is no longer active ' . $this->jobSubscription->id);
             $job = Job::find($this->jobSubscription->job_id);
             $job->monthly = null;
             $job->save();

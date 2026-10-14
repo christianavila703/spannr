@@ -83,7 +83,7 @@ class Users extends Component
                     Mail::to($this->email)->send(new MarketplaceNewUserNotification($this->listing, $user, true));
 
                 } catch(Throwable $exception) {
-                    SlackAlert::to('test')->message('<@sydney> Exception during Marketplace Manage Users' . "\n" . $exception->getMessage() . "\n" . $this->email . "\n" . $this->listing->show_url);
+                    SlackAlert::to('test')->message('Exception during Marketplace Manage Users' . "\n" . $exception->getMessage() . "\n" . $this->email . "\n" . $this->listing->show_url);
                 }
 
                 $this->listing->users()->attach($user->id, ['role' => $this->role]);

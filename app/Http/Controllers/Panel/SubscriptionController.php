@@ -33,7 +33,7 @@ class SubscriptionController extends Controller
         } catch (\Throwable $throwable) {
             $errorMessage = $throwable->getMessage();
 
-            $slackMessage = '<@Sydney> *Spannr+ subscription cancellation error*' . "\n" . ">Subscription Stripe ID: " . $subscriptionId . ".\n >Message: " . $errorMessage;
+            $slackMessage = '*Spannr+ subscription cancellation error*' . "\n" . ">Subscription Stripe ID: " . $subscriptionId . ".\n >Message: " . $errorMessage;
             SlackAlert::to(UserSubscription::SLACK_NOTIFICATION_CHANNEL)->message($slackMessage);
 
             Log::critical($errorMessage);
@@ -64,7 +64,7 @@ class SubscriptionController extends Controller
             return redirect()->route('panel.index')->with('success', 'Your subscription was resumed successfully!');
         } catch (\Throwable $throwable) {
             $errorMessage = $throwable->getMessage();
-            $slackMessage = '<@Sydney> *Spannr+ subscription resuming error*' . "\n" . ">Subscription Stripe ID: " . $subscriptionId . ".\n >Message: " . $errorMessage;
+            $slackMessage = '*Spannr+ subscription resuming error*' . "\n" . ">Subscription Stripe ID: " . $subscriptionId . ".\n >Message: " . $errorMessage;
 
             SlackAlert::to(UserSubscription::SLACK_NOTIFICATION_CHANNEL)->message($slackMessage);
             Log::critical($errorMessage);

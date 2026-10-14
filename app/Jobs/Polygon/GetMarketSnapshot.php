@@ -116,14 +116,14 @@ class GetMarketSnapshot implements ShouldQueue
                     // First batch job failure detected...
                     $message = 'Market Snapshot Batch Failure' . "\n" . $throwable->getMessage();
                     Log::critical($message);
-                    SlackAlert::to('index')->message("<@sydney> " . $message);
+                    SlackAlert::to('index')->message($message);
 
                 })->dispatch();
 
         } catch(\Throwable $throwable) {
             $message = 'Failure during GetMarketSnapshot' . "\n" . $throwable->getMessage();
             Log::critical($message);
-            SlackAlert::to('index')->message("<@sydney> " . $message);
+            SlackAlert::to('index')->message($message);
         }
 
         // Missing Tickers from Polygon
@@ -145,7 +145,7 @@ class GetMarketSnapshot implements ShouldQueue
             }
 
             CalculateMarketSnapshotData::dispatch($marketSnapshot, $previousMarketSnapshot);
-            SlackAlert::to('index')->message("<@sydney> " . $message);
+            SlackAlert::to('index')->message($message);
         }
     }
 }

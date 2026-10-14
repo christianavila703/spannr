@@ -38,7 +38,7 @@ class StartEndOfDayMarketSnapshot extends Command
             $newStockSnapshot->save();
         }
 
-        SlackAlert::to('index')->message("<@sydney> " . 'EOD Snapshot ' . route('admin.longevity-index.all'));
+        SlackAlert::to('index')->message('EOD Snapshot ' . route('admin.longevity-index.all'));
 
         return 0;
     }

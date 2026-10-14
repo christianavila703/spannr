@@ -58,7 +58,7 @@ class MedicalTreatments extends Component
             $existingTag->tagSets()->syncWithoutDetaching([$tagSet->id]);
             $this->listing->treatments()->syncWithoutDetaching([$existingTag->id]);
 
-            SlackAlert::to('test')->message('<@sydney> *Existing Tag Assigned to Treatments*' . "\n" .
+            SlackAlert::to('test')->message('*Existing Tag Assigned to Treatments*' . "\n" .
                 'Listing Type: ' . $this->listing->type . "\n" .
                 'Treatment Tag: ' . $this->newItem . "\n" .
                 $this->listing->show_url);
@@ -68,7 +68,7 @@ class MedicalTreatments extends Component
                 'name' => $this->newItem
             ]);
 
-            SlackAlert::to('test')->message('<@sydney> *New Tag Assigned to Treatments*' . "\n" .
+            SlackAlert::to('test')->message('*New Tag Assigned to Treatments*' . "\n" .
                 'Listing Type: ' . $this->listing->type . "\n" .
                 'Treatment Tag: ' . $this->newItem . "\n" .
                 $this->listing->show_url);
