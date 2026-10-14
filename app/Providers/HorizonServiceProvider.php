@@ -19,7 +19,14 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
 
         // Horizon::routeSmsNotificationsTo('15556667777');
          Horizon::routeMailNotificationsTo('sydney@spannr.com');
-         Horizon::routeSlackNotificationsTo('', '#dev-updates');
+
+        // DEV-20: the Slack webhook is a secret, so it lives in the environment (HORIZON_SLACK_WEBHOOK_URL), not in the code.
+        // When it is empty no Slack route is set, and Horizon simply sends no Slack notifications.
+        $slackWebhook = config('services.slack.horizon_webhook');
+
+        if (filled($slackWebhook)) {
+            Horizon::routeSlackNotificationsTo($slackWebhook, '#dev-updates');
+        }
 
         // Horizon::night();
     }

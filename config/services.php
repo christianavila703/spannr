@@ -66,4 +66,9 @@ return [
         'key' => env('GEOAPIFY_API_KEY')
     ],
 
+    'slack' => [
+        // Laravel Horizon notifications (see HorizonServiceProvider). Leave HORIZON_SLACK_WEBHOOK_URL empty to send none.
+        'horizon_webhook' => env('HORIZON_SLACK_WEBHOOK_URL'),
+    ],
+
 ];
