@@ -109,15 +109,18 @@
             </div>
         </div>
 
-        <div id="contributors" class="container pb-5">
-            <h2 class="h1">Contributors</h2>
-            <hr class="dark mb-5">
-            <div class="row">
-                @foreach ($contributors as $person)
-                    <x-content.about-team-card :person="$person" />
-                @endforeach
+        {{-- DEV-18: with no contributors the heading would sit above nothing, so the whole section is left out. --}}
+        @if ($contributors->isNotEmpty())
+            <div id="contributors" class="container pb-5">
+                <h2 class="h1">Contributors</h2>
+                <hr class="dark mb-5">
+                <div class="row">
+                    @foreach ($contributors as $person)
+                        <x-content.about-team-card :person="$person" />
+                    @endforeach
+                </div>
             </div>
-        </div>
+        @endif
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>

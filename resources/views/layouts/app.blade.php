@@ -128,7 +128,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-start" aria-labelledby="navbar-dropdown-admin">
                                     <a href="{{ route('admin.activity-log.index') }}" class="dropdown-item">Activity Log</a>
-                                    <a href="/admin/backup" class="dropdown-item">Backups</a>
+                                    <a href="/backup" class="dropdown-item">Backups</a>
                                     <a href="/log-viewer" class="dropdown-item">Logs</a>
                                     <a href="{{ route('admin.users.index') }}" class="dropdown-item">Users</a>
                                     <a href="{{ route('admin.users.subscriptions') }}" class="dropdown-item">Subscriptions</a>

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Public\Content\Organizations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
-use App\Models\Job;
-use App\Models\JobCategory;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Tag;
@@ -28,10 +26,6 @@ class OrganizationController extends Controller
         $foundAfterPercent = ($foundedAfterValue / $totalOrganizations) * 100;
         $foundedDifference = Carbon::now()->format('Y') - $foundedDateCutoff;
 
-        $jobsCount = Job::count();
-        $jobCategoriesCount = JobCategory::count();
-        $topHiringCompanies = Organization::withCount('jobs')->orderByDesc('jobs_count')->take(3)->get();
-
         $topLocations = Location::withCount('organizations')->orderByDesc('organizations_count')->take(5)->get();
 
         $seo = Content::where('slug', 'companies')->first();
@@ -45,9 +39,6 @@ class OrganizationController extends Controller
             'foundedAfterValue' => $foundedAfterValue,
             'foundAfterPercent' => $foundAfterPercent,
             'foundedDifference' => $foundedDifference,
-            'jobsCount' => $jobsCount,
-            'jobCategoriesCount' => $jobCategoriesCount,
-            'topHiringCompanies' => $topHiringCompanies,
             'topLocations' => $topLocations
         ]);
     }

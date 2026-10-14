@@ -68,22 +68,7 @@
                                 </div>
 
                             </li>
-                            <li>
-                                <div>
-                                    <span class="d-block lead">
-                                        We've catalogued <strong class="text-quaternary">{{ number_format($jobsCount, 0) }} jobs</strong> across {{ number_format($jobCategoriesCount, 0) }} categories
-                                    </span>
-                                    <span class="d-block text-secondary fw-bold">
-                                        Top 3 companies with most jobs posted are:
-                                    </span>
-                                    <span class="d-block">
-                                        @foreach ($topHiringCompanies as $hiringCompany)
-                                            <a href="{{ route('public.content.organizations.show', $hiringCompany->slug) }}">{{ $hiringCompany->name }}</a>
-                                            @if(!$loop->last) / @endif
-                                        @endforeach
-                                    </span>
-                                </div>
-                            </li>
+                            {{-- DEV-17 removed the jobs item (jobs count and top hiring companies) because the jobs pages are retired and 301 to the homepage. Git history has the original. --}}
                             <li>
                                 <div>
                                     <span class="d-block lead">
