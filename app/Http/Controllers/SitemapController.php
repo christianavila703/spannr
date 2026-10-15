@@ -17,6 +17,11 @@ class SitemapController extends Controller
         'index--about',                 // 301 to /index
         'index--terms-and-disclaimers', // 301 to /index
         'longevity-doctors',            // 301 to /articles/longevity-doctors
+        'contact-us',                   // 301 to /contact (DEV-23)
+        'about-us',                     // 301 to /about
+        'privacy-policy',               // 301 to /privacy
+        'terms-of-service',             // 301 to /terms
+        'terms-and-conditions',         // 301 to /terms
     ];
 
     /**

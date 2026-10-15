@@ -40,6 +40,17 @@ Route::get('/articles', [App\Http\Controllers\Public\ContentController::class, '
 Route::redirect('/articles/longevity-supplements-what-they-are-benefits-and-more', '/articles/best-longevity-supplements', 301);
 Route::redirect('/articles/beat-inflammation-anti-aging-100', '/articles/chronic-inflammation-and-longevity', 301);
 Route::redirect('/longevity-doctors', '/articles/longevity-doctors', 301);
+// DEV-23: old URLs found in the server 404 log, each sent to the page that exists. Never to the homepage, and no guessing
+// (job board paths, WordPress paths and /feed/ stay 404). A trailing slash and a query string do not affect matching.
+Route::redirect('/contact-us', '/contact', 301);
+Route::redirect('/about-us', '/about', 301);
+Route::redirect('/privacy-policy', '/privacy', 301);
+Route::redirect('/terms-of-service', '/terms', 301);
+Route::redirect('/terms-and-conditions', '/terms', 301);
+Route::redirect('/sitemap_index.xml', '/sitemap.xml', 301);
+Route::redirect('/sitemap-index.xml', '/sitemap.xml', 301);
+Route::redirect('/marketplace/clinic', '/marketplace', 301);
+Route::redirect('/marketplace/doctor', '/marketplace', 301);
 Route::get('/articles/{slug}', [App\Http\Controllers\Public\ContentController::class, 'articleShow'])->name('public.content.articles.show');
 Route::get('/glossary', [App\Http\Controllers\Public\ContentController::class, 'glossaryIndex'])->name('public.content.glossary.index');
 Route::get('/glossary/{slug}', [App\Http\Controllers\Public\ContentController::class, 'glossaryShow'])->name('public.content.glossary.show');
